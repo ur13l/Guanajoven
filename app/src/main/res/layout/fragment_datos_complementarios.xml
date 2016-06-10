@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="20dp">
+
+    <ImageView
+        android:layout_marginTop="-20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:src="@drawable/code"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/introduce"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/et_peso"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:hint="@string/peso_actual"
+                android:inputType="numberDecimal"
+                android:textSize="16dp" />
+        </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="@string/kg"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+        <EditText
+            android:id="@+id/et_estatura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:typeface="normal"
+            android:singleLine="true"
+            android:hint="@string/estatura_actual"
+            android:inputType="numberDecimal"
+            android:textSize="16dp" />
+         </android.support.design.widget.TextInputLayout>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:text="@string/m"/>
+    </LinearLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_fech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <EditText
+            android:id="@+id/et_fech"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="50"
+            android:typeface="normal"
+            android:textSize="16dp"
+            android:hint="Fecha de nacimiento" />
+    </android.support.design.widget.TextInputLayout>
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_genero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="Genero"
+        app:ms_hint="Genero"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_presion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        android:typeface="normal"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/presion"
+        app:ms_hint="@string/presion"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_glucosa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/glucosa"
+        app:ms_hint="@string/glucosa"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_actividad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/actividad"
+        app:ms_hint="@string/actividad"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_estado_animo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/estado_animo"
+        app:ms_hint="@string/estado_animo"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:background="@color/colorAccent"
+        android:layout_marginTop="5dp">
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@drawable/green_button"
+            android:textColor="@color/white"
+            android:id="@+id/btn_registrar"
+            android:text="@string/registrar">
+        </Button>
+
+    </LinearLayout>
+</LinearLayout>

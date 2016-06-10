@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="publicidad">
+        <item>@drawable/publicidad1</item>
+        <item>@drawable/publicidad2</item>
+    </array>
+</resources>

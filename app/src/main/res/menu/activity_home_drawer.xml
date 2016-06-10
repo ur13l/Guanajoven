@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/inicio">
+        <menu>
+            <group android:checkableBehavior="single">
+            <item android:id="@+id/nav_home"
+                android:title="@string/home"/>
+            <item
+                android:id="@+id/nav_datos_tutor"
+                android:title="@string/mi_perfil" />
+            <item
+                android:id="@+id/nav_logout"
+                android:title="@string/cerrar_sesion"/>
+
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/actividades">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/nav_calendario"
+                    android:title="@string/calendario"/>
+
+                <item
+                    android:id="@+id/nav_registrar_ejercicio"
+                    android:title="@string/registrar_ejercicio" />
+
+                <item
+                    android:id="@+id/nav_registrar_agua"
+                    android:title="@string/registrar_agua" />
+
+                <item
+                    android:id="@+id/nav_alarmas"
+                    android:title="@string/alarmas" />
+
+                <item
+                    android:id="@+id/nav_ver_reportes"
+                    android:title="@string/ver_reportes" />
+
+
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/general">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/nav_directorio"
+                    android:title="@string/directorio_code"/>
+                <item
+                    android:id="@+id/nav_colaboradores"
+                    android:title="@string/colaboradores" />
+
+
+            </group>
+        </menu>
+    </item>
+    <item android:title="@string/inicio_sesion">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item android:id="@+id/nav_registro"
+                    android:title="@string/registro"/>
+
+
+
+            </group>
+        </menu>
+    </item>
+</menu>

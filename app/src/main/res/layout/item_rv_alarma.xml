@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:clickable="true"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:weightSum="1"
+        android:id="@+id/elem">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="0.86">
+
+            <TextView
+                android:layout_width="158dp"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="8:00 AM"
+                android:id="@+id/hora_tv"
+                android:fontFamily="sans-serif-thin"
+                android:textSize="35dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Lun, Mar, Mie, Jue, Vie, Sab, Dom"
+                android:id="@+id/dias_tv" />
+
+        </LinearLayout>
+
+
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/activo_sw"
+            android:checked="false"
+            android:layout_gravity="center_vertical" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:id="@+id/dias_ll"
+        android:visibility="gone"
+        android:gravity="center">
+
+        <ToggleButton
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/switch_day_button"
+            android:text="@string/lun"
+            android:textOff="@string/lun"
+            android:textOn="@string/lun"
+            android:id="@+id/lunes_chk"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="0dp" />
+
+        <ToggleButton
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/switch_day_button"
+            android:text="@string/mar"
+            android:id="@+id/martes_chk"
+            android:textOff="@string/mar"
+            android:textOn="@string/mar"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="0dp" />
+
+        <ToggleButton
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/switch_day_button"
+            android:text="@string/mie"
+            android:id="@+id/miercoles_chk"
+            android:textOff="@string/mie"
+            android:textOn="@string/mie"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="0dp" />
+
+        <ToggleButton
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/switch_day_button"
+            android:text="@string/jue"
+            android:id="@+id/jueves_chk"
+            android:textOff="@string/jue"
+            android:textOn="@string/jue"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="0dp" />
+
+        <ToggleButton
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/switch_day_button"
+            android:text="@string/vie"
+            android:id="@+id/viernes_chk"
+            android:textOff="@string/vie"
+            android:textOn="@string/vie"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="0dp" />
+
+        <ToggleButton
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/switch_day_button"
+            android:text="@string/sab"
+            android:id="@+id/sabado_chk"
+            android:textOff="@string/sab"
+            android:textOn="@string/sab"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="0dp" />
+
+        <ToggleButton
+            android:layout_width="40dp"
+            android:layout_height="30dp"
+            android:background="@drawable/switch_day_button"
+            android:text="@string/dom"
+            android:id="@+id/domingo_chk"
+            android:textOff="@string/dom"
+            android:textOn="@string/dom"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginBottom="0dp" />
+
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/background_gray"
+        />
+</LinearLayout>

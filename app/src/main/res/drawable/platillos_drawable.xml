@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_pressed="true" >
+        <bitmap android:src="@drawable/platillos_white"
+            android:alpha="0.6"></bitmap>
+    </item>
+    <item android:drawable="@drawable/platillos_white"
+        android:state_selected="true" />
+    <item >
+        <bitmap android:src="@drawable/platillos_white"
+            android:alpha="0.5"></bitmap>
+    </item>
+</selector>

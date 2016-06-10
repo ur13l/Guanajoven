@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:padding="10dp"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Nuevo evento"
+        android:id="@+id/textView4" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_título"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_titulo"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:hint="Título"
+             />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/input_layout_name"
+        android:layout_width="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_descripcion"
+            android:layout_width="350dp"
+            android:layout_height="50dp"
+            android:singleLine="true"
+            android:hint="Descripcion" />
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_fechainicio"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:id="@+id/et_fecha_inicio"
+                android:hint="Fecha de inicio" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_horainicio"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:hint="Hora de inicio"
+                android:id="@+id/et_hora_inicio"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_fechafin"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:id="@+id/et_fecha_fin"
+                android:hint="Fecha de fin" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_horafin"
+            android:layout_width="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:singleLine="true"
+                android:hint="Hora de fin"
+                android:id="@+id/et_hora_fin"/>
+        </android.support.design.widget.TextInputLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_aceptar"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorNaranja"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:text="Aceptar" />
+</LinearLayout>

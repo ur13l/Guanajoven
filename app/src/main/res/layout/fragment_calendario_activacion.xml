@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view_retos_del_dia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="100dp"
+        style="@style/AppTheme.CardViewStyle"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:padding="20dp"
+                android:orientation="vertical"
+                android:background="@drawable/calendario">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/mes_tv"
+                    android:layout_gravity="center"
+                    android:textSize="25dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-light"
+                    android:text="MAY"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/dia_tv"
+                    android:layout_gravity="center"
+                    android:textSize="40dp"
+                    android:textColor="@color/white"
+                    android:text="25"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/anio_tv"
+                    android:layout_gravity="center"
+                    android:textSize="23dp"
+                    android:textColor="@color/white"
+                    android:fontFamily="sans-serif-light"
+                    android:text="2016"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.tyczj.extendedcalendarview.ExtendedCalendarView
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:id="@+id/calendario_activacion"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="100dp"
+        style="@style/AppTheme.CardViewStyle"
+        android:layout_marginBottom="10dp"
+        card_view:cardCornerRadius="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/AppTheme.TituloCardViewStyle"
+                    android:text="@string/eventos" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background_gray" />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_eventos"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/empty_view"
+                android:layout_gravity="center"
+                android:padding="30dp"
+                android:visibility="gone"
+                android:text="@string/empty"
+                />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    </LinearLayout>

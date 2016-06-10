@@ -1,0 +1,12 @@
+<resources>
+
+    <string name="app_name">ExtendedCalendarView</string>
+    <string name="monday">LUN</string>
+    <string name="tuesday">MAR</string>
+    <string name="wednesday">MIE</string>
+    <string name="thursday">JUE</string>
+    <string name="friday">VIE</string>
+    <string name="saturday">SAB</string>
+    <string name="sunday">DOM</string>
+
+</resources>

@@ -1,0 +1,220 @@
+<resources>
+    <string name="app_name">Actívate CODE</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <!-- Strings related to login -->
+    <string name="login">Inicia Sesión</string>
+    <string name="correo">¿Ingrese su Email?</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions." </string>
+    <string name="cambiar_peke">"Cambiar Peke
+    </string>
+    <string name="home">Home</string>
+    <string name="bienvenida">¡Bienvenido!</string>
+    <string name="comenzar">Comenzar</string>
+    <string name="registrar">Registrar</string>
+    <string name="copyright">Copyright © CODE 2016.</string>
+    <string name="inicio">Inicio</string>
+    <string name="email">Email</string>
+    <string name="pass">Contraseña</string>
+    <string name="facebook">"Iniciar Sesión con Facebook</string>
+    <string name="recuperar">Recuperar Usuario o Contraseña</string>
+    <string name="nuevousuario">Registrar Nuevo Usuario</string>
+    <string name="meta">Meta</string>
+    <string name="consumo_calorico">Consumo</string>
+    <string name="ejercicio">Ejercicio</string>
+    <string name="calorias_restantes">Restante</string>
+    <string name="realizar_diagnostico">Realiza un diagnóstico a tu PEKE</string>
+    <string name="meta_del_dia">Meta del día para el PEKE (Calorías)</string>
+    <string name="title_usuarionuevo">Nuevo Usuario</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="nuevousuario_diagnostico">Registra tu Usuario</string>
+    <string name="retos_peke">Retos para el PEKE</string>
+    <string name="hidratacion_diaria">Hidratación diaria</string>
+    <string name="ejercicio_diario">Ejercicio Diario</string>
+    <string name="alimentacion_balanceada">Alimentación balanceada</string>
+    <string name="diagnosito_actual">Diagnóstico actual del PEKE</string>
+    <string name="like_facebook">Dale Like a nuestra página de Facebook</string>
+    <string name="alimentos">Alimentos</string>
+    <string name="agua">Agua</string>
+    <string name="recuperarpass"><u>Recuperar contraseña</u></string>
+    <string name="recuperarpass2">Recuperar contraseña</string>
+    <string name="mi_perfil">Mi perfil</string>
+    <string name="datos_peke">Datos del PEKE</string>
+    <string name="expediente">Expediente del PEKE</string>
+    <string name="diagnostico_peke">Diagnóstico del PEKE</string>
+    <string name="acciones">Acciones</string>
+    <string name="registrar_comida">Registrar comida</string>
+    <string name="lista_alimentos">Lista de alimentos</string>
+    <string name="registrar_ejercicio">Registrar ejercicio</string>
+    <string name="registrar_agua">Registrar agua</string>
+    <string name="personalizar_alarmas">Personalizar alarmas</string>
+    <string name="directorio_nutriologos">Directorio de nutriólogos</string>
+    <string name="colaboradores">Colaboradores</string>
+    <string name="ayuda">Ayuda</string>
+    <string name="actualizarTutor">Actualiza tus datos.</string>
+
+
+    <string name="hint_name">Ingrese su Nombre</string>
+    <string name="femenino">Femenino</string>
+    <string name="masculino">Masculino</string>
+    <string name="parentesco">Parentesco</string>
+    <string name="ocupacion">Ocupación</string>
+    <string name="codPostal">Código Postal </string>
+    <string name="celular">Celular </string>
+    <string name="twitter">Twitter </string>
+    <string name="face">Facebook </string>
+    <string name="hint_user">Usuario</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_passwordconfirmar">Confirmar Contraseña</string>
+    <string name="hint_parentesco">Parentesco</string>
+    <string name="hint_ocupacion">Ocupación</string>
+    <string name="hint_codPostal">Ingrese su Código Postal</string>
+    <string name="hint_celular">Ingrese su Celular</string>
+    <string name="hint_facebook">Ingrese su Facebook</string>
+    <string name="terminos">Acepto política de privacidad</string>
+    <string name="leer_terminos">Leer</string>
+    <string name="facebook_app_id">1758904151009776</string>
+    <string name="btn_sign_up">Actualizar Datos</string>
+    <string name="err_msg_name">Enter your full name</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="err_msg_password">Enter the password</string>
+
+
+    <string name="datos_usuario">Datos de usuario</string>
+    <string name="falta_consumir">Te falta consumir:</string>
+    <string name="estado_nutricion">Nutrición</string>
+    <string name="peso_ideal">Peso ideal</string>
+    <string name="alimentacion">Alimentación</string>
+    <string name="actividad_fisica">Actividad Física</string>
+    <string name="consulta_diagnostico">Consulta diagnóstico completo</string>
+    <string name="title_activity_segunda">SegundaActivity</string>
+
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_lista_alimentos">ListaAlimentosActivity</string>
+    <string name="no_data">No se encontraron resultados con los criterios de búsqueda seleccionados.</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="tipo_porcion">Tipo de porción</string>
+    <string name="grupo_alimento">Grupo</string>
+    <string name="gramos">Gramos</string>
+    <string name="calorias">Calorías</string>
+    <string name="eq_frutas">Eq. de frutas</string>
+    <string name="eq_verduras">Eq. de verduras</string>
+    <string name="eq_poa">Eq. P.O.A.</string>
+    <string name="eq_cereales_tuberculos">Eq. Cereales y tubérculos</string>
+    <string name="eq_leguminosas">Eq. de leguminosas</string>
+    <string name="eq_lacteos">Eq. de lácteos</string>
+    <string name="eq_aceites_grasas">Eq. de aceites y grasas</string>
+    <string name="eq_azucares">Eq. de azúcares</string>
+    <string name="grasas">Grasas</string>
+    <string name="proteinas">Proteínas</string>
+    <string name="carbohidratos">Carbohidratos</string>
+    <string name="estado">Estado</string>
+    <string name="platillo">Platillo</string>
+    <string name="meta_hidratacion_diaria">Meta de hidratación diaria</string>
+    <string name="registro_agua">Registro de agua</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="seleccion_tipo_alimento">Seleccione el grupo de alimentos</string>
+    <string name="cantidad_gramos">Cantidad en gramos:</string>
+    <string name="equivalentes">Equivalentes:</string>
+    <string name="porcion">Porción:</string>
+    <string name="descripcion">Descripción:</string>
+    <string name="cereales_y_tuberculos">Cereales y tubérculos</string>
+    <string name="verduras">Verduras</string>
+    <string name="frutas">Frutas</string>
+    <string name="leguminosas">Leguminosas</string>
+    <string name="poa">Productos de Origen Animal</string>
+    <string name="lacteos">Lácteos</string>
+    <string name="aceites">Aceites y grasas</string>
+    <string name="azucares">Azúcares</string>
+    <string name="receta">Receta:</string>
+    <string name="registro_ejercicio">Registro de ejercicio</string>
+    <string name="platillos">Platillos</string>
+    <string name="hint_fechaNac">Fecha de Nacimiento</string>
+    <string name="retos_dia">Retos del día</string>
+    <string name="agenda">Agenda</string>
+    <string name="actividades">Actividades</string>
+    <string name="calendario">Calendario de activación</string>
+    <string name="alarmas">Alarmas de activación</string>
+    <string name="ver_reportes">Ver reportes</string>
+    <string name="general">General</string>
+    <string name="directorio_code">Directorio CODE</string>
+    <string name="inicio_sesion">Inicio de sesión</string>
+    <string name="registro">Registro</string>
+    <string name="iniciar_sesion">Iniciar sesión</string>
+    <string name="edad">Edad</string>
+    <string name="pasatiempos">Pasatiempos</string>
+    <string name="title_activity_asd">asd</string>
+    <string name="reportes">Reportes</string>
+    <string name="login_google">Google</string>
+    <string name="cerrar_sesion">Cerrar sesión</string>
+    <string name="recuperacion_codigo">Introduce el código de recuperación que ha sido enviado a tu correo.</string>
+    <string name="nuevo_password">Nueva contraseña</string>
+    <string name="confirmar_password">Confirmar contraseña</string>
+    <string name="reestablecer_pass">Reestablecer contraseña</string>
+    <string name="reenviar_codigo">Volver a enviar código</string>
+    <string name="no_correo"><u>Este no es mi correo</u></string>
+    <string name="enviar_codigo">Enviar código</string>
+    <string name="cambiar_correo">Cambiar correo</string>
+    <string name="olvidaste"><u>¿Olvidaste tu contraseña?</u></string>
+    <string name="o_inicia_sesion">O inicia sesión con:</string>
+    <string name="mensaje_bienvenida">Bienvenido a la aplicación Actívate, te invitamos a comenzar para llevar una vida saludable.</string>
+    <string name="colaborador1">Ing. Felipe Uriel Infante Martínez</string>
+    <string name="lider">Líder de desarrollo en Android</string>
+    <string name="correo1">ur13l.infante@gmail.com</string>
+    <string name="colaborador2">José María Cruz Parada</string>
+    <string name="desarrollador">Desarrollador en Android</string>
+    <string name="correo2">chema-cruz@live.com</string>
+    <string name="presion">¿Te conoces con presión elevada?</string>
+    <string name="glucosa">¿Te conoces con glucosa elevada?</string>
+    <string name="actividad">¿Realizas alguna actividad física?</string>
+    <string name="peso_actual">Introduce tu peso actual</string>
+    <string name="estatura_actual">Introduce tu estatura actual</string>
+    <string name="estado_animo">Estado de ánimo</string>
+    <string name="continuar">Continuar</string>
+    <string name="kg">kg</string>
+    <string name="m">m</string>
+    <string name="introduce">Responde a las siguientes preguntas</string>
+    <string name="datos_complementarios">Datos complementarios</string>
+    <string name="retos">Retos</string>
+    <string name="eventos">Eventos</string>
+    <string name="politica"><u>Política de privacidad</u></string>
+    <string name="eliminar">Eliminar</string>
+    <string name="selecciona_accion">Selecciona la acción.</string>
+    <string name="no_alarmas">No hay alarmas registradas</string>
+    <string name="mar">M</string>
+    <string name="lun">L</string>
+    <string name="dom">D</string>
+    <string name="sab">S</string>
+    <string name="vie">V</string>
+    <string name="jue">J</string>
+    <string name="mie">M</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="title_activity_video_activacion">Video de activación</string>
+    <string name="empty">No hay eventos registrados.</string>
+    <string name="mensaje_aviso_de_privacidad">Contrato para el consentimiento del titular de sus datos personales en el aplicación móvil de Code.
+
+La Comisión de Deporte del Estado de Guanajuato, se obliga a proteger y hacer un adecuado uso de los datos personales recabados, de conformidad con la Ley de Protección de Datos Personales para el Estado y los Municipios de Guanajuato, el Reglamento de Procedimientos de la Ley de Protección de Datos Personales para el Estado y los Municipios de Guanajuato, en el Poder Ejecutivo, así como la demás normatividad aplicable.
+
+Los datos personales que se resguardan tienen la  finalidad de funcionar como insumos para la gestión de actividades relacionadas con el deporte; dicha información se incorpora a la base de datos de la Comisión de Deporte del Estado de Guanajuato. La Unidad Administrativa responsable del sistema de datos es la Coordinación de Tecnologías de Información adscrita a la Dirección de planeación y desarrollo institucional. Usted podrá ejercer sus derechos de informes, corrección y cancelación de datos personales ante la oficina de la Unidad de Acceso a la Información Pública del Poder Ejecutivo, ubicada en Paseo de la Presa 170, colonia Centro, C.P. 36000 en Guanajuato, Gto.
+
+Se le informa que los datos integrados en este sistema, podrán ser compartidos con las Dependencias y Entidades del Poder Ejecutivo. Sin embargo, Usted puede manifestar su negativa al tratamiento de los datos señalados para la finalidad descrita, marcando en la siguiente casilla: "No acepto".</string>
+
+</resources>

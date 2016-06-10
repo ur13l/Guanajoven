@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/code/ActivateCode/extendedCalendarView/build/intermediates/res/merged/androidTest/debug/layout/day_view.xml",
+        "source": "/home/code/ActivateCode/extendedCalendarView/build/intermediates/bundles/debug/res/layout/day_view.xml"
+    },
+    {
+        "merged": "/home/code/ActivateCode/extendedCalendarView/build/intermediates/res/merged/androidTest/debug/layout/day_of_week.xml",
+        "source": "/home/code/ActivateCode/extendedCalendarView/build/intermediates/bundles/debug/res/layout/day_of_week.xml"
+    }
+]

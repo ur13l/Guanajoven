@@ -1,0 +1,75 @@
+{
+  "project_info": {
+    "project_number": "1098472639116",
+    "firebase_url": "https://activate-code-10e5b.firebaseio.com",
+    "project_id": "activate-code-10e5b",
+    "storage_bucket": "activate-code-10e5b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1098472639116:android:6039d676d52feb84",
+        "android_client_info": {
+          "package_name": "code.guanajuato.gob.mx.activatecode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1098472639116-r6behi94lntffq2h5cmu7i6vgdgnom61.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "code.guanajuato.gob.mx.activatecode",
+            "certificate_hash": "807334DB9C2A8D61BB5FA6A3BF5595FFC274D7F0"
+          }
+        },
+        {
+          "client_id": "1098472639116-m49plt8j7ao1t894776feiqdes7u4fi6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "code.guanajuato.gob.mx.activatecode",
+            "certificate_hash": "3EA6FD3B3C8016EC570473DA13890F25162FA948"
+          }
+        },
+        {
+          "client_id": "1098472639116-6o3cnoetm19vlt1s7bmudi1shuj1auu7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "code.guanajuato.gob.mx.activatecode",
+            "certificate_hash": "06EEDA00852700CA57CADF7A5673733F50CF9533"
+          }
+        },
+        {
+          "client_id": "1098472639116-gt8rgshlavvbqdnpplreu59a5vd5m545.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "1098472639116-or8v6kg3iuh0jtfnqidf32a07lbb6oj8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-TMbKLaVI-R4bEOF1iMJvxj_88iVcmC8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1098472639116-gt8rgshlavvbqdnpplreu59a5vd5m545.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

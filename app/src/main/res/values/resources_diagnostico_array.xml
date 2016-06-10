@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="diagnostico">
+        <item>@drawable/peke_slide</item>
+        <item>@drawable/peke_slide2</item>
+    </array>
+</resources>

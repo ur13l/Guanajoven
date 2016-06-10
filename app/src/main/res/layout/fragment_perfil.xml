@@ -1,0 +1,131 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fb="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+
+    <ImageView
+        android:layout_marginTop="0dp"
+        android:layout_width="wrap_content"
+        android:layout_height="110dp"
+        android:src="@drawable/code"/>
+
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/et_nomcom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:maxLength="50"
+                android:typeface="normal"
+                android:textSize="16dp"
+                android:hint="Nombre Completo" />
+        </android.support.design.widget.TextInputLayout>
+
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_genero"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="Genero"
+        app:ms_hint="Genero"
+        app:ms_multiline="true" />
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_fech"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_fech"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="50"
+            android:typeface="normal"
+            android:textSize="16dp"
+            android:hint="Fecha de nacimiento" />
+    </android.support.design.widget.TextInputLayout>
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_ocupacion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="Genero"
+        app:ms_hint="Ocupación"
+        app:ms_multiline="true" />
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_codpos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="50"
+            android:typeface="normal"
+            android:textSize="16dp"
+            android:hint="Código Postal"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_cel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:maxLength="50"
+            android:typeface="normal"
+            android:textSize="16dp"
+            android:hint="Celular"
+            android:inputType="phone" />
+    </android.support.design.widget.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cb_polipri"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/politica"
+            android:id="@+id/tv_polipri"
+            android:textColor="@color/colorPrimary" />
+
+    </LinearLayout>
+
+    <Button
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:background="@drawable/green_button"
+            android:textColor="@color/common_google_signin_btn_text_dark"
+            android:id="@+id/btn_actudat"
+            android:text="Actualizar Datos">
+        </Button>
+
+
+</LinearLayout>
