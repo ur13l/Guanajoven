@@ -505,6 +505,7 @@ public class HomeFragment extends CustomFragment {
             HashMap<String, String> params = new HashMap<>();
             params.put("Token", token);
             params.put("id_login_app", session.getId()+"");
+            params.put("os", "1"); //1 Representa Android
             clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/notificaciones/registrar.php",
                     params);
 
