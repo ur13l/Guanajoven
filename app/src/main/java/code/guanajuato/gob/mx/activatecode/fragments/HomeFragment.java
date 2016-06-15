@@ -191,8 +191,10 @@ public class HomeFragment extends CustomFragment {
         titleEvent = (TextView) v.findViewById(R.id.title_event);
 
         //Función para activar las alarmas de Descargar videos.
-        //DEBE MODIFICARSE PARA QUE NO LO REGISTRE SIEMPRE.
-        RetrieveVideosBroadcastReceiver.registerAlarm(getActivity());
+        if(!prefs.getBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, false)){
+            RetrieveVideosBroadcastReceiver.registerAlarm(getActivity());
+            prefs.edit().putBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, true);
+        }
 
         calendar.setGesture(1);
         //Evento para que se asigne algo al calendario.

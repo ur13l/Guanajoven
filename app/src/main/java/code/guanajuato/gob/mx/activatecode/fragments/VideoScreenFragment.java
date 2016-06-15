@@ -23,7 +23,7 @@ public class VideoScreenFragment extends Fragment {
         MediaController mc= new MediaController(getActivity());
 
         VideoView view = (VideoView)v.findViewById(R.id.video_view);
-        String path = "android.resource://" + getActivity().getPackageName() + "/" + R.raw.prueba;
+        String path = getActivity().getExternalCacheDir().toString()+"/video.mp4";
         view.setVideoURI(Uri.parse(path));
         view.setMediaController(mc);
 

@@ -8,13 +8,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
+
+import com.thin.downloadmanager.DefaultRetryPolicy;
+import com.thin.downloadmanager.DownloadRequest;
+import com.thin.downloadmanager.DownloadStatusListener;
+import com.thin.downloadmanager.DownloadStatusListenerV1;
+import com.thin.downloadmanager.ThinDownloadManager;
 
 import java.util.Calendar;
+
+import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
 
 /**
  * Created by Uriel on 20/03/2016.
  */
 public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
+    public static final String REGISTERED_ALARM = "retrieve_video_broadcast_receive_checked";
 
     /**
      * Función registerAlarm(Context paramContext)
@@ -51,7 +61,9 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
      */
     @Override
     public void onReceive(Context context, Intent intent) {
-        String url = "http://i.4cdn.org/b/1458512222085.webm";
+        String url = "http://"+ ClienteHttp.SERVER_IP+"/code_web/res/video/video.mp4";
+
+        /*
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setDescription("Video");
         request.setTitle("Video");
@@ -61,5 +73,31 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
 
         DownloadManager manager = (DownloadManager) context.getSystemService(Context.DOWNLOAD_SERVICE);
         manager.enqueue(request);
+        */
+        Uri downloadUri = Uri.parse(url);
+        Uri destinationUri = Uri.parse(context.getExternalCacheDir().toString()+"/video.mp4");
+        DownloadRequest downloadRequest = new DownloadRequest(downloadUri)
+                .setRetryPolicy(new DefaultRetryPolicy())
+                .setDestinationURI(destinationUri).setPriority(DownloadRequest.Priority.HIGH)
+                .setStatusListener(new DownloadStatusListenerV1() {
+                    @Override
+                    public void onDownloadComplete(DownloadRequest downloadRequest) {
+                        Log.d("Descarga", "Completada");
+                    }
+
+                    @Override
+                    public void onDownloadFailed(DownloadRequest downloadRequest, int errorCode, String errorMessage) {
+                        Log.d("Descarga", errorCode + " : " + errorMessage);
+
+                    }
+
+                    @Override
+                    public void onProgress(DownloadRequest downloadRequest, long totalBytes, long downloadedBytes, int progress) {
+
+
+                    }
+                });
+        ThinDownloadManager downloadManager = new ThinDownloadManager();
+        downloadManager.add(downloadRequest);
     }
 }
