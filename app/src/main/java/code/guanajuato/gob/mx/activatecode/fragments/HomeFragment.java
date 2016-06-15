@@ -42,9 +42,11 @@ import com.tyczj.extendedcalendarview.ExtendedCalendarView;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -464,7 +466,9 @@ public class HomeFragment extends CustomFragment {
     private class ObternerAsyncTask extends AsyncTask<Integer, Void, String>{
         @Override
         protected String doInBackground(Integer... args) {
-            String fecha;;
+            Date nac = null;
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat sdg = new SimpleDateFormat("yyyy-MM-dd");
 
             String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/registro/obtenerPerfil.php";
             ClienteHttp cliente = new ClienteHttp();
@@ -478,15 +482,14 @@ public class HomeFragment extends CustomFragment {
             perfil.setNombreCompleto(perfilpo.getNombre());
             perfil.setGenero(perfilpo.getId_genero());
             String fechaBaseDatos = perfilpo.getFec_nacimiento();
-            /**
-            if("0".equals(fechaBaseDatos.charAt(8)) ){ fecha = fechaBaseDatos.charAt(9) + "/"; }
-            else fecha = fechaBaseDatos.charAt(9) + "/";
-            if("0".equals(fechaBaseDatos.charAt(5)) ){ fecha += fechaBaseDatos.charAt(6) + "/";}
-            else fecha += fechaBaseDatos.charAt(6) + "/";
-            fecha += fechaBaseDatos.charAt(0) + "" + fechaBaseDatos.charAt(1) + "";
-            fecha += fechaBaseDatos.charAt(2) + "" + fechaBaseDatos.charAt(3);
-            perfil.setFecha(fecha);
-             */
+
+            try {
+                nac = sdg.parse(fechaBaseDatos);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            perfil.setFecha(sdf.format(nac));
             perfil.setOcupacion(perfilpo.getId_ocupacion());
             perfil.setCodigo_postal(perfilpo.getCodigo_postal());
             perfil.setTelefono(perfilpo.getTelefono());
