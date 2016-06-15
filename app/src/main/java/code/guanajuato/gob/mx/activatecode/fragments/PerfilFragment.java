@@ -1,34 +1,44 @@
 package code.guanajuato.gob.mx.activatecode.fragments;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
+
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
-import code.guanajuato.gob.mx.activatecode.R;
+import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
+import fr.ganfra.materialspinner.MaterialSpinner;
+import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.Perfil;
 import code.guanajuato.gob.mx.activatecode.utilities.EditTextValidations;
 import code.guanajuato.gob.mx.activatecode.utilities.OKDialog;
-import fr.ganfra.materialspinner.MaterialSpinner;
 
 public class PerfilFragment extends CustomFragment implements  View.OnClickListener, DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener {
     private EditText nomcomET;
@@ -38,8 +48,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     private String fecha;
     private MaterialSpinner ocupacionS;
     private String[] arrayOcupacion = {"Ama de casa","Empleado","Emprendedor","Empresario",
-                                       "Profesionista","Comerciante","Estudiante",
-                                       "Servidor Público"};
+            "Profesionista","Comerciante","Estudiante",
+            "Servidor Público"};
     private EditText codposET;
     private EditText celET;
     private TextView polipriTV;
@@ -97,6 +107,25 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         return v;
     }
 
+    public void continuar(){
+        //Verifica que los campos no estén vacíos
+        boolean fechaEmpty = EditTextValidations.esCampoVacio(fechET);
+        boolean codigoEmpy = EditTextValidations.spinnerSinSeleccion(generoS);
+        boolean fechafalse = false;
+        boolean codigofalse = false;
+
+        //Si ninguno de los campos es vacío
+        if(!fechaEmpty && !codigoEmpy){
+            fechafalse = true;
+            codigofalse = true;
+        }
+
+        //Si todas las validaciones se cumplen, se genera el nuevo fragment.
+        if(fechafalse && codigofalse) {
+            registrar();
+        }
+    }
+
     @Override
     public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
         int aux;
@@ -132,7 +161,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
                         actdatB.setEnabled(true);
                     } else actdatB.setEnabled(false);
                 }catch (Exception e) {
-                    System.out.println("trono este pedo");
+                    System.out.println("Error al hacer check en politica de privacidad");
                 }
 
                 break;
@@ -151,7 +180,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
                             ((TextInputLayout) celET.getParent()).setError("10 digitos");
                         } else ((TextInputLayout) celET.getParent()).setErrorEnabled(false);
                     }
-                    registrar();
+                    continuar();
                 } catch (Exception  e) {OKDialog.showOKDialog(getActivity(), "Error al actualizar información de usuario", "Su solicitud no pudo ser completada"); }
                 break;
         }
@@ -176,28 +205,29 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
+        //dpd.setMaxDate(System.currentTimeMillis());
         dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
     }
 
     //Método para proceder al registro.
     public void registrar(){
 
-            String generoStr = (generoS.getSelectedItemPosition()) +"";
+        String generoStr = (generoS.getSelectedItemPosition()) +"";
         if(generoS.getSelectedItemPosition() == 0) generoStr = null;
-            String ocupacionStr = (ocupacionS.getSelectedItemPosition()) +"";
+        String ocupacionStr = (ocupacionS.getSelectedItemPosition()) +"";
         if(ocupacionS.getSelectedItemPosition() == 0) ocupacionStr = null;
 
-            Login log = new Login(getActivity().getApplicationContext());
+        Login log = new Login(getActivity().getApplicationContext());
 
-            params = new HashMap<>();
-            params.put("id_login_app", ""+ log.getId());
-            params.put("nombre", "" + nomcomET.getText().toString());
-            params.put("genero", "" + generoStr);
-            params.put("fec_nacimiento", "" + fecha);
-            params.put("ocupacion", ocupacionStr);
-            params.put("codigo_postal", codposET.getText().toString());
-            params.put("telefono", celET.getText().toString());
-            new RegistrarAsyncTask().execute(params);
+        params = new HashMap<>();
+        params.put("id_login_app", ""+ log.getId());
+        params.put("nombre", "" + nomcomET.getText().toString());
+        params.put("genero", "" + generoStr);
+        params.put("fec_nacimiento", "" + fecha);
+        params.put("ocupacion", ocupacionStr);
+        params.put("codigo_postal", codposET.getText().toString());
+        params.put("telefono", celET.getText().toString());
+        new RegistrarAsyncTask().execute(params);
 
         // boolean presionEmpty = EditTextValidations.
     }
@@ -296,4 +326,3 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         }
     }
 }
-
