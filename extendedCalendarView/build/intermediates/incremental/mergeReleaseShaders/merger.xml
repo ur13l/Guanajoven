@@ -1,2 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="/home/code/ActivateCODE/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/home/code/ActivateCODE/extendedCalendarView/src/release/shaders"/></dataSet></merger>
+=======
+<<<<<<< HEAD
+<merger version="3"><dataSet config="main"><source path="/home/ichema/Documents/ActivateCODE/ActivateCODE/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/home/ichema/Documents/ActivateCODE/ActivateCODE/extendedCalendarView/src/release/shaders"/></dataSet></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="/home/uriel/ActivateCode/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/home/uriel/ActivateCode/extendedCalendarView/src/release/shaders"/></dataSet></merger>
+>>>>>>> 45e3134b93ed179da3754d8c7b85f8a0e1b08527
+>>>>>>> c4debff68b0b6e98f21d9a6413489964672b3179

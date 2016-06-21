@@ -1,6 +1,7 @@
 package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.content.DialogInterface;
+import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,8 +27,11 @@ import android.widget.Toast;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -56,6 +60,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     private CheckBox polipriCB;
     private Button actdatB;
     private Calendar calendar;
+    private String fechapojo;
+    private boolean calen = false;
 
     private ProgressDialog progressDialog;
     private HashMap<String, String> params;
@@ -99,7 +105,19 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         Perfil perfil = new Perfil(getActivity().getApplicationContext());
         nomcomET.setText(perfil.getNombreCompleto());
         generoS.setSelection(perfil.getGenero());
-        fechET.setText(perfil.getFecha());
+        fechapojo = perfil.getFecha();
+
+        Date nac = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdg = new SimpleDateFormat("yyyy-MM-dd");
+
+        try {
+            nac = sdg.parse(perfil.getFecha());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        fechET.setText(sdf.format(nac));
         ocupacionS.setSelection(perfil.getOcupacion());
         codposET.setText(perfil.getCodigo_postal()+"");
         celET.setText(perfil.getTelefono());
@@ -113,6 +131,21 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         boolean codigoEmpy = EditTextValidations.spinnerSinSeleccion(generoS);
         boolean fechafalse = false;
         boolean codigofalse = false;
+
+
+        if (codposET.getText().toString().length() != 0) {
+            if (codposET.getText().toString().length() != 5) {
+                ((TextInputLayout) codposET.getParent()).setErrorEnabled(true);
+                ((TextInputLayout) codposET.getParent()).setError("5 digitos");
+            } else ((TextInputLayout) codposET.getParent()).setErrorEnabled(false);
+        }
+
+        if (celET.getText().toString().length() != 0) {
+            if (celET.getText().toString().length() < 10) {
+                ((TextInputLayout) celET.getParent()).setErrorEnabled(true);
+                ((TextInputLayout) celET.getParent()).setError("10 digitos");
+            } else ((TextInputLayout) celET.getParent()).setErrorEnabled(false);
+        }
 
         //Si ninguno de los campos es vacío
         if(!fechaEmpty && !codigoEmpy){
@@ -142,6 +175,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         } else fecha += "-" + dayOfMonth;
         String date = ""+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
         fechET.setText(date);
+        calen=true;
     }
 
     @Override
@@ -168,18 +202,6 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
             case R.id.btn_actudat:
                 try {
-                    if (codposET.getText().toString().length() != 0) {
-                        if (codposET.getText().toString().length() != 5) {
-                            ((TextInputLayout) codposET.getParent()).setErrorEnabled(true);
-                            ((TextInputLayout) codposET.getParent()).setError("5 digitos");
-                        } else ((TextInputLayout) codposET.getParent()).setErrorEnabled(false);
-                    }
-                    if (celET.getText().toString().length() != 0) {
-                        if (celET.getText().toString().length() < 10) {
-                            ((TextInputLayout) celET.getParent()).setErrorEnabled(true);
-                            ((TextInputLayout) celET.getParent()).setError("10 digitos");
-                        } else ((TextInputLayout) celET.getParent()).setErrorEnabled(false);
-                    }
                     continuar();
                 } catch (Exception  e) {OKDialog.showOKDialog(getActivity(), "Error al actualizar información de usuario", "Su solicitud no pudo ser completada"); }
                 break;
@@ -205,13 +227,11 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
-        //dpd.setMaxDate(System.currentTimeMillis());
         dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
     }
 
     //Método para proceder al registro.
     public void registrar(){
-
         String generoStr = (generoS.getSelectedItemPosition()) +"";
         if(generoS.getSelectedItemPosition() == 0) generoStr = null;
         String ocupacionStr = (ocupacionS.getSelectedItemPosition()) +"";
@@ -223,7 +243,10 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         params.put("id_login_app", ""+ log.getId());
         params.put("nombre", "" + nomcomET.getText().toString());
         params.put("genero", "" + generoStr);
-        params.put("fec_nacimiento", "" + fecha);
+        if (calen == true) {
+            params.put("fec_nacimiento", "" + fecha);
+        } else
+            params.put("fec_nacimiento", "" + fechapojo);
         params.put("ocupacion", ocupacionStr);
         params.put("codigo_postal", codposET.getText().toString());
         params.put("telefono", celET.getText().toString());
@@ -315,14 +338,9 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
                 if(result.equals("success")) {
                     Snackbar.make(getActivity().findViewById(R.id.segunda_fragment_container), "Datos actualizados con exito", Snackbar.LENGTH_LONG).show();
                 }
-
-
             } else {
                 OKDialog.showOKDialog(getActivity(), "Error al actualizar información de usuario", "Hubo un problema con la red. Revise su conexión a Internet");
             }
-
-
-
         }
     }
 }
