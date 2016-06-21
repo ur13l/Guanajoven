@@ -466,10 +466,6 @@ public class HomeFragment extends CustomFragment {
     private class ObternerAsyncTask extends AsyncTask<Integer, Void, String>{
         @Override
         protected String doInBackground(Integer... args) {
-            Date nac = null;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            SimpleDateFormat sdg = new SimpleDateFormat("yyyy-MM-dd");
-
             String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/registro/obtenerPerfil.php";
             ClienteHttp cliente = new ClienteHttp();
             HashMap<String,String> param = new HashMap<>();
@@ -482,14 +478,7 @@ public class HomeFragment extends CustomFragment {
             perfil.setNombreCompleto(perfilpo.getNombre());
             perfil.setGenero(perfilpo.getId_genero());
             String fechaBaseDatos = perfilpo.getFec_nacimiento();
-
-            try {
-                nac = sdg.parse(fechaBaseDatos);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
-            perfil.setFecha(sdf.format(nac));
+            perfil.setFecha(fechaBaseDatos);
             perfil.setOcupacion(perfilpo.getId_ocupacion());
             perfil.setCodigo_postal(perfilpo.getCodigo_postal());
             perfil.setTelefono(perfilpo.getTelefono());
