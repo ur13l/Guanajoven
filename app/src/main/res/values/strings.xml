@@ -217,5 +217,7 @@ Los datos personales que se resguardan tienen la  finalidad de funcionar como in
 
 Se le informa que los datos integrados en este sistema, podrán ser compartidos con las Dependencias y Entidades del Poder Ejecutivo. Sin embargo, Usted puede manifestar su negativa al tratamiento de los datos señalados para la finalidad descrita, marcando en la siguiente casilla: "No acepto".</string>
     <string name="detener">Detener</string>
+    <string name="ejercicio30">Ejercicio (30 mins.)</string>
+    <string name="agua2">Agua (2L.)</string>
 
 </resources>

@@ -1,18 +1,20 @@
 package code.guanajuato.gob.mx.activatecode.model;
 
+import java.sql.Date;
+
 /**
  * Created by code on 21/06/16.
  */
 public class StatusReporte {
-    private String fecha;
+    private Date fecha;
     private boolean ejercicio;
     private boolean agua;
 
-    public String getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(String fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

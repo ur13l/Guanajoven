@@ -87,37 +87,31 @@ public class BitacoraDBHelper extends LocalDatabaseHelper{
     }
 
     /**
-     * Método que devuelve la lista de alarmas de agua de un Peke.
-     * @param id_user
+     * Devuelve la lista con el estatus de datos de la bitácora del usuario.
+     * @param id_login_app
      * @return
      */
-    public ArrayList<StatusReporte> getStatusReporte(int id_user){
+    public ArrayList<StatusReporte> getStatusReporte(int id_login_app) throws ParseException {
 
             SQLiteDatabase db = SQLiteDatabase.openDatabase(pathToSaveDBFile, null, SQLiteDatabase.OPEN_READONLY);
-            ArrayList<Alarma> lista = new ArrayList<>();
-            Cursor cursor = db.query(TABLA_ALARMAS, null, "id_login_app = '" + id_login_app +"'", null, null, null, "id");
+            ArrayList<StatusReporte> lista = new ArrayList<>();
+            Cursor cursor = db.query(TABLA_BITACORA, null, "id_user = '" + id_login_app +"'", null, null, null, "fecha DESC");
 
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                Alarma aa = new Alarma();
-                aa.setId(cursor.getInt(0));
-                aa.setIdLoginApp(cursor.getInt(1));
-                aa.setHora(cursor.getString(2));
-                aa.setLunes(cursor.getInt(3) > 0);
-                aa.setMartes(cursor.getInt(4) > 0);
-                aa.setMiercoles(cursor.getInt(5) > 0);
-                aa.setJueves(cursor.getInt(6) > 0);
-                aa.setViernes(cursor.getInt(7) > 0);
-                aa.setSabado(cursor.getInt(8) > 0);
-                aa.setDomingo(cursor.getInt(9) > 0);
-                aa.setActivo(cursor.getInt(10)>0);
-                lista.add(aa);
+                StatusReporte sR = new StatusReporte();
+                String startDate = cursor.getString(2);
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+                Date date = sdf1.parse(startDate);
+                java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+                sR.setFecha(sqlDate);
+                sR.setEjercicio(cursor.getFloat(3) >= 30);
+                sR.setAgua(cursor.getFloat(5) >= 2000);
+                lista.add(sR);
                 cursor.moveToNext();
             }
             db.close();
             return lista;
         }
-    }
-
 
 }
