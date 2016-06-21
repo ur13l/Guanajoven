@@ -8,9 +8,12 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
+import code.guanajuato.gob.mx.activatecode.model.Alarma;
 import code.guanajuato.gob.mx.activatecode.model.Bitacora;
+import code.guanajuato.gob.mx.activatecode.model.StatusReporte;
 
 /**
  * Autor: Uriel Infante
@@ -81,6 +84,39 @@ public class BitacoraDBHelper extends LocalDatabaseHelper{
         values.put("registro_agua", bitacora.getRegistrAgua());
         db.insert(TABLA_BITACORA, null, values);
         db.close();
+    }
+
+    /**
+     * Método que devuelve la lista de alarmas de agua de un Peke.
+     * @param id_user
+     * @return
+     */
+    public ArrayList<StatusReporte> getStatusReporte(int id_user){
+
+            SQLiteDatabase db = SQLiteDatabase.openDatabase(pathToSaveDBFile, null, SQLiteDatabase.OPEN_READONLY);
+            ArrayList<Alarma> lista = new ArrayList<>();
+            Cursor cursor = db.query(TABLA_ALARMAS, null, "id_login_app = '" + id_login_app +"'", null, null, null, "id");
+
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                Alarma aa = new Alarma();
+                aa.setId(cursor.getInt(0));
+                aa.setIdLoginApp(cursor.getInt(1));
+                aa.setHora(cursor.getString(2));
+                aa.setLunes(cursor.getInt(3) > 0);
+                aa.setMartes(cursor.getInt(4) > 0);
+                aa.setMiercoles(cursor.getInt(5) > 0);
+                aa.setJueves(cursor.getInt(6) > 0);
+                aa.setViernes(cursor.getInt(7) > 0);
+                aa.setSabado(cursor.getInt(8) > 0);
+                aa.setDomingo(cursor.getInt(9) > 0);
+                aa.setActivo(cursor.getInt(10)>0);
+                lista.add(aa);
+                cursor.moveToNext();
+            }
+            db.close();
+            return lista;
+        }
     }
 
 
