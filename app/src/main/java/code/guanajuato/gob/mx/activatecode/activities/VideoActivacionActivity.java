@@ -1,6 +1,7 @@
 package code.guanajuato.gob.mx.activatecode.activities;
 
 import android.app.KeyguardManager;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +23,7 @@ public class VideoActivacionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_activacion);
+
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         VideoScreenFragment f = new VideoScreenFragment();
