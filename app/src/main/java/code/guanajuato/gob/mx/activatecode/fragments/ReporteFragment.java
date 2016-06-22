@@ -3,6 +3,7 @@ package code.guanajuato.gob.mx.activatecode.fragments;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -15,6 +16,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import code.guanajuato.gob.mx.activatecode.R;
+import code.guanajuato.gob.mx.activatecode.adapters.RVReporteAdapter;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.StatusReporte;
 import code.guanajuato.gob.mx.activatecode.persistencia.BitacoraDBHelper;
@@ -27,10 +29,14 @@ public class ReporteFragment extends CustomFragment {
     private ArrayList<StatusReporte> lista;
     private View rootView;
     private RecyclerView rvReporte;
+    private RVReporteAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_reportes, parent, false);
-        rootView = v;
+        rvReporte = (RecyclerView) v.findViewById(R.id.rv_reporte);
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        rvReporte.setLayoutManager(llm);
+
         bitacoraDBHelper = new BitacoraDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
 
         try {
@@ -45,6 +51,8 @@ public class ReporteFragment extends CustomFragment {
             e.printStackTrace();
         }
 
+        adapter = new RVReporteAdapter(lista);
+        rvReporte.setAdapter(adapter);
         for(int i = 0 ; i != lista.size(); i++){
             Log.d("REPORTE", lista.get(i).getFecha().toString() + " | " + lista.get(i).isAgua() + " | " + lista.get(i).isEjercicio());
         }

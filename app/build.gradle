@@ -36,6 +36,7 @@ dependencies {
     compile 'com.bowyer.app:fab-toolbar:1.1.0@aar'
     compile 'com.google.code.gson:gson:2.2.2'
     compile 'com.google.android.gms:play-services-auth:9.0.2'
+    compile 'com.google.android.gms:play-services:9.0.2'
     compile 'com.facebook.android:facebook-android-sdk:4.0.1'
     compile 'com.github.ganfra:material-spinner:1.1.1'
     compile 'de.hdodenhof:circleimageview:2.0.0'

@@ -25,7 +25,7 @@ public class RVReporteAdapter extends RecyclerView.Adapter<RVReporteAdapter.Repo
 
     @Override
     public ReporteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_evento, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_reporte, parent, false);
         ReporteViewHolder pvh = new ReporteViewHolder(v);
         return pvh;
     }
