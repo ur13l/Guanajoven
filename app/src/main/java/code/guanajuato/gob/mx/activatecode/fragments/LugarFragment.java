@@ -2,9 +2,13 @@ package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +27,11 @@ import code.guanajuato.gob.mx.activatecode.model.Lugar;
  */
 public class LugarFragment extends Fragment implements OnMapReadyCallback{
     private Lugar lugar;
+    private TextView nombreTV;
+    private TextView direccionTV;
+    private TextView telefonoTV;
+    private TextView emailTV;
+    private TextView adminTV;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
@@ -30,6 +39,12 @@ public class LugarFragment extends Fragment implements OnMapReadyCallback{
         MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        nombreTV = (TextView) v.findViewById(R.id.tv_nombre);
+        direccionTV = (TextView) v.findViewById(R.id.tv_direccion);
+        telefonoTV = (TextView) v.findViewById(R.id.tv_telefono);
+        emailTV = (TextView) v.findViewById(R.id.tv_email);
+        adminTV = (TextView) v.findViewById(R.id.tv_admin);
 
         return v;
     }
@@ -45,6 +60,15 @@ public class LugarFragment extends Fragment implements OnMapReadyCallback{
         CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(14.0f).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         map.moveCamera(cameraUpdate);
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(lugar.getNombre());
+
+        nombreTV.setText(lugar.getNombre());
+        direccionTV.setText(lugar.getDireccion() + ", "+ lugar.getColonia() +", " + lugar.getCp() + ", "
+            + lugar.getMunicipio());
+        emailTV.setText(lugar.getEmail());
+        telefonoTV.setText(lugar.getTelefono());
+        adminTV.setText(lugar.getAdministrador());
     }
 
 
@@ -83,5 +107,14 @@ public class LugarFragment extends Fragment implements OnMapReadyCallback{
         lugar.setLatitud(args.getFloat("latitud"));
         lugar.setLongitud(args.getFloat("longitud"));
         return lugar;
+    }
+
+    @Override
+    public void onDestroyView(){
+        super.onDestroyView();
+        android.app.Fragment fragment = (getActivity().getFragmentManager().findFragmentById(R.id.map));
+        android.app.FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
+        ft.remove(fragment);
+        ft.commit();
     }
 }
