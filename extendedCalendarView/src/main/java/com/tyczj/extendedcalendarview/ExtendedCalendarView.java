@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -44,7 +43,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
 	
 	public interface OnDayClickListener{
-		public void onDayClicked(AdapterView<?> adapter, View view, int position, long id, Day day);
+		public void onDayClicked(Day day);
 	}
 
 
@@ -172,7 +171,7 @@ public class ExtendedCalendarView extends RelativeLayout implements OnItemClickL
 			lastItem = arg2;
 			Day d = (Day) mAdapter.getItem(arg2);
 			if(d.getDay() != 0){
-				dayListener.onDayClicked(arg0, arg1, arg2, arg3,d);
+				dayListener.onDayClicked(d);
 			}
 		}
 	}

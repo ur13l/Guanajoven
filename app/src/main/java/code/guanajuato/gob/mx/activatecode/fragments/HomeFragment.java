@@ -18,7 +18,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -42,11 +41,9 @@ import com.tyczj.extendedcalendarview.ExtendedCalendarView;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -202,7 +199,7 @@ public class HomeFragment extends CustomFragment {
         //Evento para que se asigne algo al calendario.
         calendar.setOnDayClickListener(new ExtendedCalendarView.OnDayClickListener() {
            @Override
-           public void onDayClicked(AdapterView<?> adapter, View view, int position, long id, Day day) {
+           public void onDayClicked(Day day) {
                ArrayList<Event> events = day.getEvents();
                Calendar fecha = Calendar.getInstance();
                fecha.set(Calendar.MONTH, day.getMonth());
