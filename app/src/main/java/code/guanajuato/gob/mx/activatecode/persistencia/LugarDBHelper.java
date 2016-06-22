@@ -20,11 +20,9 @@ public class LugarDBHelper extends LocalDatabaseHelper {
     }
 
     /**
-     * Método que devuelve la lista de alarmas de agua de un Peke.
-     * @param id_login_app
      * @return
      */
-    public ArrayList<Lugar> getLugares(int id_login_app){
+    public ArrayList<Lugar> getLugares(){
         SQLiteDatabase db = SQLiteDatabase.openDatabase(pathToSaveDBFile, null, SQLiteDatabase.OPEN_READONLY);
         ArrayList<Lugar> lista = new ArrayList<>();
         Cursor cursor = db.query(TABLA_LUGAR, null, null, null, null, null, "nombre");
@@ -42,7 +40,7 @@ public class LugarDBHelper extends LocalDatabaseHelper {
             aa.setAdministrador(cursor.getString(7));
             aa.setTelefono(cursor.getString(8));
             aa.setEmail(cursor.getString(9));
-            aa.setLatitud(cursor.getInt(10));
+            aa.setLatitud(cursor.getFloat(10));
             aa.setLongitud(cursor.getFloat(11));
             lista.add(aa);
             cursor.moveToNext();
