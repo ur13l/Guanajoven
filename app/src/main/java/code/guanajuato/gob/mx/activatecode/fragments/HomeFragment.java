@@ -321,7 +321,7 @@ public class HomeFragment extends CustomFragment {
 
         if(!prefs.getBoolean(DATOS_PERFIL, false)){
             new ObternerAsyncTask().execute(session.getId());
-            prefs.edit().putBoolean(DATOS_PERFIL,true);
+            prefs.edit().putBoolean(DATOS_PERFIL,true).commit();
         }
 
 
@@ -474,15 +474,17 @@ public class HomeFragment extends CustomFragment {
             Log.d("RESULT", result);
             Gson gson = new Gson();
             PerfilPOJO perfilpo = gson.fromJson(result, PerfilPOJO.class);
-            Perfil perfil = new Perfil(getActivity().getApplicationContext());
-            perfil.setNombreCompleto(perfilpo.getNombre());
-            perfil.setGenero(perfilpo.getId_genero());
-            String fechaBaseDatos = perfilpo.getFec_nacimiento();
-            perfil.setFecha(fechaBaseDatos);
-            perfil.setOcupacion(perfilpo.getId_ocupacion());
-            perfil.setCodigo_postal(perfilpo.getCodigo_postal());
-            perfil.setTelefono(perfilpo.getTelefono());
-            perfil.setSuccess(perfilpo.getSuccess());
+            if(perfilpo != null) {
+                Perfil perfil = new Perfil(getActivity().getApplicationContext());
+                perfil.setNombreCompleto(perfilpo.getNombre());
+                perfil.setGenero(perfilpo.getId_genero());
+                String fechaBaseDatos = perfilpo.getFec_nacimiento();
+                perfil.setFecha(fechaBaseDatos);
+                perfil.setOcupacion(perfilpo.getId_ocupacion());
+                perfil.setCodigo_postal(perfilpo.getCodigo_postal());
+                perfil.setTelefono(perfilpo.getTelefono());
+                perfil.setSuccess(perfilpo.getSuccess());
+            }
             Log.d("result",result);
             return result;
         }
