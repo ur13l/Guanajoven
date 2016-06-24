@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -156,10 +160,11 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
                 .requestEmail()
                 .build();
 
-        googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
-                .build();
+        if(googleApiClient == null)
+            googleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .enableAutoManage(getActivity(), this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                    .build();
 
 
         //Inicialización del SDK de Facebook, llamada al callback y definición del TokenTrackerb y ProfileTracker.
@@ -247,9 +252,12 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
         return v;
     }
 
+
+
     @Override
     public void onStart() {
         super.onStart();
+        signOut();
         logOutFacebook();
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
@@ -304,7 +312,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode != Activity.RESULT_OK) {
-                loginGooglePd.dismiss();
+                if(loginGooglePd != null)
+                    loginGooglePd.dismiss();
 
             }
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -327,7 +336,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             new LoginGoogleAsyncTask().execute(acct.getEmail());
-            loginGooglePd.dismiss();
+            if(loginGooglePd != null)
+                loginGooglePd.dismiss();
         } else {
             // Signed out, show unauthenticated UI.
         }
@@ -336,6 +346,9 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
     @Override
     public void onStop() {
         super.onStop();
+
+        googleApiClient.stopAutoManage(getActivity());
+        googleApiClient.disconnect();
         if (loginSimplePd != null) {
             loginSimplePd.dismiss();
             loginSimplePd = null;
@@ -401,6 +414,16 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
         }
     }
 
+
+    private void signOut() {
+        if(googleApiClient.isConnected())
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                    }
+                });
+    }
 
     /**
      * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión simple

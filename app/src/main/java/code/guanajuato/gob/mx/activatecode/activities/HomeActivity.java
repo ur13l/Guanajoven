@@ -3,6 +3,8 @@ package code.guanajuato.gob.mx.activatecode.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.fragments.HomeFragment;
 import code.guanajuato.gob.mx.activatecode.model.Login;
@@ -27,11 +32,13 @@ import code.guanajuato.gob.mx.activatecode.model.Login;
  * Fecha: 02/05/2016
  */
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static String MENU_ID = "menu_id";
 
     public int last_menu_id;
+
+    private GoogleApiClient mGoogleApiClient;
 
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -42,7 +49,9 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).build();
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -146,5 +155,20 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public ActionBarDrawerToggle getActionBarDrawerToggle() { return toggle; }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 //hi
 }
