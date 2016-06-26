@@ -17,6 +17,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +26,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -72,7 +75,7 @@ import code.guanajuato.gob.mx.activatecode.utilities.ValidEmail;
  * tener la opción de registro.
  * Fecha: 02/05/2016
  */
-public class LoginFragment extends CustomFragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, View.OnClickListener {
+public class LoginFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, View.OnClickListener {
 
 
     //Constantes
@@ -82,6 +85,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
 
     private boolean email, pass;
 
+
+    private Toolbar toolbar;
     //Elementos para el login con Google
     private GoogleSignInOptions googleSignInOptions;
     private GoogleApiClient googleApiClient;
@@ -203,6 +208,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
+        toolbar = (Toolbar)getActivity().findViewById(R.id.toolbarlogin);
+
         //Instancia y listener del botón de Google.
         googleSignInButton = (AppCompatButton) v.findViewById(R.id.googlebtn);
         googleSignInButton.setOnClickListener(this);
@@ -259,8 +266,6 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
         super.onStart();
         signOut();
         logOutFacebook();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
     }
 
 
@@ -268,6 +273,10 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         fbButton = (LoginButton) view.findViewById(R.id.btn_facebook);
+
+        fbButton.setLayoutParams(new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                200));
 
         fbButton.setBackgroundResource(R.drawable.facebook_button);
         fbButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_logo, 0, 0, 0);
@@ -344,8 +353,15 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        toolbar.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
+        toolbar.setVisibility(View.VISIBLE);
 
         googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();

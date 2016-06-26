@@ -281,6 +281,7 @@ public class HomeFragment extends CustomFragment {
 
     @Override
     public void onStop(){
+
         super.onStop();
         stopCambioPublicidadTask();
     }

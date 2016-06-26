@@ -18,8 +18,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
 
 import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.fragments.HomeFragment;
@@ -49,7 +52,14 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+
         mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).build();
 
@@ -132,6 +142,9 @@ public class HomeActivity extends AppCompatActivity
                 Login login = new Login(this.getApplicationContext());
                 Log.d("FACEBOOK", login.getFacebook()+"");
                 login.borrarLogin();
+                if(mGoogleApiClient.isConnected()){
+                   Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                }
                 intent = new Intent(this, LogueoActivity.class);
                 startActivity(intent);
                 break;
@@ -170,5 +183,18 @@ public class HomeActivity extends AppCompatActivity
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
     }
-//hi
+
+    @Override
+    protected  void onStart(){
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if(mGoogleApiClient.isConnected()){
+            mGoogleApiClient.disconnect();
+        }
+    }
 }

@@ -20,21 +20,19 @@ import code.guanajuato.gob.mx.activatecode.fragments.LoginFragment;
 public class LogueoActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logueo);
-
-        toolbar = (Toolbar) findViewById(R.id.toolbarlogin);
+        toolbar = (Toolbar)findViewById(R.id.toolbarlogin);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setElevation(0);
-
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment fragment = null;
         try {
-            fragment = LoginFragment.newInstance(0,  R.string.login, LoginFragment.class);
+            fragment = new LoginFragment();
             ft.replace(R.id.login_fragment_container, fragment, "fragment_login");
             ft.commit();
         }catch(Exception e){
