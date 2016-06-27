@@ -259,12 +259,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         return v;
     }
 
-
-
     @Override
     public void onStart() {
         super.onStart();
-        signOut();
+
         logOutFacebook();
     }
 
@@ -274,14 +272,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         super.onViewCreated(view, savedInstanceState);
         fbButton = (LoginButton) view.findViewById(R.id.btn_facebook);
 
-        fbButton.setLayoutParams(new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                200));
-
         fbButton.setBackgroundResource(R.drawable.facebook_button);
         fbButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_logo, 0, 0, 0);
 
         fbButton.setPadding(30, 30, 30, 30);
+        googleSignInButton.setPadding(28, 28, 28, 28);
 
         //loginButton.setReadPermissions("user_friends");
         fbButton.setReadPermissions(Arrays.asList("public_profile", "email"));
@@ -355,6 +350,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     @Override
     public void onResume(){
         super.onResume();
+        googleApiClient.connect();
+        if(googleApiClient.isConnected()){
+            Auth.GoogleSignInApi.signOut(googleApiClient);
+        }
         toolbar.setVisibility(View.GONE);
     }
 
@@ -362,6 +361,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     public void onStop() {
         super.onStop();
         toolbar.setVisibility(View.VISIBLE);
+        googleApiClient.disconnect();
 
         googleApiClient.stopAutoManage(getActivity());
         googleApiClient.disconnect();
@@ -483,6 +483,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         snack.show();
                     } else {
                         Intent i = new Intent(getActivity(), HomeActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
                         //new TutorAsyncTask().execute(sesion.getId(), 4);
 
@@ -490,6 +491,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     }
 
             } else {
+                if(loginSimplePd.isShowing()){
+                    loginSimplePd.dismiss();
+                }
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
         }
@@ -540,6 +544,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
                         } else {
                             Intent i = new Intent(getActivity(), HomeActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                             //new TutorAsyncTask().execute(sesion.getId(), 4);
 
@@ -554,6 +559,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     ft.replace(R.id.login_fragment_container, fragment).addToBackStack(null).commit();
                 }
             } else {
+                if(loginSimplePd.isShowing()){
+                    loginSimplePd.dismiss();
+
+                }
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
 
@@ -603,6 +612,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
                         } else {
                             Intent i = new Intent(getActivity(), HomeActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
                             //new TutorAsyncTask().execute(sesion.getId(), 4);
 
@@ -617,6 +627,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     ft.replace(R.id.login_fragment_container, fragment).addToBackStack(null).commit();
                 }
             } else {
+                if(loginSimplePd.isShowing()){
+                    loginSimplePd.dismiss();
+                }
+
+                if(googleApiClient.isConnected()){
+                    Auth.GoogleSignInApi.signOut(googleApiClient);
+                }
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
         }

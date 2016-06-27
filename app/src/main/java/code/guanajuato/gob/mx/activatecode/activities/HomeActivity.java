@@ -2,7 +2,10 @@ package code.guanajuato.gob.mx.activatecode.activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -24,9 +27,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 
+import java.util.HashMap;
+
 import code.guanajuato.gob.mx.activatecode.R;
+import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
 import code.guanajuato.gob.mx.activatecode.fragments.HomeFragment;
 import code.guanajuato.gob.mx.activatecode.model.Login;
+import code.guanajuato.gob.mx.activatecode.model.Perfil;
+import code.guanajuato.gob.mx.activatecode.notifications.FirebaseInstanceIDService;
 
 
 /**
@@ -103,6 +111,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
 
 
     }
@@ -140,13 +149,20 @@ public class HomeActivity extends AppCompatActivity
         switch(id){
             case R.id.nav_logout:
                 Login login = new Login(this.getApplicationContext());
-                Log.d("FACEBOOK", login.getFacebook()+"");
-                login.borrarLogin();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                new CancelarTokenAsyncTask().execute();
+
+                Perfil p = new Perfil(getApplicationContext());
+                p.borrarPerfil();
+                prefs.edit().putBoolean(HomeFragment.DATOS_PERFIL,false).commit();
+
                 if(mGoogleApiClient.isConnected()){
                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 }
                 intent = new Intent(this, LogueoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                this.finish();
                 break;
             default:
                 intent = new Intent(this, SegundaActivity.class);
@@ -196,5 +212,25 @@ public class HomeActivity extends AppCompatActivity
         if(mGoogleApiClient.isConnected()){
             mGoogleApiClient.disconnect();
         }
+    }
+
+
+    private class CancelarTokenAsyncTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... args) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            Login session = new Login(getApplicationContext());
+            String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
+            Log.d("LOGINAPP", session.getId() + "");
+            ClienteHttp clienteHttp = new ClienteHttp();
+            HashMap<String, String> params = new HashMap<>();
+            params.put("Token", token);
+            params.put("id_login_app", session.getId()+"");
+            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/notificaciones/cancelar.php",
+                    params);
+            session.borrarLogin();
+            return null;
+        }
+
     }
 }

@@ -55,6 +55,7 @@ import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.activities.SegundaActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
+import code.guanajuato.gob.mx.activatecode.connection.ConnectionUtilities;
 import code.guanajuato.gob.mx.activatecode.model.Bitacora;
 import code.guanajuato.gob.mx.activatecode.model.Evento;
 import code.guanajuato.gob.mx.activatecode.model.Login;
@@ -80,8 +81,8 @@ import code.guanajuato.gob.mx.activatecode.utilities.PublicidadSingleton;
 public class HomeFragment extends CustomFragment {
     private final static int INTERVALO_PUBLICIDAD = 1000*10; // 10 segundos
     public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
-    private static final String ALARMA_REGISTRADA = "alarma_registro_default";
-    private static final String DATOS_PERFIL = "perfil_datos_usuario";
+    public static final String ALARMA_REGISTRADA = "alarma_registro_default";
+    public static final String DATOS_PERFIL = "perfil_datos_usuario";
     private PublicidadSingleton publicidad;
     private ImageLoader imageLoader;
     private Login session;
@@ -210,7 +211,7 @@ public class HomeFragment extends CustomFragment {
                        + day.getYear());
                String strEvents = "";
                for (Event e : events){
-                  strEvents += strEvents + "• " + e.getTitle() + "\n";
+                  strEvents += "• " + e.getTitle() + "\n";
                }
                titleEvent.setText(strEvents);
                if(events.isEmpty()){
@@ -299,6 +300,7 @@ public class HomeFragment extends CustomFragment {
         Login session = new Login(getActivity().getApplicationContext());
         try {
             bitacoraDBHelper.prepareDatabase();
+            Log.d("BITACORA", session.getId() + "");
             bitacora = bitacoraDBHelper.bitacoraDelDia(session.getId(), new Date());
             if(bitacora.getId() == 0){
                 Log.d("id_hoho", session.getId()+"");
@@ -323,10 +325,12 @@ public class HomeFragment extends CustomFragment {
         }
 
 
-        FirebaseMessaging.getInstance().subscribeToTopic("code.guanajuato.gob.mx.activatecode.CODEApp");
-        FirebaseInstanceId.getInstance().getToken();
-
-        new EnviarTokenAsyncTask().execute();
+        if(ConnectionUtilities.hasWIFIConnection(getActivity())) {
+            Log.d("WIFI", "Enviando token");
+            FirebaseMessaging.getInstance().subscribeToTopic("code.guanajuato.gob.mx.activatecode.CODEApp");
+            FirebaseInstanceId.getInstance().getToken();
+            new EnviarTokenAsyncTask().execute();
+        }
 
     }
 
@@ -381,12 +385,15 @@ public class HomeFragment extends CustomFragment {
             }
             c.close();
         }
+
         dateTv.setText(cTemp.get(Calendar.DAY_OF_MONTH) + " de " +
                 cTemp.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " de "
                 + cTemp.get(Calendar.YEAR));
         String strEvents = "";
+
         for (Event e : events) {
-            strEvents += strEvents + "• " + e.getTitle() + "\n";
+            Log.d("EVENTOS", strEvents);
+            strEvents = "• " + e.getTitle() + "\n";
         }
         titleEvent.setText(strEvents);
         if (events.isEmpty()) {
@@ -494,7 +501,6 @@ public class HomeFragment extends CustomFragment {
         protected Void doInBackground(Void... args) {
 
             String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
-            Log.d("Token", token);
             ClienteHttp clienteHttp = new ClienteHttp();
             HashMap<String, String> params = new HashMap<>();
             params.put("Token", token);

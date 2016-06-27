@@ -110,7 +110,7 @@ public class Perfil {
         this.success = success;
     }
 
-    public static void borrarLogin(){
+    public static void borrarPerfil(){
         prefs.edit().remove(ID).commit();
         prefs.edit().remove(NOMBRE_COMPLETO).commit();
         prefs.edit().remove(GENERO).commit();

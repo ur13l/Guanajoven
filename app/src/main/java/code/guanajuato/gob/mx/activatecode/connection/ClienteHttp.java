@@ -18,9 +18,9 @@ import java.util.HashMap;
  * Created by marioalbertonegreterodriguez on 02/02/16.
  */
 public class ClienteHttp {
-    public static final String SERVER_IP = "192.168.1.68";
+    //public static final String SERVER_IP = "192.168.1.68";
     //public static final String SERVER_IP = "10.0.7.42";
-    //public static final String SERVER_IP = "10.0.7.42";
+    public static final String SERVER_IP = "app.codegto.gob.mx";
 
     public String hacerRequestHttp(String url, HashMap<String, String> params){
         StringBuilder sbParams = new StringBuilder();
