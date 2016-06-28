@@ -2,7 +2,12 @@ package code.guanajuato.gob.mx.activatecode.activities;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,9 +21,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+
+import java.util.HashMap;
+
 import code.guanajuato.gob.mx.activatecode.R;
+import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
 import code.guanajuato.gob.mx.activatecode.fragments.HomeFragment;
 import code.guanajuato.gob.mx.activatecode.model.Login;
+import code.guanajuato.gob.mx.activatecode.model.Perfil;
+import code.guanajuato.gob.mx.activatecode.notifications.FirebaseInstanceIDService;
 
 
 /**
@@ -27,11 +43,13 @@ import code.guanajuato.gob.mx.activatecode.model.Login;
  * Fecha: 02/05/2016
  */
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static String MENU_ID = "menu_id";
 
     public int last_menu_id;
+
+    private GoogleApiClient mGoogleApiClient;
 
     private Toolbar toolbar;
     private NavigationView navigationView;
@@ -42,7 +60,16 @@ public class HomeActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
 
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).build();
 
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -84,6 +111,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
 
 
     }
@@ -99,10 +127,6 @@ public class HomeActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int id = item.getItemId();
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -121,10 +145,20 @@ public class HomeActivity extends AppCompatActivity
         switch(id){
             case R.id.nav_logout:
                 Login login = new Login(this.getApplicationContext());
-                Log.d("FACEBOOK", login.getFacebook()+"");
-                login.borrarLogin();
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                new CancelarTokenAsyncTask().execute();
+
+                Perfil p = new Perfil(getApplicationContext());
+                p.borrarPerfil();
+                prefs.edit().putBoolean(HomeFragment.DATOS_PERFIL,false).commit();
+
+                if(mGoogleApiClient.isConnected()){
+                   Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                }
                 intent = new Intent(this, LogueoActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                this.finish();
                 break;
             default:
                 intent = new Intent(this, SegundaActivity.class);
@@ -146,5 +180,53 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public ActionBarDrawerToggle getActionBarDrawerToggle() { return toggle; }
-//hi
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    protected  void onStart(){
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+        if(mGoogleApiClient.isConnected()){
+            mGoogleApiClient.disconnect();
+        }
+    }
+
+
+    private class CancelarTokenAsyncTask extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... args) {
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            Login session = new Login(getApplicationContext());
+            String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
+            Log.d("LOGINAPP", session.getId() + "");
+            ClienteHttp clienteHttp = new ClienteHttp();
+            HashMap<String, String> params = new HashMap<>();
+            params.put("Token", token);
+            params.put("id_login_app", session.getId()+"");
+            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/notificaciones/cancelar.php",
+                    params);
+            session.borrarLogin();
+            return null;
+        }
+
+    }
 }

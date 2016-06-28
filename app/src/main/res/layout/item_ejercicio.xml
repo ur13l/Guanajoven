@@ -9,8 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="left"
-        android:text="Ejemplo"
-        android:id="@+id/tv_nombre_ejercicio"/>
+        android:text="Ejemplo" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,22 +17,19 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="right"
-        android:text="200ml"
-        android:id="@+id/tv_tiempo_ejercicio"/>
+        android:text="200ml" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_weight="20"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="right"
-        android:text="200ml"
-        android:id="@+id/tv_calorias_ejercicio"/>
+        android:text="200ml" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_weight="10"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        android:gravity="right"
-        android:id="@+id/check_ejercicio"/>
+        android:gravity="right" />
 </LinearLayout>

@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
 import com.tyczj.extendedcalendarview.CalendarProvider;
@@ -73,7 +72,7 @@ public class CalendarioActividadesFragment extends CustomFragment{
         //setFechas();
         calendarEcv.setOnDayClickListener(new ExtendedCalendarView.OnDayClickListener() {
            @Override
-           public void onDayClicked(AdapterView<?> adapterV, View view, int position, long id, Day day) {
+           public void onDayClicked(Day day) {
                ArrayList<Event> events = day.getEvents();
                fecha = Calendar.getInstance();
                fecha.set(Calendar.MONTH, day.getMonth());

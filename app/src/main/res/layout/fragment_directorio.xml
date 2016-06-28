@@ -21,4 +21,14 @@
        android:id="@+id/rv_lugares">
    </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="@string/emptyDir"
+        android:id="@+id/empty_view"
+        android:layout_gravity="center"
+        android:gravity="center_vertical|center_horizontal" />
+
 </LinearLayout>

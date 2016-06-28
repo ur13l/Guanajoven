@@ -12,11 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Nuevo evento"
-        android:id="@+id/textView4" />
+        android:text="Nuevo evento" />
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_título"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
@@ -31,7 +29,6 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_name"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content">
@@ -50,7 +47,6 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_fechainicio"
             android:layout_width="0dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
@@ -65,7 +61,6 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_horainicio"
             android:layout_width="0dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
@@ -86,7 +81,6 @@
         android:layout_height="wrap_content">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_fechafin"
             android:layout_width="0dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
@@ -101,7 +95,6 @@
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_horafin"
             android:layout_width="0dp"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"

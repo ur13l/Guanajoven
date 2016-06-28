@@ -29,6 +29,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
+import code.guanajuato.gob.mx.activatecode.connection.ConnectionUtilities;
 
 /**
  * Created by Uriel on 20/03/2016.
@@ -75,22 +76,12 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         this.context = context;
 
-        if (hasWIFIConnection(context)) {
+        if (ConnectionUtilities.hasWIFIConnection(context)) {
             prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
             new RevisarFechaVideoAsyncTask().execute();
         }
     }
-    public static boolean hasWIFIConnection(Context context)
-    {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        NetworkInfo network = cm.getActiveNetworkInfo();
-        if (network.getType() == ConnectivityManager.TYPE_WIFI){
-            return true;
-        }
-        return false;
-
-    }
 
     private class RevisarFechaVideoAsyncTask extends AsyncTask<Void, Void, String>{
 

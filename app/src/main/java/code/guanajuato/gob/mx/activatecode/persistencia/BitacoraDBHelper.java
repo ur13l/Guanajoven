@@ -53,6 +53,16 @@ public class BitacoraDBHelper extends LocalDatabaseHelper{
             bitacora.setCaloriasEjercicio(cursor.getFloat(4));
             bitacora.setRegistrAgua(cursor.getFloat(5));
         }
+        else{
+            Date startDate = new Date();
+            java.sql.Date sqlDate = new java.sql.Date(startDate.getTime());
+            bitacora.setId(0);
+            bitacora.setFecha(sqlDate);
+            bitacora.setMinutosEjercicio(0);
+            bitacora.setCaloriasEjercicio(0);
+            bitacora.setRegistrAgua(0);
+        }
+        db.close();
         return bitacora;
     }
 
@@ -65,7 +75,6 @@ public class BitacoraDBHelper extends LocalDatabaseHelper{
     public void update(ContentValues values, int id_user, String fecha){
         SQLiteDatabase db = SQLiteDatabase.openDatabase(pathToSaveDBFile, null, SQLiteDatabase.OPEN_READWRITE);
         String[] whereArgs = {id_user +"", fecha};
-        Log.d("uppdate", id_user+" - "+ fecha);
         int i = db.update(TABLA_BITACORA, values, "id_user = ? AND fecha = ?", whereArgs);
 
         db.close();

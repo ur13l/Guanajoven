@@ -1,5 +1,8 @@
 package code.guanajuato.gob.mx.activatecode.adapters;
 
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import code.guanajuato.gob.mx.activatecode.R;
+import code.guanajuato.gob.mx.activatecode.fragments.LugarFragment;
 import code.guanajuato.gob.mx.activatecode.model.Lugar;
 
 /**
@@ -40,13 +45,29 @@ public class RVLugaresAdapter extends RecyclerView.Adapter<RVLugaresAdapter.Luga
     }
 
 
-    public static class LugaresViewHolder extends RecyclerView.ViewHolder {
+    public void setFilter(List<Lugar> lista) {
+        lugares = new ArrayList<>();
+        lugares.addAll(lista);
+        notifyDataSetChanged();
+    }
+
+    public static class LugaresViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView nombreTV;
 
 
         LugaresViewHolder(View itemView) {
             super(itemView);
             nombreTV = (TextView) itemView.findViewById(R.id.tv_lugar);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            AppCompatActivity a = (AppCompatActivity)view.getContext();
+            FragmentManager fm = a.getSupportFragmentManager();
+            FragmentTransaction ft = fm.beginTransaction();
+            LugarFragment lf = LugarFragment.newInstance(lugares.get(getAdapterPosition()));
+            ft.replace(R.id.segunda_fragment_container, lf).addToBackStack(null).commit();
         }
     }
 }

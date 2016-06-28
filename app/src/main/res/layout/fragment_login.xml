@@ -7,34 +7,28 @@
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
     android:layout_alignParentTop="true"
-    android:background="@color/white"
+    android:background="@color/background_material_light"
     tools:context=".activities.LogueoActivity"
     android:padding="20dp">
 
     <ImageView
         android:layout_marginTop="-20dp"
         android:layout_width="wrap_content"
-        android:layout_height="110dp"
+        android:layout_height="180dp"
         android:src="@drawable/code"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:text="Ingresa tu email y contraseña"/>
-
 
     <LinearLayout
             android:orientation="vertical"
         android:paddingTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+        android:layout_marginTop="-30dp">
 
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
 
                 <EditText
                     android:id="@+id/email_et"
@@ -48,10 +42,9 @@
             </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/input_layout_name2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="15dp">
 
             <EditText
                 android:id="@+id/pass_et"
@@ -67,7 +60,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:background="@color/colorAccent">
                 <android.support.v7.widget.AppCompatButton
                     android:layout_width="match_parent"
@@ -85,18 +78,13 @@
             android:gravity="center"
             android:textColor="@color/colorPrimary"
             android:id="@+id/tv_recuperar_pass"
-            android:layout_marginTop="10dp" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:textStyle="bold"
-            android:text="También puedes iniciar sesión con:"/>
+            android:layout_marginTop="15dp" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -110,11 +98,13 @@
                     android:id="@+id/btn_facebook"
                     android:layout_width="match_parent"
                     android:background="@drawable/facebook_button"
+                    android:textSize="14sp"
                     fb:login_text="FACEBOOK"
                     android:text="INICIA SESIÓN CON FACEBOOK"
                     fb:logout_text="FACEBOOK"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:gravity="center"
+                    style="@style/ButtonNoPadding"
                     android:layout_gravity="center_horizontal"/>
             </LinearLayout>
             <LinearLayout
@@ -130,9 +120,11 @@
                     android:text="@string/login_google"
                     android:textColor="@color/white"
                     android:gravity="left|center_vertical"
+                    android:textSize="14sp"
                     android:background="@drawable/red_button"
                     android:id="@+id/googlebtn"
                     android:drawableLeft="@drawable/google_logo"
+                    style="@style/ButtonNoPadding"
                     android:drawablePadding="25dp"
                     android:paddingLeft="20dp"
                     android:layout_gravity="center_horizontal" />
@@ -142,16 +134,12 @@
 
 
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:textStyle="bold"
-        android:text="¿No tienes cuenta aún?"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:background="@color/colorPrimary">
         <Button
             android:layout_width="match_parent"
@@ -159,7 +147,8 @@
             android:text="Registrarte"
             android:id="@+id/btnRegistrar"
             android:background="@drawable/blue_button"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@android:color/white"
             />
     </LinearLayout>

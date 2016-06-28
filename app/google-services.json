@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1098472639116-64rvtn7m18pblfb63khlahb6b1ot2d6m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "code.guanajuato.gob.mx.activatecode",
+            "certificate_hash": "0C7A931D8A163EB5D0E774B47E4C3F4DA6DA7C88"
+          }
+        },
+        {
           "client_id": "1098472639116-r6behi94lntffq2h5cmu7i6vgdgnom61.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -17,12 +17,16 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -45,6 +49,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.plus.Plus;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -68,7 +75,7 @@ import code.guanajuato.gob.mx.activatecode.utilities.ValidEmail;
  * tener la opción de registro.
  * Fecha: 02/05/2016
  */
-public class LoginFragment extends CustomFragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, View.OnClickListener {
+public class LoginFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks, View.OnClickListener {
 
 
     //Constantes
@@ -78,6 +85,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
 
     private boolean email, pass;
 
+
+    private Toolbar toolbar;
     //Elementos para el login con Google
     private GoogleSignInOptions googleSignInOptions;
     private GoogleApiClient googleApiClient;
@@ -156,10 +165,11 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
                 .requestEmail()
                 .build();
 
-        googleApiClient = new GoogleApiClient.Builder(getActivity())
-                .enableAutoManage(getActivity(), this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
-                .build();
+        if(googleApiClient == null)
+            googleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .enableAutoManage(getActivity(), this)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                    .build();
 
 
         //Inicialización del SDK de Facebook, llamada al callback y definición del TokenTrackerb y ProfileTracker.
@@ -197,6 +207,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+
+        toolbar = (Toolbar)getActivity().findViewById(R.id.toolbarlogin);
 
         //Instancia y listener del botón de Google.
         googleSignInButton = (AppCompatButton) v.findViewById(R.id.googlebtn);
@@ -250,9 +262,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
     @Override
     public void onStart() {
         super.onStart();
+
         logOutFacebook();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(false);
     }
 
 
@@ -265,6 +276,7 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
         fbButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_logo, 0, 0, 0);
 
         fbButton.setPadding(30, 30, 30, 30);
+        googleSignInButton.setPadding(28, 28, 28, 28);
 
         //loginButton.setReadPermissions("user_friends");
         fbButton.setReadPermissions(Arrays.asList("public_profile", "email"));
@@ -304,7 +316,8 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             if (resultCode != Activity.RESULT_OK) {
-                loginGooglePd.dismiss();
+                if(loginGooglePd != null)
+                    loginGooglePd.dismiss();
 
             }
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -327,15 +340,31 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
             new LoginGoogleAsyncTask().execute(acct.getEmail());
-            loginGooglePd.dismiss();
+            if(loginGooglePd != null)
+                loginGooglePd.dismiss();
         } else {
             // Signed out, show unauthenticated UI.
         }
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+        googleApiClient.connect();
+        if(googleApiClient.isConnected()){
+            Auth.GoogleSignInApi.signOut(googleApiClient);
+        }
+        toolbar.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
+        toolbar.setVisibility(View.VISIBLE);
+        googleApiClient.disconnect();
+
+        googleApiClient.stopAutoManage(getActivity());
+        googleApiClient.disconnect();
         if (loginSimplePd != null) {
             loginSimplePd.dismiss();
             loginSimplePd = null;
@@ -402,6 +431,16 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
     }
 
 
+    private void signOut() {
+        if(googleApiClient.isConnected())
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                    }
+                });
+    }
+
     /**
      * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión simple
      */
@@ -444,13 +483,18 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
                         snack.show();
                     } else {
                         Intent i = new Intent(getActivity(), HomeActivity.class);
+                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
+                        getActivity().finish();
                         //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                         //Entra al sistema SERVLET
                     }
 
             } else {
+                if(loginSimplePd.isShowing()){
+                    loginSimplePd.dismiss();
+                }
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
         }
@@ -501,7 +545,9 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
 
                         } else {
                             Intent i = new Intent(getActivity(), HomeActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
+                            getActivity().finish();
                             //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                             //Entra al sistema SERVLET
@@ -515,6 +561,10 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
                     ft.replace(R.id.login_fragment_container, fragment).addToBackStack(null).commit();
                 }
             } else {
+                if(loginSimplePd.isShowing()){
+                    loginSimplePd.dismiss();
+
+                }
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
 
@@ -564,7 +614,9 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
 
                         } else {
                             Intent i = new Intent(getActivity(), HomeActivity.class);
+                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
+                            getActivity().finish();
                             //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                             //Entra al sistema SERVLET
@@ -578,6 +630,13 @@ public class LoginFragment extends CustomFragment implements GoogleApiClient.OnC
                     ft.replace(R.id.login_fragment_container, fragment).addToBackStack(null).commit();
                 }
             } else {
+                if(loginSimplePd.isShowing()){
+                    loginSimplePd.dismiss();
+                }
+
+                if(googleApiClient.isConnected()){
+                    Auth.GoogleSignInApi.signOut(googleApiClient);
+                }
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
         }

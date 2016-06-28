@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -23,12 +24,18 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //super.onMessageReceived(remoteMessage);
-        showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("message"));
+        showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("message"), remoteMessage.getData().get("link"));
     }
 
-    public void showNotification(String title, String message){
-        Log.d("NOTIFICATION",message);
-        Intent i = new Intent(this, HomeActivity.class);
+    public void showNotification(String title, String message, String enlace){
+        Intent i;
+        if(enlace.isEmpty()) {
+            i = new Intent(this, HomeActivity.class);
+        }
+        else{
+            i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(enlace));
+        }
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 , i, PendingIntent.FLAG_UPDATE_CURRENT);

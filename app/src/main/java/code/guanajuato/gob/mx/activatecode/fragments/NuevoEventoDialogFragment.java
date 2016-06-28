@@ -196,7 +196,7 @@ public class NuevoEventoDialogFragment extends DialogFragment implements View.On
                 String titulo = tituloEt.getText().toString();
                 String descripcion = descripcionEt.getText().toString();
                 Date fechaInicio = DateUtilities.stringToDate(f1);
-                Date fechaFin = DateUtilities.stringToDate(f1);
+                Date fechaFin = DateUtilities.stringToDate(f2 );
                 int tipo = 0;
 
                 prefs.edit().putInt(ID_EVENTOS, prefs.getInt(ID_EVENTOS,1) + 1).commit();

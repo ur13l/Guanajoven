@@ -58,8 +58,7 @@
     <item android:title="@string/inicio_sesion">
         <menu>
             <group android:checkableBehavior="single">
-                <item android:id="@+id/nav_registro"
-                    android:title="@string/registro"/>
+                <item android:title="@string/registro"/>
 
 
 
