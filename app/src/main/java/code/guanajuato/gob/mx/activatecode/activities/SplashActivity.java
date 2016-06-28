@@ -1,9 +1,11 @@
 package code.guanajuato.gob.mx.activatecode.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 
 import code.guanajuato.gob.mx.activatecode.model.Login;
@@ -46,5 +48,12 @@ public class SplashActivity extends AppCompatActivity {
 
         startActivity(intent);
         finish();
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(newBase);
+        MultiDex.install(this);
     }
 }

@@ -485,6 +485,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         Intent i = new Intent(getActivity(), HomeActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(i);
+                        getActivity().finish();
                         //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                         //Entra al sistema SERVLET
@@ -546,6 +547,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             Intent i = new Intent(getActivity(), HomeActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
+                            getActivity().finish();
                             //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                             //Entra al sistema SERVLET
@@ -614,6 +616,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             Intent i = new Intent(getActivity(), HomeActivity.class);
                             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(i);
+                            getActivity().finish();
                             //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                             //Entra al sistema SERVLET

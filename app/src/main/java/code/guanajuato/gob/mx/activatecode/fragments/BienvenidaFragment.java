@@ -38,6 +38,7 @@ public class BienvenidaFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity(), LogueoActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
         });
         return v;
