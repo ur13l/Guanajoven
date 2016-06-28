@@ -98,7 +98,7 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d("DESCARGA1",  result);
+            Log.d("DESCARGA",  result);
             if (result.equals("true")) {
 
                 String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/res/video/video.mp4";
@@ -134,7 +134,7 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
                 ThinDownloadManager downloadManager = new ThinDownloadManager();
                 downloadManager.add(downloadRequest);
             } else {
-                Log.d("DESCARGA","NO SE REGISTRA");
+                Log.d("DESCARGA","NO SE REGISTRA222");
 
             }
 

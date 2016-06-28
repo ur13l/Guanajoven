@@ -192,6 +192,7 @@ public class HomeFragment extends CustomFragment {
 
         //Función para activar las alarmas de Descargar videos.
         if(!prefs.getBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, false)){
+
             RetrieveVideosBroadcastReceiver.registerAlarm(getActivity());
             prefs.edit().putBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, true).commit();
         }
