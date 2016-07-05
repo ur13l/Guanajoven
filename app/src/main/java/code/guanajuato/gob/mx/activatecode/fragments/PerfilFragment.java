@@ -62,6 +62,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     private Calendar calendar;
     private String fechapojo;
     private boolean calen = false;
+    private Perfil perfil;
 
     private ProgressDialog progressDialog;
     private HashMap<String, String> params;
@@ -81,7 +82,6 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         polipriTV = (TextView) v.findViewById(R.id.tv_polipri);
         polipriCB = (CheckBox) v.findViewById(R.id.cb_polipri);
         actdatB = (Button) v.findViewById(R.id.btn_actudat);
-        actdatB.setEnabled(false);
 
         fechET.setKeyListener(null);
         fechET.setOnFocusChangeListener(this);
@@ -99,10 +99,10 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ocupacionS.setAdapter(adapter1);
 
-        EditTextValidations.showHint(codposET,"Ej. 37420");
-        EditTextValidations.showHint(celET,"Ej. 4772526262");
+        EditTextValidations.showHint(codposET, "Ej. 37420");
+        EditTextValidations.showHint(celET, "Ej. 4772526262");
 
-        Perfil perfil = new Perfil(getActivity().getApplicationContext());
+        perfil = new Perfil(getActivity().getApplicationContext());
         nomcomET.setText(perfil.getNombreCompleto());
         generoS.setSelection(perfil.getGenero());
         fechapojo = perfil.getFecha();
@@ -130,29 +130,41 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     public void continuar(){
         //Verifica que los campos no estén vacíos
         boolean fechaEmpty = EditTextValidations.esCampoVacio(fechET);
-        boolean codigoEmpy = EditTextValidations.spinnerSinSeleccion(generoS);
+        boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(generoS);
         boolean fechafalse = false;
         boolean codigofalse = false;
+        boolean celfalse = false;
 
 
         if (codposET.getText().toString().length() != 0) {
             if (codposET.getText().toString().length() != 5) {
                 ((TextInputLayout) codposET.getParent()).setErrorEnabled(true);
-                ((TextInputLayout) codposET.getParent()).setError("5 digitos");
-            } else ((TextInputLayout) codposET.getParent()).setErrorEnabled(false);
+                ((TextInputLayout) codposET.getParent()).setError("El código postal debe llevar 5 digitos");
+            } else{
+                ((TextInputLayout) codposET.getParent()).setErrorEnabled(false);
+                codigofalse = true;
+            }
+        }
+        else{
+            codigofalse = true;
         }
 
         if (celET.getText().toString().length() != 0) {
-            if (celET.getText().toString().length() < 10) {
+            if (celET.getText().toString().length() != 10) {
                 ((TextInputLayout) celET.getParent()).setErrorEnabled(true);
-                ((TextInputLayout) celET.getParent()).setError("10 digitos");
-            } else ((TextInputLayout) celET.getParent()).setErrorEnabled(false);
+                ((TextInputLayout) celET.getParent()).setError("El teléfono debe contar con 10 digitos");
+            } else{
+                ((TextInputLayout) celET.getParent()).setErrorEnabled(false);
+                celfalse = true;
+            }
+        }
+        else{
+            celfalse = true;
         }
 
         //Si ninguno de los campos es vacío
-        if(!fechaEmpty && !codigoEmpy){
+        if(!fechaEmpty && codigofalse && celfalse && !generoEmpty){
             fechafalse = true;
-            codigofalse = true;
         }
 
         //Si todas las validaciones se cumplen, se genera el nuevo fragment.
@@ -205,7 +217,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
             case R.id.btn_actudat:
                 try {
                     continuar();
-                } catch (Exception  e) {OKDialog.showOKDialog(getActivity(), "Error al actualizar información de usuario", "Su solicitud no pudo ser completada"); }
+                } catch (Exception  e) {OKDialog.showOKDialog(getActivity(), "Error al actualizar información de usuario", e.getMessage());
+                e.printStackTrace();}
                 break;
         }
     }
@@ -246,25 +259,46 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         params.put("id_login_app", ""+ log.getId());
         if(nomcomET.getText().toString().length() == 0) {
             params.put("nombre", "" + aux);
-        }else params.put("nombre", "" + nomcomET.getText().toString());
+            perfil.setNombreCompleto(null);
+        }else{
+            params.put("nombre", "" + nomcomET.getText().toString());
+            perfil.setNombreCompleto(nomcomET.getText().toString());
+        }
 
-        params.put("genero", "" + generoStr);
+        params.put("genero", generoStr);
+        perfil.setGenero(Integer.parseInt(generoStr));
 
         if (calen == true) {
             params.put("fec_nacimiento", "" + fecha);
-        } else params.put("fec_nacimiento", "" + fechapojo);
+            perfil.setFecha(fecha);
+        } else{
+            params.put("fec_nacimiento", "" + fechapojo);
+            perfil.setFecha(fechapojo);
+        }
 
         if(ocupacionStr == null){
             params.put("ocupacion", aux);
-        }else params.put("ocupacion", ocupacionStr);
+            perfil.setOcupacion(null);
+        }else{
+            params.put("ocupacion", ocupacionStr);
+            perfil.setOcupacion(Integer.parseInt(ocupacionStr));
+        }
 
-        if(codposET.getText().toString() == ""){
+        if(codposET.getText().toString().equals("")){
             params.put("codigo_postal", aux);
-        }else params.put("codigo_postal", codposET.getText().toString());
+            perfil.setCodigo_postal(null);
+        }else{
+            params.put("codigo_postal", codposET.getText().toString());
+            perfil.setCodigo_postal(Integer.parseInt(codposET.getText().toString()));
+        }
 
-        if(celET.getText().toString() == ""){
+        if(celET.getText().toString().equals("")){
             params.put("telefono", aux);
-        }else params.put("telefono", celET.getText().toString());
+            perfil.setTelefono(null);
+        }else{
+            params.put("telefono", celET.getText().toString());
+            perfil.setTelefono(celET.getText().toString());
+        }
 
         new RegistrarAsyncTask().execute(params);
 
@@ -351,6 +385,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
             super.onPostExecute(result);
             progressDialog.dismiss();
             if (result != null) {
+                Log.d("RESULT", result);
                 if(result.equals("success")) {
                     Snackbar.make(getActivity().findViewById(R.id.segunda_fragment_container), "Datos actualizados con exito", Snackbar.LENGTH_LONG).show();
                 }

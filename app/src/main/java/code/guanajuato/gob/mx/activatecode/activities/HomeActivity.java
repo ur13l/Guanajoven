@@ -143,6 +143,8 @@ public class HomeActivity extends AppCompatActivity
         Intent intent;
 
         switch(id){
+            case R.id.nav_home:
+                break;
             case R.id.nav_logout:
                 Login login = new Login(this.getApplicationContext());
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

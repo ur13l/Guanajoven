@@ -118,5 +118,6 @@ Se le informa que los datos integrados en este sistema, podrán ser compartidos 
     <string name="desarrollador_ios">Desarrollador en iOS</string>
     <string name="correo5">obc993@gmail.com</string>
     <string name="colaboradores_code">Colaboradores CODE</string>
+    <string name="actualizar_datos">Actualizar Datos</string>
 
 </resources>
