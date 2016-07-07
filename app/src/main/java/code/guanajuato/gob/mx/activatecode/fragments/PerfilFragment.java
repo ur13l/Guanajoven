@@ -51,9 +51,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     private EditText fechET;
     private String fecha;
     private MaterialSpinner ocupacionS;
-    private String[] arrayOcupacion = {"Ama de casa","Empleado","Emprendedor","Empresario",
-            "Profesionista","Comerciante","Estudiante",
-            "Servidor Público"};
+    private String[] arrayOcupacion = {"Profesor", "Empleado", "Empresario", "Abogado", "Estudiante", "Ingeniero", "Doctor", "Arquitecto",
+            "Ama de casa", "Empleado calzado" , "Obrero", "Comerciante", "Enfermera"};
     private EditText codposET;
     private EditText celET;
     private TextView polipriTV;
