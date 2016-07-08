@@ -18,28 +18,28 @@
         android:src="@drawable/code"/>
 
     <LinearLayout
-            android:orientation="vertical"
+        android:orientation="vertical"
         android:paddingTop="5dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="-30dp">
 
 
-            <android.support.design.widget.TextInputLayout
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <EditText
+                android:id="@+id/email_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <EditText
-                    android:id="@+id/email_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:maxLength="50"
-                    android:typeface="normal"
-                    android:textSize="18dp"
-                    android:hint="Email" />
-            </android.support.design.widget.TextInputLayout>
+                android:singleLine="true"
+                android:maxLength="50"
+                android:typeface="normal"
+                android:textSize="18dp"
+                android:hint="Email" />
+        </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -132,15 +132,6 @@
         </LinearLayout>
 
 
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:background="@color/colorPrimary">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -149,10 +140,9 @@
             android:background="@drawable/blue_button"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="@android:color/white"
-            />
-    </LinearLayout>
+            android:textColor="@android:color/white" />
 
+    </LinearLayout>
     <!--  -->
 
 

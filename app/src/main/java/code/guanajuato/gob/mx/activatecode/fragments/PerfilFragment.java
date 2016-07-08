@@ -119,7 +119,9 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
         fechET.setText(sdf.format(nac));
         ocupacionS.setSelection(perfil.getOcupacion());
-        codposET.setText(perfil.getCodigo_postal()+"");
+        if(perfil.getCodigo_postal() == 0 ){
+            codposET.setText("");
+        } else codposET.setText(perfil.getCodigo_postal()+"");
         celET.setText(perfil.getTelefono());
 
         return v;
@@ -236,20 +238,34 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         if(generoS.getSelectedItemPosition() == 0) generoStr = null;
         String ocupacionStr = (ocupacionS.getSelectedItemPosition()) +"";
         if(ocupacionS.getSelectedItemPosition() == 0) ocupacionStr = null;
+        String aux= "";
 
         Login log = new Login(getActivity().getApplicationContext());
 
         params = new HashMap<>();
         params.put("id_login_app", ""+ log.getId());
-        params.put("nombre", "" + nomcomET.getText().toString());
+        if(nomcomET.getText().toString().length() == 0) {
+            params.put("nombre", "" + aux);
+        }else params.put("nombre", "" + nomcomET.getText().toString());
+
         params.put("genero", "" + generoStr);
+
         if (calen == true) {
             params.put("fec_nacimiento", "" + fecha);
-        } else
-            params.put("fec_nacimiento", "" + fechapojo);
-        params.put("ocupacion", ocupacionStr);
-        params.put("codigo_postal", codposET.getText().toString());
-        params.put("telefono", celET.getText().toString());
+        } else params.put("fec_nacimiento", "" + fechapojo);
+
+        if(ocupacionStr == null){
+            params.put("ocupacion", aux);
+        }else params.put("ocupacion", ocupacionStr);
+
+        if(codposET.getText().toString() == ""){
+            params.put("codigo_postal", aux);
+        }else params.put("codigo_postal", codposET.getText().toString());
+
+        if(celET.getText().toString() == ""){
+            params.put("telefono", aux);
+        }else params.put("telefono", celET.getText().toString());
+
         new RegistrarAsyncTask().execute(params);
 
         // boolean presionEmpty = EditTextValidations.

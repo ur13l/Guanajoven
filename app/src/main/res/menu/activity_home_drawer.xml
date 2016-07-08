@@ -55,14 +55,5 @@
             </group>
         </menu>
     </item>
-    <item android:title="@string/inicio_sesion">
-        <menu>
-            <group android:checkableBehavior="single">
-                <item android:title="@string/registro"/>
 
-
-
-            </group>
-        </menu>
-    </item>
 </menu>

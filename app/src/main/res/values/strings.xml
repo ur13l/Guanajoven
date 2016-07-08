@@ -108,5 +108,15 @@ Se le informa que los datos integrados en este sistema, podrán ser compartidos 
     <string name="detener">Detener</string>
     <string name="ejercicio30">Ejercicio \n(30 mins.)</string>
     <string name="agua2">Agua \n (2L.)</string>
+    <string name="colaborador3">Ing. Juan José Camacho Luna</string>
+    <string name="lider_proy">Líder de proyecto</string>
+    <string name="correo3">jose.camacho@inquality.com.mx</string>
+    <string name="colaborador4">Ing. Mario Alberto Negrete Rodríguez</string>
+    <string name="lider_ios">Líder de desarrollo en iOS</string>
+    <string name="correo4">mario_rguezz@yahoo.com.mx</string>
+    <string name="colaborador5">Oscar Barrera Casillas</string>
+    <string name="desarrollador_ios">Desarrollador en iOS</string>
+    <string name="correo5">obc993@gmail.com</string>
+    <string name="colaboradores_code">Colaboradores CODE</string>
 
 </resources>
