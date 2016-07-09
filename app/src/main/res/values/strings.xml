@@ -119,5 +119,7 @@ Se le informa que los datos integrados en este sistema, podrán ser compartidos 
     <string name="correo5">obc993@gmail.com</string>
     <string name="colaboradores_code">Colaboradores CODE</string>
     <string name="actualizar_datos">Actualizar Datos</string>
+    <string name="itl">Instituto Tecnológico de León</string>
+    <string name="code">CODE</string>
 
 </resources>
