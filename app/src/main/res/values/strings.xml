@@ -8,6 +8,7 @@
 
     <!-- Strings related to login -->
     <string name="login">Inicia Sesión</string>
+    <string name="mensaje_bienvenida">Esta aplicación es de promoción para la salud y vida sana. Los consejos y sugerencias mostrados no sustituyen la orientación que un profesional te ofrece. Consulta a tu médico o ponte en contacto con la unidad de salud de CODE más cercana.</string>
 
     <string name="home">Home</string>
     <string name="bienvenida">¡Bienvenido!</string>
@@ -63,7 +64,6 @@
     <string name="reenviar_codigo">Volver a enviar código</string>
     <string name="enviar_codigo">Enviar código</string>
     <string name="olvidaste"><u>¿Olvidaste tu contraseña?</u></string>
-    <string name="mensaje_bienvenida">Bienvenido a la aplicación Actívate, te invitamos a comenzar para llevar una vida saludable.</string>
     <string name="colaborador1">Ing. Felipe Uriel Infante Martínez</string>
     <string name="lider">Líder de desarrollo en Android</string>
     <string name="correo1">ur13l.infante@gmail.com</string>
