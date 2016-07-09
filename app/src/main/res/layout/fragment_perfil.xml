@@ -63,7 +63,7 @@
         app:ms_arrowColor="@color/colorPrimary"
         app:ms_arrowSize="16dp"
         app:ms_floatingLabelColor="@color/gray"
-        app:ms_floatingLabelText="Genero"
+        app:ms_floatingLabelText="Ocupación"
         app:ms_hint="Ocupación"
         app:ms_multiline="true" />
 
@@ -101,8 +101,8 @@
 
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,9 +126,10 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:background="@drawable/green_button"
+            android:enabled="false"
             android:textColor="@color/common_google_signin_btn_text_dark"
             android:id="@+id/btn_actudat"
-            android:text="Actualizar Datos">
+            android:text="@string/actualizar_datos">
         </Button>
 
     </LinearLayout>

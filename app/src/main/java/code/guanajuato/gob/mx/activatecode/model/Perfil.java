@@ -18,10 +18,10 @@ public class Perfil {
     public final static String SUCCESS = "perfil_success";
     private int id;
     private String nombre_completo;
-    private int genero;
+    private Integer genero;
     private String fecha;
-    private int ocupacion;
-    private int codigo_postal;
+    private Integer ocupacion;
+    private Integer codigo_postal;
     private String telefono;
     private String success;
     private static SharedPreferences prefs;
@@ -55,8 +55,13 @@ public class Perfil {
         return genero;
     }
 
-    public void setGenero(int genero){
-        prefs.edit().putInt(GENERO, genero).commit();
+    public void setGenero(Integer genero){
+        if(genero == null){
+            prefs.edit().remove(GENERO).commit();
+        }
+        else {
+            prefs.edit().putInt(GENERO, genero).commit();
+        }
         this.genero = genero;
     }
 
@@ -75,8 +80,12 @@ public class Perfil {
         return ocupacion;
     }
 
-    public void setOcupacion(int ocupacion){
-        prefs.edit().putInt(OCUPACION, ocupacion).commit();
+    public void setOcupacion(Integer ocupacion){
+        if(ocupacion == null){
+            prefs.edit().remove(OCUPACION).commit();
+        }
+        else
+            prefs.edit().putInt(OCUPACION, ocupacion).commit();
         this.ocupacion = ocupacion;
     }
 
@@ -85,8 +94,12 @@ public class Perfil {
         return codigo_postal;
     }
 
-    public void setCodigo_postal(int codigo_postal){
-        prefs.edit().putInt(CODIGO_POSTAL, codigo_postal).commit();
+    public void setCodigo_postal(Integer codigo_postal){
+        if(codigo_postal == null){
+            prefs.edit().remove(CODIGO_POSTAL).commit();
+        }
+        else
+            prefs.edit().putInt(CODIGO_POSTAL, codigo_postal).commit();
         this.codigo_postal = codigo_postal;
     }
 

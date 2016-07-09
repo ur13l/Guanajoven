@@ -131,16 +131,22 @@
                 </LinearLayout>
         </LinearLayout>
 
-
-        <Button
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registrarte"
-            android:id="@+id/btnRegistrar"
-            android:background="@drawable/blue_button"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:textColor="@android:color/white" />
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registrarte"
+                android:id="@+id/btnRegistrar"
+                android:background="@drawable/blue_button"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@android:color/white" />
+        </LinearLayout>
 
     </LinearLayout>
     <!--  -->
