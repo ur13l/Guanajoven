@@ -46,6 +46,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public static String MENU_ID = "menu_id";
+    public static String INSTRUCCIONES_CHECK = "instrucciones_check";
 
     public int last_menu_id;
 
@@ -54,6 +55,9 @@ public class HomeActivity extends AppCompatActivity
     private Toolbar toolbar;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
+
+
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +110,15 @@ public class HomeActivity extends AppCompatActivity
             }
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        //Intent para abrir el tutorial de la aplicación
+        if(!prefs.getBoolean(INSTRUCCIONES_CHECK, false)){
+            Intent i = new Intent(this, InstruccionesActivity.class);
+            startActivity(i);
+            prefs.edit().putBoolean(INSTRUCCIONES_CHECK, true).commit();
+        }
+
 
     }
 

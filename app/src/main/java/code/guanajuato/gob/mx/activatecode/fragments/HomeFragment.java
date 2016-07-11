@@ -490,6 +490,8 @@ public class HomeFragment extends CustomFragment {
                 perfil.setCodigo_postal(perfilpo.getCodigo_postal());
                 perfil.setTelefono(perfilpo.getTelefono());
                 perfil.setSuccess(perfilpo.getSuccess());
+                perfil.setPeso(perfilpo.getPeso());
+                perfil.setEstatura(perfilpo.getEstatura());
             }
             Log.d("result",result);
             return result;

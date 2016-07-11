@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/background"
+    android:background="#c0000000">
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="200dp"
+        android:id="@+id/imageView7"
+        android:layout_marginBottom="52dp"
+        android:src="@drawable/flecha_morada"
+        android:layout_marginRight="48dp"
+        android:layout_marginEnd="48dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="100dp"
+        android:id="@+id/imageView8"
+        android:src="@drawable/flecha_naranja"
+        android:layout_alignBottom="@+id/imageView7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="42dp"
+        android:layout_marginStart="42dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Registra el agua\n que consumes al día"
+        android:textColor="@color/white"
+        android:id="@+id/textView2"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/imageView8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Lleva control del \nejercicio que haces."
+        android:textColor="@color/white"
+        android:id="@+id/textView3"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/imageView7"
+        android:layout_alignRight="@+id/imageView7"
+        android:layout_alignEnd="@+id/imageView7" />
+</RelativeLayout>

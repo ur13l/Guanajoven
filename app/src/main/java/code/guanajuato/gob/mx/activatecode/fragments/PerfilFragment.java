@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -24,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.vision.text.Text;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.net.URL;
@@ -44,11 +47,15 @@ import code.guanajuato.gob.mx.activatecode.model.Perfil;
 import code.guanajuato.gob.mx.activatecode.utilities.EditTextValidations;
 import code.guanajuato.gob.mx.activatecode.utilities.OKDialog;
 
-public class PerfilFragment extends CustomFragment implements  View.OnClickListener, DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener {
+public class PerfilFragment extends CustomFragment implements  View.OnClickListener, DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener, TextWatcher {
     private EditText nomcomET;
     private MaterialSpinner generoS;
     private String[] arrayGenero = {"Hombre", "Mujer"};
     private EditText fechET;
+    private EditText pesoEt;
+    private EditText estaturaEt;
+    private TextView imcTv;
+    private TextView imcMensajeTv;
     private String fecha;
     private MaterialSpinner ocupacionS;
     private String[] arrayOcupacion = {"Profesor", "Empleado", "Empresario", "Abogado", "Estudiante", "Ingeniero", "Doctor", "Arquitecto",
@@ -81,6 +88,10 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         polipriTV = (TextView) v.findViewById(R.id.tv_polipri);
         polipriCB = (CheckBox) v.findViewById(R.id.cb_polipri);
         actdatB = (Button) v.findViewById(R.id.btn_actudat);
+        pesoEt = (EditText) v.findViewById(R.id.et_peso);
+        estaturaEt = (EditText) v.findViewById(R.id.et_estatura);
+        imcTv = (TextView) v.findViewById(R.id.tv_imc);
+        imcMensajeTv = (TextView) v.findViewById(R.id.tv_imc_mensaje);
 
         fechET.setKeyListener(null);
         fechET.setOnFocusChangeListener(this);
@@ -88,6 +99,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         actdatB.setOnClickListener(this);
         polipriCB.setOnClickListener(this);
         polipriTV.setOnClickListener(this);
+        estaturaEt.addTextChangedListener(this);
+        pesoEt.addTextChangedListener(this);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayGenero);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -104,6 +117,11 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         perfil = new Perfil(getActivity().getApplicationContext());
         nomcomET.setText(perfil.getNombreCompleto());
         generoS.setSelection(perfil.getGenero());
+
+        pesoEt.setText(perfil.getPeso()+"");
+        estaturaEt.setText(perfil.getEstatura() + "");
+
+
         fechapojo = perfil.getFecha();
 
         Date nac = null;
@@ -130,6 +148,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         //Verifica que los campos no estén vacíos
         boolean fechaEmpty = EditTextValidations.esCampoVacio(fechET);
         boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(generoS);
+        boolean pesoEmpty = EditTextValidations.esCampoVacio(pesoEt);
+        boolean estaturaEmpty = EditTextValidations.esCampoVacio(estaturaEt);
         boolean fechafalse = false;
         boolean codigofalse = false;
         boolean celfalse = false;
@@ -162,7 +182,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         }
 
         //Si ninguno de los campos es vacío
-        if(!fechaEmpty && codigofalse && celfalse && !generoEmpty){
+        if(!fechaEmpty && codigofalse && celfalse && !generoEmpty && !pesoEmpty && !estaturaEmpty){
             fechafalse = true;
         }
 
@@ -256,6 +276,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
         params = new HashMap<>();
         params.put("id_login_app", ""+ log.getId());
+        params.put("peso", pesoEt.getText().toString());
+        params.put("estatura", estaturaEt.getText().toString());
         if(nomcomET.getText().toString().length() == 0) {
             params.put("nombre", "" + aux);
             perfil.setNombreCompleto(null);
@@ -346,6 +368,37 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         AlertDialog dialog = builder.create();
         // display dialog
         dialog.show();
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        if(pesoEt.getText().length() > 0 && estaturaEt.getText().length() > 0){
+            float peso = Float.parseFloat(pesoEt.getText().toString());
+            float estatura = Float.parseFloat(estaturaEt.getText().toString());
+            float imc = peso / (estatura*estatura);
+            imcTv.setText(imc + "");
+            if(imc > 25 && 30 > imc)
+                imcMensajeTv.setText("¡Cuidado, tú IMC indica un sobrepeso!");
+            else if(imc >= 30)
+                imcMensajeTv.setText("¡Cuidado, tú IMC indica un obesidad!");
+            else
+                imcMensajeTv.setText("");
+
+        }
+        else{
+            imcTv.setText("NC");
+            imcMensajeTv.setText("");
+        }
     }
 
     private class RegistrarAsyncTask extends AsyncTask<HashMap<String, String>, Void, String> {

@@ -15,6 +15,8 @@ public class Perfil {
     public final static String OCUPACION = "perfil_ocupacion";
     public final static String CODIGO_POSTAL= "perfil_codigo_postal";
     public final static String TELEFONO = "perfil_telefono";
+    public final static String PESO = "perfil_peso";
+    public final static String ESTATURA = "perfil_estatura";
     public final static String SUCCESS = "perfil_success";
     private int id;
     private String nombre_completo;
@@ -23,6 +25,8 @@ public class Perfil {
     private Integer ocupacion;
     private Integer codigo_postal;
     private String telefono;
+    private float peso;
+    private float estatura;
     private String success;
     private static SharedPreferences prefs;
 
@@ -112,6 +116,27 @@ public class Perfil {
         prefs.edit().putString(TELEFONO, telefono).commit();
         this.telefono = telefono;
     }
+
+    public float getPeso() {
+        float peso = prefs.getFloat(PESO,0);
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        prefs.edit().putFloat(PESO, peso).commit();
+        this.peso = peso;
+    }
+
+    public float getEstatura() {
+        float estatura = prefs.getFloat(ESTATURA,0);
+        return estatura;
+    }
+
+    public void setEstatura(float estatura) {
+        prefs.edit().putFloat(ESTATURA, estatura).commit();
+        this.estatura = estatura;
+    }
+
 
     public String getSuccess() {
         String success = prefs.getString(SUCCESS,"");

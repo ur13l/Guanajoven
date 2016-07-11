@@ -11,6 +11,8 @@ public class PerfilPOJO {
     private int id_ocupacion;
     private int codigo_postal;
     private String telefono;
+    private float peso;
+    private float estatura;
     private String success;
 
     public int getId_login_app() {
@@ -67,6 +69,23 @@ public class PerfilPOJO {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+
+    public float getEstatura() {
+        return estatura;
+    }
+
+    public void setEstatura(float estatura) {
+        this.estatura = estatura;
+    }
+
+    public float getPeso() {
+        return peso;
+    }
+
+    public void setPeso(float peso) {
+        this.peso = peso;
     }
 
     public String getSuccess() {

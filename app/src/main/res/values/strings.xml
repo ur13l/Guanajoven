@@ -121,5 +121,9 @@ Se le informa que los datos integrados en este sistema, podrán ser compartidos 
     <string name="actualizar_datos">Actualizar Datos</string>
     <string name="itl">Instituto Tecnológico de León</string>
     <string name="code">CODE</string>
+    <string name="peso">Peso</string>
+    <string name="estatura">Estatura</string>
+    <string name="imc">Índice de masa corporal (IMC)</string>
+    <string name="leyenda_imc">*El cálculo del IMC se realiza en base a los parámetros de la OMS para personas mayores a 18 años.</string>
 
 </resources>

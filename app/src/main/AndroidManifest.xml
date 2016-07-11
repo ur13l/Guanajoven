@@ -56,6 +56,9 @@
             android:name=".activities.BienvenidaActivity"
             android:theme="@style/AppTheme.BienvenidaTheme" />
         <activity
+            android:name=".activities.InstruccionesActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
             android:name=".activities.LogueoActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
