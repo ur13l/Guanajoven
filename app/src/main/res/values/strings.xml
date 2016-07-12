@@ -106,8 +106,8 @@ Los datos personales que se resguardan tienen la  finalidad de funcionar como in
 
 Se le informa que los datos integrados en este sistema, podrán ser compartidos con las Dependencias y Entidades del Poder Ejecutivo. Sin embargo, Usted puede manifestar su negativa al tratamiento de los datos señalados para la finalidad descrita, marcando en la siguiente casilla: "No acepto".</string>
     <string name="detener">Detener</string>
-    <string name="ejercicio30">Ejercicio \n(30 mins.)</string>
-    <string name="agua2">Agua \n (2L.)</string>
+    <string name="ejercicio30">Ejercicio</string>
+    <string name="agua2">Agua</string>
     <string name="colaborador3">Ing. Juan José Camacho Luna</string>
     <string name="lider_proy">Líder de proyecto</string>
     <string name="correo3">jose.camacho@inquality.com.mx</string>

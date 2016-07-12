@@ -115,7 +115,9 @@ public class BitacoraDBHelper extends LocalDatabaseHelper{
                 java.sql.Date sqlDate = new java.sql.Date(date.getTime());
                 sR.setFecha(sqlDate);
                 sR.setEjercicio(cursor.getFloat(3) >= 30);
+                sR.setEjercicioMin(cursor.getFloat(3));
                 sR.setAgua(cursor.getFloat(5) >= 2000);
+                sR.setAguaLt(cursor.getFloat(5));
                 lista.add(sR);
                 cursor.moveToNext();
             }

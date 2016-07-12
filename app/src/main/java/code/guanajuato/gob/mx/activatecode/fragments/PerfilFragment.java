@@ -40,6 +40,7 @@ import java.util.Locale;
 
 import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
+import code.guanajuato.gob.mx.activatecode.utilities.MathFormat;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.model.Login;
@@ -118,8 +119,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         nomcomET.setText(perfil.getNombreCompleto());
         generoS.setSelection(perfil.getGenero());
 
-        pesoEt.setText(perfil.getPeso()+"");
-        estaturaEt.setText(perfil.getEstatura() + "");
+        pesoEt.setText(MathFormat.removeDots((float) MathFormat.round((double)perfil.getPeso(),2))+"");
+        estaturaEt.setText(MathFormat.removeDots((float) MathFormat.round((double)perfil.getEstatura(),2))+"" + "");
 
 
         fechapojo = perfil.getFecha();
@@ -386,11 +387,11 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
             float peso = Float.parseFloat(pesoEt.getText().toString());
             float estatura = Float.parseFloat(estaturaEt.getText().toString());
             float imc = peso / (estatura*estatura);
-            imcTv.setText(imc + "");
+            imcTv.setText(MathFormat.round(Double.parseDouble(MathFormat.removeDots(imc)), 2) + "");
             if(imc > 25 && 30 > imc)
-                imcMensajeTv.setText("¡Cuidado, tú IMC indica un sobrepeso!");
+                imcMensajeTv.setText("¡Cuidado, tú IMC indica sobrepeso!");
             else if(imc >= 30)
-                imcMensajeTv.setText("¡Cuidado, tú IMC indica un obesidad!");
+                imcMensajeTv.setText("¡Cuidado, tú IMC indica obesidad!");
             else
                 imcMensajeTv.setText("");
 

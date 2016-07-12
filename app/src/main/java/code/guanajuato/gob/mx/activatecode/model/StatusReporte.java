@@ -9,6 +9,8 @@ public class StatusReporte {
     private Date fecha;
     private boolean ejercicio;
     private boolean agua;
+    private float ejercicioMin;
+    private float aguaLt;
 
     public Date getFecha() {
         return fecha;
@@ -32,5 +34,21 @@ public class StatusReporte {
 
     public void setEjercicio(boolean ejercicio) {
         this.ejercicio = ejercicio;
+    }
+
+    public float getEjercicioMin() {
+        return ejercicioMin;
+    }
+
+    public void setEjercicioMin(float ejercicioMin) {
+        this.ejercicioMin = ejercicioMin;
+    }
+
+    public float getAguaLt() {
+        return aguaLt;
+    }
+
+    public void setAguaLt(float aguaLt) {
+        this.aguaLt = aguaLt;
     }
 }

@@ -208,7 +208,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
             String presionNum = presionSpinner.getSelectedItem().equals("Sí")?"1":"0";
             String glucosaNum = glucosaSpinner.getSelectedItem().equals("Sí")?"1":"0";
             String actividadNum = actividadSpinner.getSelectedItem().equals("Sí")?"1":"0";
-            String animoNum = presionSpinner.getSelectedItemPosition() + "";
+            String animoNum = estadoAnimoSpinner.getSelectedItemPosition() + "";
             String generoNum = generoS.getSelectedItemPosition() + "";
 
             params = new HashMap<>();

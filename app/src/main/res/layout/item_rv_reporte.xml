@@ -18,19 +18,45 @@
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical" />
-            <ImageView
-                android:id="@+id/img_ejercicio"
-                android:src="@drawable/feliz"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_weight="1" />
-            <ImageView
-                android:id="@+id/img_agua"
-                android:layout_width="0dp"
-                android:src="@drawable/feliz"
-                android:layout_height="40dp"
-                android:layout_weight="1" />
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/img_ejercicio"
+                    android:src="@drawable/feliz"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="5 min"
+                    android:id="@+id/tv_ejercicio"
+                    android:layout_gravity="center" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/img_agua"
+                    android:layout_width="wrap_content"
+                    android:src="@drawable/feliz"
+                    android:layout_height="30dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="3 min"
+                    android:id="@+id/tv_agua"
+                    android:layout_gravity="center" />
+            </LinearLayout>
     </LinearLayout>
     <View
         android:layout_width="match_parent"

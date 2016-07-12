@@ -24,4 +24,6 @@ public class MathFormat {
         long tmp = Math.round(value);
         return (double) tmp / factor;
     }
+
+
 }
