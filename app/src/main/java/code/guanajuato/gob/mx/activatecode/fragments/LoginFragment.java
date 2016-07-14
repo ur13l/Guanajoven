@@ -477,6 +477,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     sesion.setGoogle(result.isGoogle() == 1);
 
                     if (sesion.getId() == 0) {
+                        if(loginSimplePd.isShowing()){
+                            loginSimplePd.dismiss();
+                        }
                         Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente", Snackbar.LENGTH_LONG);
                         View sView = snack.getView();
                         sView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.error));
@@ -495,6 +498,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 if(loginSimplePd.isShowing()){
                     loginSimplePd.dismiss();
                 }
+                Log.d("ProgressDialog","Entrando aquí");
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
         }
@@ -542,6 +546,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         if (sesion.getId() == -1) {
                             OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo ya se encuentra ligada a otro tipo de cuenta.");
                             LoginManager.getInstance().logOut();
+                            if(loginSimplePd.isShowing()){
+                                loginSimplePd.dismiss();
+
+                            }
 
                         } else {
                             Intent i = new Intent(getActivity(), HomeActivity.class);
@@ -607,6 +615,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
                     if (sesion.getId() == 0) {
                         Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente", Snackbar.LENGTH_LONG);
+                        if(loginSimplePd.isShowing()){
+                            loginSimplePd.dismiss();
+
+                        }
                     } else
                         //Error para cuando ya existe el registro como de Google o Facebook
                         if (sesion.getId() == -1) {

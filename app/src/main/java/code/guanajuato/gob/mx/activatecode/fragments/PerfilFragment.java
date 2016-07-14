@@ -112,8 +112,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ocupacionS.setAdapter(adapter1);
 
-        EditTextValidations.showHint(codposET, "Ej. 37420");
-        EditTextValidations.showHint(celET, "Ej. 4772526262");
+        EditTextValidations.showHint(codposET, "Ej. 37000");
+        EditTextValidations.showHint(celET, "Ej. 4771234567");
 
         perfil = new Perfil(getActivity().getApplicationContext());
         nomcomET.setText(perfil.getNombreCompleto());
@@ -384,18 +384,27 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     @Override
     public void afterTextChanged(Editable editable) {
         if(pesoEt.getText().length() > 0 && estaturaEt.getText().length() > 0){
-            float peso = Float.parseFloat(pesoEt.getText().toString());
-            float estatura = Float.parseFloat(estaturaEt.getText().toString());
-            float imc = peso / (estatura*estatura);
-            imcTv.setText(MathFormat.round(Double.parseDouble(MathFormat.removeDots(imc)), 2) + "");
-            if(imc > 25 && 30 > imc)
-                imcMensajeTv.setText("¡Cuidado, tú IMC indica sobrepeso!");
-            else if(imc >= 30)
-                imcMensajeTv.setText("¡Cuidado, tú IMC indica obesidad!");
-            else
-                imcMensajeTv.setText("");
+            if(!pesoEt.getText().toString().equals(".") ) {
+                if (!estaturaEt.getText().toString().equals(".")) {
+                    float peso = Float.parseFloat(pesoEt.getText().toString());
+                    float estatura = Float.parseFloat(estaturaEt.getText().toString());
+                    float imc = peso / (estatura * estatura);
+                    imcTv.setText(MathFormat.round(Double.parseDouble(MathFormat.removeDots(imc)), 2) + "");
+                    if (imc > 25 && 30 > imc)
+                        imcMensajeTv.setText("¡Cuidado, tú IMC indica sobrepeso!");
+                    else if (imc >= 30)
+                        imcMensajeTv.setText("¡Cuidado, tú IMC indica obesidad!");
+                    else
+                        imcMensajeTv.setText("");
+                } else {
+                    estaturaEt.setText("");
+                }
+            }
+                else{
+                pesoEt.setText("");
+                }
+            }
 
-        }
         else{
             imcTv.setText("NC");
             imcMensajeTv.setText("");

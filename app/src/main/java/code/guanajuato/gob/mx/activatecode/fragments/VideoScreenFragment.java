@@ -44,6 +44,7 @@ public class VideoScreenFragment extends Fragment implements SurfaceHolder.Callb
         path = getActivity().getExternalCacheDir().toString()+"/video.mp4";
         mp = new MediaPlayer();
         File file = new File(path);
+
         if(file.exists()){
             holder = surfaceView.getHolder();
             holder.setFixedSize(640, 480);

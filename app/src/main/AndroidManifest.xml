@@ -28,6 +28,7 @@
         android:icon="@drawable/code1"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
+        android:name="android.support.multidex.MultiDexApplication"
         android:supportsRtl="true">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -51,12 +52,15 @@
             android:name=".activities.HomeActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.BienvenidaActivity"
-            android:theme="@style/AppTheme.BienvenidaTheme" />
+            android:theme="@style/AppTheme.BienvenidaTheme"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".activities.InstruccionesActivity"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name=".activities.LogueoActivity"
@@ -66,6 +70,7 @@
         <activity
             android:name=".activities.SegundaActivity"
             android:label="@string/title_activity_segunda"
+            android:screenOrientation="portrait"
             android:theme="@style/ActivityStyle">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -79,6 +84,7 @@
         </activity>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:label="@string/app_name" />
         <activity

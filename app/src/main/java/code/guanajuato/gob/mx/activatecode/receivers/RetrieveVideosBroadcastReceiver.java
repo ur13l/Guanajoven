@@ -133,9 +133,6 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
                         });
                 ThinDownloadManager downloadManager = new ThinDownloadManager();
                 downloadManager.add(downloadRequest);
-            } else {
-                Log.d("DESCARGA","NO SE REGISTRA222");
-
             }
 
         }
