@@ -3,6 +3,7 @@ package code.guanajuato.gob.mx.activatecode.fragments;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,12 +32,17 @@ public class ReporteFragment extends CustomFragment {
     private View rootView;
     private RecyclerView rvReporte;
     private RVReporteAdapter adapter;
+    private CardView reporteCard;
+    private TextView emptyView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_reportes, parent, false);
         rvReporte = (RecyclerView) v.findViewById(R.id.rv_reporte);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rvReporte.setLayoutManager(llm);
+        emptyView = (TextView) v.findViewById(R.id.tv_empty);
+        reporteCard = (CardView) v.findViewById(R.id.card_reporte);
 
         bitacoraDBHelper = new BitacoraDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
 
@@ -53,6 +60,15 @@ public class ReporteFragment extends CustomFragment {
 
         adapter = new RVReporteAdapter(lista);
         rvReporte.setAdapter(adapter);
+
+        if(lista.isEmpty()){
+            emptyView.setVisibility(View.VISIBLE);
+            reporteCard.setVisibility(View.GONE);
+        }
+        else{
+            emptyView.setVisibility(View.GONE);
+            reporteCard.setVisibility(View.VISIBLE);
+        }
         for(int i = 0 ; i != lista.size(); i++){
             Log.d("REPORTE", lista.get(i).getFecha().toString() + " | " + lista.get(i).isAgua() + " | " + lista.get(i).isEjercicio());
         }

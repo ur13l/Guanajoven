@@ -59,7 +59,6 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
             } catch (IOException e) {
                 Log.e("DB", e.getMessage());
             }
-            initializeData();
         }
     }
 
@@ -72,6 +71,7 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_alarmas_activacion, parent, false);
+        initializeData();
         rv = (RecyclerView) v.findViewById(R.id.rv_alarmas);
         emptyView = (TextView) v.findViewById(R.id.empty_view);
         //Se hace el inflate del FAB creado en los recursos y se añade al CoordinatorLayout de la activity.

@@ -125,5 +125,9 @@ Se le informa que los datos integrados en este sistema, podrán ser compartidos 
     <string name="estatura">Estatura</string>
     <string name="imc">Índice de masa corporal (IMC)</string>
     <string name="leyenda_imc">*El cálculo del IMC se realiza en base a los parámetros de la OMS para personas mayores a 18 años.</string>
+    <string name="empty_reporte">No se encontraron registros.</string>
+    <string name="leyenda_ejercicio">*Lista de Actividades calculada para una persona de 70 Kg aproximadamente.\n
+    *Los datos mostrados pueden varias dependiendo de los factores y físicos y metabólicos de la persona.\n
+    *Datos tomados del Libro Alimentación y Nutrición de Francisco Grande Covian.</string>
 
 </resources>
