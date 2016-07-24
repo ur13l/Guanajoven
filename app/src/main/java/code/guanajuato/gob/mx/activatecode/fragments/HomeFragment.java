@@ -98,6 +98,8 @@ public class HomeFragment extends CustomFragment {
     private TextView dateTv;
     private TextView titleEvent;
     private LinearLayout llCalendario;
+    private View aguaView;
+    private View ejercicioView;
 
     //Handler para manipular el cambio de la publicidad
     Handler handlerPublicidad; //Handler para manipular las imágenes en el diagnóstico
@@ -189,6 +191,8 @@ public class HomeFragment extends CustomFragment {
         dateTv = (TextView) v.findViewById(R.id.date_home);
         llCalendario = (LinearLayout) v.findViewById( R.id.ll_calendario);
         titleEvent = (TextView) v.findViewById(R.id.title_event);
+        aguaView = v.findViewById(R.id.selectAgua);
+        ejercicioView = v.findViewById(R.id.selectEjercicio);
 
         //Función para activar las alarmas de Descargar videos.
         if(!prefs.getBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, false)){
@@ -254,6 +258,19 @@ public class HomeFragment extends CustomFragment {
         btnAgua = (Button)bottomToolbar.findViewById(R.id.btn_agua);
         btnEjercicio = (Button)bottomToolbar.findViewById(R.id.btn_ejercicio);
 
+        aguaView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cambiarFragment(R.id.nav_registrar_agua);
+            }
+        });
+
+        ejercicioView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cambiarFragment(R.id.nav_registrar_ejercicio);
+            }
+        });
         btnAgua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

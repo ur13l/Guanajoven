@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="left" >
+        <ImageView android:id="@+id/notifimage"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/code"/>
+        <TextView android:id="@+id/notiftitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/notifimage"
+            android:text="Título"
+            android:textSize="16dp"
+            android:textAppearance="@android:style/TextAppearance.Material.Notification.Title"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/notiftext"
+            android:layout_toRightOf="@id/notiftitle">
+            <TextView android:id="@+id/notiftime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:gravity="right"
+                android:textSize="12dp"
+                android:text="22:00"
+                android:textAppearance="@android:style/TextAppearance.Material.Notification.Time"/>
+        </FrameLayout>
+        <TextView android:id="@+id/notiftext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Esto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificaciónEsto es el texto de notificación"
+            android:layout_toRightOf="@id/notifimage"
+            android:textAppearance="@android:style/TextAppearance.Material.Notification.Info"
+            android:textSize="14dp"
+            android:layout_below="@id/notiftitle"
+            android:lines="1" />
+    </RelativeLayout>
+
+</LinearLayout>

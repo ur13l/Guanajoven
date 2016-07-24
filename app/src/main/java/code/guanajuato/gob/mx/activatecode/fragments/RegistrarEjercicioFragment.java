@@ -73,7 +73,7 @@ public class RegistrarEjercicioFragment extends CustomFragment {
             CheckBox ejercicioChk = (CheckBox) ejercicioView.getChildAt(3);
             nombreEjercicioTv.setText(ejercicio.getNombre());
             tiempoEjercicioTv.setText(MathFormat.removeDots(ejercicio.getTiempo()) + " mins.");
-            caloriasEjercicioTv.setText(MathFormat.removeDots(ejercicio.getCalorías()) + " cal.");
+            caloriasEjercicioTv.setText(MathFormat.removeDots(ejercicio.getCalorías()) + " kcal.");
             ejercicioChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

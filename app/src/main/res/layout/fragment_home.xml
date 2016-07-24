@@ -60,6 +60,8 @@
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:background="?attr/selectableItemBackground"
+                android:id="@+id/selectAgua"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp">
                     <TextView
@@ -104,7 +106,9 @@
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
+                android:background="?attr/selectableItemBackground"
                 android:paddingTop="10dp"
+                android:id="@+id/selectEjercicio"
                 android:paddingBottom="10dp">
                     <TextView
                         android:layout_width="match_parent"
