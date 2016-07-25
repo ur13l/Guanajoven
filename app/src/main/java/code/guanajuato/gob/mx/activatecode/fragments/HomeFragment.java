@@ -342,13 +342,11 @@ public class HomeFragment extends CustomFragment {
             prefs.edit().putBoolean(DATOS_PERFIL,true).commit();
         }
 
+        Log.d("WIFI", "Enviando token");
+        FirebaseMessaging.getInstance().subscribeToTopic("code.guanajuato.gob.mx.activatecode.CODEApp");
+        FirebaseInstanceId.getInstance().getToken();
+        new EnviarTokenAsyncTask().execute();
 
-        if(ConnectionUtilities.hasWIFIConnection(getActivity())) {
-            Log.d("WIFI", "Enviando token");
-            FirebaseMessaging.getInstance().subscribeToTopic("code.guanajuato.gob.mx.activatecode.CODEApp");
-            FirebaseInstanceId.getInstance().getToken();
-            new EnviarTokenAsyncTask().execute();
-        }
 
     }
 
