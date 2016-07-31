@@ -23,13 +23,13 @@ public class AlarmasDBHelper extends LocalDatabaseHelper {
 
     /**
      * Método para registrar las alarmas por defecto que debe tener un peke.
-     * @param id_peke: id del peke en cuestión
+     * @param idUsuario: Id del usuario registrando la alarma.
      */
-    public void registrarAlarmasDefault(int id_peke) {
+    public void registrarAlarmasDefault(int idUsuario) {
         SQLiteDatabase db = SQLiteDatabase.openDatabase(pathToSaveDBFile, null, SQLiteDatabase.OPEN_READWRITE);
 
         ContentValues values = new ContentValues();
-        values.put("id_login_app", id_peke);
+        values.put("id_login_app", idUsuario);
         values.put("hora", "8:00");
         values.put("lunes", 1);
         values.put("martes", 1);

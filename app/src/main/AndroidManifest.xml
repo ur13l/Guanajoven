@@ -98,8 +98,18 @@
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
 
         <receiver android:name=".receivers.AlarmasBroadcastReceiver"
+                android:enabled="true"
+                android:exported="true"></receiver>
+        <receiver android:name=".receivers.RetrieveVideosBroadcastReceiver"></receiver>
+
+        <receiver android:name=".receivers.AlarmaBootReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
         <receiver android:name=".receivers.RetrieveVideosBroadcastReceiver"></receiver>
 
         <service
