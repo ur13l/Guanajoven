@@ -1,19 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:fb="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
-    android:layout_alignParentTop="true">
+    android:layout_alignParentTop="true"
+    tools:context=".activities.LogueoActivity"
+    android:theme="@style/AppThemeLogin">
 
     <ImageView
+        android:background="@drawable/background_img1"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/login_background"
         ></ImageView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryAlpha"
+        ></RelativeLayout>
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -21,8 +30,6 @@
     android:layout_centerHorizontal="true"
     android:layout_alignParentTop="true"
     android:background="#00ffffff"
-
-    tools:context=".activities.LogueoActivity"
     android:padding="20dp">
 
     <ImageView
@@ -42,6 +49,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/white"
             android:layout_marginTop="15dp">
 
             <EditText
@@ -52,12 +60,16 @@
                 android:maxLength="50"
                 android:typeface="normal"
                 android:textSize="18dp"
-                android:hint="Email" />
+                android:hint="Email"
+                android:textColorHint="@color/white"
+                android:textColorHighlight="@color/white"
+                android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColorHint="@color/white"
             android:layout_marginTop="15dp">
 
             <EditText
@@ -68,7 +80,11 @@
                 android:typeface="normal"
                 android:textSize="18dp"
                 android:maxLength="15"
-                android:hint="@string/pass" />
+                android:hint="@string/pass"
+                android:textColorHint="@color/white"
+                android:textColorLink="@color/white"
+                android:textColorHighlight="@color/white"
+                android:textColor="@color/white" />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -90,7 +106,7 @@
             android:text="@string/olvidaste"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/white"
             android:id="@+id/tv_recuperar_pass"
             android:layout_marginTop="15dp" />
 
@@ -167,5 +183,11 @@
 
 
 </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="right|bottom"></RelativeLayout>
 
 </FrameLayout>

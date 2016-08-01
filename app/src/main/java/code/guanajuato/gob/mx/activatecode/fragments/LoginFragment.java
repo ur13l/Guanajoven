@@ -393,7 +393,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 } else {
                     ((TextInputLayout) correoEt.getParent()).setErrorEnabled(true);
                     ((TextInputLayout) correoEt.getParent()).setError("Correo no valido");
-                    correoEt.setHintTextColor(Color.BLACK);
+                    correoEt.setHintTextColor(Color.WHITE);
                     correoEt.setTypeface(Typeface.DEFAULT);
                     email = false;
                 }
