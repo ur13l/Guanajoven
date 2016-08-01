@@ -14,9 +14,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-/**
- * Created by marioalbertonegreterodriguez on 02/02/16.
- */
+
 public class ClienteHttp {
     //public static final String SERVER_IP = "192.168.1.73";
     //public static final String SERVER_IP = "10.0.7.42";
