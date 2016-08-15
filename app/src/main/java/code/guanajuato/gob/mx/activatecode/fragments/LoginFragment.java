@@ -64,6 +64,7 @@ import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.LoginPOJO;
+import code.guanajuato.gob.mx.activatecode.receivers.AlarmaBootReceiver;
 import code.guanajuato.gob.mx.activatecode.utilities.EditTextValidations;
 import code.guanajuato.gob.mx.activatecode.utilities.OKDialog;
 import code.guanajuato.gob.mx.activatecode.utilities.ValidEmail;
@@ -485,10 +486,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         sView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.error));
                         snack.show();
                     } else {
-                        Intent i = new Intent(getActivity(), HomeActivity.class);
-                        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(i);
-                        getActivity().finish();
+                        startHomeActivity();
                         //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                         //Entra al sistema SERVLET
@@ -552,13 +550,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             }
 
                         } else {
-                            Intent i = new Intent(getActivity(), HomeActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            getActivity().finish();
-                            //new TutorAsyncTask().execute(sesion.getId(), 4);
-
-                            //Entra al sistema SERVLET
+                            startHomeActivity();
                         }
                 }
                 //Cuando se debe realizar la inserción, enviar a Datos complementarios con correo, google, facebook, password = null;
@@ -625,10 +617,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo ya se encuentra ligada a otro tipo de cuenta.");
 
                         } else {
-                            Intent i = new Intent(getActivity(), HomeActivity.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            startActivity(i);
-                            getActivity().finish();
+                            startHomeActivity();
                             //new TutorAsyncTask().execute(sesion.getId(), 4);
 
                             //Entra al sistema SERVLET
@@ -652,6 +641,14 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
         }
+    }
+
+    public void startHomeActivity(){
+        AlarmaBootReceiver.configurarTodasAlarmas(this.getActivity());
+        Intent i = new Intent(getActivity(), HomeActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
+        getActivity().finish();
     }
 
     public void logOutFacebook() {

@@ -35,6 +35,7 @@ import code.guanajuato.gob.mx.activatecode.fragments.HomeFragment;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.Perfil;
 import code.guanajuato.gob.mx.activatecode.notifications.FirebaseInstanceIDService;
+import code.guanajuato.gob.mx.activatecode.receivers.AlarmasBroadcastReceiver;
 
 
 /**
@@ -160,6 +161,7 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_logout:
                 Login login = new Login(this.getApplicationContext());
+                AlarmasBroadcastReceiver.cancelAlarms(this);
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 new CancelarTokenAsyncTask().execute();
 

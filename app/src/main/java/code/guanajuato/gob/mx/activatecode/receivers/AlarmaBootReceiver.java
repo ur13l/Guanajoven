@@ -21,13 +21,17 @@ public class AlarmaBootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        configurarTodasAlarmas(context);
+    }
+
+    public static void configurarTodasAlarmas(Context context){
         Login l = new Login(context.getApplicationContext());
         AlarmasDBHelper dbHelper = new AlarmasDBHelper(context, context.getFilesDir().getAbsolutePath());
         ArrayList<Alarma> alarmas = dbHelper.getAlarmas(l.getId());
-        Log.d("ALARMBOOT", "LALA");
         for(Alarma a: alarmas){
-            Toast.makeText(context, a.getHora(), Toast.LENGTH_LONG).show();
-            AlarmasBroadcastReceiver.registerAlarm(context, a);
+            if(a.isActivo()) {
+                AlarmasBroadcastReceiver.registerAlarm(context, a);
+            }
         }
     }
 }

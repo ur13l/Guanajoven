@@ -322,6 +322,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
             perfil.setTelefono(celET.getText().toString());
         }
 
+        perfil.setPeso(Float.parseFloat(pesoEt.getText().toString()));
+        perfil.setEstatura(Float.parseFloat(estaturaEt.getText().toString()));
         new RegistrarAsyncTask().execute(params);
 
         // boolean presionEmpty = EditTextValidations.

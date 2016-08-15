@@ -18,6 +18,8 @@ import java.util.List;
 
 import code.guanajuato.gob.mx.activatecode.activities.VideoActivacionActivity;
 import code.guanajuato.gob.mx.activatecode.model.Alarma;
+import code.guanajuato.gob.mx.activatecode.model.Login;
+import code.guanajuato.gob.mx.activatecode.persistencia.AlarmasDBHelper;
 
 /**
  * Created by uriel on 27/03/16.
@@ -80,6 +82,52 @@ public class AlarmasBroadcastReceiver extends BroadcastReceiver {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static void cancelAlarms(Context mContext){
+        AlarmasDBHelper dbHelper = new AlarmasDBHelper(mContext, mContext.getFilesDir().getAbsolutePath());
+        Login login = new Login(mContext.getApplicationContext());
+        ArrayList<Alarma> alarmas = dbHelper.getAlarmas(login.getId());
+
+        for(Alarma a: alarmas){
+            ArrayList<Integer> daysOfWeek = new ArrayList();
+            if (a.isLunes())
+                daysOfWeek.add(Calendar.MONDAY);
+            if(a.isMartes())
+                daysOfWeek.add(Calendar.TUESDAY);
+            if(a.isMiercoles())
+                daysOfWeek.add(Calendar.WEDNESDAY);
+            if(a.isJueves())
+                daysOfWeek.add(Calendar.THURSDAY);
+            if(a.isViernes())
+                daysOfWeek.add(Calendar.FRIDAY);
+            if(a.isSabado())
+                daysOfWeek.add(Calendar.SATURDAY);
+            if(a.isDomingo())
+                daysOfWeek.add(Calendar.SUNDAY);
+
+
+            Calendar calendar = Calendar.getInstance();
+
+            calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(a.getHora().split(":")[0]));
+            calendar.set(Calendar.MINUTE, Integer.parseInt(a.getHora().split(":")[1]));
+            calendar.set(Calendar.SECOND, 0);
+            Intent intent = new Intent(mContext, AlarmasBroadcastReceiver.class);
+            intent.putExtra(DIAS_DE_LA_SEMANA, convertIntegers(daysOfWeek));
+            intent.putExtra(LOGIN_APP_ID, a.getIdLoginApp());
+            intent.putExtra(HORA, a.getHora());
+            intent.putExtra(ID, a.getId());
+            int id = intent.getIntExtra(ID, -1);
+            PendingIntent localPendingIntent = PendingIntent
+                    .getBroadcast(
+                            mContext.getApplicationContext(),
+                            id,
+                            intent,
+                            PendingIntent.FLAG_UPDATE_CURRENT);
+
+            cancelAlarmIfExists(mContext, id, intent);
+        }
+
     }
 
 

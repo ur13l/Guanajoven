@@ -10,12 +10,12 @@
         <item name="android:colorButtonNormal">@color/colorPrimary</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
-        <item name="android:textColorHint">@color/white</item>
 
     </style>
 
     <style name="AppThemeLogin" parent="AppTheme">
         <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
