@@ -114,6 +114,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
         EditTextValidations.showHint(codposET, "Ej. 37000");
         EditTextValidations.showHint(celET, "Ej. 4771234567");
+        EditTextValidations.showHint(pesoEt, "Ej. 70");
+        EditTextValidations.showHint(estaturaEt, "Ej. 1.70");
 
         perfil = new Perfil(getActivity().getApplicationContext());
         nomcomET.setText(perfil.getNombreCompleto());

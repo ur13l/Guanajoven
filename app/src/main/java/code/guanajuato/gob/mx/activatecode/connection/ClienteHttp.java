@@ -80,7 +80,7 @@ public class ClienteHttp {
         try {
             //Receive the response from the server
             InputStream in = new BufferedInputStream(conn.getInputStream());
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "ISO-8859-1"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
 
             String line;
             while ((line = reader.readLine()) != null) {

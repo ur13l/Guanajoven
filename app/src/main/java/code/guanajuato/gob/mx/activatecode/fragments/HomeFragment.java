@@ -65,6 +65,7 @@ import code.guanajuato.gob.mx.activatecode.model.Publicidad;
 import code.guanajuato.gob.mx.activatecode.notifications.FirebaseInstanceIDService;
 import code.guanajuato.gob.mx.activatecode.persistencia.AlarmasDBHelper;
 import code.guanajuato.gob.mx.activatecode.persistencia.BitacoraDBHelper;
+import code.guanajuato.gob.mx.activatecode.receivers.AlarmaBootReceiver;
 import code.guanajuato.gob.mx.activatecode.receivers.RetrieveVideosBroadcastReceiver;
 import code.guanajuato.gob.mx.activatecode.utilities.DateUtilities;
 import code.guanajuato.gob.mx.activatecode.utilities.MathFormat;
@@ -347,6 +348,7 @@ public class HomeFragment extends CustomFragment {
         FirebaseInstanceId.getInstance().getToken();
         new EnviarTokenAsyncTask().execute();
 
+        AlarmaBootReceiver.configurarTodasAlarmas(this.getActivity());
 
     }
 

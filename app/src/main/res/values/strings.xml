@@ -129,5 +129,6 @@ Se le informa que los datos integrados en este sistema, podrán ser compartidos 
     <string name="leyenda_ejercicio">*Lista de Actividades calculada para una persona de 70 Kg aproximadamente.\n
     *Los datos mostrados pueden varias dependiendo de los factores y físicos y metabólicos de la persona.\n
     *Datos tomados del Libro Alimentación y Nutrición de Francisco Grande Covian.</string>
+    <string name="lesion">¿Te encuentras lesionado?</string>
 
 </resources>

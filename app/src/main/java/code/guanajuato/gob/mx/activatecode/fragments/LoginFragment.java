@@ -644,7 +644,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
     public void startHomeActivity(){
-        AlarmaBootReceiver.configurarTodasAlarmas(this.getActivity());
         Intent i = new Intent(getActivity(), HomeActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

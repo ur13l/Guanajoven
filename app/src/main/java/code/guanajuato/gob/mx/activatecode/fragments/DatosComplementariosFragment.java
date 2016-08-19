@@ -35,12 +35,11 @@ import fr.ganfra.materialspinner.MaterialSpinner;
  */
 public class DatosComplementariosFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener, DatePickerDialog.OnDateSetListener{
     private String[] arraySiNo = {"Sí", "No"};
-    private String[] arrayAnimo = {"Triste", "Enojado", "Alegre"};
 
     private MaterialSpinner presionSpinner;
     private MaterialSpinner glucosaSpinner;
     private MaterialSpinner actividadSpinner;
-    private MaterialSpinner estadoAnimoSpinner;
+    private MaterialSpinner lesionSpinner;
     private MaterialSpinner generoS;
     private EditText pesoEt;
     private EditText estaturaEt;
@@ -102,7 +101,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         presionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_presion);
         glucosaSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_glucosa);
         actividadSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_actividad);
-        estadoAnimoSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_estado_animo);
+        lesionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_lesion);
         pesoEt = (EditText) v.findViewById(R.id.et_peso);
         estaturaEt = (EditText) v.findViewById(R.id.et_estatura);
         registrarBtn = (Button) v.findViewById(R.id.btn_registrar);
@@ -112,15 +111,11 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         presionSpinner.setAdapter(adapter);
         glucosaSpinner.setAdapter(adapter);
         actividadSpinner.setAdapter(adapter);
+        lesionSpinner.setAdapter(adapter);
 
         fechET.setKeyListener(null);
         fechET.setOnFocusChangeListener(this);
         fechET.setOnClickListener(this);
-
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayAnimo);
-        //Cambiar item
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        estadoAnimoSpinner.setAdapter(adapter1);
 
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayGenero);
         //Cambiar item
@@ -201,14 +196,14 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         boolean presionEmpty = EditTextValidations.spinnerSinSeleccion(presionSpinner);
         boolean glucosaEmpty = EditTextValidations.spinnerSinSeleccion(glucosaSpinner);
         boolean actividadEmpty = EditTextValidations.spinnerSinSeleccion(actividadSpinner);
-        boolean estadoAnimoEmpty = EditTextValidations.spinnerSinSeleccion(estadoAnimoSpinner);
+        boolean lesionEmpty = EditTextValidations.spinnerSinSeleccion(lesionSpinner);
         boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(generoS);
 
-        if(!pesoEmpty && !estaturaEmpty && !presionEmpty && !glucosaEmpty && !actividadEmpty && !estadoAnimoEmpty && !generoEmpty && !fechaEmpty) {
+        if(!pesoEmpty && !estaturaEmpty && !presionEmpty && !glucosaEmpty && !actividadEmpty && !lesionEmpty && !generoEmpty && !fechaEmpty) {
             String presionNum = presionSpinner.getSelectedItem().equals("Sí")?"1":"0";
             String glucosaNum = glucosaSpinner.getSelectedItem().equals("Sí")?"1":"0";
             String actividadNum = actividadSpinner.getSelectedItem().equals("Sí")?"1":"0";
-            String animoNum = estadoAnimoSpinner.getSelectedItemPosition() + "";
+            String lesionNum = lesionSpinner.getSelectedItemPosition() + "";
             String generoNum = generoS.getSelectedItemPosition() + "";
 
             params = new HashMap<>();
@@ -223,7 +218,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
             params.put("genero", generoNum);
             params.put("glucosa", glucosaNum);
             params.put("actividad", actividadNum);
-            params.put("animo", animoNum);
+            params.put("lesion", lesionNum);
             new RegistrarAsyncTask().execute(params);
         }
         // boolean presionEmpty = EditTextValidations.

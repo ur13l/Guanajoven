@@ -71,6 +71,12 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_alarmas_activacion, parent, false);
+        dbHelper = new AlarmasDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
+        try {
+            dbHelper.prepareDatabase();
+        } catch (IOException e) {
+            Log.e("DB", e.getMessage());
+        }
         initializeData();
         rv = (RecyclerView) v.findViewById(R.id.rv_alarmas);
         emptyView = (TextView) v.findViewById(R.id.empty_view);
