@@ -1,4 +1,4 @@
-package code.guanajuato.gob.mx.activatecode.utilities;
+package code.guanajuato.gob.mx.activatecode.utils;
 
 /**
  * Created by Uriel on 07/03/2016.

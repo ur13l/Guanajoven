@@ -2,7 +2,6 @@ package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -27,6 +26,7 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -34,10 +34,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
+import com.squareup.picasso.Picasso;
 import com.tyczj.extendedcalendarview.CalendarProvider;
 import com.tyczj.extendedcalendarview.Day;
 import com.tyczj.extendedcalendarview.Event;
 import com.tyczj.extendedcalendarview.ExtendedCalendarView;
+
+import org.json.JSONArray;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -55,21 +58,22 @@ import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.activities.SegundaActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
-import code.guanajuato.gob.mx.activatecode.connection.ConnectionUtilities;
 import code.guanajuato.gob.mx.activatecode.model.Bitacora;
 import code.guanajuato.gob.mx.activatecode.model.Evento;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.Perfil;
 import code.guanajuato.gob.mx.activatecode.model.PerfilPOJO;
 import code.guanajuato.gob.mx.activatecode.model.Publicidad;
+import code.guanajuato.gob.mx.activatecode.model.models_tmp.Imagen;
 import code.guanajuato.gob.mx.activatecode.notifications.FirebaseInstanceIDService;
 import code.guanajuato.gob.mx.activatecode.persistencia.AlarmasDBHelper;
 import code.guanajuato.gob.mx.activatecode.persistencia.BitacoraDBHelper;
 import code.guanajuato.gob.mx.activatecode.receivers.AlarmaBootReceiver;
 import code.guanajuato.gob.mx.activatecode.receivers.RetrieveVideosBroadcastReceiver;
-import code.guanajuato.gob.mx.activatecode.utilities.DateUtilities;
-import code.guanajuato.gob.mx.activatecode.utilities.MathFormat;
-import code.guanajuato.gob.mx.activatecode.utilities.PublicidadSingleton;
+import code.guanajuato.gob.mx.activatecode.utils.DateUtilities;
+import code.guanajuato.gob.mx.activatecode.utils.FileUtils;
+import code.guanajuato.gob.mx.activatecode.utils.MathFormat;
+import code.guanajuato.gob.mx.activatecode.utils.PublicidadSingleton;
 
 /**
  * Autor: Uriel Infante
@@ -84,6 +88,7 @@ public class HomeFragment extends CustomFragment {
     public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
     public static final String ALARMA_REGISTRADA = "alarma_registro_default";
     public static final String DATOS_PERFIL = "perfil_datos_usuario";
+    public static final String RES_URL = "http://app.codegto.gob.mx/code_web/src/res/";
     private PublicidadSingleton publicidad;
     private ImageLoader imageLoader;
     private Login session;
@@ -101,6 +106,7 @@ public class HomeFragment extends CustomFragment {
     private LinearLayout llCalendario;
     private View aguaView;
     private View ejercicioView;
+    private static ArrayList<Imagen> listaImagenes;
 
     //Handler para manipular el cambio de la publicidad
     Handler handlerPublicidad; //Handler para manipular las imágenes en el diagnóstico
@@ -116,24 +122,30 @@ public class HomeFragment extends CustomFragment {
     Runnable handlerPublicidadTask =  new Runnable(){
         @Override
         public void run() {
-            Random rand = new Random();
-            int randInt = rand.nextInt(publicidad.length());
-            final Publicidad p = publicidad.getAt(randInt);
-            ImageView img = (ImageView)getActivity().findViewById(R.id.image_view_publicidad);
-            if(img != null) {
-                img.setImageResource(p.getResourceId());
-                img.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent();
-                        intent.setAction(Intent.ACTION_VIEW);
-                        intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                        intent.setData(Uri.parse(p.getLink()));
-                        startActivity(intent);
-                    }
-                });
 
-                Log.d("HandlerPublicidad", "Mostrando:" + p.getLink());
+            Random rand = new Random();
+            if(publicidad.length() != 0) {
+                int randInt = rand.nextInt(publicidad.length());
+                final Imagen p = publicidad.getAt(randInt);
+                ImageView img = (ImageView) getActivity().findViewById(R.id.image_view_publicidad);
+                if (img != null) {
+
+                    Picasso.with(getActivity())
+                            .load(RES_URL + "imagenes/" + p.getImg())
+                            .into(img);
+                    img.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_VIEW);
+                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                            intent.setData(Uri.parse(p.getLink()));
+                            startActivity(intent);
+                        }
+                    });
+
+                    Log.d("HandlerPublicidad", "Mostrando:" + p.getLink());
+                }
             }
             handlerPublicidad.postDelayed(handlerPublicidadTask, INTERVALO_PUBLICIDAD);
         }
@@ -144,9 +156,8 @@ public class HomeFragment extends CustomFragment {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        TypedArray array = getActivity().getResources().obtainTypedArray(R.array.publicidad);
-        String[] stringArray = getActivity().getResources().getStringArray(R.array.publicidad_links);
-        publicidad = PublicidadSingleton.getInstance(array, stringArray);
+
+        publicidad = PublicidadSingleton.getInstance(getActivity());
 
         //Configuración de UniversalImageLoader
         // UNIVERSAL IMAGE LOADER SETUP
@@ -174,13 +185,13 @@ public class HomeFragment extends CustomFragment {
 
         String fecha = prefs.getString(FECHA_ACTUALIZACION,  DateUtilities.dateToString(DateUtilities.stringToDate("2002-02-02 00:00:00")));
         new NuevosEventosAsyncTask().execute(fecha);
-
+        new RecibirImagenesAsyncTask().execute();
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("PekeSalud");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Actívate CODE");
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
 
         //Se asocian las vistas a los elementos en Java.
@@ -532,6 +543,30 @@ public class HomeFragment extends CustomFragment {
             return null;
         }
 
+    }
+
+
+    private class RecibirImagenesAsyncTask extends AsyncTask<Void, Void, ArrayList<Imagen>> {
+
+        @Override
+        protected ArrayList<Imagen> doInBackground(Void... voids) {
+            HashMap<String, String> params = new HashMap<>();
+            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/imagenes/imagenes.php";
+            ClienteHttp cliente = new ClienteHttp();
+            String result = cliente.hacerRequestHttp(url, params);
+            Gson gson = new Gson();
+            Log.d("RESULTAD", result);
+            return gson.fromJson(result, new TypeToken<List<Imagen>>(){
+            }.getType());
+        }
+
+        @Override
+        public void onPostExecute(ArrayList<Imagen> result) {
+            super.onPostExecute(result);
+            Gson gson = new Gson();
+            JsonArray jsonArray = gson.toJsonTree(result).getAsJsonArray();
+            FileUtils.writeToFile(jsonArray.toString(), getActivity());
+        }
     }
 
 

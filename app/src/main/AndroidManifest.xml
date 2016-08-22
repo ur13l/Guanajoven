@@ -29,7 +29,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         android:name="android.support.multidex.MultiDexApplication"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:largeHeap="true">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key"/>
@@ -81,6 +82,7 @@
             android:name=".activities.VideoActivacionActivity"
             android:label="@string/title_activity_video_activacion"
             android:showOnLockScreen="true"
+            android:noHistory="true"
             android:theme="@style/ActivityStyle">
         </activity>
         <activity android:name="com.facebook.FacebookActivity"

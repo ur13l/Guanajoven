@@ -1,4 +1,4 @@
-package code.guanajuato.gob.mx.activatecode.utilities;
+package code.guanajuato.gob.mx.activatecode.utils;
 
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;

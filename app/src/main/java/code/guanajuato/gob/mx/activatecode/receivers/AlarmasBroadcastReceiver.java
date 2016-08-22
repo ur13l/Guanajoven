@@ -173,7 +173,6 @@ public class AlarmasBroadcastReceiver extends BroadcastReceiver {
                 i.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
                 i.addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
                 i.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-
                 keyguardLock.disableKeyguard();
                 wakeLock.acquire();
             }

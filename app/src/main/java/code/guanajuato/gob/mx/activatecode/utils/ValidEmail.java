@@ -1,4 +1,4 @@
-package code.guanajuato.gob.mx.activatecode.utilities;
+package code.guanajuato.gob.mx.activatecode.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

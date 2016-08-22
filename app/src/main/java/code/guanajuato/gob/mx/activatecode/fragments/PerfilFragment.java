@@ -1,10 +1,8 @@
 package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.content.DialogInterface;
-import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -13,40 +11,31 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.text.Text;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Locale;
 
-import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
-import code.guanajuato.gob.mx.activatecode.utilities.MathFormat;
+import code.guanajuato.gob.mx.activatecode.utils.MathFormat;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.Perfil;
-import code.guanajuato.gob.mx.activatecode.utilities.EditTextValidations;
-import code.guanajuato.gob.mx.activatecode.utilities.OKDialog;
+import code.guanajuato.gob.mx.activatecode.utils.EditTextValidations;
+import code.guanajuato.gob.mx.activatecode.utils.OKDialog;
 
 public class PerfilFragment extends CustomFragment implements  View.OnClickListener, DatePickerDialog.OnDateSetListener, View.OnFocusChangeListener, TextWatcher {
     private EditText nomcomET;

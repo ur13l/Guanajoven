@@ -18,8 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 import code.guanajuato.gob.mx.activatecode.R;
-import code.guanajuato.gob.mx.activatecode.utilities.DateUtilities;
-import code.guanajuato.gob.mx.activatecode.utilities.EditTextValidations;
+import code.guanajuato.gob.mx.activatecode.utils.DateUtilities;
+import code.guanajuato.gob.mx.activatecode.utils.EditTextValidations;
 
 /**
  * Created by Uriel on 11/03/2016.

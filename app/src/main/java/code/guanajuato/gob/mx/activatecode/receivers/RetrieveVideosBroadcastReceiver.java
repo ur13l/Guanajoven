@@ -37,8 +37,8 @@ import code.guanajuato.gob.mx.activatecode.connection.ConnectionUtilities;
 public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
     public static final String REGISTERED_ALARM = "retrieve_video_broadcast_receiver_checked";
     public static final String FECHA_ACTUALIZACION = "retrieve_video_broadcast_receiver_fecha";
-    private SharedPreferences prefs;
-    private Context context;
+    private static SharedPreferences prefs;
+    private static Context context;
     /**
      * Función registerAlarm(Context paramContext)
      *
@@ -63,6 +63,12 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
         AlarmManager am = ((AlarmManager) paramContext.getSystemService(Context.ALARM_SERVICE));
         //am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), localPendingIntent);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HOUR, localPendingIntent);
+
+        context =paramContext;
+        if (ConnectionUtilities.hasWIFIConnection(context)) {
+            prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+            new RevisarFechaVideoAsyncTask().execute();
+        }
     }
 
     /**
@@ -83,7 +89,7 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
     }
 
 
-    private class RevisarFechaVideoAsyncTask extends AsyncTask<Void, Void, String>{
+    private static class RevisarFechaVideoAsyncTask extends AsyncTask<Void, Void, String>{
 
         @Override
         protected String doInBackground(Void... args) {

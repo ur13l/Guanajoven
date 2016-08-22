@@ -7,15 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.model.StatusReporte;
-import code.guanajuato.gob.mx.activatecode.utilities.DateUtilities;
-import code.guanajuato.gob.mx.activatecode.utilities.MathFormat;
+import code.guanajuato.gob.mx.activatecode.utils.DateUtilities;
+import code.guanajuato.gob.mx.activatecode.utils.MathFormat;
 
 /**
  * Created by code on 21/06/16.

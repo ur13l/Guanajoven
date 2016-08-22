@@ -15,9 +15,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.Log;
@@ -26,7 +24,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -51,7 +48,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.plus.Plus;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -64,10 +60,9 @@ import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.LoginPOJO;
-import code.guanajuato.gob.mx.activatecode.receivers.AlarmaBootReceiver;
-import code.guanajuato.gob.mx.activatecode.utilities.EditTextValidations;
-import code.guanajuato.gob.mx.activatecode.utilities.OKDialog;
-import code.guanajuato.gob.mx.activatecode.utilities.ValidEmail;
+import code.guanajuato.gob.mx.activatecode.utils.EditTextValidations;
+import code.guanajuato.gob.mx.activatecode.utils.OKDialog;
+import code.guanajuato.gob.mx.activatecode.utils.ValidEmail;
 
 /**
  * Autor: Uriel Infante

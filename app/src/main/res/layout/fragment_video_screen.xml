@@ -6,7 +6,7 @@
 
 
     <VideoView
-        android:layout_height="wrap_content"
+        android:layout_height="280dp"
         android:layout_width="match_parent"
         android:id="@+id/video_view"
         android:layout_gravity="center_vertical">

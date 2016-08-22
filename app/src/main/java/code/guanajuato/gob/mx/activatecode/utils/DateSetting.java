@@ -1,4 +1,4 @@
-package code.guanajuato.gob.mx.activatecode.utilities;
+package code.guanajuato.gob.mx.activatecode.utils;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.widget.DatePicker;

@@ -27,7 +27,7 @@ import java.util.HashMap;
 
 import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
-import code.guanajuato.gob.mx.activatecode.utilities.OKDialog;
+import code.guanajuato.gob.mx.activatecode.utils.OKDialog;
 
 /**
 * Autor: Uriel Infante

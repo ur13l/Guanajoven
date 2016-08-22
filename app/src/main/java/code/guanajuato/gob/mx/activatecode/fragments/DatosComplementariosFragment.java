@@ -23,8 +23,8 @@ import code.guanajuato.gob.mx.activatecode.activities.HomeActivity;
 import code.guanajuato.gob.mx.activatecode.connection.ClienteHttp;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.model.LoginPOJO;
-import code.guanajuato.gob.mx.activatecode.utilities.EditTextValidations;
-import code.guanajuato.gob.mx.activatecode.utilities.OKDialog;
+import code.guanajuato.gob.mx.activatecode.utils.EditTextValidations;
+import code.guanajuato.gob.mx.activatecode.utils.OKDialog;
 import fr.ganfra.materialspinner.MaterialSpinner;
 
 /**

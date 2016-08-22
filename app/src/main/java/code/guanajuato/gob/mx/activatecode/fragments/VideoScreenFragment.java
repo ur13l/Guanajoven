@@ -69,6 +69,8 @@ public class VideoScreenFragment extends Fragment implements SurfaceHolder.Callb
         btnDetener.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(mp != null)
+                    mp.release();
                 getActivity().finish();
             }
         });
@@ -86,6 +88,7 @@ public class VideoScreenFragment extends Fragment implements SurfaceHolder.Callb
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
+        mp=MediaPlayer.create(getActivity().getApplicationContext(), R.raw.alarm);
         mp.setAudioStreamType(AudioManager.STREAM_ALARM);
         mp.setDisplay(holder);
         play();

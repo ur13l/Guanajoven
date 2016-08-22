@@ -22,7 +22,7 @@ import code.guanajuato.gob.mx.activatecode.model.Bitacora;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.persistencia.AguaDBHelper;
 import code.guanajuato.gob.mx.activatecode.persistencia.BitacoraDBHelper;
-import code.guanajuato.gob.mx.activatecode.utilities.MathFormat;
+import code.guanajuato.gob.mx.activatecode.utils.MathFormat;
 
 /**
  * Autor: Uriel Infante

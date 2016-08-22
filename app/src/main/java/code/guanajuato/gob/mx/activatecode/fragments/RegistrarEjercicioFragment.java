@@ -26,7 +26,7 @@ import code.guanajuato.gob.mx.activatecode.model.Ejercicio;
 import code.guanajuato.gob.mx.activatecode.model.Login;
 import code.guanajuato.gob.mx.activatecode.persistencia.BitacoraDBHelper;
 import code.guanajuato.gob.mx.activatecode.persistencia.EjercicioDBHelper;
-import code.guanajuato.gob.mx.activatecode.utilities.MathFormat;
+import code.guanajuato.gob.mx.activatecode.utils.MathFormat;
 
 /**
  * Created by Uriel on 01/02/2016.

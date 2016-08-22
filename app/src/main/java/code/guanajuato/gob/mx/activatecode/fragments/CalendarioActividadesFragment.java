@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
 
 import code.guanajuato.gob.mx.activatecode.R;
 import code.guanajuato.gob.mx.activatecode.adapters.RVEventosAdapter;
-import code.guanajuato.gob.mx.activatecode.utilities.DateUtilities;
+import code.guanajuato.gob.mx.activatecode.utils.DateUtilities;
 
 /**
  * Created by Uriel on 11/03/2016.

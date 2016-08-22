@@ -214,36 +214,5 @@
             android:scaleType="centerCrop"/>
     </android.support.v7.widget.CardView>
 
-    <!-- Facebook -->
-    <!--
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_view_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="100dp"
-        style="@style/AppTheme.CardViewStyle"
-        card_view:cardCornerRadius="4dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/facebook"
-            android:orientation="vertical">
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/white"
-                android:textAllCaps="true"
-                style="?android:attr/borderlessButtonStyle"
-                android:layout_margin="0dp"
-                android:padding="5dp"
-                android:textSize="12sp"
-                android:text="@string/like_facebook"/>
-
-       </LinearLayout>
-    </android.support.v7.widget.CardView>
-
--->
 
 </LinearLayout>

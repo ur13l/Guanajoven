@@ -1,4 +1,4 @@
-package code.guanajuato.gob.mx.activatecode.utilities;
+package code.guanajuato.gob.mx.activatecode.utils;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
