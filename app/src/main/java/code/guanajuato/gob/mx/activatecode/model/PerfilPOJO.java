@@ -13,6 +13,10 @@ public class PerfilPOJO {
     private String telefono;
     private float peso;
     private float estatura;
+    private int presion;
+    private int glucosa_elevada;
+    private int actividad_fisica;
+    private int lesion;
     private String success;
 
     public int getId_login_app() {
@@ -86,6 +90,38 @@ public class PerfilPOJO {
 
     public void setPeso(float peso) {
         this.peso = peso;
+    }
+
+    public int getPresion() {
+        return presion;
+    }
+
+    public void setPresion(int presion) {
+        this.presion = presion;
+    }
+
+    public int getGlucosa() {
+        return glucosa_elevada;
+    }
+
+    public void setGlucosa(int glucosa) {
+        this.glucosa_elevada = glucosa;
+    }
+
+    public int getActividad() {
+        return actividad_fisica;
+    }
+
+    public void setActividad(int actividad) {
+        this.actividad_fisica = actividad;
+    }
+
+    public int getLesion() {
+        return lesion;
+    }
+
+    public void setLesion(int lesion) {
+        this.lesion = lesion;
     }
 
     public String getSuccess() {

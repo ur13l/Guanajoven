@@ -17,6 +17,10 @@ public class Perfil {
     public final static String TELEFONO = "perfil_telefono";
     public final static String PESO = "perfil_peso";
     public final static String ESTATURA = "perfil_estatura";
+    public final static String PRESION = "perfil_presion";
+    public final static String GLUCOSA = "perfil_glucosa";
+    public final static String LESION = "perfil_lesion";
+    public final static String ACTIVIDAD = "perfil_actividad";
     public final static String SUCCESS = "perfil_success";
     private int id;
     private String nombre_completo;
@@ -27,6 +31,10 @@ public class Perfil {
     private String telefono;
     private float peso;
     private float estatura;
+    private Integer presion;
+    private Integer glucosa;
+    private Integer lesion;
+    private Integer actividad;
     private String success;
     private static SharedPreferences prefs;
 
@@ -137,6 +145,45 @@ public class Perfil {
         this.estatura = estatura;
     }
 
+    public Integer getPresion(){
+        Integer presion = prefs.getInt(PRESION,0);
+        return presion;
+    }
+
+    public void setPresion(Integer presion){
+        prefs.edit().putInt(PRESION, presion).commit();
+        this.presion = presion;
+    }
+
+    public Integer getGlucosa(){
+        Integer glucosa = prefs.getInt(GLUCOSA,0);
+        return glucosa;
+    }
+
+    public void setGlucosa(Integer glucosa){
+        prefs.edit().putInt(GLUCOSA, glucosa).commit();
+        this.glucosa = glucosa;
+    }
+
+    public Integer getActividad(){
+        Integer actividad = prefs.getInt(ACTIVIDAD,0);
+        return actividad;
+    }
+
+    public void setActividad(Integer actividad){
+        prefs.edit().putInt(ACTIVIDAD, actividad).commit();
+        this.actividad = actividad;
+    }
+
+    public Integer getLesion(){
+        Integer lesion = prefs.getInt(LESION,0);
+        return lesion;
+    }
+
+    public void setLesion(Integer lesion){
+        prefs.edit().putInt(LESION, lesion).commit();
+        this.lesion = lesion;
+    }
 
     public String getSuccess() {
         String success = prefs.getString(SUCCESS,"");

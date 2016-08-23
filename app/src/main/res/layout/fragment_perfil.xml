@@ -183,6 +183,59 @@
     </android.support.design.widget.TextInputLayout>
 
 
+
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_presion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        android:typeface="normal"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/presion"
+        app:ms_hint="@string/presion"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_glucosa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/glucosa"
+        app:ms_hint="@string/glucosa"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_actividad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/actividad"
+        app:ms_hint="@string/actividad"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
+    <fr.ganfra.materialspinner.MaterialSpinner
+        android:id="@+id/spinner_lesion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:ms_arrowColor="@color/colorPrimary"
+        app:ms_arrowSize="16dp"
+        app:ms_floatingLabelColor="@color/gray"
+        app:ms_floatingLabelText="@string/lesion"
+        app:ms_hint="@string/lesion"
+        app:ms_multiline="true"
+        android:layout_marginTop="5dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

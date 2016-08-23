@@ -520,6 +520,10 @@ public class HomeFragment extends CustomFragment {
                 perfil.setSuccess(perfilpo.getSuccess());
                 perfil.setPeso(perfilpo.getPeso());
                 perfil.setEstatura(perfilpo.getEstatura());
+                perfil.setPresion(perfilpo.getPresion());
+                perfil.setGlucosa(perfilpo.getGlucosa());
+                perfil.setActividad(perfilpo.getActividad());
+                perfil.setLesion(perfilpo.getLesion());
             }
             Log.d("result",result);
             return result;
@@ -564,8 +568,10 @@ public class HomeFragment extends CustomFragment {
         public void onPostExecute(ArrayList<Imagen> result) {
             super.onPostExecute(result);
             Gson gson = new Gson();
-            JsonArray jsonArray = gson.toJsonTree(result).getAsJsonArray();
-            FileUtils.writeToFile(jsonArray.toString(), getActivity());
+            if(result != null) {
+                JsonArray jsonArray = gson.toJsonTree(result).getAsJsonArray();
+                FileUtils.writeToFile(jsonArray.toString(), getActivity());
+            }
         }
     }
 

@@ -50,6 +50,11 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     private MaterialSpinner ocupacionS;
     private String[] arrayOcupacion = {"Profesor", "Empleado", "Empresario", "Abogado", "Estudiante", "Ingeniero", "Doctor", "Arquitecto",
             "Ama de casa", "Empleado calzado" , "Obrero", "Comerciante", "Enfermera"};
+    private MaterialSpinner presionSpinner;
+    private MaterialSpinner glucosaSpinner;
+    private MaterialSpinner actividadSpinner;
+    private MaterialSpinner lesionSpinner;
+    private String[] arraySiNo = {"Sí", "No"};
     private EditText codposET;
     private EditText celET;
     private TextView polipriTV;
@@ -82,6 +87,10 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         estaturaEt = (EditText) v.findViewById(R.id.et_estatura);
         imcTv = (TextView) v.findViewById(R.id.tv_imc);
         imcMensajeTv = (TextView) v.findViewById(R.id.tv_imc_mensaje);
+        presionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_presion);
+        glucosaSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_glucosa);
+        actividadSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_actividad);
+        lesionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_lesion);
 
         fechET.setKeyListener(null);
         fechET.setOnFocusChangeListener(this);
@@ -91,6 +100,15 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         polipriTV.setOnClickListener(this);
         estaturaEt.addTextChangedListener(this);
         pesoEt.addTextChangedListener(this);
+
+
+
+        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arraySiNo);
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        presionSpinner.setAdapter(adapter2);
+        glucosaSpinner.setAdapter(adapter2);
+        actividadSpinner.setAdapter(adapter2);
+        lesionSpinner.setAdapter(adapter2);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayGenero);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -109,6 +127,10 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         perfil = new Perfil(getActivity().getApplicationContext());
         nomcomET.setText(perfil.getNombreCompleto());
         generoS.setSelection(perfil.getGenero());
+        presionSpinner.setSelection(perfil.getPresion());
+        glucosaSpinner.setSelection(perfil.getGlucosa());
+        actividadSpinner.setSelection(perfil.getActividad());
+        lesionSpinner.setSelection(perfil.getLesion());
 
         pesoEt.setText(MathFormat.removeDots((float) MathFormat.round((double)perfil.getPeso(),2))+"");
         estaturaEt.setText(MathFormat.removeDots((float) MathFormat.round((double)perfil.getEstatura(),2))+"" + "");
@@ -140,6 +162,10 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         //Verifica que los campos no estén vacíos
         boolean fechaEmpty = EditTextValidations.esCampoVacio(fechET);
         boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(generoS);
+        boolean presionEmpty = EditTextValidations.spinnerSinSeleccion(presionSpinner);
+        boolean glucosaEmpty = EditTextValidations.spinnerSinSeleccion(glucosaSpinner);
+        boolean actividadEmpty = EditTextValidations.spinnerSinSeleccion(actividadSpinner);
+        boolean lesionEmpty = EditTextValidations.spinnerSinSeleccion(lesionSpinner);
         boolean pesoEmpty = EditTextValidations.esCampoVacio(pesoEt);
         boolean estaturaEmpty = EditTextValidations.esCampoVacio(estaturaEt);
         boolean fechafalse = false;
@@ -174,7 +200,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         }
 
         //Si ninguno de los campos es vacío
-        if(!fechaEmpty && codigofalse && celfalse && !generoEmpty && !pesoEmpty && !estaturaEmpty){
+        if(!fechaEmpty && codigofalse && celfalse && !generoEmpty && !presionEmpty && !glucosaEmpty && !actividadEmpty && !lesionEmpty && !pesoEmpty && !estaturaEmpty){
             fechafalse = true;
         }
 
@@ -260,6 +286,14 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     public void registrar(){
         String generoStr = (generoS.getSelectedItemPosition()) +"";
         if(generoS.getSelectedItemPosition() == 0) generoStr = null;
+        String presionStr = (presionSpinner.getSelectedItemPosition()) +"";
+        if(presionSpinner.getSelectedItemPosition() == 0) presionStr = null;
+        String glucosaStr = (glucosaSpinner.getSelectedItemPosition()) +"";
+        if(glucosaSpinner.getSelectedItemPosition() == 0) glucosaStr = null;
+        String actividadStr = (actividadSpinner.getSelectedItemPosition()) +"";
+        if(actividadSpinner.getSelectedItemPosition() == 0) actividadStr = null;
+        String lesionStr = (lesionSpinner.getSelectedItemPosition()) +"";
+        if(lesionSpinner.getSelectedItemPosition() == 0) lesionStr = null;
         String ocupacionStr = (ocupacionS.getSelectedItemPosition()) +"";
         if(ocupacionS.getSelectedItemPosition() == 0) ocupacionStr = null;
         String aux= "";
@@ -280,6 +314,18 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
         params.put("genero", generoStr);
         perfil.setGenero(Integer.parseInt(generoStr));
+
+        params.put("presion", presionStr);
+        perfil.setPresion(Integer.parseInt(presionStr));
+
+        params.put("glucosa", glucosaStr);
+        perfil.setGlucosa(Integer.parseInt(glucosaStr));
+
+        params.put("actividad", generoStr);
+        perfil.setActividad(Integer.parseInt(actividadStr));
+
+        params.put("lesion", lesionStr);
+        perfil.setLesion(Integer.parseInt(lesionStr));
 
         if (calen == true) {
             params.put("fec_nacimiento", "" + fecha);
