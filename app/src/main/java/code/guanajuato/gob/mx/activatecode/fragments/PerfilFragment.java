@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -381,7 +382,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(dialog_title);
-        builder.setMessage(dialog_message);
+        builder.setMessage(Html.fromHtml(dialog_message));
 
         String positiveText = "Acepto";
         builder.setPositiveButton(positiveText,
