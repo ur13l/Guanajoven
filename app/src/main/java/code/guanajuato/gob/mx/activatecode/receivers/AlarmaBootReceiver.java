@@ -28,6 +28,7 @@ public class AlarmaBootReceiver extends BroadcastReceiver {
         Login l = new Login(context.getApplicationContext());
         AlarmasDBHelper dbHelper = new AlarmasDBHelper(context, context.getFilesDir().getAbsolutePath());
         ArrayList<Alarma> alarmas = dbHelper.getAlarmas(l.getId());
+        RetrieveVideosBroadcastReceiver.registerAlarm(context);
         for(Alarma a: alarmas){
             if(a.isActivo()) {
                 AlarmasBroadcastReceiver.registerAlarm(context, a);
