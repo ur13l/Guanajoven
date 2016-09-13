@@ -463,27 +463,33 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
         @Override
         public void onPostExecute(LoginPOJO result) {
-
             if (result != null) {
-
                     Login sesion = new Login(getActivity().getApplicationContext());
                     sesion.setId(result.getId());
                     sesion.setCorreo(result.getCorreo());
                     sesion.setFacebook(result.isFacebook() == 1);
                     sesion.setGoogle(result.isGoogle() == 1);
-
                     if (sesion.getId() == 0) {
                         if(loginSimplePd.isShowing()){
                             loginSimplePd.dismiss();
                         }
-                        Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente", Snackbar.LENGTH_LONG);
-                        View sView = snack.getView();
-                        sView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.error));
-                        snack.show();
+                        if(sesion.getGoogle()){
+                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Google.");
+                        }
+                        else if (sesion.getFacebook()){
+                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Facebook.");
+                        }
+                        else {
+                            Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente. Verifique que no tenga registro creado con Google o Facebook", Snackbar.LENGTH_LONG);
+                            View sView = snack.getView();
+                            sView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.error));
+                            TextView textView = (TextView) sView.findViewById(android.support.design.R.id.snackbar_text);
+                            textView.setMaxLines(7);
+                            snack.show();
+                        }
                     } else {
                         startHomeActivity();
                         //new TutorAsyncTask().execute(sesion.getId(), 4);
-
                         //Entra al sistema SERVLET
                     }
 
@@ -574,7 +580,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         @Override
         protected void onPreExecute() {
             loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
-
         }
 
 
@@ -601,15 +606,23 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     sesion.setGoogle(result.isGoogle() == 1);
 
                     if (sesion.getId() == 0) {
-                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente", Snackbar.LENGTH_LONG);
-                        if(loginSimplePd.isShowing()){
+                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG);
+                        if (loginSimplePd.isShowing()) {
                             loginSimplePd.dismiss();
 
                         }
                     } else
                         //Error para cuando ya existe el registro como de Google o Facebook
                         if (sesion.getId() == -1) {
-                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo ya se encuentra ligada a otro tipo de cuenta.");
+                            if(sesion.getGoogle()){
+                                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Google.");
+                            }
+                            else if (sesion.getFacebook()){
+                                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Facebook.");
+                            }
+                            else {
+                                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo ya se encuentra ligada a otro tipo de cuenta.");
+                            }
 
                         } else {
                             startHomeActivity();
