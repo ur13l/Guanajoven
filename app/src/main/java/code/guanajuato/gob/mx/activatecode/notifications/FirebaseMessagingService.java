@@ -29,12 +29,13 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //super.onMessageReceived(remoteMessage);
-        showNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTag());
+        Log.d("DEBUG", "Notificacion");
+        showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("tag"));
     }
 
     public void showNotification(String title, String message, String enlace){
         Intent i;
-        if(enlace.isEmpty()) {
+        if(enlace == null || enlace.isEmpty()) {
             i = new Intent(this, HomeActivity.class);
         }
         else{
