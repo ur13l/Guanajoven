@@ -17,4 +17,6 @@
     <color name="googleDark">#c23724</color>
     <color name="error">#F44336</color>
 
+    <color name="black_overlay">#66000000</color>
+
 </resources>

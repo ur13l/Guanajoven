@@ -7,7 +7,87 @@
     android:orientation="vertical"
     android:background="@color/background_gray"
     android:paddingBottom="60dp">
-    <include layout="@layout/header_code"/>
+
+    <!--Publicidad -->
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/AppTheme.CardViewStyle"
+        card_view:cardCornerRadius="4dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/image_view_publicidad"
+            android:src="@drawable/publicidad1"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"/>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="100dp"
+        style="@style/AppTheme.CardViewStyle"
+        card_view:cardCornerRadius="4dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:padding="20dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:id="@+id/ll_calendario"
+                android:background="@drawable/calendario"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="9 de Marzo"
+                    android:textColor="@color/white"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowColor="@color/black"
+                    android:id="@+id/date_home"
+                    android:textStyle="bold"
+                    android:textSize="23dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:shadowDx="3"
+                    android:shadowDy="3"
+                    android:shadowColor="@color/black"
+                    android:id="@+id/title_event"
+                    android:text="¡Sal a correr por 30 minutos!"
+                    android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background_gray" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <com.tyczj.extendedcalendarview.ExtendedCalendarView
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:id="@+id/calendar_home"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
@@ -137,82 +217,6 @@
             </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="100dp"
-        style="@style/AppTheme.CardViewStyle"
-        card_view:cardCornerRadius="4dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="170dp"
-                android:padding="20dp"
-                android:foreground="?attr/selectableItemBackground"
-                android:id="@+id/ll_calendario"
-                android:background="@drawable/calendario"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="9 de Marzo"
-                    android:textColor="@color/white"
-                    android:id="@+id/date_home"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    />
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:shadowDx="3"
-                    android:shadowDy="3"
-                    android:shadowColor="@color/black"
-                    android:id="@+id/title_event"
-                    android:text="¡Sal a correr por 30 minutos!"
-                    android:textAppearance="?android:attr/textAppearanceSmall"/>
-
-            </LinearLayout>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:background="@color/background_gray" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <com.tyczj.extendedcalendarview.ExtendedCalendarView
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:id="@+id/calendar_home"
-                />
-        </LinearLayout>
-
-        </LinearLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <!--Publicidad -->
-    <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/AppTheme.CardViewStyle"
-        card_view:cardCornerRadius="4dp">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/image_view_publicidad"
-            android:src="@drawable/publicidad1"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"/>
-    </android.support.v7.widget.CardView>
 
 
 </LinearLayout>

@@ -142,6 +142,11 @@ public class HomeActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
+        if(id == R.id.ayuda_home){
+            Intent i = new Intent(this, HelpActivity.class);
+            startActivity(i);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

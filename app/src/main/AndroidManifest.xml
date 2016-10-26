@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="code.guanajuato.gob.mx.activatecode">
@@ -9,7 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
@@ -20,29 +21,30 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <!-- To use account credentials -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-
     <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
 
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:hardwareAccelerated="true"
         android:icon="@drawable/code1"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
-        android:name="android.support.multidex.MultiDexApplication"
+        android:largeHeap="true"
         android:supportsRtl="true"
-        android:largeHeap="true">
+        android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/api_key"/>
-        <meta-data android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/api_key" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".activities.SplashActivity"
-            android:theme="@style/SplashTheme"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,8 +59,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.BienvenidaActivity"
-            android:theme="@style/AppTheme.BienvenidaTheme"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.BienvenidaTheme" />
         <activity
             android:name=".activities.InstruccionesActivity"
             android:screenOrientation="portrait"
@@ -67,8 +69,8 @@
             android:name=".activities.LogueoActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible|adjustPan"
-            android:theme="@style/ActivityStyle" />
+            android:theme="@style/ActivityStyle"
+            android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
             android:name=".activities.SegundaActivity"
             android:label="@string/title_activity_segunda"
@@ -81,15 +83,16 @@
         <activity
             android:name=".activities.VideoActivacionActivity"
             android:label="@string/title_activity_video_activacion"
-            android:showOnLockScreen="true"
             android:noHistory="true"
-            android:theme="@style/ActivityStyle">
-        </activity>
-        <activity android:name="com.facebook.FacebookActivity"
+            android:screenOrientation="landscape"
+            android:showOnLockScreen="true"
+            android:theme="@style/ActivityStyle"></activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:screenOrientation="portrait"
@@ -100,37 +103,38 @@
             android:name="com.tyczj.extendedcalendarview.CalendarProvider"
             android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
 
-        <receiver android:name=".receivers.AlarmasBroadcastReceiver"
-                android:enabled="true"
-                android:exported="true"></receiver>
-        <receiver android:name=".receivers.RetrieveVideosBroadcastReceiver"></receiver>
-
-        <receiver android:name=".receivers.AlarmaBootReceiver"
+        <receiver
+            android:name=".receivers.AlarmasBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" />
+        <receiver android:name=".receivers.RetrieveVideosBroadcastReceiver" />
+        <receiver
+            android:name=".receivers.AlarmaBootReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.RetrieveVideosBroadcastReceiver"></receiver>
+        <receiver android:name=".receivers.RetrieveVideosBroadcastReceiver" />
 
-        <service
-            android:name=".notifications.FirebaseInstanceIDService">
+        <service android:name=".notifications.FirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".notifications.FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-        <service
-            android:name=".notifications.FirebaseMessagingService">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
-            </intent-filter>
-        </service>
-
-
-
+        <activity
+            android:name=".activities.HelpActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_help"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

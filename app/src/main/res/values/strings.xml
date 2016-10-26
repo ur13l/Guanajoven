@@ -289,4 +289,9 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     *Datos tomados del Libro Alimentación y Nutrición de Francisco Grande Covian.</string>
     <string name="lesion">¿Te encuentras lesionado?</string>
 
+    <string name="title_activity_help">HelpActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="continuar">Continuar</string>
+
 </resources>
