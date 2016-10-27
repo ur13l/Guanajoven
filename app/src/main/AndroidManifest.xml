@@ -132,9 +132,8 @@
 
         <activity
             android:name=".activities.HelpActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_help"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/ActivityStyle"></activity>
     </application>
 
 </manifest>

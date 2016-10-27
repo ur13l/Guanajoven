@@ -44,9 +44,12 @@ public class ColaboradoresFragment extends CustomFragment {
     }
 
     public void abrirColaboradores(){
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse("http://www.codegto.gob.mx/index.php/directorio/"));
-        startActivity(i);
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        DetalleColaboradoresCodeFragment f = new DetalleColaboradoresCodeFragment();
+        ft.replace(R.id.segunda_fragment_container, f)
+                .addToBackStack(null)
+                .commit();
     }
 
     public void abrirITL(){

@@ -1,18 +1,23 @@
 package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
@@ -49,6 +54,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     private EditText fechET;
     private String fecha;
     private Calendar calendar;
+    private TextView politicaTv;
 
     private LoginPOJO loginPrevio;
     private HashMap<String, String> params;
@@ -105,6 +111,14 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         pesoEt = (EditText) v.findViewById(R.id.et_peso);
         estaturaEt = (EditText) v.findViewById(R.id.et_estatura);
         registrarBtn = (Button) v.findViewById(R.id.btn_registrar);
+        politicaTv = (TextView) v.findViewById(R.id.aviso_privacidad);
+
+        politicaTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arraySiNo);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -234,6 +248,27 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     }
 
 
+    private void showDialog() {
+        String dialog_title = getResources().getString(R.string.politica);
+        String dialog_message = getResources().getString(R.string.mensaje_aviso_de_privacidad);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(dialog_title);
+        builder.setMessage(Html.fromHtml(dialog_message));
+
+        String positiveText = "Acepto";
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
 
     /**
      * Clase privada pra realizar la llamada asíncrona y registrar los datos complementarios de un usuario.

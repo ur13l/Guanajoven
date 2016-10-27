@@ -2,6 +2,7 @@ package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -15,8 +16,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,6 +92,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     private GoogleSignInApi googleSignInApi;
     private AppCompatButton googleSignInButton;
     private ProgressDialog loginGooglePd;
+    private TextView politicaTv;
 
     //Elementos para el login con Facebook
     private LoginButton fbButton;
@@ -219,6 +223,14 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         loginButton = (AppCompatButton) v.findViewById(R.id.btn_iniciar_sesion);
         recuperarPasswordTv = (TextView) v.findViewById(R.id.tv_recuperar_pass);
         btnRegistrar = (Button) v.findViewById(R.id.btnRegistrar);
+        politicaTv = (TextView) v.findViewById(R.id.aviso_privacidad);
+
+        politicaTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDialog();
+            }
+        });
 
         //Se muestra mensaje cuando se gana el foco
         correoEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -322,6 +334,29 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    private void showDialog() {
+        String dialog_title = getResources().getString(R.string.politica);
+        String dialog_message = getResources().getString(R.string.mensaje_aviso_de_privacidad);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(dialog_title);
+        builder.setMessage(Html.fromHtml(dialog_message));
+
+        String positiveText = "Acepto";
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+    }
+
 
     /**
      * Obtiene el resultado del logueo utilizando Google

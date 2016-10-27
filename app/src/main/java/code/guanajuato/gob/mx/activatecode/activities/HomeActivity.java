@@ -3,6 +3,7 @@ package code.guanajuato.gob.mx.activatecode.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -181,6 +182,12 @@ public class HomeActivity extends AppCompatActivity
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 this.finish();
+                break;
+            case R.id.nav_historial_notificaciones:
+                String url = "http://www.codegto.gob.mx/";
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
                 break;
             default:
                 intent = new Intent(this, SegundaActivity.class);

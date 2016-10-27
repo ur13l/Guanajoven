@@ -47,6 +47,11 @@
                     android:icon="@drawable/ic_reporte"
                     android:title="@string/ver_reportes" />
 
+                <item
+                    android:id="@+id/nav_historial_notificaciones"
+                    android:icon="@drawable/ic_notificaciones"
+                    android:title="@string/historial_notificaciones" />
+
 
             </group>
         </menu>
