@@ -7,6 +7,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import com.thin.downloadmanager.DownloadStatusListener;
 import com.thin.downloadmanager.DownloadStatusListenerV1;
 import com.thin.downloadmanager.ThinDownloadManager;
 
+import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -105,7 +107,9 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
         @Override
         protected void onPostExecute(String result) {
             Log.d("DESCARGA",  result);
-            if (result.equals("true")) {
+            String path = context.getExternalCacheDir().toString()+"/video.mp4";
+            File file = new File(path);
+            if (result.equals("true") || !file.exists() ) {
 
                 String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/res/video/video.mp4";
                 Uri downloadUri = Uri.parse(url);

@@ -2,8 +2,12 @@ package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.content.ContentValues;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -43,6 +47,14 @@ public class RegistrarAguaFragment extends CustomFragment {
     private float currentProgress;
     private Login session;
     private Bitacora bitacora;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
@@ -116,5 +128,28 @@ public class RegistrarAguaFragment extends CustomFragment {
             }
         });
         return v;
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_agua, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Snackbar snackbar = Snackbar.make(getView(), getResources().getString(R.string.leyenda_ejercicio), Snackbar.LENGTH_LONG);
+        View snackbarView = snackbar.getView();
+        snackbarView.setAlpha(0.8f);
+        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setMaxLines(7);
+        snackbar.show();
+        return false;
     }
 }

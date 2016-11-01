@@ -8,8 +8,8 @@ android {
         applicationId "code.guanajuato.gob.mx.activatecode"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 9
-        versionName "1.6.2"
+        versionCode 10
+        versionName "1.7"
         multiDexEnabled true
     }
     buildTypes {
@@ -47,6 +47,7 @@ dependencies {
     compile 'com.mani:ThinDownloadManager:1.2.5'
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
 }
 
 

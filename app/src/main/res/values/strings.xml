@@ -51,7 +51,7 @@
     <string name="alarmas">Alarmas de activación</string>
     <string name="ver_reportes">Ver reportes</string>
     <string name="general">General</string>
-    <string name="directorio_code">Directorio CODE</string>
+    <string name="directorio_code">Instalaciones deportivas</string>
     <string name="inicio_sesion">Inicio de sesión</string>
     <string name="registro">Registro</string>
     <string name="reportes">Reportes</string>
@@ -282,7 +282,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="peso">Peso</string>
     <string name="estatura">Estatura</string>
     <string name="imc">Índice de masa corporal (IMC)</string>
-    <string name="leyenda_imc">*El cálculo del IMC se realiza en base a los parámetros de la OMS para personas mayores a 18 años.</string>
+    <string name="leyenda_imc">*El IMC ​debe confirmarse ​con un especialista o en las instalaciones de la CODE ya que no se consideran valores de músculo y grasa. Tampoco aplica para menores de edad.</string>
     <string name="empty_reporte">No se encontraron registros.</string>
     <string name="leyenda_ejercicio">*Lista de Actividades calculada para una persona de 70 Kg aproximadamente.\n
     *Los datos mostrados pueden varias dependiendo de los factores y físicos y metabólicos de la persona.\n
@@ -300,7 +300,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="slide5">Registrar Alarmas que te permitiran iniciar una rutina de activación física.</string>
     <string name="slide6">Conocer la ubicación de las Instalaciones deportivas de CODE.</string>
     <string name="historial_notificaciones">Historial de notificaciones</string>
-    <string name="aviso_privacidad"><u>Al iniciar sesión con Google o Facebook indica que está de acuerdo con la política de privacidad</u></string>
-    <string name="aviso_privacidad2"><u>Al dar click en Registrar indica que está de acuerdo con la política de privacidad</u></string>
+    <string name="aviso_privacidad"><u>Al iniciar sesión con Google o Facebook estás aceptando la política de privacidad</u></string>
+    <string name="aviso_privacidad2"><u>Al dar click en Registrar indica que estás aceptando la política de privacidad</u></string>
 
 </resources>

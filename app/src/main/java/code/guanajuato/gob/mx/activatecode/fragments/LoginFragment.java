@@ -657,6 +657,10 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                             }
                             else {
                                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo ya se encuentra ligada a otro tipo de cuenta.");
+                                if (loginSimplePd.isShowing()) {
+                                    loginSimplePd.dismiss();
+
+                                }
                             }
 
                         } else {
