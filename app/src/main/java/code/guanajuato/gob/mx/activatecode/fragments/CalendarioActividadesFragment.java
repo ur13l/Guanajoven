@@ -1,14 +1,18 @@
 package code.guanajuato.gob.mx.activatecode.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.Time;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +49,8 @@ public class CalendarioActividadesFragment extends CustomFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
+
+        setHasOptionsMenu(true);
         View v = inflater.inflate(R.layout.fragment_calendario_activacion, parent, false);
         calendarEcv = (ExtendedCalendarView) v.findViewById(R.id.calendario_activacion);
         mesTv = (TextView) v.findViewById(R.id.mes_tv);
@@ -182,6 +188,38 @@ public class CalendarioActividadesFragment extends CustomFragment{
     public boolean onContextItemSelected(MenuItem item) {
         DateUtilities.deleteEvento(getActivity(), (int)adapter.getSelectedEvent().getEventId());
         updateEvents();
+        return false;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu_calendario, menu);
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String dialog_title = getResources().getString(R.string.calendario);
+        String dialog_message = getResources().getString(R.string.leyenda_calendario);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(dialog_title);
+        builder.setMessage(dialog_message);
+
+        String positiveText = "Aceptar";
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+
         return false;
     }
 }

@@ -19,7 +19,7 @@ import code.guanajuato.gob.mx.activatecode.R;
  */
 public class AyudaFragment extends Fragment {
     private static int FIRST_SLIDE = 1;
-    private static int LAST_SLIDE = 6;
+    private static int LAST_SLIDE = 9;
     private int slide;
     private int nextSlide;
 
@@ -69,6 +69,21 @@ public class AyudaFragment extends Fragment {
                 imageView.setImageResource(R.drawable.slide6);
                 textView.setText(R.string.slide6);
                 backgroundView.setBackgroundColor(getResources().getColor(R.color.colorNaranja));
+                break;
+            case 7:
+                imageView.setImageResource(R.drawable.slide7);
+                textView.setText(R.string.slide7);
+                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
+                break;
+            case 8:
+                imageView.setImageResource(R.drawable.slide8);
+                textView.setText(R.string.slide8);
+                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorMagenta));
+                break;
+            case 9:
+                imageView.setImageResource(R.drawable.slide9);
+                textView.setText(R.string.slide9);
+                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 break;
         }
 

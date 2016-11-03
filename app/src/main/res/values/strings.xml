@@ -284,9 +284,18 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="imc">Índice de masa corporal (IMC)</string>
     <string name="leyenda_imc">*El IMC ​debe confirmarse ​con un especialista o en las instalaciones de la CODE ya que no se consideran valores de músculo y grasa. Tampoco aplica para menores de edad.</string>
     <string name="empty_reporte">No se encontraron registros.</string>
-    <string name="leyenda_ejercicio">*Lista de Actividades calculada para una persona de 70 Kg aproximadamente.\n
-    *Los datos mostrados pueden varias dependiendo de los factores y físicos y metabólicos de la persona.\n
-    *Datos tomados del Libro Alimentación y Nutrición de Francisco Grande Covian.</string>
+    <string name="leyenda_ejercicio">
+        Registra aquí el tiempo de activación por día.\n
+        ​La meta son 150 minutos a la semana(mínimo)​\n
+        Lista de Actividades calculada para una persona de 70 Kg aproximadamente.\n
+        Los datos mostrados pueden varias dependiendo de los factores y físicos y metabólicos de la persona.\n
+        Datos tomados del Libro Alimentación y Nutrición de Francisco Grande Covian.</string>
+
+    <string name="leyenda_hidratacion">
+        Registra aquí tu consumo de agua diario ​en la búsqueda de una mejor salud para ti.
+    </string>
+
+    <string name="leyenda_calendario">Registra tu​s actividades físicas en nuestro calendario y enterate de los eventos​ deportivos​de la CODE</string>
     <string name="lesion">¿Te encuentras lesionado?</string>
 
     <string name="title_activity_help">HelpActivity</string>
@@ -302,5 +311,8 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="historial_notificaciones">Historial de notificaciones</string>
     <string name="aviso_privacidad"><u>Al iniciar sesión con Google o Facebook estás aceptando la política de privacidad</u></string>
     <string name="aviso_privacidad2"><u>Al dar click en Registrar indica que estás aceptando la política de privacidad</u></string>
+    <string name="slide7">Ideal para registrar tus horarios de activación física</string>
+    <string name="slide8">Recibirás tips nutricionales para mejorar tus hábitos alimenticios y de salud</string>
+    <string name="slide9">Contacto permanente con nuestro sitio web</string>
 
 </resources>

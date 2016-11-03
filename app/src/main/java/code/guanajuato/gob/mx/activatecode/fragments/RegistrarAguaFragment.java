@@ -1,8 +1,10 @@
 package code.guanajuato.gob.mx.activatecode.fragments;
 
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -144,12 +146,26 @@ public class RegistrarAguaFragment extends CustomFragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Snackbar snackbar = Snackbar.make(getView(), getResources().getString(R.string.leyenda_ejercicio), Snackbar.LENGTH_LONG);
-        View snackbarView = snackbar.getView();
-        snackbarView.setAlpha(0.8f);
-        TextView textView = (TextView) snackbarView.findViewById(android.support.design.R.id.snackbar_text);
-        textView.setMaxLines(7);
-        snackbar.show();
+        String dialog_title = getResources().getString(R.string.agua);
+        String dialog_message = getResources().getString(R.string.leyenda_hidratacion);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(dialog_title);
+        builder.setMessage(dialog_message);
+
+        String positiveText = "Aceptar";
+        builder.setPositiveButton(positiveText,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // positive button logic
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        // display dialog
+        dialog.show();
+
         return false;
     }
 }
