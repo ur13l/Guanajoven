@@ -184,7 +184,7 @@ public class HomeActivity extends AppCompatActivity
                 this.finish();
                 break;
             case R.id.nav_historial_notificaciones:
-                String url = "http://www.codegto.gob.mx/";
+                String url = "http://app.codegto.gob.mx/historial/index.php";
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);
