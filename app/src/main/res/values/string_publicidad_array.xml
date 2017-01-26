@@ -3,7 +3,7 @@
     <!-- Este string-array funciona junto a resources_publicidad_array, los items y sus enlaces deben ir en el mismo
         orden para redirigir a las páginas correctamente -->
     <string-array name="publicidad_links">
-        <item>http://code.guanajuato.gob.mx/</item>
-        <item>http://code.guanajuato.gob.mx/</item>
+        <item>http://mx.gob.jovenes/</item>
+        <item>http://mx.gob.jovenes/</item>
     </string-array>
 </resources>

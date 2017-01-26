@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "code.guanajuato.gob.mx.activatecode"
+        applicationId "mx.gob.jovenes.guanajuato"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 11
-        versionName "1.8"
+        versionCode 1
+        versionName "0.1"
         multiDexEnabled true
     }
     buildTypes {

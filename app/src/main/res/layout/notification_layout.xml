@@ -17,7 +17,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/code"/>
+            android:src="@drawable/logo"/>
         <TextView android:id="@+id/notiftitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

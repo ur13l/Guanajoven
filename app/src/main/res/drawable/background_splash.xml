@@ -12,7 +12,7 @@
         android:right="80dp" android:left="80dp">
         <bitmap
             android:gravity="center"
-            android:src="@drawable/code1"
+            android:src="@drawable/logomin"
             />
     </item>
 </layer-list>
