@@ -33,9 +33,8 @@
     android:padding="20dp">
 
     <ImageView
-        android:layout_marginTop="-20dp"
         android:layout_width="wrap_content"
-        android:layout_height="180dp"
+        android:layout_height="150dp"
         android:src="@drawable/logo"/>
 
     <LinearLayout
@@ -49,7 +48,7 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/colorPrimaryDark"
             android:layout_marginTop="15dp">
 
             <EditText
@@ -58,18 +57,19 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:maxLength="50"
-                android:typeface="normal"
                 android:textSize="18dp"
                 android:hint="Email"
-                android:textColorHint="@color/white"
-                android:textColorHighlight="@color/white"
-                android:textColor="@color/white" />
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorHighlight="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark"
+                android:textIsSelectable="false"
+                android:typeface="normal" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColorHint="@color/white"
+            android:textColorHint="@color/colorPrimaryDark"
             android:layout_marginTop="15dp">
 
             <EditText
@@ -81,10 +81,10 @@
                 android:textSize="18dp"
                 android:maxLength="15"
                 android:hint="@string/pass"
-                android:textColorHint="@color/white"
-                android:textColorLink="@color/white"
-                android:textColorHighlight="@color/white"
-                android:textColor="@color/white" />
+                android:textColorHint="@color/colorPrimaryDark"
+                android:textColorLink="@color/colorPrimaryDark"
+                android:textColorHighlight="@color/colorPrimaryDark"
+                android:textColor="@color/colorPrimaryDark" />
         </android.support.design.widget.TextInputLayout>
 
         <LinearLayout
@@ -106,7 +106,7 @@
             android:text="@string/olvidaste"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/tv_recuperar_pass"
             android:layout_marginTop="15dp" />
 
@@ -181,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/aviso_privacidad"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimaryDark"
             android:layout_gravity="center"
             android:gravity="center"
             android:id="@+id/aviso_privacidad"/>
