@@ -85,32 +85,22 @@ public class HomeFragment extends CustomFragment {
     public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
     public static final String ALARMA_REGISTRADA = "alarma_registro_default";
     public static final String DATOS_PERFIL = "perfil_datos_usuario";
-    public static final String RES_URL = "http://app.codegto.gob.mx/code_web/src/res/";
+    public static final String RES_URL = "http://"+ClienteHttp.SERVER_IP + "/res/";
     private PublicidadSingleton publicidad;
     private ImageLoader imageLoader;
     private Login session;
     private BitacoraDBHelper bitacoraDBHelper;
     private Bitacora bitacora;
 
-    //Elementos visuales
-    private TextView hidratacionIndicatorTv;
-    private TextView ejercicioIndicatorTv;
-    private ProgressBar hidratacionPb;
-    private ProgressBar ejercicioPb;
+
     private ExtendedCalendarView calendar;
     private TextView dateTv;
     private TextView titleEvent;
     private LinearLayout llCalendario;
-    private View aguaView;
-    private View ejercicioView;
     private static ArrayList<Imagen> listaImagenes;
 
     //Handler para manipular el cambio de la publicidad
     Handler handlerPublicidad; //Handler para manipular las imágenes en el diagnóstico
-
-    //Elementos de la vista
-    private Button btnAgua;
-    private Button btnEjercicio;
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
@@ -126,7 +116,7 @@ public class HomeFragment extends CustomFragment {
                 final Imagen p = publicidad.getAt(randInt);
                 ImageView img = (ImageView) getActivity().findViewById(R.id.image_view_publicidad);
                 if (img != null) {
-
+                    Log.d("IMAGEN", RES_URL + "imagenes/" + p.getImg());
                     Picasso.with(getActivity())
                             .load(RES_URL + "imagenes/" + p.getImg())
                             .into(img);
@@ -191,17 +181,11 @@ public class HomeFragment extends CustomFragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Actívate CODE");
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
 
-        //Se asocian las vistas a los elementos en Java.
-        hidratacionIndicatorTv = (TextView) v.findViewById(R.id.hidratacion_indicator_tv);
-        hidratacionPb = (ProgressBar) v.findViewById(R.id.progress_bar_hidratacion);
-        ejercicioIndicatorTv = (TextView) v.findViewById(R.id.ejercicio_indicator_tv);
-        ejercicioPb = (ProgressBar) v.findViewById(R.id.progress_bar_ejercicio);
+
         calendar = (ExtendedCalendarView) v.findViewById(R.id.calendar_home);
         dateTv = (TextView) v.findViewById(R.id.date_home);
         llCalendario = (LinearLayout) v.findViewById( R.id.ll_calendario);
         titleEvent = (TextView) v.findViewById(R.id.title_event);
-        aguaView = v.findViewById(R.id.selectAgua);
-        ejercicioView = v.findViewById(R.id.selectEjercicio);
 
         //Función para activar las alarmas de Descargar videos.
         if(!prefs.getBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, false)){
@@ -264,34 +248,8 @@ public class HomeFragment extends CustomFragment {
         Toolbar bottomToolbar = (Toolbar) getActivity().getLayoutInflater().inflate(R.layout.toolbar_bottom_home,coordinatorLayout,false);
         coordinatorLayout.addView(bottomToolbar);
 
-        btnAgua = (Button)bottomToolbar.findViewById(R.id.btn_agua);
-        btnEjercicio = (Button)bottomToolbar.findViewById(R.id.btn_ejercicio);
 
-        aguaView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cambiarFragment(R.id.nav_registrar_agua);
-            }
-        });
 
-        ejercicioView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cambiarFragment(R.id.nav_registrar_ejercicio);
-            }
-        });
-        btnAgua.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cambiarFragment(R.id.nav_registrar_agua);
-            }
-        });
-        btnEjercicio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cambiarFragment(R.id.nav_registrar_ejercicio);
-            }
-        });
 
     }
 
@@ -336,13 +294,6 @@ public class HomeFragment extends CustomFragment {
         } catch (Exception e) {
             Log.e("DB", e.getMessage());
         }
-
-
-        ejercicioIndicatorTv.setText(MathFormat.removeDots(bitacora.getMinutosEjercicio()) + "");
-        hidratacionIndicatorTv.setText(MathFormat.removeDots(bitacora.getRegistrAgua()/1000)+"");
-
-        ejercicioPb.setProgress((int) bitacora.getMinutosEjercicio());
-        hidratacionPb.setProgress((int)bitacora.getRegistrAgua());
 
         registrarAlarmasDefault();
 
@@ -457,7 +408,7 @@ public class HomeFragment extends CustomFragment {
         protected ArrayList<Evento> doInBackground(String... args) {
             HashMap<String, String> params = new HashMap<>();
             params.put("fecha_actualizacion", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/eventos/nuevosEventos.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/eventos/nuevosEventos.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
@@ -497,7 +448,7 @@ public class HomeFragment extends CustomFragment {
     private class ObternerAsyncTask extends AsyncTask<Integer, Void, String>{
         @Override
         protected String doInBackground(Integer... args) {
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/registro/obtenerPerfil.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/obtenerPerfil.php";
             ClienteHttp cliente = new ClienteHttp();
             HashMap<String,String> param = new HashMap<>();
             param.put("id_login_app",args[0]+"");
@@ -538,7 +489,7 @@ public class HomeFragment extends CustomFragment {
             params.put("Token", token);
             params.put("id_login_app", session.getId()+"");
             params.put("os", "1"); //1 Representa Android
-            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/notificaciones/registrar.php",
+            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "//app_php/notificaciones/registrar.php",
                     params);
 
             return null;
@@ -552,7 +503,7 @@ public class HomeFragment extends CustomFragment {
         @Override
         protected ArrayList<Imagen> doInBackground(Void... voids) {
             HashMap<String, String> params = new HashMap<>();
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/imagenes/imagenes.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/imagenes/imagenes.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();

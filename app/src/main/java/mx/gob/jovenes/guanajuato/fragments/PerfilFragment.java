@@ -470,7 +470,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         @Override
         protected String doInBackground(HashMap<String, String>... args) {
 
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/registro/actualizarPerfil.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/actualizarPerfil.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, args[0]);
             Log.d("result",result);

@@ -156,7 +156,7 @@ public class ReestablecerPasswordFragment extends Fragment implements View.OnCli
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
             params.put("codigo", args[1].toString());
-            String url = "http://"+ ClienteHttp.SERVER_IP+"/code_web/src/app_php/login/comprobarCodigo.php";
+            String url = "http://"+ ClienteHttp.SERVER_IP+"//app_php/login/comprobarCodigo.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             return Boolean.valueOf(result);
@@ -216,7 +216,7 @@ public class ReestablecerPasswordFragment extends Fragment implements View.OnCli
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
             params.put("password", args[1].toString());
-            String url = "http://"+ ClienteHttp.SERVER_IP+"/code_web/src/app_php/login/cambiarPassword.php";
+            String url = "http://"+ ClienteHttp.SERVER_IP+"//app_php/login/cambiarPassword.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             return result;

@@ -48,6 +48,7 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+    compile 'org.jetbrains:annotations-java5:15.0'
 }
 
 

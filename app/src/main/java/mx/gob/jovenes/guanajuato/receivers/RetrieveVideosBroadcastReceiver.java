@@ -86,7 +86,7 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         protected String doInBackground(Void... args) {
-            String url1 = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/video/video.php";
+            String url1 = "http://" + ClienteHttp.SERVER_IP + "//app_php/video/video.php";
             HashMap<String, String> params = new HashMap<>();
             params.put("fecha_actualizacion", prefs.getString(FECHA_ACTUALIZACION, "0000-00-00 00:00"));
             ClienteHttp clienteHttp = new ClienteHttp();
@@ -102,7 +102,7 @@ public class RetrieveVideosBroadcastReceiver extends BroadcastReceiver {
             File file = new File(path);
             if (result.equals("true") || !file.exists() ) {
 
-                String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/res/video/video.mp4";
+                String url = "http://" + ClienteHttp.SERVER_IP + "//res/video/video.mp4";
                 Uri downloadUri = Uri.parse(url);
                 Uri destinationUri = Uri.parse(context.getExternalCacheDir().toString() + "/video.mp4");
                 DownloadRequest downloadRequest = new DownloadRequest(downloadUri)

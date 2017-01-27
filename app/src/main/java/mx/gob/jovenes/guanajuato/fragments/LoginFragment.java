@@ -411,7 +411,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         Intent i = null;
         switch (v.getId()) {
             case R.id.btn_iniciar_sesion:
-                /*
                 String correo = correoEt.getText().toString();
                 String password = contrasenaEt.getText().toString();
                 if (ValidEmail.isValidEmail(correo) != false) {
@@ -425,13 +424,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 } else {
                     ((TextInputLayout) correoEt.getParent()).setErrorEnabled(true);
                     ((TextInputLayout) correoEt.getParent()).setError("Correo no valido");
-                    correoEt.setHintTextColor(Color.WHITE);
+                    correoEt.setHintTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     correoEt.setTypeface(Typeface.DEFAULT);
                     email = false;
                 }
-                */
-                //DEMO
-                new LoginSimpleAsyncTask().execute(null,null);
+
                 break;
 
             case R.id.googlebtn:
@@ -493,7 +490,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         protected LoginPOJO doInBackground(String... args) {
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/login/loginFacebook.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/login/loginFacebook.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
@@ -561,7 +558,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         protected LoginPOJO doInBackground(String... args) {
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/login/loginGoogle.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/login/loginGoogle.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
@@ -643,22 +640,21 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         @Override
         protected LoginPOJO doInBackground(String... args) {
 
-            /*
+
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
             params.put("password", args[1].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/login/loginSimple.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "/app_php/login/loginSimple.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
             return gson.fromJson(result, LoginPOJO.class);
-            */
-            return null;
+
         }
 
         @Override
         public void onPostExecute(LoginPOJO result) {
-            /*
+
             if (result != null) {
                     Login sesion = new Login(getActivity().getApplicationContext());
                     sesion.setId(result.getId());
@@ -692,16 +688,13 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 if(loginSimplePd.isShowing()){
                     loginSimplePd.dismiss();
                 }
-                Log.d("ProgressDialog","Entrando aquí");
                 OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
             }
         }
-        */
 
-            //DEMO
-            startHomeActivity();
+
         }
-    }
+
 
         public void startHomeActivity(){
         Intent i = new Intent(getActivity(), HomeActivity.class);
