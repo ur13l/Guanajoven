@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/home/uriel/Android/Guanajoven/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/home/uriel/Android/Guanajoven/extendedCalendarView/src/release/shaders"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/home/code/Guanajoven/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/home/code/Guanajoven/extendedCalendarView/src/release/shaders"/></dataSet></merger>
