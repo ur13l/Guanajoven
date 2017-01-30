@@ -9,7 +9,7 @@
                 android:icon="@drawable/ic_home"
                 android:title="@string/home"/>
             <item
-                android:id="@+id/nav_datos_tutor"
+                android:id="@+id/nav_perfil"
                 android:icon="@drawable/ic_perfil"
                 android:title="@string/mi_perfil" />
             <item
@@ -28,29 +28,25 @@
                     android:title="@string/calendario"/>
 
                 <item
-                    android:id="@+id/nav_registrar_ejercicio"
+                    android:id="@+id/nav_convocatorias"
                     android:icon="@drawable/ic_exercise"
-                    android:title="@string/registrar_ejercicio" />
+                    android:title="@string/convocatorias" />
 
                 <item
-                    android:id="@+id/nav_registrar_agua"
+                    android:id="@+id/nav_mis_eventos"
                     android:icon="@drawable/ic_water"
-                    android:title="@string/registrar_agua" />
+                    android:title="@string/mis_eventos" />
 
-                <item
-                    android:id="@+id/nav_alarmas"
-                    android:icon="@drawable/ic_alarma"
-                    android:title="@string/alarmas" />
-
-                <item
-                    android:id="@+id/nav_ver_reportes"
-                    android:icon="@drawable/ic_reporte"
-                    android:title="@string/ver_reportes" />
 
                 <item
                     android:id="@+id/nav_historial_notificaciones"
                     android:icon="@drawable/ic_notificaciones"
                     android:title="@string/historial_notificaciones" />
+
+                <item
+                    android:id="@+id/nav_chat_ayuda"
+                    android:icon="@drawable/ic_notificaciones"
+                    android:title="@string/chat" />
 
 
             </group>
@@ -61,7 +57,7 @@
             <group android:checkableBehavior="single">
                 <item android:id="@+id/nav_directorio"
                     android:icon="@drawable/ic_directorio"
-                    android:title="@string/directorio_code"/>
+                    android:title="@string/instalaciones"/>
                 <item
                     android:id="@+id/nav_colaboradores"
                     android:icon="@drawable/ic_colaboradores"

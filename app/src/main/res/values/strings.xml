@@ -26,7 +26,6 @@
     <string name="recuperarpass"><u>Recuperar contraseña</u></string>
     <string name="recuperarpass2">Recuperar contraseña</string>
     <string name="mi_perfil">Mi perfil</string>
-    <string name="registrar_ejercicio">Registrar ejercicio</string>
     <string name="registrar_agua">Registrar agua</string>
     <string name="colaboradores">Colaboradores</string>
 
@@ -47,7 +46,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="registro_ejercicio">Registro de ejercicio</string>
     <string name="actividades">Actividades</string>
-    <string name="calendario">Calendario de activación</string>
+    <string name="calendario">Calendario de eventos</string>
     <string name="alarmas">Alarmas de activación</string>
     <string name="ver_reportes">Ver reportes</string>
     <string name="general">General</string>
@@ -312,5 +311,10 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="code3">Dirección de Cultura Física</string>
     <string name="correo7">culturafisica.code@guanajuato.gob.mx</string>
     <string name="code2">Dirección de Investigación y Medicina del Deporte</string>
+    <string name="convocatorias">Convocatorias</string>
+    <string name="mis_eventos">Mis eventos</string>
+    <string name="instalaciones">Instalaciones</string>
+    <string name="chat">Chat de ayuda</string>
+    <string name="registrar_ejercicio">W</string>
 
 </resources>
