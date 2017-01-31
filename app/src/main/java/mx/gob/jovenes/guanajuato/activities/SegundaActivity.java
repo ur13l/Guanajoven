@@ -71,15 +71,15 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = HomeFragment.newInstance(R.id.nav_home,HomeFragment.class);
                     break;
                  */
-                case R.id.nav_datos_tutor:
-                    fragment = PerfilFragment.newInstance(R.id.nav_datos_tutor, R.string.datos_usuario, PerfilFragment.class);
+                case R.id.nav_perfil:
+                    fragment = PerfilFragment.newInstance(R.id.nav_perfil, R.string.datos_usuario, PerfilFragment.class);
                     break;
 
-                case R.id.nav_registrar_agua:
-                    fragment = RegistrarAguaFragment.newInstance(R.id.nav_registrar_agua, R.string.registrar_agua, RegistrarAguaFragment.class);
+                case R.id.nav_convocatorias:
+                    fragment = RegistrarAguaFragment.newInstance(R.id.nav_convocatorias, R.string.registrar_agua, RegistrarAguaFragment.class);
                     break;
-                case R.id.nav_registrar_ejercicio:
-                    fragment = RegistrarEjercicioFragment.newInstance(R.id.nav_registrar_ejercicio, R.string.registrar_ejercicio,RegistrarEjercicioFragment.class);
+                case R.id.nav_mis_eventos:
+                    fragment = RegistrarEjercicioFragment.newInstance(R.id.nav_mis_eventos, R.string.registrar_ejercicio,RegistrarEjercicioFragment.class);
                     break;
 
                 case R.id.nav_colaboradores:
@@ -90,15 +90,15 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = CalendarioActividadesFragment.newInstance(R.id.nav_calendario, R.string.calendario, CalendarioActividadesFragment.class);
                     break;
 
-                case R.id.nav_alarmas:
-                    fragment = AlarmasActivacionFragment.newInstance(R.id.nav_alarmas, R.string.alarmas, AlarmasActivacionFragment.class);
+                case R.id.nav_historial_notificaciones:
+                    fragment = AlarmasActivacionFragment.newInstance(R.id.nav_historial_notificaciones, R.string.alarmas, AlarmasActivacionFragment.class);
                     break;
 
                 case R.id.nav_directorio:
                     fragment = AlarmasActivacionFragment.newInstance(R.id.nav_directorio, R.string.directorio_code, DirectorioFragment.class);
                     break;
-                case R.id.nav_ver_reportes:
-                    fragment = ReporteFragment.newInstance(R.id.nav_ver_reportes, R.string.reportes,ReporteFragment.class);
+                case R.id.nav_chat_ayuda:
+                    fragment = ReporteFragment.newInstance(R.id.nav_chat_ayuda, R.string.reportes,ReporteFragment.class);
                     break;
             }
         } catch (IllegalAccessException e) {

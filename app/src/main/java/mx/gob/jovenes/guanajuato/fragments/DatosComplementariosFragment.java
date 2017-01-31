@@ -290,7 +290,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
          */
         @Override
         protected Integer doInBackground(HashMap<String, String>... args) {
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/registro/crearUsuario.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/crearUsuario.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, args[0]);
             return Integer.parseInt(result);

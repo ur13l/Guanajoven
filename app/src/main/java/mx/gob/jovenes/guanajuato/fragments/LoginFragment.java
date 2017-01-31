@@ -424,10 +424,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 } else {
                     ((TextInputLayout) correoEt.getParent()).setErrorEnabled(true);
                     ((TextInputLayout) correoEt.getParent()).setError("Correo no valido");
-                    correoEt.setHintTextColor(Color.WHITE);
+                    correoEt.setHintTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     correoEt.setTypeface(Typeface.DEFAULT);
                     email = false;
                 }
+
                 break;
 
             case R.id.googlebtn:
@@ -472,71 +473,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 });
     }
 
-    /**
-     * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión simple
-     */
-    private class LoginSimpleAsyncTask extends AsyncTask<String, Void, LoginPOJO> {
-
-        @Override
-        protected void onPreExecute() {
-            loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
-
-        }
-
-        @Override
-        protected LoginPOJO doInBackground(String... args) {
-
-            HashMap<String, String> params = new HashMap<>();
-            params.put("correo", args[0].toString());
-            params.put("password", args[1].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/login/loginSimple.php";
-            ClienteHttp cliente = new ClienteHttp();
-            String result = cliente.hacerRequestHttp(url, params);
-            Gson gson = new Gson();
-            return gson.fromJson(result, LoginPOJO.class);
-        }
-
-        @Override
-        public void onPostExecute(LoginPOJO result) {
-            if (result != null) {
-                    Login sesion = new Login(getActivity().getApplicationContext());
-                    sesion.setId(result.getId());
-                    sesion.setCorreo(result.getCorreo());
-                    sesion.setFacebook(result.isFacebook() == 1);
-                    sesion.setGoogle(result.isGoogle() == 1);
-                    if (sesion.getId() == 0) {
-                        if(loginSimplePd.isShowing()){
-                            loginSimplePd.dismiss();
-                        }
-                        if(sesion.getGoogle()){
-                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Google.");
-                        }
-                        else if (sesion.getFacebook()){
-                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Facebook.");
-                        }
-                        else {
-                            Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente. Verifique que no tenga registro creado con Google o Facebook", Snackbar.LENGTH_LONG);
-                            View sView = snack.getView();
-                            sView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.error));
-                            TextView textView = (TextView) sView.findViewById(android.support.design.R.id.snackbar_text);
-                            textView.setMaxLines(7);
-                            snack.show();
-                        }
-                    } else {
-                        startHomeActivity();
-                        //new TutorAsyncTask().execute(sesion.getId(), 4);
-                        //Entra al sistema SERVLET
-                    }
-
-            } else {
-                if(loginSimplePd.isShowing()){
-                    loginSimplePd.dismiss();
-                }
-                Log.d("ProgressDialog","Entrando aquí");
-                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
-            }
-        }
-    }
 
     /**
      * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión con facebook
@@ -554,7 +490,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         protected LoginPOJO doInBackground(String... args) {
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/login/loginFacebook.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/login/loginFacebook.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
@@ -622,7 +558,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         protected LoginPOJO doInBackground(String... args) {
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/login/loginGoogle.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/login/loginGoogle.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
@@ -690,7 +626,77 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         }
     }
 
-    public void startHomeActivity(){
+    /**
+     * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión simple
+     */
+    private class LoginSimpleAsyncTask extends AsyncTask<String, Void, LoginPOJO> {
+
+        @Override
+        protected void onPreExecute() {
+            loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
+
+        }
+
+        @Override
+        protected LoginPOJO doInBackground(String... args) {
+
+
+            HashMap<String, String> params = new HashMap<>();
+            params.put("correo", args[0].toString());
+            params.put("password", args[1].toString());
+            String url = "http://" + ClienteHttp.SERVER_IP + "/app_php/login/loginSimple.php";
+            ClienteHttp cliente = new ClienteHttp();
+            String result = cliente.hacerRequestHttp(url, params);
+            Gson gson = new Gson();
+            return gson.fromJson(result, LoginPOJO.class);
+
+        }
+
+        @Override
+        public void onPostExecute(LoginPOJO result) {
+
+            if (result != null) {
+                    Login sesion = new Login(getActivity().getApplicationContext());
+                    sesion.setId(result.getId());
+                    sesion.setCorreo(result.getCorreo());
+                    sesion.setFacebook(result.isFacebook() == 1);
+                    sesion.setGoogle(result.isGoogle() == 1);
+                    if (sesion.getId() == 0) {
+                        if(loginSimplePd.isShowing()){
+                            loginSimplePd.dismiss();
+                        }
+                        if(sesion.getGoogle()){
+                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Google.");
+                        }
+                        else if (sesion.getFacebook()){
+                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Facebook.");
+                        }
+                        else {
+                            Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente. Verifique que no tenga registro creado con Google o Facebook", Snackbar.LENGTH_LONG);
+                            View sView = snack.getView();
+                            sView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.error));
+                            TextView textView = (TextView) sView.findViewById(android.support.design.R.id.snackbar_text);
+                            textView.setMaxLines(7);
+                            snack.show();
+                        }
+                    } else {
+                        startHomeActivity();
+                        //new TutorAsyncTask().execute(sesion.getId(), 4);
+                    }
+
+            } else {
+                if(loginSimplePd.isShowing()){
+                    loginSimplePd.dismiss();
+                }
+                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
+            }
+        }
+
+
+        }
+
+
+        public void startHomeActivity(){
         Intent i = new Intent(getActivity(), HomeActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

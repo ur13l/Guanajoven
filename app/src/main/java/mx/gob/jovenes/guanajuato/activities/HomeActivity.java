@@ -210,7 +210,7 @@ public class HomeActivity extends AppCompatActivity
     public ActionBarDrawerToggle getActionBarDrawerToggle() { return toggle; }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
+    public void onConnected(@org.jetbrains.annotations.Nullable Bundle bundle) {
 
     }
 
@@ -250,7 +250,7 @@ public class HomeActivity extends AppCompatActivity
             HashMap<String, String> params = new HashMap<>();
             params.put("Token", token);
             params.put("id_login_app", session.getId()+"");
-            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/notificaciones/cancelar.php",
+            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "//app_php/notificaciones/cancelar.php",
                     params);
             session.borrarLogin();
             return null;

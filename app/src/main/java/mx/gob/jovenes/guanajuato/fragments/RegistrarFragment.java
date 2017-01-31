@@ -133,7 +133,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
         @Override
         protected Boolean doInBackground(String... args) {
-            String url = "http://" + ClienteHttp.SERVER_IP + "/code_web/src/app_php/registro/comprobarCorreo.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/comprobarCorreo.php";
             ClienteHttp cliente = new ClienteHttp();
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());

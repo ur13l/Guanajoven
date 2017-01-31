@@ -111,7 +111,7 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
         protected RecuperarPass doInBackground(String... args) {
             HashMap<String, String> params = new HashMap<>();
             params.put("correo", args[0].toString());
-            String url = "http://"+ ClienteHttp.SERVER_IP+"/code_web/src/app_php/login/recuperarContrasena.php";
+            String url = "http://"+ ClienteHttp.SERVER_IP+"//app_php/login/recuperarContrasena.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
