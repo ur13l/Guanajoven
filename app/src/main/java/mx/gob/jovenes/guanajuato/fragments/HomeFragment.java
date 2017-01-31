@@ -245,8 +245,8 @@ public class HomeFragment extends CustomFragment {
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.coordinatorLayout);
 
         //Añadir toolbar en el fondo.
-        Toolbar bottomToolbar = (Toolbar) getActivity().getLayoutInflater().inflate(R.layout.toolbar_bottom_home,coordinatorLayout,false);
-        coordinatorLayout.addView(bottomToolbar);
+        //Toolbar bottomToolbar = (Toolbar) getActivity().getLayoutInflater().inflate(R.layout.toolbar_bottom_home,coordinatorLayout,false);
+        //coordinatorLayout.addView(bottomToolbar);
 
 
 

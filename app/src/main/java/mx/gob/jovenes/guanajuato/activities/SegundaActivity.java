@@ -13,10 +13,10 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.AlarmasActivacionFragment;
 import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
+import mx.gob.jovenes.guanajuato.fragments.ConvocatoriasFragment;
 import mx.gob.jovenes.guanajuato.fragments.DirectorioFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.PerfilFragment;
-import mx.gob.jovenes.guanajuato.fragments.RegistrarAguaFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegistrarEjercicioFragment;
 import mx.gob.jovenes.guanajuato.fragments.ReporteFragment;
 
@@ -76,7 +76,7 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_convocatorias:
-                    fragment = RegistrarAguaFragment.newInstance(R.id.nav_convocatorias, R.string.registrar_agua, RegistrarAguaFragment.class);
+                    fragment = ConvocatoriasFragment.newInstance(R.id.nav_convocatorias, R.string.registrar_agua, ConvocatoriasFragment.class);
                     break;
                 case R.id.nav_mis_eventos:
                     fragment = RegistrarEjercicioFragment.newInstance(R.id.nav_mis_eventos, R.string.registrar_ejercicio,RegistrarEjercicioFragment.class);
