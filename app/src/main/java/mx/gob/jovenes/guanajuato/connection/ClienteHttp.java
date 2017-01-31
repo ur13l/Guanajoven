@@ -17,7 +17,7 @@ import java.util.HashMap;
 
 public class ClienteHttp {
     //public static final String SERVER_IP = "192.168.1.73";
-    public static final String SERVER_IP = "10.0.7.42/guanajoven-web/public";
+    public static final String SERVER_IP = "192.168.1.76/GuanajovenWeb/public";
     //public static final String SERVER_IP = "app.codegto.gob";
 
     public String hacerRequestHttp(String url, HashMap<String, String> params){

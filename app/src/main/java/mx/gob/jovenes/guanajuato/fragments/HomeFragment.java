@@ -503,7 +503,7 @@ public class HomeFragment extends CustomFragment {
         @Override
         protected ArrayList<Imagen> doInBackground(Void... voids) {
             HashMap<String, String> params = new HashMap<>();
-            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/imagenes/imagenes.php";
+            String url = "http://" + ClienteHttp.SERVER_IP + "/app_php/imagenes/imagenes.php";
             ClienteHttp cliente = new ClienteHttp();
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
