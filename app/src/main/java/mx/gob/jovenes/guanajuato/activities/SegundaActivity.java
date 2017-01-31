@@ -76,7 +76,7 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_convocatorias:
-                    fragment = ConvocatoriasFragment.newInstance(R.id.nav_convocatorias, R.string.registrar_agua, ConvocatoriasFragment.class);
+                    fragment = ConvocatoriasFragment.newInstance(R.id.nav_convocatorias, R.string.convocatorias, ConvocatoriasFragment.class);
                     break;
                 case R.id.nav_mis_eventos:
                     fragment = RegistrarEjercicioFragment.newInstance(R.id.nav_mis_eventos, R.string.registrar_ejercicio,RegistrarEjercicioFragment.class);
