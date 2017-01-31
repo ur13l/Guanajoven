@@ -39,8 +39,6 @@ public class CustomFragment extends Fragment {
                 appBarLayout.removeViewAt(1);
             if (appBarLayout.getChildCount() > 2)
                 appBarLayout.removeViewAt(2);
-            if (coordinatorLayout.findViewById(R.id.toolbar_bottom_home) != null)
-                coordinatorLayout.removeViewAt(coordinatorLayout.getChildCount() - 1);
 
         //Bloqueando la toolbar principal
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
