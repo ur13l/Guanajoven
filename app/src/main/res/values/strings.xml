@@ -8,13 +8,13 @@
 
     <!-- Strings related to login -->
     <string name="login">Inicia Sesión</string>
-    <string name="mensaje_bienvenida">Esta aplicación es de promoción para la salud y vida sana. Los consejos y sugerencias mostrados no sustituyen la orientación que un profesional te ofrece. Consulta a tu médico o ponte en contacto con la unidad de salud de CODE más cercana.</string>
+    <string name="mensaje_bienvenida">Somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y politícas publicas, orientada a elevar la calidad de vida de los jóvenes Guanajuatenses.</string>
 
     <string name="home">Home</string>
     <string name="bienvenida">¡Bienvenido!</string>
     <string name="comenzar">Comenzar</string>
     <string name="registrar">Registrar</string>
-    <string name="copyright">Copyright © CODE 2016.</string>
+    <string name="copyright">Copyright © CODICUS 2017.</string>
     <string name="inicio">Inicio</string>
     <string name="pass">Contraseña</string>
     <string name="ejercicio">Ejercicio</string>

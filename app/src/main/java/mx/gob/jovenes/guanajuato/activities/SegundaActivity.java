@@ -12,9 +12,11 @@ import android.view.View;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.AlarmasActivacionFragment;
 import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
+import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriasFragment;
 import mx.gob.jovenes.guanajuato.fragments.DirectorioFragment;
+import mx.gob.jovenes.guanajuato.fragments.HistorialNotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.MisEventosFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.PerfilFragment;
@@ -91,14 +93,14 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_historial_notificaciones:
-                    fragment = AlarmasActivacionFragment.newInstance(R.id.nav_historial_notificaciones, R.string.alarmas, AlarmasActivacionFragment.class);
+                    fragment = HistorialNotificacionesFragment.newInstance(R.id.nav_historial_notificaciones, R.string.historial_notificaciones, HistorialNotificacionesFragment.class);
                     break;
 
                 case R.id.nav_directorio:
                     fragment = AlarmasActivacionFragment.newInstance(R.id.nav_directorio, R.string.directorio_code, DirectorioFragment.class);
                     break;
                 case R.id.nav_chat_ayuda:
-                    fragment = ReporteFragment.newInstance(R.id.nav_chat_ayuda, R.string.reportes,ReporteFragment.class);
+                    fragment = ChatFragment.newInstance(R.id.nav_chat_ayuda, R.string.chat, ChatFragment.class);
                     break;
             }
         } catch (IllegalAccessException e) {

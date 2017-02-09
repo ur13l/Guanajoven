@@ -8,8 +8,10 @@
         android:layout_alignParentLeft="true"
         android:maxWidth="300dp"
         android:background="@drawable/bubble_out"
+        android:gravity="center_vertical"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:padding="5dp"
+        android:paddingLeft="10dp">
 
         <TextView
             android:id="@+id/txt_msg"
@@ -17,7 +19,7 @@
             android:layout_height="wrap_content"
             android:maxWidth="300dp"
             android:text="Hola!"
-            android:padding="10dp" />
+            android:padding="5dp" />
 
     </LinearLayout>
 

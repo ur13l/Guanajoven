@@ -21,7 +21,7 @@ import java.io.OutputStream;
  */
 public class LocalDatabaseHelper extends SQLiteOpenHelper{
     protected static final String DB_NAME = "code.sqlite";
-    protected static final int VERSION = 15;
+    protected static final int VERSION = 17;
     protected Context context;
     protected String pathToSaveDBFile;
 

@@ -14,10 +14,12 @@
         android:layout_marginBottom="10dp" />
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="273dp"
         android:layout_gravity="center_horizontal"
-        android:layout_height="280dp"
-        android:src="@drawable/logo" />
+        android:layout_height="223dp"
+        android:src="@drawable/logo"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:layout_width="match_parent"

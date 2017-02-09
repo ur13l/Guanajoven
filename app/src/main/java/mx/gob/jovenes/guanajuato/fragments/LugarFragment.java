@@ -28,7 +28,6 @@ public class LugarFragment extends Fragment implements OnMapReadyCallback{
     private TextView nombreTV;
     private TextView direccionTV;
     private TextView telefonoTV;
-    private TextView emailTV;
     private TextView adminTV;
 
     @Override
@@ -41,7 +40,6 @@ public class LugarFragment extends Fragment implements OnMapReadyCallback{
         nombreTV = (TextView) v.findViewById(R.id.tv_nombre);
         direccionTV = (TextView) v.findViewById(R.id.tv_direccion);
         telefonoTV = (TextView) v.findViewById(R.id.tv_telefono);
-        emailTV = (TextView) v.findViewById(R.id.tv_email);
         adminTV = (TextView) v.findViewById(R.id.tv_admin);
 
         return v;
@@ -62,9 +60,7 @@ public class LugarFragment extends Fragment implements OnMapReadyCallback{
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(lugar.getNombre());
 
         nombreTV.setText(lugar.getNombre());
-        direccionTV.setText(lugar.getDireccion() + ", "+ lugar.getColonia() +", " + lugar.getCp() + ", "
-            + lugar.getMunicipio());
-        emailTV.setText(lugar.getEmail());
+        direccionTV.setText(lugar.getDireccion());
         telefonoTV.setText(lugar.getTelefono());
         adminTV.setText(lugar.getAdministrador());
     }

@@ -75,27 +75,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_email" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Small Text"
-                android:id="@+id/tv_email"
-                android:layout_gravity="center_vertical"
-                android:paddingLeft="15dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_admin" />
+                android:src="@drawable/ic_place_grey_600_24dp" />
 
             <TextView
                 android:layout_width="wrap_content"

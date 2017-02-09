@@ -40,13 +40,8 @@ import fr.ganfra.materialspinner.MaterialSpinner;
 public class DatosComplementariosFragment extends Fragment implements View.OnClickListener, View.OnFocusChangeListener, DatePickerDialog.OnDateSetListener{
     private String[] arraySiNo = {"Sí", "No"};
 
-    private MaterialSpinner presionSpinner;
-    private MaterialSpinner glucosaSpinner;
-    private MaterialSpinner actividadSpinner;
-    private MaterialSpinner lesionSpinner;
+
     private MaterialSpinner generoS;
-    private EditText pesoEt;
-    private EditText estaturaEt;
     private Button registrarBtn;
     private ProgressDialog progressDialog;
     private String[] arrayGenero = {"Hombre", "Mujer"};
@@ -103,12 +98,6 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         calendar = Calendar.getInstance();
         generoS = (MaterialSpinner) v.findViewById(R.id.spinner_genero);
         fechET = (EditText) v.findViewById(R.id.et_fech);
-        presionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_presion);
-        glucosaSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_glucosa);
-        actividadSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_actividad);
-        lesionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_lesion);
-        pesoEt = (EditText) v.findViewById(R.id.et_peso);
-        estaturaEt = (EditText) v.findViewById(R.id.et_estatura);
         registrarBtn = (Button) v.findViewById(R.id.btn_registrar);
         politicaTv = (TextView) v.findViewById(R.id.aviso_privacidad);
 
@@ -121,10 +110,6 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arraySiNo);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        presionSpinner.setAdapter(adapter);
-        glucosaSpinner.setAdapter(adapter);
-        actividadSpinner.setAdapter(adapter);
-        lesionSpinner.setAdapter(adapter);
 
         fechET.setKeyListener(null);
         fechET.setOnFocusChangeListener(this);
@@ -135,12 +120,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         generoS.setAdapter(adapter2);
 
-        EditTextValidations.removeErrorTyping(pesoEt);
-        EditTextValidations.removeErrorTyping(estaturaEt);
         EditTextValidations.removeErrorTyping(fechET);
-
-        EditTextValidations.showHint(pesoEt, "Ej. 70");
-        EditTextValidations.showHint(estaturaEt, "Ej. 1.70");
 
         registrarBtn.setOnClickListener(this);
         return v;
@@ -203,20 +183,11 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
     //Método para proceder al registro.
     public void registrar(){
-        boolean pesoEmpty = EditTextValidations.esCampoVacio(pesoEt);
-        boolean estaturaEmpty = EditTextValidations.esCampoVacio(estaturaEt);
         boolean fechaEmpty = EditTextValidations.esCampoVacio(fechET);
-        boolean presionEmpty = EditTextValidations.spinnerSinSeleccion(presionSpinner);
-        boolean glucosaEmpty = EditTextValidations.spinnerSinSeleccion(glucosaSpinner);
-        boolean actividadEmpty = EditTextValidations.spinnerSinSeleccion(actividadSpinner);
-        boolean lesionEmpty = EditTextValidations.spinnerSinSeleccion(lesionSpinner);
         boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(generoS);
 
-        if(!pesoEmpty && !estaturaEmpty && !presionEmpty && !glucosaEmpty && !actividadEmpty && !lesionEmpty && !generoEmpty && !fechaEmpty) {
-            String presionNum = presionSpinner.getSelectedItem().equals("Sí")?"1":"0";
-            String glucosaNum = glucosaSpinner.getSelectedItem().equals("Sí")?"1":"0";
-            String actividadNum = actividadSpinner.getSelectedItem().equals("Sí")?"1":"0";
-            String lesionNum = lesionSpinner.getSelectedItemPosition() + "";
+        if(!generoEmpty && !fechaEmpty) {
+
             String generoNum = generoS.getSelectedItemPosition() + "";
 
             params = new HashMap<>();
@@ -224,14 +195,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
             params.put("password", loginPrevio.getContrasena());
             params.put("facebook", ""+loginPrevio.isFacebook());
             params.put("google", ""+loginPrevio.isGoogle());
-            params.put("estatura", estaturaEt.getText().toString());
             params.put("fec_nacimiento", fecha);
-            params.put("peso", pesoEt.getText().toString());
-            params.put("presion", presionNum);
-            params.put("genero", generoNum);
-            params.put("glucosa", glucosaNum);
-            params.put("actividad", actividadNum);
-            params.put("lesion", lesionNum);
             new RegistrarAsyncTask().execute(params);
         }
         // boolean presionEmpty = EditTextValidations.

@@ -43,21 +43,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     private MaterialSpinner generoS;
     private String[] arrayGenero = {"Hombre", "Mujer"};
     private EditText fechET;
-    private EditText pesoEt;
-    private EditText estaturaEt;
-    private TextView imcTv;
-    private TextView imcMensajeTv;
     private String fecha;
-    private MaterialSpinner ocupacionS;
-    private String[] arrayOcupacion = {"Profesor", "Empleado", "Empresario", "Abogado", "Estudiante", "Ingeniero", "Doctor", "Arquitecto",
-            "Ama de casa", "Empleado calzado" , "Obrero", "Comerciante", "Enfermera"};
-    private MaterialSpinner presionSpinner;
-    private MaterialSpinner glucosaSpinner;
-    private MaterialSpinner actividadSpinner;
-    private MaterialSpinner lesionSpinner;
-    private String[] arraySiNo = {"Sí", "No"};
-    private EditText codposET;
-    private EditText celET;
     private TextView polipriTV;
     private CheckBox polipriCB;
     private Button actdatB;
@@ -78,20 +64,10 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         nomcomET = (EditText) v.findViewById(R.id.et_nomcom);
         generoS = (MaterialSpinner) v.findViewById(R.id.spinner_genero);
         fechET = (EditText) v.findViewById(R.id.et_fech);
-        ocupacionS = (MaterialSpinner) v.findViewById(R.id.spinner_ocupacion);
-        codposET = (EditText) v.findViewById(R.id.et_codpos);
-        celET = (EditText) v.findViewById(R.id.et_cel);
+
         polipriTV = (TextView) v.findViewById(R.id.tv_polipri);
         polipriCB = (CheckBox) v.findViewById(R.id.cb_polipri);
         actdatB = (Button) v.findViewById(R.id.btn_actudat);
-        pesoEt = (EditText) v.findViewById(R.id.et_peso);
-        estaturaEt = (EditText) v.findViewById(R.id.et_estatura);
-        imcTv = (TextView) v.findViewById(R.id.tv_imc);
-        imcMensajeTv = (TextView) v.findViewById(R.id.tv_imc_mensaje);
-        presionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_presion);
-        glucosaSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_glucosa);
-        actividadSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_actividad);
-        lesionSpinner = (MaterialSpinner) v.findViewById(R.id.spinner_lesion);
 
         fechET.setKeyListener(null);
         fechET.setOnFocusChangeListener(this);
@@ -99,42 +75,16 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         actdatB.setOnClickListener(this);
         polipriCB.setOnClickListener(this);
         polipriTV.setOnClickListener(this);
-        estaturaEt.addTextChangedListener(this);
-        pesoEt.addTextChangedListener(this);
 
-
-
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arraySiNo);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        presionSpinner.setAdapter(adapter2);
-        glucosaSpinner.setAdapter(adapter2);
-        actividadSpinner.setAdapter(adapter2);
-        lesionSpinner.setAdapter(adapter2);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayGenero);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         generoS.setAdapter(adapter);
 
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, arrayOcupacion);
-        //Cambiar item
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ocupacionS.setAdapter(adapter1);
-
-        EditTextValidations.showHint(codposET, "Ej. 37000");
-        EditTextValidations.showHint(celET, "Ej. 4771234567");
-        EditTextValidations.showHint(pesoEt, "Ej. 70");
-        EditTextValidations.showHint(estaturaEt, "Ej. 1.70");
 
         perfil = new Perfil(getActivity().getApplicationContext());
         nomcomET.setText(perfil.getNombreCompleto());
         generoS.setSelection(perfil.getGenero());
-        presionSpinner.setSelection(perfil.getPresion());
-        glucosaSpinner.setSelection(perfil.getGlucosa());
-        actividadSpinner.setSelection(perfil.getActividad());
-        lesionSpinner.setSelection(perfil.getLesion());
-
-        pesoEt.setText(MathFormat.removeDots((float) MathFormat.round((double)perfil.getPeso(),2))+"");
-        estaturaEt.setText(MathFormat.removeDots((float) MathFormat.round((double)perfil.getEstatura(),2))+"" + "");
 
 
         fechapojo = perfil.getFecha();
@@ -150,11 +100,6 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         }
 
         fechET.setText(sdf.format(nac));
-        ocupacionS.setSelection(perfil.getOcupacion());
-        if(perfil.getCodigo_postal() == 0 ){
-            codposET.setText("");
-        } else codposET.setText(perfil.getCodigo_postal()+"");
-        celET.setText(perfil.getTelefono());
 
         return v;
     }
@@ -163,45 +108,14 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         //Verifica que los campos no estén vacíos
         boolean fechaEmpty = EditTextValidations.esCampoVacio(fechET);
         boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(generoS);
-        boolean presionEmpty = EditTextValidations.spinnerSinSeleccion(presionSpinner);
-        boolean glucosaEmpty = EditTextValidations.spinnerSinSeleccion(glucosaSpinner);
-        boolean actividadEmpty = EditTextValidations.spinnerSinSeleccion(actividadSpinner);
-        boolean lesionEmpty = EditTextValidations.spinnerSinSeleccion(lesionSpinner);
-        boolean pesoEmpty = EditTextValidations.esCampoVacio(pesoEt);
-        boolean estaturaEmpty = EditTextValidations.esCampoVacio(estaturaEt);
+
         boolean fechafalse = false;
         boolean codigofalse = false;
         boolean celfalse = false;
 
 
-        if (codposET.getText().toString().length() != 0) {
-            if (codposET.getText().toString().length() != 5) {
-                ((TextInputLayout) codposET.getParent()).setErrorEnabled(true);
-                ((TextInputLayout) codposET.getParent()).setError("El código postal debe llevar 5 digitos");
-            } else{
-                ((TextInputLayout) codposET.getParent()).setErrorEnabled(false);
-                codigofalse = true;
-            }
-        }
-        else{
-            codigofalse = true;
-        }
-
-        if (celET.getText().toString().length() != 0) {
-            if (celET.getText().toString().length() != 10) {
-                ((TextInputLayout) celET.getParent()).setErrorEnabled(true);
-                ((TextInputLayout) celET.getParent()).setError("El teléfono debe contar con 10 digitos");
-            } else{
-                ((TextInputLayout) celET.getParent()).setErrorEnabled(false);
-                celfalse = true;
-            }
-        }
-        else{
-            celfalse = true;
-        }
-
-        //Si ninguno de los campos es vacío
-        if(!fechaEmpty && codigofalse && celfalse && !generoEmpty && !presionEmpty && !glucosaEmpty && !actividadEmpty && !lesionEmpty && !pesoEmpty && !estaturaEmpty){
+               //Si ninguno de los campos es vacío
+        if(!fechaEmpty && codigofalse && celfalse && !generoEmpty){
             fechafalse = true;
         }
 
@@ -287,24 +201,13 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
     public void registrar(){
         String generoStr = (generoS.getSelectedItemPosition()) +"";
         if(generoS.getSelectedItemPosition() == 0) generoStr = null;
-        String presionStr = (presionSpinner.getSelectedItemPosition()) +"";
-        if(presionSpinner.getSelectedItemPosition() == 0) presionStr = null;
-        String glucosaStr = (glucosaSpinner.getSelectedItemPosition()) +"";
-        if(glucosaSpinner.getSelectedItemPosition() == 0) glucosaStr = null;
-        String actividadStr = (actividadSpinner.getSelectedItemPosition()) +"";
-        if(actividadSpinner.getSelectedItemPosition() == 0) actividadStr = null;
-        String lesionStr = (lesionSpinner.getSelectedItemPosition()) +"";
-        if(lesionSpinner.getSelectedItemPosition() == 0) lesionStr = null;
-        String ocupacionStr = (ocupacionS.getSelectedItemPosition()) +"";
-        if(ocupacionS.getSelectedItemPosition() == 0) ocupacionStr = null;
+
         String aux= "";
 
         Login log = new Login(getActivity().getApplicationContext());
 
         params = new HashMap<>();
         params.put("id_login_app", ""+ log.getId());
-        params.put("peso", pesoEt.getText().toString());
-        params.put("estatura", estaturaEt.getText().toString());
         if(nomcomET.getText().toString().length() == 0) {
             params.put("nombre", "" + aux);
             perfil.setNombreCompleto(null);
@@ -316,17 +219,8 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
         params.put("genero", generoStr);
         perfil.setGenero(Integer.parseInt(generoStr));
 
-        params.put("presion", presionStr);
-        perfil.setPresion(Integer.parseInt(presionStr));
-
-        params.put("glucosa", glucosaStr);
-        perfil.setGlucosa(Integer.parseInt(glucosaStr));
 
         params.put("actividad", generoStr);
-        perfil.setActividad(Integer.parseInt(actividadStr));
-
-        params.put("lesion", lesionStr);
-        perfil.setLesion(Integer.parseInt(lesionStr));
 
         if (calen == true) {
             params.put("fec_nacimiento", "" + fecha);
@@ -336,32 +230,9 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
             perfil.setFecha(fechapojo);
         }
 
-        if(ocupacionStr == null){
-            params.put("ocupacion", aux);
-            perfil.setOcupacion(null);
-        }else{
-            params.put("ocupacion", ocupacionStr);
-            perfil.setOcupacion(Integer.parseInt(ocupacionStr));
-        }
 
-        if(codposET.getText().toString().equals("")){
-            params.put("codigo_postal", aux);
-            perfil.setCodigo_postal(null);
-        }else{
-            params.put("codigo_postal", codposET.getText().toString());
-            perfil.setCodigo_postal(Integer.parseInt(codposET.getText().toString()));
-        }
 
-        if(celET.getText().toString().equals("")){
-            params.put("telefono", aux);
-            perfil.setTelefono(null);
-        }else{
-            params.put("telefono", celET.getText().toString());
-            perfil.setTelefono(celET.getText().toString());
-        }
 
-        perfil.setPeso(Float.parseFloat(pesoEt.getText().toString()));
-        perfil.setEstatura(Float.parseFloat(estaturaEt.getText().toString()));
         new RegistrarAsyncTask().execute(params);
 
         // boolean presionEmpty = EditTextValidations.
@@ -423,32 +294,7 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
     @Override
     public void afterTextChanged(Editable editable) {
-        if(pesoEt.getText().length() > 0 && estaturaEt.getText().length() > 0){
-            if(!pesoEt.getText().toString().equals(".") ) {
-                if (!estaturaEt.getText().toString().equals(".")) {
-                    float peso = Float.parseFloat(pesoEt.getText().toString());
-                    float estatura = Float.parseFloat(estaturaEt.getText().toString());
-                    float imc = peso / (estatura * estatura);
-                    imcTv.setText(MathFormat.round(Double.parseDouble(MathFormat.removeDots(imc)), 2) + "");
-                    if (imc > 25 && 30 > imc)
-                        imcMensajeTv.setText("¡Cuidado, tú IMC indica sobrepeso!");
-                    else if (imc >= 30)
-                        imcMensajeTv.setText("¡Cuidado, tú IMC indica obesidad!");
-                    else
-                        imcMensajeTv.setText("");
-                } else {
-                    estaturaEt.setText("");
-                }
-            }
-                else{
-                pesoEt.setText("");
-                }
-            }
 
-        else{
-            imcTv.setText("NC");
-            imcMensajeTv.setText("");
-        }
     }
 
     private class RegistrarAsyncTask extends AsyncTask<HashMap<String, String>, Void, String> {

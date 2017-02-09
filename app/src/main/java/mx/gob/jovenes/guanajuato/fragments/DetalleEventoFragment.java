@@ -33,7 +33,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_lugar, parent, false);
+        View v = inflater.inflate(R.layout.fragment_detalle_evento, parent, false);
         MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -95,10 +95,12 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
     @Override
     public void onDestroyView(){
+        /*
         super.onDestroyView();
         android.app.Fragment fragment = (getActivity().getFragmentManager().findFragmentById(R.id.map));
         android.app.FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
         ft.remove(fragment);
         ft.commit();
+        */
     }
 }
