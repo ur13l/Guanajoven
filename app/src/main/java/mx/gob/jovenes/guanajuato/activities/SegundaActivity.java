@@ -15,6 +15,7 @@ import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriasFragment;
 import mx.gob.jovenes.guanajuato.fragments.DirectorioFragment;
+import mx.gob.jovenes.guanajuato.fragments.MisEventosFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.PerfilFragment;
 import mx.gob.jovenes.guanajuato.fragments.ReporteFragment;
