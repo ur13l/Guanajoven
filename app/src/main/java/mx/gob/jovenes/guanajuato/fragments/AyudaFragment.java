@@ -18,7 +18,7 @@ import mx.gob.jovenes.guanajuato.R;
  */
 public class AyudaFragment extends Fragment {
     private static int FIRST_SLIDE = 1;
-    private static int LAST_SLIDE = 9;
+    private static int LAST_SLIDE = 4;
     private int slide;
     private int nextSlide;
 
@@ -46,42 +46,17 @@ public class AyudaFragment extends Fragment {
                 break;
             case 2:
                 imageView.setImageResource(R.drawable.slide2);
-                textView.setText(R.string.slide2);
+                textView.setText(R.string.slide1);
                 backgroundView.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
                 break;
             case 3:
                 imageView.setImageResource(R.drawable.slide3);
-                textView.setText(R.string.slide3);
+                textView.setText(R.string.slide1);
                 backgroundView.setBackgroundColor(getResources().getColor(R.color.colorMagenta));
                 break;
             case 4:
                 imageView.setImageResource(R.drawable.slide4);
-                textView.setText(R.string.slide4);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                break;
-            case 5:
-                imageView.setImageResource(R.drawable.slide5);
-                textView.setText(R.string.slide5);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                break;
-            case 6:
-                imageView.setImageResource(R.drawable.slide6);
-                textView.setText(R.string.slide6);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorNaranja));
-                break;
-            case 7:
-                imageView.setImageResource(R.drawable.slide7);
-                textView.setText(R.string.slide7);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
-                break;
-            case 8:
-                imageView.setImageResource(R.drawable.slide8);
-                textView.setText(R.string.slide8);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorMagenta));
-                break;
-            case 9:
-                imageView.setImageResource(R.drawable.slide9);
-                textView.setText(R.string.slide9);
+                textView.setText(R.string.slide1);
                 backgroundView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 break;
         }

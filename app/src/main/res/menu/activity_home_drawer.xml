@@ -29,12 +29,12 @@
 
                 <item
                     android:id="@+id/nav_convocatorias"
-                    android:icon="@drawable/ic_exercise"
+                    android:icon="@drawable/convocatoria"
                     android:title="@string/convocatorias" />
 
                 <item
                     android:id="@+id/nav_mis_eventos"
-                    android:icon="@drawable/ic_water"
+                    android:icon="@drawable/evento"
                     android:title="@string/mis_eventos" />
 
 
@@ -45,7 +45,7 @@
 
                 <item
                     android:id="@+id/nav_chat_ayuda"
-                    android:icon="@drawable/ic_notificaciones"
+                    android:icon="@drawable/ayuda"
                     android:title="@string/chat" />
 
 

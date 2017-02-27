@@ -292,7 +292,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="continuar">Continuar</string>
-    <string name="slide1">¡Actívate es una aplicación que nos permite mejorar nuestra calidad de vida!</string>
+    <string name="slide1">Esto es una sección de ayuda, aquí se coloca un mensaje referente a alguna pantalla específica y se muestra su contenido.</string>
     <string name="slide2">Contiene una Agenda donde podrás consultar los Eventos deportivos que CODE prepara para ti, además de poder recibir Notificaciones tipo Push a tu celular.</string>
     <string name="slide3">Nos permite registrar y sumar las actividades físicas y consumo de agua durante el día.</string>
     <string name="slide4">Consultar un Reporte de los resultados obtenidos día a día.</string>
