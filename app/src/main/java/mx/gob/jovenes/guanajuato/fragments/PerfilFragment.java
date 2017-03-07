@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
@@ -30,8 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
-import mx.gob.jovenes.guanajuato.utils.MathFormat;
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -204,10 +202,9 @@ public class PerfilFragment extends CustomFragment implements  View.OnClickListe
 
         String aux= "";
 
-        Login log = new Login(getActivity().getApplicationContext());
+
 
         params = new HashMap<>();
-        params.put("id_login_app", ""+ log.getId());
         if(nomcomET.getText().toString().length() == 0) {
             params.put("nombre", "" + aux);
             perfil.setNombreCompleto(null);

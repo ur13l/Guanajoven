@@ -25,8 +25,9 @@ import java.util.HashMap;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.LoginPOJO;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -270,11 +271,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
             super.onPostExecute(result);
             if (result != null) {
                 if(result != 0){
-                    Login login = new Login(getActivity().getApplicationContext());
-                    login.setCorreo(loginPrevio.getCorreo());
-                    login.setFacebook(loginPrevio.isFacebook() == 1);
-                    login.setGoogle(loginPrevio.isGoogle() == 1);
-                    login.setId(result);
+                    Sesion usuario = new Sesion(getActivity().getApplicationContext());
                     Intent i = new Intent(getActivity(), HomeActivity.class);
                     startActivity(i);
                 }

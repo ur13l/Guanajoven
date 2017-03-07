@@ -114,8 +114,8 @@ public class EditTextValidations {
 
             @Override
             public void afterTextChanged(Editable s) {
-                ((TextInputLayout) et.getParent()).setErrorEnabled(false);
-                ((TextInputLayout) et.getParent()).setError(null);
+//                ((TextInputLayout) et.getParent()).setErrorEnabled(false);
+//                ((TextInputLayout) et.getParent()).setError(null);
             }
         });
     }

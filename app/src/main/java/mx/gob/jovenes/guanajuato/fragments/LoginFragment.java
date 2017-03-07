@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.InputType;
 import android.util.Log;
@@ -60,16 +58,22 @@ import java.util.HashMap;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.LoginPOJO;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
 import mx.gob.jovenes.guanajuato.utils.ValidEmail;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 /**
  * Autor: Uriel Infante
- * Fragment de la interfaz Login, el usuario puede introducir su correo y contraseña para iniciar sesión.
+ * Fragment de la interfaz Usuario, el usuario puede introducir su correo y contraseña para iniciar sesión.
  * Se cuenta con opción de recuperar contraseña e iniciar sesión con Google o Facebook, además de
  * tener la opción de registro.
  * Fecha: 02/05/2016
@@ -85,17 +89,15 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     private boolean email, pass;
 
 
-    private Toolbar toolbar;
     //Elementos para el login con Google
     private GoogleSignInOptions googleSignInOptions;
     private GoogleApiClient googleApiClient;
     private GoogleSignInApi googleSignInApi;
-    private AppCompatButton googleSignInButton;
+    private Button googleSignInButton;
     private ProgressDialog loginGooglePd;
-    private TextView politicaTv;
 
     //Elementos para el login con Facebook
-    private LoginButton fbButton;
+    //private LoginButton fbButton;
     private CallbackManager callbackManager;
     private AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
@@ -104,9 +106,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     private ProgressDialog loginSimplePd;
     private EditText contrasenaEt;
     private EditText correoEt;
-    private AppCompatButton loginButton;
+    private Button loginButton;
     private TextView recuperarPasswordTv;
-    private Button btnRegistrar;
+
+    private Retrofit retrofit;
+    private UsuarioAPI usuarioAPI;
 
     public SharedPreferences prefs;
 
@@ -126,7 +130,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                         public void onCompleted(JSONObject object, GraphResponse response) {
                             //Si el resultado ha sido exitoso, se ejecuta la AsyncTask LoginFacebookAsyncTask.
                             String email = object.optString("email");
-                            new LoginFacebookAsyncTask().execute(email);
+                            //new LoginFacebookAsyncTask().execute(email);
                         }
                     });
             Bundle parameters = new Bundle();
@@ -172,8 +176,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                     .build();
 
 
-        //Inicialización del SDK de Facebook, llamada al callback y definición del TokenTrackerb y ProfileTracker.
-        FacebookSdk.sdkInitialize(getActivity().getApplicationContext());
+
         callbackManager = CallbackManager.Factory.create();
         accessTokenTracker = new AccessTokenTracker() {
             @Override
@@ -194,6 +197,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         //Instancia de las preferencias.
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
+
+        //Instancia de retrofit para servicio de API
+        retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
+        usuarioAPI = retrofit.create(UsuarioAPI.class);
+
     }
 
     /**
@@ -208,29 +216,19 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
 
-        toolbar = (Toolbar)getActivity().findViewById(R.id.toolbarlogin);
-
         //Instancia y listener del botón de Google.
-        googleSignInButton = (AppCompatButton) v.findViewById(R.id.googlebtn);
+        googleSignInButton = (Button) v.findViewById(R.id.googlebtn);
         googleSignInButton.setOnClickListener(this);
 
         //Instancia del botón de Facebook.
-        fbButton = (LoginButton) v.findViewById(R.id.btn_facebook);
+        //fbButton = (LoginButton) v.findViewById(R.id.btn_facebook);
 
         //Instancia de los demás elementos de la vista.
         contrasenaEt = (EditText) v.findViewById(R.id.pass_et);
         correoEt = (EditText) v.findViewById(R.id.email_et);
-        loginButton = (AppCompatButton) v.findViewById(R.id.btn_iniciar_sesion);
+        loginButton = (Button) v.findViewById(R.id.btn_iniciar_sesion);
         recuperarPasswordTv = (TextView) v.findViewById(R.id.tv_recuperar_pass);
-        btnRegistrar = (Button) v.findViewById(R.id.btnRegistrar);
-        politicaTv = (TextView) v.findViewById(R.id.aviso_privacidad);
 
-        politicaTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showDialog();
-            }
-        });
 
         //Se muestra mensaje cuando se gana el foco
         correoEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -251,9 +249,9 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
 
         //Configurando el input type
-        contrasenaEt.setInputType(InputType.TYPE_CLASS_TEXT |
-                InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        contrasenaEt.setTypeface(Typeface.DEFAULT);
+        //contrasenaEt.setInputType(InputType.TYPE_CLASS_TEXT |
+//                InputType.TYPE_TEXT_VARIATION_PASSWORD);
+//        contrasenaEt.setTypeface(Typeface.DEFAULT);
 
 
         loginButton.setOnClickListener(this);
@@ -262,7 +260,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
 
         recuperarPasswordTv.setOnClickListener(this);
-        btnRegistrar.setOnClickListener(this);
 
         return v;
     }
@@ -270,7 +267,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     @Override
     public void onStart() {
         super.onStart();
-
         logOutFacebook();
     }
 
@@ -278,18 +274,18 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        fbButton = (LoginButton) view.findViewById(R.id.btn_facebook);
+        //fbButton = (LoginButton) view.findViewById(R.id.btn_facebook);
 
-        fbButton.setBackgroundResource(R.drawable.facebook_button);
-        fbButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_logo, 0, 0, 0);
+        //fbButton.setBackgroundResource(R.drawable.facebook_button);
+        //fbButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.facebook_logo, 0, 0, 0);
 
-        fbButton.setPadding(30, 30, 30, 30);
+        //fbButton.setPadding(30, 30, 30, 30);
         googleSignInButton.setPadding(28, 28, 28, 28);
 
         //loginButton.setReadPermissions("user_friends");
-        fbButton.setReadPermissions(Arrays.asList("public_profile", "email"));
-        fbButton.setFragment(this);
-        fbButton.registerCallback(callbackManager, callback);
+        //fbButton.setReadPermissions(Arrays.asList("public_profile", "email"));
+        //fbButton.setFragment(this);
+        //fbButton.registerCallback(callbackManager, callback);
 
 
     }
@@ -370,7 +366,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            new LoginGoogleAsyncTask().execute(acct.getEmail());
+            //new LoginGoogleAsyncTask().execute(acct.getEmail());
             if(loginGooglePd != null)
                 loginGooglePd.dismiss();
         } else {
@@ -385,13 +381,11 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         if(googleApiClient.isConnected()){
             Auth.GoogleSignInApi.signOut(googleApiClient);
         }
-        toolbar.setVisibility(View.GONE);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        toolbar.setVisibility(View.VISIBLE);
         googleApiClient.disconnect();
 
         googleApiClient.stopAutoManage(getActivity());
@@ -414,16 +408,27 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 String correo = correoEt.getText().toString();
                 String password = contrasenaEt.getText().toString();
                 if (ValidEmail.isValidEmail(correo) != false) {
-                    ((TextInputLayout) correoEt.getParent()).setError(null);
+                    //((TextInputLayout) correoEt.getParent()).setError(null);
                     if (password.length() > 0) {
-                        new LoginSimpleAsyncTask().execute(correo, password);
+                        Call<Response<Usuario>> call = usuarioAPI.login(correo, password);
+                        call.enqueue(new Callback<Response<Usuario>>() {
+                            @Override
+                            public void onResponse(Call<Response<Usuario>> call, retrofit2.Response<Response<Usuario>> response) {
+                                Log.d("WOW", "WOW");
+                            }
+
+                            @Override
+                            public void onFailure(Call<Response<Usuario>> call, Throwable t) {
+                                Log.d("WOW", "Error");
+                            }
+                        });
                     } else {
-                        ((TextInputLayout) contrasenaEt.getParent()).setErrorEnabled(true);
-                        ((TextInputLayout) contrasenaEt.getParent()).setError("El campo se encuentra vacío");
+                        //((TextInputLayout) contrasenaEt.getParent()).setErrorEnabled(true);
+                        //((TextInputLayout) contrasenaEt.getParent()).setError("El campo se encuentra vacío");
                     }
                 } else {
-                    ((TextInputLayout) correoEt.getParent()).setErrorEnabled(true);
-                    ((TextInputLayout) correoEt.getParent()).setError("Correo no valido");
+                    //((TextInputLayout) correoEt.getParent()).setErrorEnabled(true);
+                    //((TextInputLayout) correoEt.getParent()).setError("Correo no valido");
                     correoEt.setHintTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     correoEt.setTypeface(Typeface.DEFAULT);
                     email = false;
@@ -453,12 +458,6 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 ft.commit();
                 break;
 
-            case R.id.btnRegistrar:
-                FragmentManager fm1 = getActivity().getSupportFragmentManager();
-                FragmentTransaction ft1 = fm1.beginTransaction();
-                RegistrarFragment f1 = new RegistrarFragment();
-                ft1.replace(R.id.login_fragment_container, f1).addToBackStack(null).commit();
-                break;
         }
     }
 
@@ -474,226 +473,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     }
 
 
-    /**
-     * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión con facebook
-     */
-    private class LoginFacebookAsyncTask extends AsyncTask<String, Void, LoginPOJO> {
 
-        @Override
-        protected void onPreExecute() {
-            loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
-
-        }
-
-
-        @Override
-        protected LoginPOJO doInBackground(String... args) {
-            HashMap<String, String> params = new HashMap<>();
-            params.put("correo", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/login/loginFacebook.php";
-            ClienteHttp cliente = new ClienteHttp();
-            String result = cliente.hacerRequestHttp(url, params);
-            Gson gson = new Gson();
-            return gson.fromJson(result, LoginPOJO.class);
-        }
-
-        @Override
-        public void onPostExecute(LoginPOJO result) {
-            super.onPostExecute(result);
-            if (result != null) {
-                if (result.getInserted() == 0) {
-                    Login sesion = new Login(getActivity().getApplicationContext());
-                    sesion.setId(result.getId());
-                    sesion.setCorreo(result.getCorreo());
-                    sesion.setFacebook(result.isFacebook() == 1);
-                    sesion.setGoogle(result.isGoogle() == 1);
-
-                    //Error para cuando los datos de sesión son incorrectos o no se ha traído bien la información.
-                    if (sesion.getId() == 0) {
-                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente", Snackbar.LENGTH_LONG).show();
-                    } else
-                        //Error para cuando ya existe el registro como de Google o Facebook
-                        if (sesion.getId() == -1) {
-                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo ya se encuentra ligada a otro tipo de cuenta.");
-                            LoginManager.getInstance().logOut();
-                            if(loginSimplePd.isShowing()){
-                                loginSimplePd.dismiss();
-
-                            }
-
-                        } else {
-                            startHomeActivity();
-                        }
-                }
-                //Cuando se debe realizar la inserción, enviar a Datos complementarios con correo, google, facebook, password = null;
-                else {
-                    DatosComplementariosFragment fragment = DatosComplementariosFragment.newInstance(result.getCorreo(), "", result.isFacebook(), result.isGoogle());
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.login_fragment_container, fragment).addToBackStack(null).commit();
-                }
-            } else {
-                if(loginSimplePd.isShowing()){
-                    loginSimplePd.dismiss();
-
-                }
-                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
-            }
-
-        }
-    }
-
-    /**
-     * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión con facebook
-     */
-    private class LoginGoogleAsyncTask extends AsyncTask<String, Void, LoginPOJO> {
-
-        @Override
-        protected void onPreExecute() {
-            loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
-        }
-
-
-        @Override
-        protected LoginPOJO doInBackground(String... args) {
-            HashMap<String, String> params = new HashMap<>();
-            params.put("correo", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/login/loginGoogle.php";
-            ClienteHttp cliente = new ClienteHttp();
-            String result = cliente.hacerRequestHttp(url, params);
-            Gson gson = new Gson();
-            return gson.fromJson(result, LoginPOJO.class);
-        }
-
-        @Override
-        public void onPostExecute(LoginPOJO result) {
-            super.onPostExecute(result);
-            if (result != null) {
-                if (result.getInserted() == 0) {
-                    Login sesion = new Login(getActivity().getApplicationContext());
-                    sesion.setId(result.getId());
-                    sesion.setCorreo(result.getCorreo());
-                    sesion.setFacebook(result.isFacebook() == 1);
-                    sesion.setGoogle(result.isGoogle() == 1);
-
-                    if (sesion.getId() == 0) {
-                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG);
-                        if (loginSimplePd.isShowing()) {
-                            loginSimplePd.dismiss();
-
-                        }
-                    } else
-                        //Error para cuando ya existe el registro como de Google o Facebook
-                        if (sesion.getId() == -1) {
-                            if(sesion.getGoogle()){
-                                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Google.");
-                            }
-                            else if (sesion.getFacebook()){
-                                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Facebook.");
-                            }
-                            else {
-                                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo ya se encuentra ligada a otro tipo de cuenta.");
-                                if (loginSimplePd.isShowing()) {
-                                    loginSimplePd.dismiss();
-
-                                }
-                            }
-
-                        } else {
-                            startHomeActivity();
-                            //new TutorAsyncTask().execute(sesion.getId(), 4);
-
-                            //Entra al sistema SERVLET
-                        }
-                }
-                //Cuando se debe realizar la inserción, enviar a Datos complementarios con correo, google, facebook, password = null;
-                else {
-                    DatosComplementariosFragment fragment = DatosComplementariosFragment.newInstance(result.getCorreo(), "", result.isFacebook(), result.isGoogle());
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.login_fragment_container, fragment).addToBackStack(null).commit();
-                }
-            } else {
-                if(loginSimplePd.isShowing()){
-                    loginSimplePd.dismiss();
-                }
-
-                if(googleApiClient.isConnected()){
-                    Auth.GoogleSignInApi.signOut(googleApiClient);
-                }
-                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
-            }
-        }
-    }
-
-    /**
-     * Clase privada pra realizar la llamada asíncrona al servidor para el inicio de sesión simple
-     */
-    private class LoginSimpleAsyncTask extends AsyncTask<String, Void, LoginPOJO> {
-
-        @Override
-        protected void onPreExecute() {
-            loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
-
-        }
-
-        @Override
-        protected LoginPOJO doInBackground(String... args) {
-
-
-            HashMap<String, String> params = new HashMap<>();
-            params.put("correo", args[0].toString());
-            params.put("password", args[1].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "/app_php/login/loginSimple.php";
-            ClienteHttp cliente = new ClienteHttp();
-            String result = cliente.hacerRequestHttp(url, params);
-            Gson gson = new Gson();
-            return gson.fromJson(result, LoginPOJO.class);
-
-        }
-
-        @Override
-        public void onPostExecute(LoginPOJO result) {
-
-            if (result != null) {
-                    Login sesion = new Login(getActivity().getApplicationContext());
-                    sesion.setId(result.getId());
-                    sesion.setCorreo(result.getCorreo());
-                    sesion.setFacebook(result.isFacebook() == 1);
-                    sesion.setGoogle(result.isGoogle() == 1);
-                    if (sesion.getId() == 0) {
-                        if(loginSimplePd.isShowing()){
-                            loginSimplePd.dismiss();
-                        }
-                        if(sesion.getGoogle()){
-                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Google.");
-                        }
-                        else if (sesion.getFacebook()){
-                            OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Su cuenta de correo se encuentra ligada a Facebook.");
-                        }
-                        else {
-                            Snackbar snack = Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente. Verifique que no tenga registro creado con Google o Facebook", Snackbar.LENGTH_LONG);
-                            View sView = snack.getView();
-                            sView.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.error));
-                            TextView textView = (TextView) sView.findViewById(android.support.design.R.id.snackbar_text);
-                            textView.setMaxLines(7);
-                            snack.show();
-                        }
-                    } else {
-                        startHomeActivity();
-                        //new TutorAsyncTask().execute(sesion.getId(), 4);
-                    }
-
-            } else {
-                if(loginSimplePd.isShowing()){
-                    loginSimplePd.dismiss();
-                }
-                OKDialog.showOKDialog(getActivity(), "Error al iniciar sesión", "Hubo un problema con la red. Revise su conexión a Internet");
-            }
-        }
-
-
-        }
 
 
         public void startHomeActivity(){

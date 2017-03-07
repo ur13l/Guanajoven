@@ -17,10 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -58,7 +56,7 @@ import mx.gob.jovenes.guanajuato.activities.SegundaActivity;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.Bitacora;
 import mx.gob.jovenes.guanajuato.model.Evento;
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.model.PerfilPOJO;
 import mx.gob.jovenes.guanajuato.model.models_tmp.Imagen;
@@ -67,9 +65,9 @@ import mx.gob.jovenes.guanajuato.persistencia.AlarmasDBHelper;
 import mx.gob.jovenes.guanajuato.persistencia.BitacoraDBHelper;
 import mx.gob.jovenes.guanajuato.receivers.AlarmaBootReceiver;
 import mx.gob.jovenes.guanajuato.receivers.RetrieveVideosBroadcastReceiver;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import mx.gob.jovenes.guanajuato.utils.FileUtils;
-import mx.gob.jovenes.guanajuato.utils.MathFormat;
 import mx.gob.jovenes.guanajuato.utils.PublicidadSingleton;
 
 /**
@@ -88,7 +86,7 @@ public class HomeFragment extends CustomFragment {
     public static final String RES_URL = "http://"+ClienteHttp.SERVER_IP + "/res/";
     private PublicidadSingleton publicidad;
     private ImageLoader imageLoader;
-    private Login session;
+    private Sesion session;
     private BitacoraDBHelper bitacoraDBHelper;
     private Bitacora bitacora;
 
@@ -165,7 +163,7 @@ public class HomeFragment extends CustomFragment {
         imageLoader = ImageLoader.getInstance();
 
         //Asignando al usuario activo
-        session = new Login(getActivity().getApplicationContext());
+        session = new Sesion(getActivity().getApplicationContext());
 
         //Declarando las preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
@@ -278,31 +276,13 @@ public class HomeFragment extends CustomFragment {
      * @throws ParseException
      */
     public void setValoresSesion() throws ParseException {
-        session = new Login(getActivity().getApplicationContext());
+        session = new Sesion(getActivity().getApplicationContext());
         bitacoraDBHelper = new BitacoraDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
         bitacora = new Bitacora(getActivity().getApplicationContext());
 
-        Login session = new Login(getActivity().getApplicationContext());
-        try {
-            bitacoraDBHelper.prepareDatabase();
-            Log.d("BITACORA", session.getId() + "");
-            bitacora = bitacoraDBHelper.bitacoraDelDia(session.getId(), new Date());
-            if(bitacora.getId() == 0){
-                Log.d("id_hoho", session.getId()+"");
-                bitacora.setIdUser(session.getId());
-            }
-        } catch (Exception e) {
-            Log.e("DB", e.getMessage());
-        }
+        Sesion session = new Sesion(getActivity().getApplicationContext());
 
-        registrarAlarmasDefault();
 
-        if(!prefs.getBoolean(DATOS_PERFIL, false)){
-            new ObternerAsyncTask().execute(session.getId());
-            prefs.edit().putBoolean(DATOS_PERFIL,true).commit();
-        }
-
-        Log.d("WIFI", "Enviando token");
         FirebaseMessaging.getInstance().subscribeToTopic("mx.gob.jovenes.guanajuato.CODEApp");
         FirebaseInstanceId.getInstance().getToken();
         new EnviarTokenAsyncTask().execute();
@@ -323,20 +303,6 @@ public class HomeFragment extends CustomFragment {
     }
 
 
-    public void registrarAlarmasDefault(){
-        AlarmasDBHelper alarmaDBHelper = new AlarmasDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
-
-
-        if(!prefs.getBoolean(ALARMA_REGISTRADA + session.getId(), false)){
-            try {
-                alarmaDBHelper.prepareDatabase();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            alarmaDBHelper.registrarAlarmasDefault(session.getId());
-            prefs.edit().putBoolean(ALARMA_REGISTRADA+session.getId(), true).commit();
-        }
-    }
 
     public void initEvents() {
         ArrayList<Event> events = new ArrayList<>();
@@ -487,7 +453,7 @@ public class HomeFragment extends CustomFragment {
             ClienteHttp clienteHttp = new ClienteHttp();
             HashMap<String, String> params = new HashMap<>();
             params.put("Token", token);
-            params.put("id_login_app", session.getId()+"");
+            params.put("id_login_app", session.getIdUsuario()+"");
             params.put("os", "1"); //1 Representa Android
             clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "//app_php/notificaciones/registrar.php",
                     params);

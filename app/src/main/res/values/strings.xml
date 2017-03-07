@@ -6,8 +6,8 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- Strings related to login -->
-    <string name="login">Inicia Sesión</string>
+    <!-- Strings related to usuario -->
+    <string name="usuario">Inicia Sesión</string>
     <string name="mensaje_bienvenida">Somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y politícas publicas, orientada a elevar la calidad de vida de los jóvenes Guanajuatenses.</string>
 
     <string name="home">Home</string>
@@ -33,7 +33,7 @@
     <string name="hint_user">Usuario</string>
     <string name="hint_email">Email</string>
     <string name="hint_passwordconfirmar">Confirmar Contraseña</string>
-    <string name="facebook_app_id">1042222702564616</string>
+    <string name="facebook_app_id">203591490120675</string>
     <string name="api_key">AIzaSyB-TMbKLaVI-R4bEOF1iMJvxj_88iVcmC8</string>
 
 
@@ -319,5 +319,6 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="ubicacion">Parece que te encuentras cerca de \"...\"</string>
     <string name="checkin">Hacer check-in</string>
     <string name="mas_convocatorias">Más convocatorias</string>
+    <string name="facebook">Facebook</string>
 
 </resources>

@@ -3,12 +3,10 @@ package mx.gob.jovenes.guanajuato.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -32,7 +30,7 @@ import java.util.HashMap;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
 import mx.gob.jovenes.guanajuato.receivers.AlarmasBroadcastReceiver;
@@ -165,7 +163,8 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 break;
             case R.id.nav_logout:
-                Login login = new Login(this.getApplicationContext());
+                /**
+                Usuario usuario = new Usuario(this.getApplicationContext());
                 AlarmasBroadcastReceiver.cancelAlarms(this);
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 new CancelarTokenAsyncTask().execute();
@@ -177,7 +176,7 @@ public class HomeActivity extends AppCompatActivity
                 if(mGoogleApiClient.isConnected()){
                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 }
-                intent = new Intent(this, LogueoActivity.class);
+                intent = new Intent(this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 this.finish();
@@ -187,6 +186,7 @@ public class HomeActivity extends AppCompatActivity
                 intent.putExtra(MENU_ID, id);
                 startActivity(intent);
                 break;
+                 */
         }
 
         return true;
@@ -236,8 +236,9 @@ public class HomeActivity extends AppCompatActivity
     private class CancelarTokenAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... args) {
+            /*
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            Login session = new Login(getApplicationContext());
+            Usuario session = new Usuario(getApplicationContext());
             String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
             Log.d("LOGINAPP", session.getId() + "");
             ClienteHttp clienteHttp = new ClienteHttp();
@@ -247,7 +248,9 @@ public class HomeActivity extends AppCompatActivity
             clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "//app_php/notificaciones/cancelar.php",
                     params);
             session.borrarLogin();
+            */
             return null;
+
         }
 
     }

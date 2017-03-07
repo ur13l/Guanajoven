@@ -2,8 +2,8 @@ package mx.gob.jovenes.guanajuato.model;
 
 /**
  * Autor: Uriel Infante
- * Clase POJO (Plain Old Java Object) para el Login, esta representa el verdadero modelo de un
- * objeto tipo Login, es utilizada para generar instancias con Gson.
+ * Clase POJO (Plain Old Java Object) para el Usuario, esta representa el verdadero modelo de un
+ * objeto tipo Usuario, es utilizada para generar instancias con Gson.
  * Fecha:27/05/2016
  */
 public class LoginPOJO {

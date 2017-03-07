@@ -8,7 +8,8 @@ import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 import android.support.v7.app.AppCompatActivity;
 
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
 
 /**
  * Created by Uriel on 17/01/2016.
@@ -18,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
 
     /**
      * Método para iniciar la vista Splash.
-     * Al terminar de mostrar el Splash podrá redirigir a Bienvenida, Login o Home, dependiendo de
+     * Al terminar de mostrar el Splash podrá redirigir a Bienvenida, Usuario o Home, dependiendo de
      * la instancia del sistema.
      * @param savedInstanceState
      */
@@ -34,10 +35,10 @@ public class SplashActivity extends AppCompatActivity {
             intent = new Intent(this, BienvenidaActivity.class);
         }
         else {
-            Login sesion = new Login(getApplicationContext());
+            Sesion sesion = new Sesion(getApplicationContext());
 
-            if (sesion.getId() == 0) {
-                intent = new Intent(this, LogueoActivity.class);
+            if (sesion.getIdUsuario() == 0) {
+                intent = new Intent(this, LoginActivity.class);
             } else {
                 intent = new Intent(this, HomeActivity.class);
             }

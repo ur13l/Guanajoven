@@ -26,7 +26,6 @@ public class Alimento {
     private char estado;
     private char platillo;
     private GrupoAlimento grupoAlimento;
-    private TipoPorcion tipoPorcion;
 
     public long getId() {
         return id;
@@ -204,13 +203,6 @@ public class Alimento {
         this.grupoAlimento = grupoAlimento;
     }
 
-    public TipoPorcion getTipoPorcion() {
-        return tipoPorcion;
-    }
-
-    public void setTipoPorcion(TipoPorcion tipoPorcion) {
-        this.tipoPorcion = tipoPorcion;
-    }
 
 
 }

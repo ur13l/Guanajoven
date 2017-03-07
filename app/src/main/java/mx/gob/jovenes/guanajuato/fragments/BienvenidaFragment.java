@@ -12,7 +12,7 @@ import android.widget.Button;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.BienvenidaActivity;
-import mx.gob.jovenes.guanajuato.activities.LogueoActivity;
+import mx.gob.jovenes.guanajuato.activities.LoginActivity;
 
 /**
  * Autor: Uriel Infante
@@ -36,7 +36,7 @@ public class BienvenidaFragment extends Fragment {
                 editor.putBoolean(BienvenidaActivity.BIENVENIDA_KEY, true);
                 editor.commit();
 
-                Intent intent = new Intent(getActivity(), LogueoActivity.class);
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 getActivity().finish();
             }

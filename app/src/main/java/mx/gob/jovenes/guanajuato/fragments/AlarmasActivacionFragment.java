@@ -28,7 +28,7 @@ import java.util.Calendar;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVAlarmaAdapter;
 import mx.gob.jovenes.guanajuato.model.Alarma;
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.persistencia.AlarmasDBHelper;
 import mx.gob.jovenes.guanajuato.receivers.AlarmasBroadcastReceiver;
 
@@ -41,7 +41,7 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
     private RVAlarmaAdapter adapter;
     private ArrayList<Alarma> alarmas;
     private AlarmasDBHelper dbHelper;
-    private Login sesion;
+    private Usuario sesion;
     private SharedPreferences prefs;
     private FloatingActionButton fab;
     private TextView emptyView;
@@ -50,16 +50,7 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        sesion = new Login(getActivity().getApplicationContext());
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        if(savedInstanceState == null){
-            dbHelper = new AlarmasDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
-            try {
-                dbHelper.prepareDatabase();
-            } catch (IOException e) {
-                Log.e("DB", e.getMessage());
-            }
-        }
+
     }
 
     @Override
@@ -132,19 +123,7 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
     private void initializeData(){
         alarmas = new ArrayList<Alarma>();
 
-        alarmas = dbHelper.getAlarmas(sesion.getId());
 
-        if(!prefs.getBoolean(ALARMA_REGISTRADA + sesion.getId(), false)) {
-            for (Alarma a : alarmas) {
-
-                if (a.isActivo()) {
-                    AlarmasBroadcastReceiver.registerAlarm(getActivity().getApplicationContext(),
-                            a);
-                }
-
-            }
-            prefs.edit().putBoolean(ALARMA_REGISTRADA + sesion.getId(), true).commit();
-        }
 
     }
 
@@ -219,20 +198,6 @@ public class AlarmasActivacionFragment extends CustomFragment implements TimePic
 
     @Override
     public void onTimeSet(RadialPickerLayout view, int hourOfDay, int minute, int second) {
-        Alarma aa = new Alarma();
 
-        aa.setActivo(true);
-        aa.setLunes(true);
-        aa.setMartes(true);
-        aa.setMiercoles(true);
-        aa.setJueves(true);
-        aa.setViernes(true);
-        aa.setSabado(true);
-        aa.setDomingo(true);
-        aa.setHora("8:00");
-        aa.setIdLoginApp(sesion.getId());
-        alarmas.add(setTime(getActivity(),hourOfDay,minute, aa, -1, this));
-        adapter.notifyItemInserted(alarmas.size()-1);
-        adapter.notifyDataSetChanged();
     }
 }

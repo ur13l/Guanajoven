@@ -26,7 +26,6 @@ public class Platillo {
     private String foto2;
     private char estado;
     private String recetaTexto;
-    private TipoPorcion tipoPorcion;
 
     public long getId() {
         return id;
@@ -202,13 +201,5 @@ public class Platillo {
 
     public void setRecetaTexto(String recetaTexto) {
         this.recetaTexto = recetaTexto;
-    }
-
-    public TipoPorcion getTipoPorcion() {
-        return tipoPorcion;
-    }
-
-    public void setTipoPorcion(TipoPorcion tipoPorcion) {
-        this.tipoPorcion = tipoPorcion;
     }
 }

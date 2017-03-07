@@ -5,39 +5,30 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.fragments.LoginFragment;
+import mx.gob.jovenes.guanajuato.fragments.StartFragment;
 
 
 /**
  * Autor: Uriel Infante
- * Activity contenedora de la interfaz Login.
+ * Activity contenedora de la interfaz Usuario.
  * Fecha: 02/05/2016
  */
-public class LogueoActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_logueo);
-        toolbar = (Toolbar)findViewById(R.id.toolbarlogin);
-        setSupportActionBar(toolbar);
+        setContentView(R.layout.activity_login);
 
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
-        Fragment fragment = null;
-        try {
-            fragment = new LoginFragment();
-            ft.replace(R.id.login_fragment_container, fragment, "fragment_login");
-            ft.commit();
-        }catch(Exception e){
-            e.getMessage();
-        }
+        Fragment fragment = new StartFragment();
+        ft.replace(R.id.login_fragment_container, fragment, "fragment_login");
+        ft.commit();
 
     }
 
@@ -56,8 +47,5 @@ public class LogueoActivity extends AppCompatActivity {
     public void onBackPressed(){
         super.onBackPressed();
     }
-
-
-
 
 }

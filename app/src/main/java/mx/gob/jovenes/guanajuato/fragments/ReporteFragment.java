@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVReporteAdapter;
-import mx.gob.jovenes.guanajuato.model.Login;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.StatusReporte;
 import mx.gob.jovenes.guanajuato.persistencia.BitacoraDBHelper;
 
@@ -38,40 +38,7 @@ public class ReporteFragment extends CustomFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_reportes, parent, false);
-        rvReporte = (RecyclerView) v.findViewById(R.id.rv_reporte);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        rvReporte.setLayoutManager(llm);
-        emptyView = (TextView) v.findViewById(R.id.tv_empty);
-        reporteCard = (CardView) v.findViewById(R.id.card_reporte);
 
-        bitacoraDBHelper = new BitacoraDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
-
-        try {
-            bitacoraDBHelper.prepareDatabase();
-            Login session = new Login(getActivity().getApplicationContext());
-            lista = bitacoraDBHelper.getStatusReporte(session.getId());
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        adapter = new RVReporteAdapter(lista);
-        rvReporte.setAdapter(adapter);
-
-        if(lista.isEmpty()){
-            emptyView.setVisibility(View.VISIBLE);
-            reporteCard.setVisibility(View.GONE);
-        }
-        else{
-            emptyView.setVisibility(View.GONE);
-            reporteCard.setVisibility(View.VISIBLE);
-        }
-        for(int i = 0 ; i != lista.size(); i++){
-            Log.d("REPORTE", lista.get(i).getFecha().toString() + " | " + lista.get(i).isAgua() + " | " + lista.get(i).isEjercicio());
-        }
         return v;
     }
 
