@@ -58,12 +58,14 @@ import java.util.HashMap;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
+import mx.gob.jovenes.guanajuato.activities.LoginActivity;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.LoginPOJO;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
 import mx.gob.jovenes.guanajuato.utils.ValidEmail;
@@ -410,15 +412,26 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 if (ValidEmail.isValidEmail(correo) != false) {
                     //((TextInputLayout) correoEt.getParent()).setError(null);
                     if (password.length() > 0) {
+                        loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
                         Call<Response<Usuario>> call = usuarioAPI.login(correo, password);
                         call.enqueue(new Callback<Response<Usuario>>() {
                             @Override
                             public void onResponse(Call<Response<Usuario>> call, retrofit2.Response<Response<Usuario>> response) {
-                                Log.d("WOW", "WOW");
+                                loginSimplePd.dismiss();
+                                Response<Usuario> body = response.body();
+                                if(body.success){
+                                    Sesion.cargarSesion(body.data);
+                                    ((LoginActivity)getActivity()).startHomeActivity();
+                                }
+                                else{
+                                    Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG);
+                                }
                             }
 
                             @Override
                             public void onFailure(Call<Response<Usuario>> call, Throwable t) {
+                                loginSimplePd.dismiss();
+                                Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG);
                                 Log.d("WOW", "Error");
                             }
                         });
@@ -476,12 +489,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
 
 
 
-        public void startHomeActivity(){
-        Intent i = new Intent(getActivity(), HomeActivity.class);
-        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        getActivity().finish();
-    }
+
 
     public void logOutFacebook() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();

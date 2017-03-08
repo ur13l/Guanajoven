@@ -320,5 +320,8 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="checkin">Hacer check-in</string>
     <string name="mas_convocatorias">Más convocatorias</string>
     <string name="facebook">Facebook</string>
+    <string name="codigo_postal">Código postal</string>
+    <string name="curp">CURP</string>
+    <string name="nombre">Nombre</string>
 
 </resources>

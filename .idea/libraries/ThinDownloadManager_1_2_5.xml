@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="ThinDownloadManager-1.2.5">
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mani/ThinDownloadManager/1.2.5/res" />
-      <root url="jar://$PROJECT_DIR$/app/build/intermediates/exploded-aar/com.mani/ThinDownloadManager/1.2.5/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/98751b8df5e111390c36623b415cac3d8153175c/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/98751b8df5e111390c36623b415cac3d8153175c/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

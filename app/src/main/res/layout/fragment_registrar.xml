@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    android:background="@color/white"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:orientation="vertical">
     <include layout="@layout/header_code"/>
 
     <LinearLayout
@@ -59,7 +66,7 @@
                 android:typeface="normal"
                 android:textSize="18dp"
                 android:maxLength="15"
-                android:hint="Confirmar contraseña" />
+                android:hint="@string/confirmar_password" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -68,14 +75,42 @@
             android:layout_marginTop="5dp">
 
             <EditText
-                android:id="@+id/et_confpass"
+                android:id="@+id/et_nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:typeface="normal"
                 android:textSize="18dp"
                 android:maxLength="15"
-                android:hint="Confirmar contraseña" />
+                android:hint="@string/nombre" />
+        </android.support.design.widget.TextInputLayout>
+
+        <fr.ganfra.materialspinner.MaterialSpinner
+            android:id="@+id/spn_genero"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:ms_arrowColor="@color/colorPrimary"
+            app:ms_arrowSize="16dp"
+            app:ms_floatingLabelColor="@color/gray"
+            app:ms_floatingLabelText="Genero"
+            app:ms_hint="Genero"
+            app:ms_multiline="true"
+            android:layout_marginTop="5dp" />
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/et_curp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:typeface="normal"
+                android:textSize="18dp"
+                android:maxLength="15"
+                android:hint="@string/curp" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -84,96 +119,27 @@
             android:layout_marginTop="5dp">
 
             <EditText
-                android:id="@+id/et_confpass"
+                android:id="@+id/et_codigo_postal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:typeface="normal"
                 android:textSize="18dp"
                 android:maxLength="15"
-                android:hint="Confirmar contraseña" />
+                android:hint="@string/codigo_postal" />
         </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_confpass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="Confirmar contraseña" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_confpass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="Confirmar contraseña" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_confpass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="Confirmar contraseña" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_confpass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="Confirmar contraseña" />
-        </android.support.design.widget.TextInputLayout>
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@color/colorPrimary">
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continuar"
+            android:layout_marginTop="15dp"
+            android:text="@string/registrar"
             android:id="@+id/btn_continuar"
-            android:background="@drawable/blue_button"
+            android:background="@drawable/bordered_button_blue"
             android:layout_gravity="center_horizontal"
             android:textColor="@android:color/white"
             />
-    </LinearLayout>
 
-</LinearLayout>
+
+    </LinearLayout>
+    </LinearLayout>
+</ScrollView>

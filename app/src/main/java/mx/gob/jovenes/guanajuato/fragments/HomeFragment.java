@@ -79,88 +79,22 @@ import mx.gob.jovenes.guanajuato.utils.PublicidadSingleton;
  * Fecha: 27/05/2016
  */
 public class HomeFragment extends CustomFragment {
-    private final static int INTERVALO_PUBLICIDAD = 1000*10; // 10 segundos
     public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
-    public static final String ALARMA_REGISTRADA = "alarma_registro_default";
-    public static final String DATOS_PERFIL = "perfil_datos_usuario";
-    public static final String RES_URL = "http://"+ClienteHttp.SERVER_IP + "/res/";
-    private PublicidadSingleton publicidad;
-    private ImageLoader imageLoader;
     private Sesion session;
-    private BitacoraDBHelper bitacoraDBHelper;
-    private Bitacora bitacora;
 
 
-    private ExtendedCalendarView calendar;
-    private TextView dateTv;
-    private TextView titleEvent;
-    private LinearLayout llCalendario;
-    private static ArrayList<Imagen> listaImagenes;
 
-    //Handler para manipular el cambio de la publicidad
-    Handler handlerPublicidad; //Handler para manipular las imágenes en el diagnóstico
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
 
-    //Código que ejecuta el handler para cambiar la publicidad cada 10 segundos
-    Runnable handlerPublicidadTask =  new Runnable(){
-        @Override
-        public void run() {
 
-            Random rand = new Random();
-            if(publicidad.length() != 0) {
-                int randInt = rand.nextInt(publicidad.length());
-                final Imagen p = publicidad.getAt(randInt);
-                ImageView img = (ImageView) getActivity().findViewById(R.id.image_view_publicidad);
-                if (img != null) {
-                    Log.d("IMAGEN", RES_URL + "imagenes/" + p.getImg());
-                    Picasso.with(getActivity())
-                            .load(RES_URL + "imagenes/" + p.getImg())
-                            .into(img);
-                    img.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_VIEW);
-                            intent.addCategory(Intent.CATEGORY_BROWSABLE);
-                            intent.setData(Uri.parse(p.getLink()));
-                            startActivity(intent);
-                        }
-                    });
-
-                    Log.d("HandlerPublicidad", "Mostrando:" + p.getLink());
-                }
-            }
-            handlerPublicidad.postDelayed(handlerPublicidadTask, INTERVALO_PUBLICIDAD);
-        }
-    };
 
 
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
-        publicidad = PublicidadSingleton.getInstance(getActivity());
-
-        //Configuración de UniversalImageLoader
-        // UNIVERSAL IMAGE LOADER SETUP
-        DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                .cacheOnDisc(true).cacheInMemory(true)
-                .imageScaleType(ImageScaleType.EXACTLY)
-                .displayer(new FadeInBitmapDisplayer(300)).build();
-
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
-                getActivity().getApplicationContext())
-                .defaultDisplayImageOptions(defaultOptions)
-                .memoryCache(new WeakMemoryCache())
-                .discCacheSize(100 * 1024 * 1024).build();
-
-        ImageLoader.getInstance().init(config);
-
-        //Asignación del ImageLoader como elemento global.
-        imageLoader = ImageLoader.getInstance();
 
         //Asignando al usuario activo
         session = new Sesion(getActivity().getApplicationContext());
@@ -169,21 +103,16 @@ public class HomeFragment extends CustomFragment {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         String fecha = prefs.getString(FECHA_ACTUALIZACION,  DateUtilities.dateToString(DateUtilities.stringToDate("2002-02-02 00:00:00")));
-        new NuevosEventosAsyncTask().execute(fecha);
-        new RecibirImagenesAsyncTask().execute();
+        new NuevosEventosAsyncTask().execute(fecha); //TODO: Cambiar por nuevo servicio
+        new RecibirImagenesAsyncTask().execute(); //TODO: Cambiar por otro servicio
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Actívate CODE");
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
 
-
-        calendar = (ExtendedCalendarView) v.findViewById(R.id.calendar_home);
-        dateTv = (TextView) v.findViewById(R.id.date_home);
-        llCalendario = (LinearLayout) v.findViewById( R.id.ll_calendario);
-        titleEvent = (TextView) v.findViewById(R.id.title_event);
 
         //Función para activar las alarmas de Descargar videos.
         if(!prefs.getBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, false)){
@@ -192,37 +121,6 @@ public class HomeFragment extends CustomFragment {
             prefs.edit().putBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, true).commit();
         }
 
-        calendar.setGesture(1);
-        //Evento para que se asigne algo al calendario.
-        calendar.setOnDayClickListener(new ExtendedCalendarView.OnDayClickListener() {
-           @Override
-           public void onDayClicked(Day day) {
-               ArrayList<Event> events = day.getEvents();
-               Calendar fecha = Calendar.getInstance();
-               fecha.set(Calendar.MONTH, day.getMonth());
-               fecha.set(Calendar.DAY_OF_MONTH, day.getDay());
-               fecha.set(Calendar.YEAR, day.getYear());
-               dateTv.setText(day.getDay() + " de " +
-                       fecha.getDisplayName(Calendar.MONTH,Calendar.LONG,Locale.getDefault()) + " de "
-                       + day.getYear());
-               String strEvents = "";
-               for (Event e : events){
-                  strEvents += "• " + e.getTitle() + "\n";
-               }
-               titleEvent.setText(strEvents);
-               if(events.isEmpty()){
-                   titleEvent.setText("No hay eventos programados durante este día");
-               }
-                   }
-                                       }
-        );
-
-        llCalendario.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cambiarFragment(R.id.nav_calendario);
-            }
-        });
         initEvents();
 
 
@@ -254,8 +152,7 @@ public class HomeFragment extends CustomFragment {
     @Override
     public void onStart(){
         super.onStart();
-        handlerPublicidad = new Handler();
-        startCambioPublicidadTask();
+
         try {
             setValoresSesion();
         } catch (ParseException e) {
@@ -267,7 +164,6 @@ public class HomeFragment extends CustomFragment {
     public void onStop(){
 
         super.onStop();
-        stopCambioPublicidadTask();
     }
 
 
@@ -277,17 +173,10 @@ public class HomeFragment extends CustomFragment {
      */
     public void setValoresSesion() throws ParseException {
         session = new Sesion(getActivity().getApplicationContext());
-        bitacoraDBHelper = new BitacoraDBHelper(getActivity(), getActivity().getFilesDir().getAbsolutePath());
-        bitacora = new Bitacora(getActivity().getApplicationContext());
-
-        Sesion session = new Sesion(getActivity().getApplicationContext());
-
 
         FirebaseMessaging.getInstance().subscribeToTopic("mx.gob.jovenes.guanajuato.CODEApp");
         FirebaseInstanceId.getInstance().getToken();
-        new EnviarTokenAsyncTask().execute();
-
-        AlarmaBootReceiver.configurarTodasAlarmas(this.getActivity());
+        new EnviarTokenAsyncTask().execute(); //TODO: Servicio para el token
 
     }
 
@@ -329,39 +218,10 @@ public class HomeFragment extends CustomFragment {
             c.close();
         }
 
-        dateTv.setText(cTemp.get(Calendar.DAY_OF_MONTH) + " de " +
-                cTemp.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()) + " de "
-                + cTemp.get(Calendar.YEAR));
-        String strEvents = "";
-
-        for (Event e : events) {
-            Log.d("EVENTOS", strEvents);
-            strEvents = "• " + e.getTitle() + "\n";
-        }
-        titleEvent.setText(strEvents);
-        if (events.isEmpty()) {
-            titleEvent.setText("No hay eventos programados durante este día");
-        }
 
     }
 
 
-
-    /**
-     * Arranque para el cambio de publicidad.
-     */
-    void startCambioPublicidadTask()
-    {
-        handlerPublicidadTask.run();
-    }
-
-    /**
-     * Se detiene el cambio de publicidad.
-     */
-    void stopCambioPublicidadTask()
-    {
-        handlerPublicidad.removeCallbacks(handlerPublicidadTask);
-    }
 
 
     /**
@@ -405,7 +265,7 @@ public class HomeFragment extends CustomFragment {
                             );
                         }
                     }
-                    calendar.refreshCalendar();
+
                 }
             }
         }

@@ -17,4 +17,20 @@ public interface UsuarioAPI {
             @Query("email") String email,
             @Query("password") String password
     );
+
+    @POST("usuarios/registrar")
+    Call<Response<Usuario>> registrar(
+            @Query("email") String email,
+            @Query("password") String password,
+            @Query("confirmar_password") String confirmarPassword,
+            @Query("nombre") String nombre,
+            @Query("id_genero") String idGenero,
+            @Query("id_ocupacion") String idOcupacion,
+            @Query("id_estado") String idEstado,
+            @Query("id_municipio") String idMunicipio,
+            @Query("fecha_nacimiento") String fechaNacimiento,
+            @Query("codigo_postal") String codigoPostal,
+            @Query("telefono") String telefono,
+            @Query("curp") String curp
+    );
 }
