@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import java.util.HashMap;
 
@@ -51,6 +52,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     private EditText etCodigoPostal;
     private EditText etCurp;
     private ProgressDialog progressDialog;
+    private ImageButton btnBack;
 
     private UsuarioAPI usuarioAPI;
 
@@ -77,6 +79,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         etCodigoPostal = (EditText) v.findViewById(R.id.et_codigo_postal);
         etCurp = (EditText) v.findViewById(R.id.et_curp);
         spnGenero = (MaterialSpinner) v.findViewById(R.id.spn_genero);
+        btnBack = (ImageButton) v.findViewById(R.id.btn_back);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, generos);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -95,6 +98,8 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         EditTextValidations.removeErrorTyping(etEmail);
         EditTextValidations.removeErrorTyping(etPassword1);
         EditTextValidations.removeErrorTyping(etPassword2);
+
+        btnBack.setOnClickListener(view -> getActivity().onBackPressed());
 
         continuarBtn.setOnClickListener(this);
         return v;
@@ -174,13 +179,13 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
                     }
                     else{
-                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG);
+                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Response<Usuario>> call, Throwable t) {
-                    Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG);
+                    Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG).show();
 
                 }
             });

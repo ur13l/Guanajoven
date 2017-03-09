@@ -23,8 +23,8 @@ public class EditTextValidations {
      */
     public static boolean esCampoVacio(EditText et){
         if(et.getText().toString().length() == 0){
-            ((TextInputLayout)et.getParent()).setErrorEnabled(true);
-            ((TextInputLayout)et.getParent()).setError("Este campo es obligatorio");
+            ((TextInputLayout)et.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)et.getParent().getParent()).setError("Este campo es obligatorio");
             return true;
         }
         else{
@@ -43,8 +43,8 @@ public class EditTextValidations {
             return true;
         }
         else{
-            ((TextInputLayout)et.getParent()).setErrorEnabled(true);
-            ((TextInputLayout)et.getParent()).setError("El email no es válido");
+            ((TextInputLayout)et.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)et.getParent().getParent()).setError("El email no es válido");
             return false;
         }
     }
@@ -59,8 +59,8 @@ public class EditTextValidations {
             return true;
         }
         else{
-            ((TextInputLayout)et.getParent()).setErrorEnabled(true);
-            ((TextInputLayout)et.getParent()).setError("La contraseña debe contener más de 6 caracteres");
+            ((TextInputLayout)et.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)et.getParent().getParent()).setError("La contraseña debe contener más de 6 caracteres");
             return false;
         }
     }
@@ -76,8 +76,8 @@ public class EditTextValidations {
             return true;
         }
         else{
-            ((TextInputLayout)et1.getParent()).setErrorEnabled(true);
-            ((TextInputLayout)et1.getParent()).setError("Las contraseñas no coinciden");
+            ((TextInputLayout)et1.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)et1.getParent().getParent()).setError("Las contraseñas no coinciden");
             return false;
         }
     }
@@ -114,8 +114,8 @@ public class EditTextValidations {
 
             @Override
             public void afterTextChanged(Editable s) {
-//                ((TextInputLayout) et.getParent()).setErrorEnabled(false);
-//                ((TextInputLayout) et.getParent()).setError(null);
+               ((TextInputLayout) et.getParent().getParent()).setErrorEnabled(false);
+               ((TextInputLayout) et.getParent().getParent()).setError(null);
             }
         });
     }
@@ -146,10 +146,10 @@ public class EditTextValidations {
         Date d2 = DateUtilities.stringToDate(fec2);
 
         if(d2.before(d1)){
-            ((TextInputLayout)f1.getParent()).setErrorEnabled(true);
-            ((TextInputLayout)f1.getParent()).setError("La fecha de fin no puede ser posterior a la de inicio.");
-            ((TextInputLayout)h1.getParent()).setErrorEnabled(true);
-            ((TextInputLayout)h1.getParent()).setError("");
+            ((TextInputLayout)f1.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)f1.getParent().getParent()).setError("La fecha de fin no puede ser posterior a la de inicio.");
+            ((TextInputLayout)h1.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)h1.getParent().getParent()).setError("");
             return false;
         }
         else{

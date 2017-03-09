@@ -34,12 +34,12 @@ public class StartFragment extends Fragment {
 
         btnLogin.setOnClickListener((view) -> {
             Fragment f = new LoginFragment();
-            ft.replace(R.id.login_fragment_container, f).commit();
+            ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
         });
 
         btnRegistrar.setOnClickListener(view -> {
             Fragment f = new RegistrarFragment();
-            ft.replace(R.id.login_fragment_container, f).commit();
+            ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
         });
 
         return v;

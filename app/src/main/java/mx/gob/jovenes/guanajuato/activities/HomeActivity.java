@@ -34,6 +34,7 @@ import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
 import mx.gob.jovenes.guanajuato.receivers.AlarmasBroadcastReceiver;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
 
 
 /**
@@ -163,19 +164,16 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 break;
             case R.id.nav_logout:
-                /**
-                Usuario usuario = new Usuario(this.getApplicationContext());
-                AlarmasBroadcastReceiver.cancelAlarms(this);
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+                //TODO:Ejecución para cancelar el Token
                 new CancelarTokenAsyncTask().execute();
 
-                Perfil p = new Perfil(getApplicationContext());
-                p.borrarPerfil();
-                prefs.edit().putBoolean(HomeFragment.DATOS_PERFIL,false).commit();
-
+                //Verifica si la sesión de google existe
                 if(mGoogleApiClient.isConnected()){
                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 }
+
+                Sesion.logout();
                 intent = new Intent(this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
@@ -186,7 +184,7 @@ public class HomeActivity extends AppCompatActivity
                 intent.putExtra(MENU_ID, id);
                 startActivity(intent);
                 break;
-                 */
+
         }
 
         return true;

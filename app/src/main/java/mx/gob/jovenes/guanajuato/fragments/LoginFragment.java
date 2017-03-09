@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -97,6 +98,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
     private GoogleSignInApi googleSignInApi;
     private Button googleSignInButton;
     private ProgressDialog loginGooglePd;
+    private ImageButton btnBack;
 
     //Elementos para el login con Facebook
     //private LoginButton fbButton;
@@ -230,6 +232,7 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         correoEt = (EditText) v.findViewById(R.id.email_et);
         loginButton = (Button) v.findViewById(R.id.btn_iniciar_sesion);
         recuperarPasswordTv = (TextView) v.findViewById(R.id.tv_recuperar_pass);
+        btnBack = (ImageButton) v.findViewById(R.id.btn_back);
 
 
         //Se muestra mensaje cuando se gana el foco
@@ -245,15 +248,18 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
             }
         });
 
+        //Botón para presionar atrás y volver al menú inicial.
+        btnBack.setOnClickListener(view -> getActivity().onBackPressed());
+
         //Eliminar mensaje de error mientras tiene foco de correo
         EditTextValidations.removeErrorTyping(correoEt);
         EditTextValidations.removeErrorTyping(contrasenaEt);
 
 
         //Configurando el input type
-        //contrasenaEt.setInputType(InputType.TYPE_CLASS_TEXT |
-//                InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//        contrasenaEt.setTypeface(Typeface.DEFAULT);
+        contrasenaEt.setInputType(InputType.TYPE_CLASS_TEXT |
+                InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        contrasenaEt.setTypeface(Typeface.DEFAULT);
 
 
         loginButton.setOnClickListener(this);
@@ -424,24 +430,24 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                                     ((LoginActivity)getActivity()).startHomeActivity();
                                 }
                                 else{
-                                    Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG);
+                                    Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG).show();
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<Response<Usuario>> call, Throwable t) {
                                 loginSimplePd.dismiss();
-                                Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG);
+                                Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG).show();
                                 Log.d("WOW", "Error");
                             }
                         });
                     } else {
-                        //((TextInputLayout) contrasenaEt.getParent()).setErrorEnabled(true);
-                        //((TextInputLayout) contrasenaEt.getParent()).setError("El campo se encuentra vacío");
+                        ((TextInputLayout) contrasenaEt.getParent().getParent()).setErrorEnabled(true);
+                        ((TextInputLayout) contrasenaEt.getParent().getParent()).setError("El campo se encuentra vacío");
                     }
                 } else {
-                    //((TextInputLayout) correoEt.getParent()).setErrorEnabled(true);
-                    //((TextInputLayout) correoEt.getParent()).setError("Correo no valido");
+                    ((TextInputLayout) correoEt.getParent().getParent()).setErrorEnabled(true);
+                    ((TextInputLayout) correoEt.getParent().getParent()).setError("Correo no valido");
                     correoEt.setHintTextColor(getResources().getColor(R.color.colorPrimaryDark));
                     correoEt.setTypeface(Typeface.DEFAULT);
                     email = false;

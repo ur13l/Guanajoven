@@ -7,21 +7,33 @@
     android:fillViewport="true"
     android:background="@color/white">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:orientation="vertical">
-    <include layout="@layout/header_code"/>
+
+
+
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_gravity="top|left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:srcCompat="@drawable/ic_arrow_back_white_36dp" />
 
     <LinearLayout
+
         android:orientation="vertical"
         android:paddingTop="5dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="10dp">
 
-
+        <include layout="@layout/header_code"/>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -109,7 +121,7 @@
                 android:singleLine="true"
                 android:typeface="normal"
                 android:textSize="18dp"
-                android:maxLength="15"
+                android:maxLength="18"
                 android:hint="@string/curp" />
         </android.support.design.widget.TextInputLayout>
 
@@ -141,5 +153,5 @@
 
 
     </LinearLayout>
-    </LinearLayout>
+    </FrameLayout>
 </ScrollView>

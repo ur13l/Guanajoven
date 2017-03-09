@@ -88,6 +88,11 @@ public class Sesion {
         return prefs.getString(RUTA_IMAGEN, null);
     }
 
+
+    /**
+     * Permite cargar una instancia de Usuario como el objeto de sesión en el momento.
+     * @param usuario
+     */
     public static void cargarSesion(Usuario usuario) {
         prefs.edit().putInt(ID_USUARIO, usuario.getId_usuario()).apply();
         prefs.edit().putInt(ID_DATOS_USUARIO, usuario.getId_datos_usuario()).apply();
@@ -107,6 +112,26 @@ public class Sesion {
         prefs.edit().putString(RUTA_IMAGEN, usuario.getRuta_imagen()).apply();
 
 
+    }
+
+    /**
+     * Elimina todos los datos guardados en la sesión
+     */
+    public static void logout(){
+        prefs.edit().remove(ID_USUARIO).apply();
+        prefs.edit().remove(ID_DATOS_USUARIO).apply();
+        prefs.edit().remove(ID_ESTADO).apply();
+        prefs.edit().remove(ID_MUNICIPIO).apply();
+        prefs.edit().remove(ID_GENERO).apply();
+        prefs.edit().remove(ID_OCUPACION).apply();
+        prefs.edit().remove(CODIGO_POSTAL).apply();
+        prefs.edit().remove(EMAIL).apply();
+        prefs.edit().remove(API_TOKEN).apply();
+        prefs.edit().remove(NOMBRE).apply();
+        prefs.edit().remove(FECHA_NACIMIENTO).apply();
+        prefs.edit().remove(TELEFONO).apply();
+        prefs.edit().remove(CURP).apply();
+        prefs.edit().remove(RUTA_IMAGEN).apply();
     }
 
 }
