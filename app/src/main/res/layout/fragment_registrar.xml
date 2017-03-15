@@ -1,157 +1,237 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@color/white">
-
+    >
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-
-
-    <ImageButton
-        android:id="@+id/btn_back"
-        android:layout_gravity="top|left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        app:srcCompat="@drawable/ic_arrow_back_white_36dp" />
-
-    <LinearLayout
-
-        android:orientation="vertical"
-        android:paddingTop="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-        <include layout="@layout/header_code"/>
-        <android.support.design.widget.TextInputLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background2" />
 
-            <EditText
-                android:id="@+id/et_emailreg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:maxLength="50"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:hint="Email" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:alpha="0.8">
 
-            <EditText
-                android:id="@+id/et_passreg"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="@string/pass" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_confpass"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="@string/confirmar_password" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_nombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="@string/nombre" />
-        </android.support.design.widget.TextInputLayout>
-
-        <fr.ganfra.materialspinner.MaterialSpinner
-            android:id="@+id/spn_genero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:ms_arrowColor="@color/colorPrimary"
-            app:ms_arrowSize="16dp"
-            app:ms_floatingLabelColor="@color/gray"
-            app:ms_floatingLabelText="Genero"
-            app:ms_hint="Genero"
-            app:ms_multiline="true"
-            android:layout_marginTop="5dp" />
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_curp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="18"
-                android:hint="@string/curp" />
-        </android.support.design.widget.TextInputLayout>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp">
-
-            <EditText
-                android:id="@+id/et_codigo_postal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:typeface="normal"
-                android:textSize="18dp"
-                android:maxLength="15"
-                android:hint="@string/codigo_postal" />
-        </android.support.design.widget.TextInputLayout>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/registrar"
-            android:id="@+id/btn_continuar"
-            android:background="@drawable/bordered_button_blue"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@android:color/white"
-            />
-
-
-    </LinearLayout>
+        </FrameLayout>
     </FrameLayout>
-</ScrollView>
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_gravity="top|left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/ic_arrow_back_white_36dp" />
+
+        <LinearLayout
+
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_profile"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                android:src="@drawable/placeholder"/>
+            
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_emailreg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="50"
+                    android:textColorHint="@color/gray"
+                    android:typeface="normal"
+                    android:textSize="18dp"
+                    android:hint="Email" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_passreg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="18dp"
+                    android:maxLength="15"
+                    android:hint="@string/pass" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_confpass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="18dp"
+                    android:maxLength="15"
+                    android:hint="@string/confirmar_password" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="18dp"
+                    android:maxLength="15"
+                    android:hint="@string/nombre" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_ap_paterno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="18dp"
+                    android:maxLength="15"
+                    android:hint="@string/ap_paterno" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_ap_materno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="18dp"
+                    android:maxLength="15"
+                    android:hint="@string/ap_materno" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_fecha_nacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="50"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="16dp"
+                    android:hint="Fecha de nacimiento" />
+            </android.support.design.widget.TextInputLayout>
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spn_genero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ms_arrowColor="@color/colorPrimary"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="@color/gray"
+                app:ms_floatingLabelText="@string/genero"
+                app:ms_hint="Genero"
+                app:ms_multiline="true"
+                android:layout_marginTop="5dp" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spn_estado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ms_arrowColor="@color/colorPrimary"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="@color/gray"
+                app:ms_floatingLabelText="@string/estado_nacimiento"
+                app:ms_hint="@string/estado_nacimiento"
+                app:ms_multiline="true"
+                android:layout_marginTop="5dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_codigo_postal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textSize="18dp"
+                    android:maxLength="15"
+                    android:hint="@string/codigo_postal" />
+            </android.support.design.widget.TextInputLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="@string/registrar"
+                android:id="@+id/btn_continuar"
+                android:background="@drawable/bordered_button_blue"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@android:color/white"
+                />
+
+
+        </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+</FrameLayout>

@@ -11,10 +11,10 @@
     <string name="mensaje_bienvenida">Somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y politícas publicas, orientada a elevar la calidad de vida de los jóvenes Guanajuatenses.</string>
 
     <string name="home">Home</string>
-    <string name="bienvenida">¡Bienvenido!</string>
+    <string name="bienvenida">#MarcaTuRumbo</string>
     <string name="comenzar">Comenzar</string>
     <string name="registrar">Registrar</string>
-    <string name="copyright">Copyright © CODICUS 2017.</string>
+    <string name="copyright">Copyright © \nInQuality 2017.</string>
     <string name="inicio">Inicio</string>
     <string name="pass">Contraseña</string>
     <string name="ejercicio">Ejercicio</string>
@@ -323,5 +323,9 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="codigo_postal">Código postal</string>
     <string name="curp">CURP</string>
     <string name="nombre">Nombre</string>
+    <string name="ap_paterno">Apellido paterno</string>
+    <string name="ap_materno">Apellido materno</string>
+    <string name="genero">Género</string>
+    <string name="estado_nacimiento">Estado de nacimiento</string>
 
 </resources>

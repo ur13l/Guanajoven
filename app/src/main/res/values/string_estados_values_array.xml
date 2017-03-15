@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="estados_values">
+        <item>AS</item>
+        <item>BC</item>
+        <item>BS</item>
+        <item>CC</item>
+        <item>CS</item>
+        <item>CH</item>
+        <item>CL</item>
+        <item>CM</item>
+        <item>DF</item>
+        <item>DG</item>
+        <item>MC</item>
+        <item>GT</item>
+        <item>GR</item>
+        <item>HG</item>
+        <item>JC</item>
+        <item>MC</item>
+        <item>MS</item>
+        <item>NT</item>
+        <item>NL</item>
+        <item>OC</item>
+        <item>PL</item>
+        <item>QT</item>
+        <item>QR</item>
+        <item>SP</item>
+        <item>SL</item>
+        <item>SR</item>
+        <item>TC</item>
+        <item>TS</item>
+        <item>TL</item>
+        <item>VZ</item>
+        <item>YN</item>
+        <item>ZS</item>
+        <item>NE</item>
+
+    </string-array>
+</resources>

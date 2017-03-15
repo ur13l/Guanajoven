@@ -249,7 +249,12 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
         });
 
         //Botón para presionar atrás y volver al menú inicial.
-        btnBack.setOnClickListener(view -> getActivity().onBackPressed());
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
 
         //Eliminar mensaje de error mientras tiene foco de correo
         EditTextValidations.removeErrorTyping(correoEt);

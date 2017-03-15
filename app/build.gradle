@@ -11,8 +11,8 @@ android {
         versionCode 1
         versionName "0.1"
 
-        jackOptions {
-            enabled true
+        dexOptions {
+            javaMaxHeapSize "4g"
         }
         multiDexEnabled true
     }
@@ -21,10 +21,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-    }
-    compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
     }
 }
 
@@ -60,10 +56,6 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
 
-
 }
-
-
-
 
 apply plugin: 'com.google.gms.google-services'

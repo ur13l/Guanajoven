@@ -30,16 +30,23 @@ public class StartFragment extends Fragment {
         btnRegistrar = (Button) v.findViewById(R.id.btn_registrar);
 
 
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
 
-        btnLogin.setOnClickListener((view) -> {
-            Fragment f = new LoginFragment();
-            ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment f = new LoginFragment();
+                ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
+            }
         });
 
-        btnRegistrar.setOnClickListener(view -> {
-            Fragment f = new RegistrarFragment();
-            ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
+        btnRegistrar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment f = new RegistrarFragment();
+                ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
+            }
         });
 
         return v;

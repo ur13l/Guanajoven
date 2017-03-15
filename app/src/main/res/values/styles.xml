@@ -10,6 +10,7 @@
         <item name="android:colorButtonNormal">@color/colorPrimary</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="android:textColorHint">@color/colorPrimaryDark</item>
 
     </style>
 
@@ -47,8 +48,8 @@
 
     <!--Estilo de encabezado -->
     <style name="AppTheme.EncabezadoTheme">
-        <item name="android:textSize">30sp</item>
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">Arial</item>
     </style>
@@ -92,6 +93,7 @@
     <!-- Estilo de activity -->
     <style name="ActivityStyle" parent="AppTheme.NoActionBar">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:textColorHint">@color/colorPrimaryDark</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
