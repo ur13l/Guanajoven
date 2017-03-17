@@ -25,27 +25,7 @@ public class CustomFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         int string_title = getArguments().getInt("string_title");
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(string_title));
 
-
-    }
-
-    public void verificarToolbar(){
-        CoordinatorLayout coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.coordinatorLayout);
-        AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.toolbar_container);
-        //Se eliminan las toolbars existentes en caso de existir para generar la Toolbar de Home
-
-            if (appBarLayout.getChildCount() > 1)
-                appBarLayout.removeViewAt(1);
-            if (appBarLayout.getChildCount() > 2)
-                appBarLayout.removeViewAt(2);
-
-        //Bloqueando la toolbar principal
-        Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
-
-        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
-        params.setScrollFlags(params.SCROLL_FLAG_ENTER_ALWAYS_COLLAPSED);
-        toolbar.setLayoutParams(params);
 
 
     }

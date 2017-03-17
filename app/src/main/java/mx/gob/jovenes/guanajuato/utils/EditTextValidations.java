@@ -49,6 +49,24 @@ public class EditTextValidations {
         }
     }
 
+
+    /**
+     * Identifica si el campo de código postal es válido (5 caracteres numéricos).
+     * @param et
+     * @return
+     */
+    public static boolean esCodigoPostalValido(EditText et){
+        String cp = et.getText().toString();
+        if(cp.length() == 5){
+            return true;
+        }
+        else{
+            ((TextInputLayout)et.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)et.getParent().getParent()).setError("El código postal es inválido");
+            return false;
+        }
+    }
+
     /**
      * Método que determina si una contraseña es válida o no, indica el error en el EditText en caso de no serlo.
      * @param et:EditText que se va a comprobar.

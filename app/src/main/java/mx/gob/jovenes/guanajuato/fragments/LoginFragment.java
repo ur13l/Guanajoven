@@ -2,6 +2,7 @@ package mx.gob.jovenes.guanajuato.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -242,6 +244,8 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 if (hasFocus) {
                     correoEt.setHint("user@example.com");
                     correoEt.setTypeface(Typeface.DEFAULT);
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(correoEt, InputMethodManager.SHOW_IMPLICIT);
                 } else {
                     correoEt.setHint("");
                 }

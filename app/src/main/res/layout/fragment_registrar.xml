@@ -37,16 +37,16 @@
             android:paddingRight="10dp"
             android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btn_back"
-            android:layout_gravity="top|left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            app:srcCompat="@drawable/ic_arrow_back_white_36dp" />
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="6dp"
+                android:layout_marginLeft="6dp"
+                app:srcCompat="@drawable/ic_arrow_back_blue_24dp" />
 
         <LinearLayout
-
             android:orientation="vertical"
             android:paddingTop="5dp"
             android:layout_width="match_parent"
@@ -59,9 +59,21 @@
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp"
                 android:src="@drawable/placeholder"/>
-            
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="@string/cambiar_imagen"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/ingresa_datos"/>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -73,8 +85,9 @@
                     android:singleLine="true"
                     android:maxLength="50"
                     android:textColorHint="@color/gray"
+                    android:inputType="textEmailAddress"
                     android:typeface="normal"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:hint="Email" />
             </android.support.design.widget.TextInputLayout>
 
@@ -90,7 +103,7 @@
                     android:singleLine="true"
                     android:typeface="normal"
                     android:textColorHint="@color/gray"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:maxLength="15"
                     android:hint="@string/pass" />
             </android.support.design.widget.TextInputLayout>
@@ -107,7 +120,7 @@
                     android:singleLine="true"
                     android:typeface="normal"
                     android:textColorHint="@color/gray"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:maxLength="15"
                     android:hint="@string/confirmar_password" />
             </android.support.design.widget.TextInputLayout>
@@ -124,7 +137,8 @@
                     android:singleLine="true"
                     android:typeface="normal"
                     android:textColorHint="@color/gray"
-                    android:textSize="18dp"
+                    android:inputType="textCapWords"
+                    android:textSize="16dp"
                     android:maxLength="15"
                     android:hint="@string/nombre" />
             </android.support.design.widget.TextInputLayout>
@@ -140,8 +154,9 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:typeface="normal"
+                    android:inputType="textCapWords"
                     android:textColorHint="@color/gray"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:maxLength="15"
                     android:hint="@string/ap_paterno" />
             </android.support.design.widget.TextInputLayout>
@@ -157,8 +172,9 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:typeface="normal"
+                    android:inputType="textCapWords"
                     android:textColorHint="@color/gray"
-                    android:textSize="18dp"
+                    android:textSize="16dp"
                     android:maxLength="15"
                     android:hint="@string/ap_materno" />
             </android.support.design.widget.TextInputLayout>
@@ -184,6 +200,7 @@
                 android:id="@+id/spn_genero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:ms_hintColor="@color/colorPrimary"
                 app:ms_arrowColor="@color/colorPrimary"
                 app:ms_arrowSize="16dp"
                 app:ms_floatingLabelColor="@color/gray"
@@ -196,6 +213,7 @@
                 android:id="@+id/spn_estado"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:ms_hintColor="@color/colorPrimary"
                 app:ms_arrowColor="@color/colorPrimary"
                 app:ms_arrowSize="16dp"
                 app:ms_floatingLabelColor="@color/gray"
@@ -213,10 +231,11 @@
                     android:id="@+id/et_codigo_postal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
+                    android:lines="1"
                     android:typeface="normal"
-                    android:textSize="18dp"
-                    android:maxLength="15"
+                    android:inputType="number"
+                    android:textSize="16dp"
+                    android:maxLength="5"
                     android:hint="@string/codigo_postal" />
             </android.support.design.widget.TextInputLayout>
             <Button

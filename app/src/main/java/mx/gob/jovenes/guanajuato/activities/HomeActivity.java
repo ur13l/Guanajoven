@@ -52,7 +52,6 @@ public class HomeActivity extends AppCompatActivity
 
     private GoogleApiClient mGoogleApiClient;
 
-    private Toolbar toolbar;
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
 
@@ -76,10 +75,7 @@ public class HomeActivity extends AppCompatActivity
                 .addOnConnectionFailedListener(this).build();
 
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setElevation(0);
-
+       /*
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -92,6 +88,8 @@ public class HomeActivity extends AppCompatActivity
             }
         });
         toggle.syncState();
+
+        */
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -191,9 +189,6 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-    public Toolbar getToolbar() {
-        return toolbar;
-    }
 
     public NavigationView getNavigationView(){
         return navigationView;

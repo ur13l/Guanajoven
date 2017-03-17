@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/background1"
+            android:src="@drawable/background4"
             android:scaleType="centerCrop"/>
         <FrameLayout
             android:layout_width="match_parent"
@@ -30,13 +32,16 @@
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_place_white_36dp"
+            android:drawableTop="@drawable/ic_chat_white_36dp"
             android:paddingTop="10dp"
             android:textColor="#fff"
             app:layout_constraintLeft_toRightOf="@+id/button5"
             android:layout_marginLeft="64dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintTop_toBottomOf="@+id/button9" />
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/button9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintVertical_bias="0.496" />
 
         <TextView
             android:id="@+id/textView7"
@@ -46,7 +51,7 @@
             android:layout_marginRight="0dp"
             android:layout_marginTop="0dp"
             android:gravity="center_horizontal"
-            android:text="@string/instalaciones"
+            android:text="@string/chat"
             android:textColor="@color/white"
             app:layout_constraintLeft_toLeftOf="@+id/button6"
             app:layout_constraintRight_toRightOf="@+id/button6"
@@ -58,20 +63,24 @@
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_chat_white_36dp"
+            android:drawableTop="@drawable/ic_group_white_36dp"
             android:paddingTop="10dp"
             android:textColor="#fff"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="64dp"
-            app:layout_constraintTop_toBottomOf="@+id/button8" />
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/button8"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintHorizontal_bias="0.501"
+            app:layout_constraintVertical_bias="0.496" />
 
         <TextView
             android:id="@+id/textView14"
-            android:layout_width="54dp"
-            android:layout_height="18dp"
+            android:layout_width="79dp"
+            android:layout_height="43dp"
             android:gravity="center_horizontal"
-            android:text="@string/mi_perfil"
+            android:text="@string/codigo_guanajoven"
             android:textColor="@color/white"
             android:layout_marginTop="0dp"
             app:layout_constraintTop_toBottomOf="@+id/button7"
@@ -79,7 +88,7 @@
             app:layout_constraintRight_toRightOf="@+id/button7"
             android:layout_marginLeft="0dp"
             app:layout_constraintLeft_toLeftOf="@+id/button7"
-            app:layout_constraintHorizontal_bias="0.0" />
+            app:layout_constraintHorizontal_bias="0.363" />
 
         <TextView
             android:id="@+id/textView15"
@@ -87,7 +96,7 @@
             android:layout_height="38dp"
             android:layout_marginTop="0dp"
             android:gravity="center_horizontal"
-            android:text="@string/calendario"
+            android:text="@string/eventos"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/button8"
             android:layout_marginLeft="8dp"
@@ -97,28 +106,30 @@
 
         <TextView
             android:id="@+id/textView16"
-            android:layout_width="75dp"
-            android:layout_height="37dp"
+            android:layout_width="66dp"
+            android:layout_height="35dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="0dp"
             android:gravity="center_horizontal"
-            android:text="@string/mis_eventos"
+            android:text="@string/checkin_texto"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/button9"
             app:layout_constraintLeft_toLeftOf="@+id/button9"
             android:layout_marginRight="0dp"
             app:layout_constraintRight_toRightOf="@+id/button9"
-            app:layout_constraintHorizontal_bias="0.482" />
+            app:layout_constraintHorizontal_bias="0.482"
+            card_view:layout_editor_absoluteY="312dp"
+            card_view:layout_editor_absoluteX="286dp" />
 
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="58dp"
+            android:layout_width="54dp"
             android:layout_height="38dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="0dp"
             android:layout_marginTop="0dp"
             android:gravity="center_horizontal"
-            android:text="@string/chat"
+            android:text="@string/social"
             android:textColor="@color/white"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintLeft_toLeftOf="@+id/button5"
@@ -129,11 +140,12 @@
             android:id="@+id/imageView9"
             android:layout_width="170dp"
             android:layout_height="170dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="64dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/logo" />
+            app:srcCompat="@drawable/logo"
+            app:layout_constraintHorizontal_bias="0.502" />
 
         <Button
             android:layout_width="54dp"
@@ -144,9 +156,11 @@
             android:textColor="#fff"
             android:id="@+id/button2"
             app:layout_constraintRight_toLeftOf="@+id/button5"
-            android:layout_marginRight="64dp"
-            android:layout_marginTop="64dp"
-            app:layout_constraintTop_toBottomOf="@+id/button7" />
+            android:layout_marginRight="58dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/button7"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp" />
 
         <Button
             android:id="@+id/button7"
@@ -172,7 +186,8 @@
             android:textColor="#fff"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView9" />
+            app:layout_constraintTop_toBottomOf="@+id/imageView9"
+            app:layout_constraintHorizontal_bias="0.501" />
 
         <Button
             android:id="@+id/button9"
@@ -202,5 +217,26 @@
             app:layout_constraintRight_toRightOf="@+id/button2"
             app:layout_constraintTop_toBottomOf="@+id/button2" />
     </android.support.constraint.ConstraintLayout>
+
+
+    <ImageButton
+        android:id="@+id/btn_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|top"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        app:srcCompat="@drawable/ic_menu_white_24dp" />
+
+    <ImageButton
+        android:id="@+id/btn_help"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|top"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:srcCompat="@drawable/ic_help" />
 
 </FrameLayout>

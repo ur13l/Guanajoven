@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/background4" />
+            android:src="@drawable/background1" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -62,12 +62,13 @@
                 android:layout_height="42dp"
                 android:hint="Email"
                 android:maxLength="50"
+                android:singleLine="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textColorHighlight="@color/colorPrimaryDark"
                 android:textColorHint="@color/gray"
-                android:textIsSelectable="false"
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:typeface="normal"
+                android:inputType="textEmailAddress"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="266dp" />
         </android.support.design.widget.TextInputLayout>
@@ -92,7 +93,7 @@
         android:textColorHighlight="@color/colorPrimaryDark"
         android:textColorHint="@color/gray"
         android:textColorLink="@color/colorPrimaryDark"
-        android:textSize="18dp"
+        android:textSize="16dp"
         android:typeface="normal"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="324dp" />
@@ -133,13 +134,13 @@
                 <Button
                     android:id="@+id/googlebtn"
                     style="@style/ButtonNoPadding"
-                    android:layout_height="42dp"
+                    android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:background="@drawable/bordered_button"
-                    android:drawableLeft="@drawable/google_logo"
                     android:drawablePadding="25dp"
                     android:gravity="left|center_vertical"
+                    android:drawableLeft="@drawable/google_logo"
                     android:paddingLeft="20dp"
                     android:text="@string/login_google"
                     android:textColor="@color/google"
@@ -154,11 +155,11 @@
         <Button
             android:id="@+id/btn_facebook"
             style="@style/ButtonNoPadding"
-            android:layout_height="42dp"
+            android:layout_height="50dp"
             android:layout_gravity="center_horizontal"
             android:layout_weight="1"
             android:background="@drawable/bordered_button"
-            android:drawableLeft="@drawable/google_logo"
+            android:drawableLeft="@drawable/facebook_logo"
             android:drawablePadding="25dp"
             android:gravity="left|center_vertical"
             android:paddingLeft="20dp"
@@ -182,5 +183,5 @@
         android:background="@android:color/transparent"
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
-        app:srcCompat="@drawable/ic_arrow_back_white_36dp" />
+        app:srcCompat="@drawable/ic_arrow_back_blue_24dp" />
 </FrameLayout>

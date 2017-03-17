@@ -110,7 +110,6 @@ public class HomeFragment extends CustomFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Actívate CODE");
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
 
 
@@ -133,10 +132,9 @@ public class HomeFragment extends CustomFragment {
         //Haciendo que la barra se pueda ocultar
         Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
 
-        AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams)toolbar.getLayoutParams();
+
         //ScrollFlag para el comportamiento deseado "scroll|snap|enterAlways"
-        params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS + AppBarLayout.LayoutParams.SCROLL_FLAG_SNAP);
-        toolbar.setLayoutParams(params);
+
 
         CoordinatorLayout coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.coordinatorLayout);
 

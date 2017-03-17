@@ -8,10 +8,11 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
-    <include
-        layout="@layout/app_bar_home"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_container"
+        tools:context=".activities.HomeActivity"/>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

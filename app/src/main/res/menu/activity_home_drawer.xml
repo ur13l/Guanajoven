@@ -12,6 +12,12 @@
                 android:id="@+id/nav_perfil"
                 android:icon="@drawable/ic_perfil"
                 android:title="@string/mi_perfil" />
+
+
+            <item
+                android:id="@+id/nav_codigo_guanajoven"
+                android:icon="@drawable/qr"
+                android:title="@string/codigo_guanajoven" />
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_sesion"
@@ -25,7 +31,7 @@
             <group android:checkableBehavior="single">
                 <item android:id="@+id/nav_calendario"
                     android:icon="@drawable/ic_calendar"
-                    android:title="@string/calendario"/>
+                    android:title="@string/eventos"/>
 
                 <item
                     android:id="@+id/nav_convocatorias"
@@ -35,18 +41,27 @@
                 <item
                     android:id="@+id/nav_mis_eventos"
                     android:icon="@drawable/evento"
-                    android:title="@string/mis_eventos" />
+                    android:title="@string/checkin_texto" />
 
 
                 <item
                     android:id="@+id/nav_historial_notificaciones"
                     android:icon="@drawable/ic_notificaciones"
-                    android:title="@string/historial_notificaciones" />
+                    android:title="@string/notificaciones" />
+
+
+                <item
+                    android:id="@+id/nav_redes_sociales"
+                    android:icon="@drawable/social"
+                    android:title="@string/social" />
+
 
                 <item
                     android:id="@+id/nav_chat_ayuda"
-                    android:icon="@drawable/ayuda"
+                    android:icon="@drawable/chat_grey"
                     android:title="@string/chat" />
+
+
 
 
             </group>
@@ -57,7 +72,7 @@
             <group android:checkableBehavior="single">
                 <item android:id="@+id/nav_directorio"
                     android:icon="@drawable/ic_directorio"
-                    android:title="@string/instalaciones"/>
+                    android:title="@string/regiones"/>
                 <item
                     android:id="@+id/nav_colaboradores"
                     android:icon="@drawable/ic_colaboradores"

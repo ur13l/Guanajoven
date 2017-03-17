@@ -25,7 +25,7 @@
     <string name="agua">Agua</string>
     <string name="recuperarpass"><u>Recuperar contraseña</u></string>
     <string name="recuperarpass2">Recuperar contraseña</string>
-    <string name="mi_perfil">Mi perfil</string>
+    <string name="mi_perfil">Modificar perfil</string>
     <string name="registrar_agua">Registrar agua</string>
     <string name="colaboradores">Colaboradores</string>
 
@@ -314,7 +314,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="convocatorias">Convocatorias</string>
     <string name="mis_eventos">Mis eventos</string>
     <string name="instalaciones">Instalaciones</string>
-    <string name="chat">Chat de ayuda</string>
+    <string name="chat">Chat</string>
     <string name="registrar_ejercicio">W</string>
     <string name="ubicacion">Parece que te encuentras cerca de \"...\"</string>
     <string name="checkin">Hacer check-in</string>
@@ -327,5 +327,12 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="ap_materno">Apellido materno</string>
     <string name="genero">Género</string>
     <string name="estado_nacimiento">Estado de nacimiento</string>
+    <string name="cambiar_imagen">Agrega una imagen</string>
+    <string name="ingresa_datos">Ingresa los siguientes datos:</string>
+    <string name="codigo_guanajoven">Código Guanajoven</string>
+    <string name="checkin_texto">Check-in</string>
+    <string name="social">Redes sociales</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="regiones">Regiones</string>
 
 </resources>

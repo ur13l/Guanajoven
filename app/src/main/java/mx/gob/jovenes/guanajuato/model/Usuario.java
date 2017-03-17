@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class Usuario {
 
-    private int id_usuario;
+    private int id;
     private String email;
     private String nombre;
     private String api_token;
@@ -28,11 +28,11 @@ public class Usuario {
     private String ruta_imagen;
 
     public int getId_usuario() {
-        return id_usuario;
+        return id;
     }
 
     public void setId_usuario(int id_usuario) {
-        this.id_usuario = id_usuario;
+        this.id = id_usuario;
     }
 
     public String getEmail() {
