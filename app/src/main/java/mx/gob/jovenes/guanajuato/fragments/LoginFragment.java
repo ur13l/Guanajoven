@@ -175,12 +175,12 @@ public class LoginFragment extends Fragment implements GoogleApiClient.OnConnect
                 .requestEmail()
                 .build();
 
-        if(googleApiClient == null)
+        if(googleApiClient == null) {
             googleApiClient = new GoogleApiClient.Builder(getActivity())
                     .enableAutoManage(getActivity(), this)
                     .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                     .build();
-
+        }
 
 
         callbackManager = CallbackManager.Factory.create();
