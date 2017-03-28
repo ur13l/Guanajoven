@@ -16,6 +16,7 @@ import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriasFragment;
 import mx.gob.jovenes.guanajuato.fragments.DirectorioFragment;
+import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
 import mx.gob.jovenes.guanajuato.fragments.HistorialNotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.MisEventosFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
@@ -47,7 +48,7 @@ public class SegundaActivity extends AppCompatActivity {
             }
         });
 
-        int conditional =0;
+        int conditional = 0;
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction ft = fm.beginTransaction();
         Fragment fragment = null;
@@ -74,7 +75,7 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
                  */
                 case R.id.nav_perfil:
-                    fragment = PerfilFragment.newInstance(R.id.nav_perfil, R.string.datos_usuario, PerfilFragment.class);
+                    fragment = EditarDatosFragment.newInstance(R.id.nav_perfil, R.string.datos_usuario, EditarDatosFragment.class);
                     break;
 
                 case R.id.nav_convocatorias:

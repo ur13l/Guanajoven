@@ -14,14 +14,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Time;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.zzb;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -82,13 +89,12 @@ public class HomeFragment extends CustomFragment {
     public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
     private Sesion session;
 
-
-
+    //Elementos gráficos
+    private ImageButton btnSlide;
+    private ViewGroup pnlPublicidad;
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
-
-
 
 
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
@@ -112,17 +118,15 @@ public class HomeFragment extends CustomFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
 
+        pnlPublicidad = (ViewGroup) v.findViewById(R.id.pnl_publicidad);
+        btnSlide = (ImageButton) v.findViewById(R.id.btn_slide);
 
-        //Función para activar las alarmas de Descargar videos.
-        if(!prefs.getBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, false)){
-
-            RetrieveVideosBroadcastReceiver.registerAlarm(getActivity());
-            prefs.edit().putBoolean(RetrieveVideosBroadcastReceiver.REGISTERED_ALARM, true).commit();
-        }
-
-        initEvents();
-
-
+        btnSlide.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomUp();
+            }
+        });
        return v;
     }
 
@@ -130,21 +134,6 @@ public class HomeFragment extends CustomFragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         //Haciendo que la barra se pueda ocultar
-        Toolbar toolbar = (Toolbar)getActivity().findViewById(R.id.toolbar);
-
-
-        //ScrollFlag para el comportamiento deseado "scroll|snap|enterAlways"
-
-
-        CoordinatorLayout coordinatorLayout = (CoordinatorLayout)getActivity().findViewById(R.id.coordinatorLayout);
-
-        //Añadir toolbar en el fondo.
-        //Toolbar bottomToolbar = (Toolbar) getActivity().getLayoutInflater().inflate(R.layout.toolbar_bottom_home,coordinatorLayout,false);
-        //coordinatorLayout.addView(bottomToolbar);
-
-
-
-
     }
 
     @Override
@@ -164,60 +153,41 @@ public class HomeFragment extends CustomFragment {
         super.onStop();
     }
 
+    /**
+     * Método para realizar la animación de aparición de la barra de publicidad.
+     */
+    private void bottomUp() {
+
+        Animation bottomUp = AnimationUtils.loadAnimation(getContext(),
+                R.anim.bottom_up);
+        pnlPublicidad.startAnimation(bottomUp);
+        pnlPublicidad.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * Método para la animación que desaparece la barra de publicidad.
+     */
+    private void bottomDown() {
+        Animation bottomDown = AnimationUtils.loadAnimation(getContext(),
+                R.anim.bottom_down);
+        pnlPublicidad.startAnimation(bottomDown);
+        pnlPublicidad.setVisibility(View.INVISIBLE);
+    }
+
 
     /**
      * Asigna los valores de la sesión y la bitácora.
      * @throws ParseException
      */
     public void setValoresSesion() throws ParseException {
-        session = new Sesion(getActivity().getApplicationContext());
 
         FirebaseMessaging.getInstance().subscribeToTopic("mx.gob.jovenes.guanajuato.CODEApp");
         FirebaseInstanceId.getInstance().getToken();
-        new EnviarTokenAsyncTask().execute(); //TODO: Servicio para el token
+        //new EnviarTokenAsyncTask().execute(); //TODO: Servicio para el token
 
     }
 
-    /**
-     * Función para cambiar el fragment activo utilizando un botón
-     * @param id_menu: Es el id del recurso del menú que se está utilizando.
-     */
-    public void cambiarFragment(int id_menu){
-        //a mi me guta mas AQUI porque ve,
-        Intent i = new Intent(getActivity(), SegundaActivity.class);
-        i.putExtra(HomeActivity.MENU_ID, id_menu);
-        startActivity(i);
-    }
 
-
-
-    public void initEvents() {
-        ArrayList<Event> events = new ArrayList<>();
-
-        Calendar cTemp = Calendar.getInstance();
-        TimeZone tz = TimeZone.getDefault();
-
-        int startDay = Time.getJulianDay(cTemp.getTimeInMillis(), TimeUnit.MILLISECONDS.toSeconds(tz.getOffset(cTemp.getTimeInMillis())));
-
-        Cursor c = getActivity().getContentResolver().query(CalendarProvider.CONTENT_URI, new String[]{CalendarProvider.ID, CalendarProvider.EVENT,
-                        CalendarProvider.DESCRIPTION, CalendarProvider.LOCATION, CalendarProvider.START, CalendarProvider.END, CalendarProvider.COLOR}, "?>=" + CalendarProvider.START_DAY + " AND " + CalendarProvider.END_DAY + ">=?",
-                new String[]{String.valueOf(startDay), String.valueOf(startDay)}, null);
-        if (c != null) {
-            if (c.moveToFirst()) {
-                do {
-                    Event event = new Event(c.getLong(0), c.getLong(4), c.getLong(5));
-                    event.setName(c.getString(1));
-                    event.setDescription(c.getString(2));
-                    event.setLocation(c.getString(3));
-                    event.setColor(c.getInt(6));
-                    events.add(event);
-                } while (c.moveToNext());
-            }
-            c.close();
-        }
-
-
-    }
 
 
 
@@ -268,6 +238,8 @@ public class HomeFragment extends CustomFragment {
             }
         }
     }
+
+
 
     private class ObternerAsyncTask extends AsyncTask<Integer, Void, String>{
         @Override

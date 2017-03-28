@@ -162,7 +162,6 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 break;
             case R.id.nav_logout:
-
                 //TODO:Ejecución para cancelar el Token
                 new CancelarTokenAsyncTask().execute();
 
@@ -229,19 +228,7 @@ public class HomeActivity extends AppCompatActivity
     private class CancelarTokenAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... args) {
-            /*
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            Usuario session = new Usuario(getApplicationContext());
-            String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
-            Log.d("LOGINAPP", session.getId() + "");
-            ClienteHttp clienteHttp = new ClienteHttp();
-            HashMap<String, String> params = new HashMap<>();
-            params.put("Token", token);
-            params.put("id_login_app", session.getId()+"");
-            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "//app_php/notificaciones/cancelar.php",
-                    params);
-            session.borrarLogin();
-            */
+
             return null;
 
         }

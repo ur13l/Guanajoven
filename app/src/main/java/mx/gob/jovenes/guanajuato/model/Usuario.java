@@ -15,24 +15,28 @@ public class Usuario {
     private int id;
     private String email;
     private String nombre;
-    private String api_token;
-    private int id_datos_usuario;
-    private int id_genero;
-    private Date fecha_nacimiento;
-    private int id_ocupacion;
+    private String apPaterno;
+    private String apMaterno;
+    private String apiToken;
+    private int idDatosUsuario;
+    private int idGenero;
+    private Date fechaNacimiento;
+    private int idOcupacion;
     private int codigo_postal;
     private String telefono;
     private String curp;
-    private int id_estado;
-    private int id_municipio;
-    private String ruta_imagen;
+    private int idEstado;
+    private int idMunicipio;
+    private String rutaImagen;
+    private String idGoogle;
+    private String idFacebook;
 
-    public int getId_usuario() {
+    public int getId() {
         return id;
     }
 
-    public void setId_usuario(int id_usuario) {
-        this.id = id_usuario;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getEmail() {
@@ -51,44 +55,44 @@ public class Usuario {
         this.nombre = nombre;
     }
 
-    public String getApi_token() {
-        return api_token;
+    public String getApiToken() {
+        return apiToken;
     }
 
-    public void setApi_token(String api_token) {
-        this.api_token = api_token;
+    public void setApiToken(String apiToken) {
+        this.apiToken = apiToken;
     }
 
-    public int getId_datos_usuario() {
-        return id_datos_usuario;
+    public int getIdDatosUsuario() {
+        return idDatosUsuario;
     }
 
-    public void setId_datos_usuario(int id_datos_usuario) {
-        this.id_datos_usuario = id_datos_usuario;
+    public void setIdDatosUsuario(int idDatosUsuario) {
+        this.idDatosUsuario = idDatosUsuario;
     }
 
-    public int getId_genero() {
-        return id_genero;
+    public int getIdGenero() {
+        return idGenero;
     }
 
-    public void setId_genero(int id_genero) {
-        this.id_genero = id_genero;
+    public void setIdGenero(int idGenero) {
+        this.idGenero = idGenero;
     }
 
-    public Date getFecha_nacimiento() {
-        return fecha_nacimiento;
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public int getId_ocupacion() {
-        return id_ocupacion;
+    public int getIdOcupacion() {
+        return idOcupacion;
     }
 
-    public void setId_ocupacion(int id_ocupacion) {
-        this.id_ocupacion = id_ocupacion;
+    public void setIdOcupacion(int idOcupacion) {
+        this.idOcupacion = idOcupacion;
     }
 
     public int getCodigo_postal() {
@@ -115,27 +119,59 @@ public class Usuario {
         this.curp = curp;
     }
 
-    public int getId_estado() {
-        return id_estado;
+    public int getIdEstado() {
+        return idEstado;
     }
 
-    public void setId_estado(int id_estado) {
-        this.id_estado = id_estado;
+    public void setIdEstado(int idEstado) {
+        this.idEstado = idEstado;
     }
 
-    public int getId_municipio() {
-        return id_municipio;
+    public int getIdMunicipio() {
+        return idMunicipio;
     }
 
-    public void setId_municipio(int id_municipio) {
-        this.id_municipio = id_municipio;
+    public void setIdMunicipio(int idMunicipio) {
+        this.idMunicipio = idMunicipio;
     }
 
-    public String getRuta_imagen() {
-        return ruta_imagen;
+    public String getRutaImagen() {
+        return rutaImagen;
     }
 
-    public void setRuta_imagen(String ruta_imagen) {
-        this.ruta_imagen = ruta_imagen;
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
+
+    public String getIdGoogle() {
+        return idGoogle;
+    }
+
+    public void setIdGoogle(String idGoogle) {
+        this.idGoogle = idGoogle;
+    }
+
+    public String getIdFacebook() {
+        return idFacebook;
+    }
+
+    public void setIdFacebook(String idFacebook) {
+        this.idFacebook = idFacebook;
+    }
+
+    public String getApPaterno() {
+        return apPaterno;
+    }
+
+    public void setApPaterno(String apPaterno) {
+        this.apPaterno = apPaterno;
+    }
+
+    public String getApMaterno() {
+        return apMaterno;
+    }
+
+    public void setApMaterno(String apMaterno) {
+        this.apMaterno = apMaterno;
     }
 }

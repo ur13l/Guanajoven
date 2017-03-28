@@ -334,5 +334,12 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="social">Redes sociales</string>
     <string name="notificaciones">Notificaciones</string>
     <string name="regiones">Regiones</string>
+    <string name="necesitamos">Por favor, introduce tu correo para enviarte un email con las instrucciones para restaurar tu contraseña.</string>
+    <string name="datos_comp">Dinos algo sobre ti</string>
+    <string name="ocupacion">Ocupación</string>
+    <string name="estado_civil">Estado civil</string>
+    <string name="nivel_academico">Nivel académico</string>
+    <string name="pasatiempo_favorito">Pasatiempo favorito</string>
+    <string name="guardar">Guardar</string>
 
 </resources>

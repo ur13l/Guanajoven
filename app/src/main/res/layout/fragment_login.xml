@@ -132,7 +132,7 @@
 
 
                 <Button
-                    android:id="@+id/googlebtn"
+                    android:id="@+id/btn_google"
                     style="@style/ButtonNoPadding"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
@@ -173,7 +173,14 @@
             app:layout_constraintTop_toBottomOf="@+id/tv_recuperar_pass"
             android:layout_marginStart="16dp" />
 
-
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/lgn_btn_facebook"
+            style="@style/ButtonNoPadding"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"
+            android:layout_weight="1"
+            android:layout_width="150dp" />
         </android.support.constraint.ConstraintLayout>
 
     <ImageButton

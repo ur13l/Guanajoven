@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background2" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:alpha="0.8">
+
+        </FrameLayout>
+    </FrameLayout>
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:paddingTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <ImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/img_profile"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/logo"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/datos_comp"/>
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_ocupacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/ocupacion"
+                    app:ms_hint="@string/ocupacion"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_estado_civil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/estado_civil"
+                    app:ms_hint="@string/estado_civil"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_nivel_academico"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/nivel_academico"
+                    app:ms_hint="@string/nivel_academico"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_pasatiempo_favorito"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:typeface="normal"
+                        android:textColorHint="@color/gray"
+                        android:inputType="textCapWords"
+                        android:textSize="16dp"
+                        android:maxLength="15"
+                        android:hint="@string/pasatiempo_favorito" />
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/guardar"
+                    android:id="@+id/btn_continuar"
+                    android:background="@drawable/bordered_button_blue"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@android:color/white"
+                    />
+
+
+            </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+</FrameLayout>

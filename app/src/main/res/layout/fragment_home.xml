@@ -239,4 +239,25 @@
         android:layout_marginRight="16dp"
         app:srcCompat="@drawable/ic_help" />
 
+    <ImageButton
+        android:id="@+id/btn_slide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        app:srcCompat="@drawable/quantum_ic_volume_up_white_36" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:id="@+id/pnl_publicidad"
+        android:layout_gravity="bottom"
+        android:layout_height="0dp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@color/background_gray"/>
+    </FrameLayout>
+
 </FrameLayout>
