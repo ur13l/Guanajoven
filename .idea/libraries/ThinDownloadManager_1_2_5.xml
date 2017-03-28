@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="ThinDownloadManager-1.2.5">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/a190180593dc4d8692870d634f79bb80dd986eca/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/a190180593dc4d8692870d634f79bb80dd986eca/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/c06558cdf5540518ba0f5c4bf2e1e65aaf8e8a91/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/c06558cdf5540518ba0f5c4bf2e1e65aaf8e8a91/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

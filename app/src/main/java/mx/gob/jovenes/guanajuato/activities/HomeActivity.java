@@ -162,7 +162,6 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 break;
             case R.id.nav_logout:
-
                 //TODO:Ejecución para cancelar el Token
                 new CancelarTokenAsyncTask().execute();
 
@@ -176,6 +175,11 @@ public class HomeActivity extends AppCompatActivity
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 this.finish();
+                break;
+            case R.id.nav_codigo_guanajoven:
+                intent = new Intent(this, SegundaActivity.class);
+                intent.putExtra(MENU_ID, id);
+                startActivity(intent);
                 break;
             default:
                 intent = new Intent(this, SegundaActivity.class);

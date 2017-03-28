@@ -13,6 +13,7 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.AlarmasActivacionFragment;
 import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
+import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriasFragment;
 import mx.gob.jovenes.guanajuato.fragments.DirectorioFragment;
@@ -76,7 +77,6 @@ public class SegundaActivity extends AppCompatActivity {
                 case R.id.nav_perfil:
                     fragment = PerfilFragment.newInstance(R.id.nav_perfil, R.string.datos_usuario, PerfilFragment.class);
                     break;
-
                 case R.id.nav_convocatorias:
                     fragment = ConvocatoriasFragment.newInstance(R.id.nav_convocatorias, R.string.convocatorias, ConvocatoriasFragment.class);
                     break;
@@ -101,6 +101,9 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_chat_ayuda:
                     fragment = ChatFragment.newInstance(R.id.nav_chat_ayuda, R.string.chat, ChatFragment.class);
+                    break;
+                case R.id.nav_codigo_guanajoven:
+                    fragment = CodigoGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, CodigoGuanajovenFragment.class);
                     break;
             }
         } catch (IllegalAccessException e) {
