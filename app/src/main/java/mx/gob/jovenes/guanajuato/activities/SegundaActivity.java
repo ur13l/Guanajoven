@@ -104,6 +104,7 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_codigo_guanajoven:
                     fragment = CodigoGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, CodigoGuanajovenFragment.class);
+                    //fragment.getView().setBackgroundColor(R.color.colorPrimary);
                     break;
             }
         } catch (IllegalAccessException e) {
