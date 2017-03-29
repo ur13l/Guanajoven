@@ -14,6 +14,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
@@ -21,9 +22,15 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.models_tmp.RecuperarPass;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 
 /**
@@ -32,11 +39,12 @@ import mx.gob.jovenes.guanajuato.utils.OKDialog;
  * La interfaz solicita el correo electrónico para enviar un código de recuperación.
  * Fecha: 02/05/2016
  */
-public class RecuperarPasswordFragment extends Fragment implements View.OnClickListener{
+public class RecuperarPasswordFragment extends CustomFragment implements View.OnClickListener{
     private EditText correoEt;
-    private AppCompatButton recuperarPasswordBtn;
+    private Button recuperarPasswordBtn;
     private ProgressDialog progressDialog;
     private SharedPreferences prefs;
+    private UsuarioAPI usuarioAPI;
 
 
     /**
@@ -47,6 +55,8 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+        usuarioAPI = ((MyApplication) getActivity().getApplication()).getRetrofitInstance().create(UsuarioAPI.class);
     }
 
     /**
@@ -62,17 +72,10 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
         View v = inflater.inflate(R.layout.fragment_recuperar_pass, container, false);
 
 
-        // Personalización de la barra, se muestra el botón de navegación hacia atrás y cambia el título.
-        AppCompatActivity appcom = (AppCompatActivity) getActivity();
-        appcom.getSupportActionBar().setDisplayShowHomeEnabled(true);
-        appcom.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        appcom.getSupportActionBar().setHomeButtonEnabled(true);
-        appcom.getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-        appcom.getSupportActionBar().setTitle(R.string.recuperarpass2);
 
         //Declaración de los elementos visuales.
         //Declaración de los elementos visuales.
-        recuperarPasswordBtn = (AppCompatButton) v.findViewById(R.id.btn_recuperar_password);
+        recuperarPasswordBtn = (Button) v.findViewById(R.id.btn_recuperar_password);
         correoEt = (EditText) v.findViewById(R.id.et_correo);
         recuperarPasswordBtn.setOnClickListener(this);
 
@@ -86,64 +89,32 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
     @Override
     public void onClick(View view) {
         String correo = correoEt.getText().toString();
-        new RecuperarPasswordAsyncTask().execute(correo);
-    }
-
-
-    /**
-     * Clase privada para enviar el correo con el código de usuario y solicitar el cambio de contraseña.
-     */
-    private class RecuperarPasswordAsyncTask extends AsyncTask<String, Void, RecuperarPass> {
-
-        @Override
-        protected void onPreExecute(){
-            progressDialog = ProgressDialog.show(getActivity(), "Enviando código", "Enviando código de recuperación de contraseña.", true);
-        }
-
-
-        /**
-         * La clase RecuperarPass obtiene el código y el status de la operación.
-         * El método doInBackground se ejecuta de manera asíncrona.
-         * @param args
-         * @return
-         */
-        @Override
-        protected RecuperarPass doInBackground(String... args) {
-            HashMap<String, String> params = new HashMap<>();
-            params.put("correo", args[0].toString());
-            String url = "http://"+ ClienteHttp.SERVER_IP+"//app_php/login/recuperarContrasena.php";
-            ClienteHttp cliente = new ClienteHttp();
-            String result = cliente.hacerRequestHttp(url, params);
-            Gson gson = new Gson();
-            return gson.fromJson(result, RecuperarPass.class);
-        }
-
-        @Override
-        public void onPostExecute(RecuperarPass result) {
-            super.onPostExecute(result);
-            if(result != null) {
-                if(result.getStatus().equals("valid")){
-                    //Se guardan las preferencias de usuario, para ingresar directamente a ReestablecerPasswordFragment.
-                    prefs.edit().putString(LoginFragment.CORREO, correoEt.getText().toString()).commit();
-                    prefs.edit().putString(LoginFragment.CODIGO, result.getCodigo()).commit();
-
-                    //Se cambia el fragment en pantalla.
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    Fragment f = new ReestablecerPasswordFragment();
-                    ft.replace(R.id.login_fragment_container, f, "fragment_reestablecer").commit();
-
+        progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
+        Call<Response<Boolean>> call = usuarioAPI.recuperarPassword(correo);
+        call.enqueue(new Callback<Response<Boolean>>() {
+            @Override
+            public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                if(progressDialog != null){
+                    progressDialog.dismiss();
+                }
+                Response<Boolean> resp = response.body();
+                if(resp.success){
+                    OKDialog.showOKDialog(getActivity(), "Correo enviado", "Se ha enviado un enlace a tu correo para recuperar la contraseña");
                 }
                 else{
-                    OKDialog.showOKDialog(getActivity(), "Correo inválido", "El correo del cual desea recuperar su contraseña es inválido o no se encuentra registrado");
+                    OKDialog.showOKDialog(getActivity(), "Error", resp.errors[0]);
                 }
             }
-            else{
-                OKDialog.showOKDialog(getActivity(), "Error al recuperar contraseña", "Hubo un problema con la red. Revise su conexión a Internet");
-            }
 
-            progressDialog.dismiss();
-        }
+            @Override
+            public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                if(progressDialog != null){
+                    progressDialog.dismiss();
+                }
+                OKDialog.showOKDialog(getActivity(), "Error", "Hubo un error al intentar recuperar tu contraseña");
+            }
+        });
+
     }
 
 }

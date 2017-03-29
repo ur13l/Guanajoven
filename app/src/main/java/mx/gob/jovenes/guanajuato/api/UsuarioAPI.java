@@ -30,4 +30,23 @@ public interface UsuarioAPI {
     Call<Response<Boolean>> verificarCorreo(
             @Query("email") String email
     );
+
+    @POST("usuarios/logingoogle")
+    Call<Response<Usuario>> loginGoogle(
+            @Query("email") String email,
+            @Query("id_google") String idGoogle
+    );
+
+
+    @POST("usuarios/loginfacebook")
+    Call<Response<Usuario>> loginFacebook(
+            @Query("email") String email,
+            @Query("id_facebook") String idFacebook
+    );
+
+
+    @POST("password/email")
+    Call<Response<Boolean>> recuperarPassword(
+            @Query("email") String email
+    );
 }

@@ -257,7 +257,10 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                         etFechaNacimiento.getText().toString(),
                         etCodigoPostal.getText().toString(),
                         estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
-                        "data:image/jpeg;base64," + getBase64(imgPerfil))
+                        "data:image/jpeg;base64," + getBase64(imgPerfil),
+                        null,
+                        null
+                )
             );
 
             callRegistrar.enqueue(new Callback<Response<Usuario>>() {
@@ -551,63 +554,6 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         String image = Base64.encodeToString(bb, 0);
 
         return image;
-    }
-
-
-
-
-    /**
-     * Clase privada para comprobar la existencia de un correo en la BD.
-     */
-    private class VerificarCorreoAsyncTask extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getActivity(), "Conectando con el servidor", "Comprobando existencia de correo.", true);
-
-        }
-
-
-        @Override
-        protected Boolean doInBackground(String... args) {
-            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/comprobarCorreo.php";
-            ClienteHttp cliente = new ClienteHttp();
-            HashMap<String, String> params = new HashMap<>();
-            params.put("correo", args[0].toString());
-            String result = cliente.hacerRequestHttp(url, params);
-            Boolean b = null;
-            if(result.equals("true")){
-                b = true;
-            }
-            else if(result.equals("false")){
-                b = false;
-            }
-            return b;
-        }
-
-        @Override
-        public void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (result != null) {
-                if(!result){
-                    FragmentManager fm = getActivity().getSupportFragmentManager();
-                    FragmentTransaction ft = fm.beginTransaction();
-                    //La nueva instancia lleva correo y contraseña,los campos de facebook y google van en 0.
-                    Fragment f = DatosComplementariosFragment.newInstance(etEmail.getText().toString(),
-                            etPassword1.getText().toString(), 0, 0);
-                    ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
-                }
-                else{
-                    ((TextInputLayout)etEmail.getParent()).setErrorEnabled(true);
-                    ((TextInputLayout)etEmail.getParent()).setError("Este correo ya se encuentra registrado");
-                }
-
-            } else {
-                OKDialog.showOKDialog(getActivity(), "Error al registrar usuario", "Hubo un problema con la red. Revise su conexión a Internet");
-            }
-
-            progressDialog.dismiss();
-        }
     }
 
 }

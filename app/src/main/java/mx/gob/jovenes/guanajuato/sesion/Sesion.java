@@ -94,22 +94,22 @@ public class Sesion {
      * @param usuario
      */
     public static void cargarSesion(Usuario usuario) {
-        prefs.edit().putInt(ID_USUARIO, usuario.getId_usuario()).apply();
-        prefs.edit().putInt(ID_DATOS_USUARIO, usuario.getId_datos_usuario()).apply();
-        prefs.edit().putInt(ID_ESTADO, usuario.getId_estado()).apply();
-        prefs.edit().putInt(ID_MUNICIPIO, usuario.getId_municipio()).apply();
-        prefs.edit().putInt(ID_GENERO, usuario.getId_genero()).apply();
-        prefs.edit().putInt(ID_OCUPACION, usuario.getId_ocupacion()).apply();
+        prefs.edit().putInt(ID_USUARIO, usuario.getId()).apply();
+        prefs.edit().putInt(ID_DATOS_USUARIO, usuario.getIdDatosUsuario()).apply();
+        prefs.edit().putInt(ID_ESTADO, usuario.getIdEstado()).apply();
+        prefs.edit().putInt(ID_MUNICIPIO, usuario.getIdMunicipio()).apply();
+        prefs.edit().putInt(ID_GENERO, usuario.getIdGenero()).apply();
+        prefs.edit().putInt(ID_OCUPACION, usuario.getIdOcupacion()).apply();
         prefs.edit().putInt(CODIGO_POSTAL, usuario.getCodigo_postal()).apply();
         prefs.edit().putString(EMAIL, usuario.getEmail()).apply();
-        prefs.edit().putString(API_TOKEN, usuario.getApi_token()).apply();
+        prefs.edit().putString(API_TOKEN, usuario.getApiToken()).apply();
         prefs.edit().putString(NOMBRE, usuario.getNombre()).apply();
-        if (usuario.getFecha_nacimiento() != null) {
-            prefs.edit().putString(FECHA_NACIMIENTO, usuario.getFecha_nacimiento().toString()).apply();
+        if (usuario.getFechaNacimiento() != null) {
+            prefs.edit().putString(FECHA_NACIMIENTO, usuario.getFechaNacimiento().toString()).apply();
         }
         prefs.edit().putString(TELEFONO, usuario.getTelefono()).apply();
         prefs.edit().putString(CURP, usuario.getCurp()).apply();
-        prefs.edit().putString(RUTA_IMAGEN, usuario.getRuta_imagen()).apply();
+        prefs.edit().putString(RUTA_IMAGEN, usuario.getRutaImagen()).apply();
 
 
     }

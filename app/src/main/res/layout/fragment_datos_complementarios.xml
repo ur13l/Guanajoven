@@ -1,92 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" >
-<LinearLayout
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
-
-
-    <include layout="@layout/header_code"/>
-    <TextView
+    >
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/introduce"
-        android:textStyle="bold" />
+        android:layout_height="match_parent">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <EditText
-            android:id="@+id/et_nombre"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:maxLength="50"
-            android:typeface="normal"
-            android:textSize="16dp"
-            android:hint="Nombre" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/background2" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
-
-        <EditText
-            android:id="@+id/et_fech"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:maxLength="50"
-            android:typeface="normal"
-            android:textSize="16dp"
-            android:hint="Fecha de nacimiento" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:alpha="0.8">
 
-    <fr.ganfra.materialspinner.MaterialSpinner
-        android:id="@+id/spinner_genero"
+        </FrameLayout>
+    </FrameLayout>
+    <ScrollView
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:ms_arrowColor="@color/colorPrimary"
-        app:ms_arrowSize="16dp"
-        app:ms_floatingLabelColor="@color/gray"
-        app:ms_floatingLabelText="Genero"
-        app:ms_hint="Genero"
-        app:ms_multiline="true"
-        android:layout_marginTop="5dp" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
-
-    <LinearLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:background="@color/colorAccent"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="5dp">
-        <Button
-            android:layout_height="wrap_content"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:background="@drawable/green_button"
-            android:textColor="@color/white"
-            android:id="@+id/btn_registrar"
-            android:text="@string/registrar">
-        </Button>
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical">
 
-    </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/aviso_privacidad2"
-        android:textColor="@color/colorPrimary"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:id="@+id/aviso_privacidad"/>
-</LinearLayout>
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="6dp"
+                app:srcCompat="@drawable/ic_arrow_back_blue_24dp" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:paddingTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/img_profile"
+                    android:layout_width="128dp"
+                    android:layout_height="128dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:src="@drawable/placeholder"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:text="@string/cambiar_imagen"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/ingresa_datos"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_nombre"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:typeface="normal"
+                        android:textColorHint="@color/gray"
+                        android:inputType="textCapWords"
+                        android:textSize="16dp"
+                        android:maxLength="15"
+                        android:hint="@string/nombre" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_ap_paterno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:typeface="normal"
+                        android:inputType="textCapWords"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16dp"
+                        android:maxLength="15"
+                        android:hint="@string/ap_paterno" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_ap_materno"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:typeface="normal"
+                        android:inputType="textCapWords"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16dp"
+                        android:maxLength="15"
+                        android:hint="@string/ap_materno" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_fecha_nacimiento"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:maxLength="50"
+                        android:typeface="normal"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16dp"
+                        android:hint="Fecha de nacimiento" />
+                </android.support.design.widget.TextInputLayout>
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_genero"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/genero"
+                    app:ms_hint="Genero"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_estado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/estado_nacimiento"
+                    app:ms_hint="@string/estado_nacimiento"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_codigo_postal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="1"
+                        android:typeface="normal"
+                        android:inputType="number"
+                        android:textSize="16dp"
+                        android:maxLength="5"
+                        android:hint="@string/codigo_postal" />
+                </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/registrar"
+                    android:id="@+id/btn_continuar"
+                    android:background="@drawable/bordered_button_blue"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@android:color/white"
+                    />
+
+
+            </LinearLayout>
+        </FrameLayout>
     </ScrollView>
+</FrameLayout>
