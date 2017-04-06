@@ -97,6 +97,15 @@
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
+    <!-- Estilo de activity2 -->
+    <style name="DarkStyle" parent="AppTheme.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:textColorHint">@color/white</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
     <!-- Tema de indicadores de calorías -->
     <style name="AppTheme.IndicadorTheme">
         <item name="android:gravity">center</item>
