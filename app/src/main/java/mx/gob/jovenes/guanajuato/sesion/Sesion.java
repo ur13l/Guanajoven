@@ -18,6 +18,8 @@ public class Sesion {
     private static final String EMAIL  = "email";
     private static final String API_TOKEN = "api_token";
     private static final String NOMBRE = "nombre";
+    private static final String APELLIDO_PATERNO = "apellido_paterno";
+    private static final String APELLIDO_MATERNO = "apellido_materno";
     private static final String ID_DATOS_USUARIO = "id_datos_usuario";
     private static final String ID_GENERO = "id_genero";
     private static final String FECHA_NACIMIENTO = "fecha_nacimiento";
@@ -48,6 +50,14 @@ public class Sesion {
 
     public static String getNombre(){
         return prefs.getString(NOMBRE, null);
+    }
+
+    public static String getApellidoPaterno() {
+        return prefs.getString(APELLIDO_PATERNO, null);
+    }
+
+    public static String getApellidoMaterno() {
+        return prefs.getString(APELLIDO_MATERNO, null);
     }
 
     public static int getIdDatosUsuario(){
@@ -104,6 +114,8 @@ public class Sesion {
         prefs.edit().putString(EMAIL, usuario.getEmail()).apply();
         prefs.edit().putString(API_TOKEN, usuario.getApiToken()).apply();
         prefs.edit().putString(NOMBRE, usuario.getNombre()).apply();
+        prefs.edit().putString(APELLIDO_PATERNO, usuario.getApPaterno()).apply();
+        prefs.edit().putString(APELLIDO_MATERNO, usuario.getApMaterno()).apply();
         if (usuario.getFechaNacimiento() != null) {
             prefs.edit().putString(FECHA_NACIMIENTO, usuario.getFechaNacimiento().toString()).apply();
         }
@@ -128,6 +140,8 @@ public class Sesion {
         prefs.edit().remove(EMAIL).apply();
         prefs.edit().remove(API_TOKEN).apply();
         prefs.edit().remove(NOMBRE).apply();
+        prefs.edit().remove(APELLIDO_PATERNO).apply();
+        prefs.edit().remove(APELLIDO_MATERNO).apply();
         prefs.edit().remove(FECHA_NACIMIENTO).apply();
         prefs.edit().remove(TELEFONO).apply();
         prefs.edit().remove(CURP).apply();

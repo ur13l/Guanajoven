@@ -176,6 +176,11 @@ public class HomeActivity extends AppCompatActivity
                 startActivity(intent);
                 this.finish();
                 break;
+            case R.id.nav_codigo_guanajoven:
+                intent = new Intent(this, SegundaActivity.class);
+                intent.putExtra(MENU_ID, id);
+                startActivity(intent);
+                break;
             default:
                 intent = new Intent(this, SegundaActivity.class);
                 intent.putExtra(MENU_ID, id);

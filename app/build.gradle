@@ -51,11 +51,10 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.+' 
     compile 'org.jetbrains:annotations-java5:15.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.1'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
-
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 
 apply plugin: 'com.google.gms.google-services'
