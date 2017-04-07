@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class Usuario {
 
-    private int id;
+    private int idUsuario;
     private String email;
     private String nombre;
     private String apPaterno;
@@ -32,11 +32,11 @@ public class Usuario {
     private String idFacebook;
 
     public int getId() {
-        return id;
+        return idUsuario;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.idUsuario = id;
     }
 
     public String getEmail() {

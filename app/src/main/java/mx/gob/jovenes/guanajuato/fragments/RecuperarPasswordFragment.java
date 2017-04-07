@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 import com.google.gson.Gson;
 
@@ -39,12 +40,13 @@ import retrofit2.Callback;
  * La interfaz solicita el correo electrónico para enviar un código de recuperación.
  * Fecha: 02/05/2016
  */
-public class RecuperarPasswordFragment extends CustomFragment implements View.OnClickListener{
+public class RecuperarPasswordFragment extends Fragment implements View.OnClickListener{
     private EditText correoEt;
     private Button recuperarPasswordBtn;
     private ProgressDialog progressDialog;
     private SharedPreferences prefs;
     private UsuarioAPI usuarioAPI;
+    private ImageButton btnBack;
 
 
     /**
@@ -71,12 +73,18 @@ public class RecuperarPasswordFragment extends CustomFragment implements View.On
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_recuperar_pass, container, false);
 
-
-
         //Declaración de los elementos visuales.
         //Declaración de los elementos visuales.
         recuperarPasswordBtn = (Button) v.findViewById(R.id.btn_recuperar_password);
         correoEt = (EditText) v.findViewById(R.id.et_correo);
+        btnBack = (ImageButton) v.findViewById(R.id.btn_back);
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
         recuperarPasswordBtn.setOnClickListener(this);
 
         return v;
@@ -89,7 +97,7 @@ public class RecuperarPasswordFragment extends CustomFragment implements View.On
     @Override
     public void onClick(View view) {
         String correo = correoEt.getText().toString();
-        progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
+        progressDialog = ProgressDialog.show(getActivity(), getString(R.string.espera), getString(R.string.verificando), true);
         Call<Response<Boolean>> call = usuarioAPI.recuperarPassword(correo);
         call.enqueue(new Callback<Response<Boolean>>() {
             @Override
@@ -99,10 +107,10 @@ public class RecuperarPasswordFragment extends CustomFragment implements View.On
                 }
                 Response<Boolean> resp = response.body();
                 if(resp.success){
-                    OKDialog.showOKDialog(getActivity(), "Correo enviado", "Se ha enviado un enlace a tu correo para recuperar la contraseña");
+                    OKDialog.showOKDialog(getActivity(),  getString(R.string.correo_enviado), getString(R.string.enviado));
                 }
                 else{
-                    OKDialog.showOKDialog(getActivity(), "Error", resp.errors[0]);
+                    OKDialog.showOKDialog(getActivity(),  getString(R.string.error), resp.errors[0]);
                 }
             }
 
@@ -111,7 +119,7 @@ public class RecuperarPasswordFragment extends CustomFragment implements View.On
                 if(progressDialog != null){
                     progressDialog.dismiss();
                 }
-                OKDialog.showOKDialog(getActivity(), "Error", "Hubo un error al intentar recuperar tu contraseña");
+                OKDialog.showOKDialog(getActivity(), getString(R.string.error), getString(R.string.hubo_error));
             }
         });
 

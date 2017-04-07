@@ -2,11 +2,22 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> bc73a790c2f8460561bf31f6e070a20b973c7a58
       <module fileurl="file://$PROJECT_DIR$/Guanajoven.iml" filepath="$PROJECT_DIR$/Guanajoven.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/Guanajoven.iml" filepath="$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/Guanajoven.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/app/app.iml" filepath="$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/extendedCalendarView/extendedCalendarView.iml" filepath="$PROJECT_DIR$/extendedCalendarView/extendedCalendarView.iml" />
+<<<<<<< HEAD
+=======
+=======
+      <module fileurl="file://$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/Guanajoven.iml" filepath="$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/Guanajoven.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/app/app.iml" filepath="$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/app/app.iml" />
+>>>>>>> 0497359d4525604f4552121ee230f1731746694b
+>>>>>>> bc73a790c2f8460561bf31f6e070a20b973c7a58
       <module fileurl="file://$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/extendedCalendarView/extendedCalendarView.iml" filepath="$PROJECT_DIR$/../../../xamppfiles/htdocs/CODE/Guanajoven/extendedCalendarView/extendedCalendarView.iml" />
     </modules>
   </component>
