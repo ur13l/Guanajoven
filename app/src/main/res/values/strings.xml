@@ -341,5 +341,11 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="nivel_academico">Nivel académico</string>
     <string name="pasatiempo_favorito">Pasatiempo favorito</string>
     <string name="guardar">Guardar</string>
+    <string name="enviado">Se ha enviado un enlace a tu correo con las instrucciones para reestablecer la contraseña</string>
+    <string name="correo_enviado">Correo enviado</string>
+    <string name="error">Error</string>
+    <string name="hubo_error">Hubo un error al intentar recuperar tu contraseña</string>
+    <string name="espera">Espera un momento</string>
+    <string name="verificando">Verificando dirección de correo electrónico.</string>
 
 </resources>

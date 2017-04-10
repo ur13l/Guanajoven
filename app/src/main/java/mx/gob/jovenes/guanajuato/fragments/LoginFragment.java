@@ -330,7 +330,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                 Call<Response<Boolean>> call = usuarioAPI.verificarCorreo(
                                         email
                                 );
-
+                                loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
                                 call.enqueue(new Callback<Response<Boolean>>() {
                                     @Override
                                     public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
@@ -353,6 +353,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                                         if(loginSimplePd != null){
                                                             loginSimplePd.dismiss();
                                                         }
+                                                        logOutFacebook();
                                                         OKDialog.showOKDialog(getActivity(), "Error", "Error de conexión, intente más adelante");
                                                     }
                                                 });
@@ -398,6 +399,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                         if(loginSimplePd != null){
                                             loginSimplePd.dismiss();
                                         }
+                                        logOutFacebook();
                                         OKDialog.showOKDialog(getActivity(), "Error", "Hubo un error al conectarse con el servidor.");
                                     }
                                 });
@@ -483,7 +485,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
             Call<Response<Boolean>> call = usuarioAPI.verificarCorreo(
                     acct.getEmail()
             );
-
+            loginSimplePd = ProgressDialog.show(getActivity(), "Iniciando sesión", "Espere un momento mientras se inicia la sesión", true);
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
@@ -508,7 +510,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                 if(loginSimplePd != null){
                                     loginSimplePd.dismiss();
                                 }
-                                OKDialog.showOKDialog(getActivity(), "Error", "Error en la conexión, favor de revisar más adelante.");
+                                OKDialog.showOKDialog(getActivity(), "Error", "Error en la conexión, por favor, intente más adelante.");
                             }
                         });
                     }
