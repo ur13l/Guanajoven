@@ -30,7 +30,7 @@
         tools:layout_constraintTop_creator="1">
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/imagen_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/placeholder" />

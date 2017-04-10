@@ -1,6 +1,9 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Writer;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,6 +55,9 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                      input_fecha_nacimiento,
                      input_curp, input_cp,
                      input_estado;
+
+    //Imagen
+    private ImageView imagen_qr;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdg = new SimpleDateFormat("yyyy-MM-dd");
@@ -83,6 +97,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         input_curp = (EditText) vista.findViewById(R.id.curp);
         input_cp = (EditText) vista.findViewById(R.id.cp);
         input_estado = (EditText) vista.findViewById(R.id.estado);
+        imagen_qr = (ImageView) vista.findViewById(R.id.codigo_guanajoven_qr);
 
         input_nombre.setText(nombre);
         input_correo.setText(correo);
@@ -92,8 +107,32 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         input_cp.setText(cp);
         input_estado.setText(estado);
 
-        //TODO: Generar código QR
+        String dato = nombre + curp;
+        try {
+            generarQR(dato, imagen_qr);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
 
         return vista;
+    }
+
+    //Generar código QR
+    private void generarQR(String dato, ImageView objeto) throws WriterException {
+        Writer generador = new QRCodeWriter();
+        String datoFinal = Uri.encode(dato, "utf-8");
+
+        BitMatrix bm = generador.encode(datoFinal, BarcodeFormat.QR_CODE, 150, 150);
+        Bitmap imagenBitMap = Bitmap.createBitmap(150, 150, Bitmap.Config.ARGB_8888);
+
+        for (int i = 0; i < 150; i++) { //width
+            for (int j = 0; j  < 150; j++) { //height
+                imagenBitMap.setPixel(i, j, bm.get(i, j) ? Color.BLACK : Color.WHITE);
+            }
+        }
+
+        if (imagenBitMap != null) {
+            objeto.setImageBitmap(imagenBitMap);
+        }
     }
 }
