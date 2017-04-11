@@ -10,7 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,28 +36,28 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     private String nombre,
                    correo,
                    genero,
-                   curp,
-                   cp,
+                   Curp,
                    estado;
 
-    Date fecha_nacimiento = null;
+    Date fechaNacimiento;
 
-    private int id_genero,
-                id_estado;
+    private int idGenero,
+                cp,
+                idEstado;
 
     private Resources res;
     private String[] estados;
 
     //Campos
-    private EditText input_nombre,
-                     input_correo,
-                     input_genero,
-                     input_fecha_nacimiento,
-                     input_curp, input_cp,
-                     input_estado;
+    private TextView inputNombre,
+                     inputCorreo,
+                     inputGenero,
+                     inputFechaNacimiento,
+                     inputCurp, inputCp,
+                     inputEstado;
 
     //Imagen
-    private ImageView imagen_qr;
+    private ImageView imagenQr, imagenUsuario;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdg = new SimpleDateFormat("yyyy-MM-dd");
@@ -70,46 +70,46 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         //Obtener datos de usuario
         nombre = Sesion.getNombre() + " " + Sesion.getApellidoPaterno() + " " + Sesion.getApellidoMaterno();
         correo = Sesion.getEmail();
-        id_genero = Sesion.getIdGenero();
+        idGenero = Sesion.getIdGenero();
 
-        if (id_genero == 1) genero = "Masculino";
+        if (idGenero == 1) genero = "Masculino";
         else genero = "Femenino";
 
         try {
-            fecha_nacimiento = sdg.parse(Sesion.getFechaNacimiento());
+            fechaNacimiento = sdg.parse(Sesion.getFechaNacimiento());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        curp = Sesion.getCurp();
-        cp = Sesion.getCurp();
-        id_estado = Sesion.getIdEstado();
+        Curp = Sesion.getCurp();
+        cp = Sesion.getCodigoPostal();
 
+        idEstado = Sesion.getIdEstado();
         res = getResources();
         estados = res.getStringArray(R.array.estados);
-        estado = estados[id_estado];
+        estado = estados[idEstado];
 
         //Cargar datos de usuario
-        input_nombre = (EditText) vista.findViewById(R.id.nombre_usuario);
-        input_correo = (EditText) vista.findViewById(R.id.email);
-        input_genero = (EditText) vista.findViewById(R.id.genero);
-        input_fecha_nacimiento = (EditText) vista.findViewById(R.id.fecha);
-        input_curp = (EditText) vista.findViewById(R.id.curp);
-        input_cp = (EditText) vista.findViewById(R.id.cp);
-        input_estado = (EditText) vista.findViewById(R.id.estado);
-        imagen_qr = (ImageView) vista.findViewById(R.id.codigo_guanajoven_qr);
+        inputNombre = (TextView) vista.findViewById(R.id.tv_nombreCG);
+        inputCorreo = (TextView) vista.findViewById(R.id.tv_correoCG);
+        inputGenero = (TextView) vista.findViewById(R.id.tv_generoCG);
+        inputFechaNacimiento = (TextView) vista.findViewById(R.id.tv_fechaCG);
+        inputCurp = (TextView) vista.findViewById(R.id.tv_curpCG);
+        inputCp = (TextView) vista.findViewById(R.id.tv_cpCG);
+        inputEstado = (TextView) vista.findViewById(R.id.tv_estadoCG);
+        imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
 
-        input_nombre.setText(nombre);
-        input_correo.setText(correo);
-        input_genero.setText(genero);
-        input_fecha_nacimiento.setText(sdf.format(fecha_nacimiento));
-        input_curp.setText(curp);
-        input_cp.setText(cp);
-        input_estado.setText(estado);
+        inputNombre.setText(nombre);
+        inputCorreo.setText(correo);
+        inputGenero.setText(genero);
+        //inputFechaNacimiento.setText(sdf.format(fechaNacimiento));
+        inputCurp.setText(Curp);
+        inputCp.setText(String.valueOf(cp));
+        inputEstado.setText(estado);
 
-        String dato = nombre + curp;
+        String dato = nombre + Curp;
         try {
-            generarQR(dato, imagen_qr);
+            generarQR(dato, imagenQr);
         } catch (WriterException e) {
             e.printStackTrace();
         }
