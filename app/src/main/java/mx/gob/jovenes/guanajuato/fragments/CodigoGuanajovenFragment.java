@@ -12,19 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
+import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 
@@ -37,13 +33,12 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                    correo,
                    genero,
                    Curp,
-                   estado;
-
-    Date fechaNacimiento;
+                   estado,
+                   rutaImagen,
+                   fechaNacimiento;
 
     private int idGenero,
-                cp,
-                idEstado;
+                cp;
 
     private Resources res;
     private String[] estados;
@@ -57,10 +52,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                      inputEstado;
 
     //Imagen
-    private ImageView imagenQr, imagenUsuario;
-
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    SimpleDateFormat sdg = new SimpleDateFormat("yyyy-MM-dd");
+    private ImageView imagenQr;
+    private CircleImageView imagenUsuario;
 
     @Nullable
     @Override
@@ -69,25 +62,17 @@ public class CodigoGuanajovenFragment extends CustomFragment {
 
         //Obtener datos de usuario
         nombre = Sesion.getNombre() + " " + Sesion.getApellidoPaterno() + " " + Sesion.getApellidoMaterno();
-        correo = Sesion.getEmail();
+        correo = Sesion.getCorreo();
         idGenero = Sesion.getIdGenero();
 
         if (idGenero == 1) genero = "Masculino";
         else genero = "Femenino";
 
-        try {
-            fechaNacimiento = sdg.parse(Sesion.getFechaNacimiento());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
+        fechaNacimiento = Sesion.getFechaNacimiento();
         Curp = Sesion.getCurp();
         cp = Sesion.getCodigoPostal();
-
-        idEstado = Sesion.getIdEstado();
-        res = getResources();
-        estados = res.getStringArray(R.array.estados);
-        estado = estados[idEstado];
+        estado = Sesion.getEstado();
+        rutaImagen = Sesion.getRutaImagen();
 
         //Cargar datos de usuario
         inputNombre = (TextView) vista.findViewById(R.id.tv_nombreCG);
@@ -98,14 +83,16 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputCp = (TextView) vista.findViewById(R.id.tv_cpCG);
         inputEstado = (TextView) vista.findViewById(R.id.tv_estadoCG);
         imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
+        imagenUsuario = (CircleImageView) vista.findViewById(R.id.iv_imagenCG);
 
         inputNombre.setText(nombre);
         inputCorreo.setText(correo);
         inputGenero.setText(genero);
-        //inputFechaNacimiento.setText(sdf.format(fechaNacimiento));
+        inputFechaNacimiento.setText(fechaNacimiento);
         inputCurp.setText(Curp);
         inputCp.setText(String.valueOf(cp));
         inputEstado.setText(estado);
+        Picasso.with(getActivity()).load(rutaImagen).into(imagenUsuario);
 
         String dato = nombre + Curp;
         try {

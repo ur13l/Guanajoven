@@ -15,17 +15,18 @@ public class Usuario {
     private int idUsuario;
     private String email;
     private String nombre;
-    private String apPaterno;
-    private String apMaterno;
+    private String apellidoPaterno;
+    private String apellidoMaterno;
     private String apiToken;
     private int idDatosUsuario;
     private int idGenero;
-    private Date fechaNacimiento;
+    private String fechaNacimiento;
     private int idOcupacion;
-    private int codigo_postal;
+    private int codigoPostal;
     private String telefono;
     private String curp;
     private int idEstado;
+    private String estado;
     private int idMunicipio;
     private String rutaImagen;
     private String idGoogle;
@@ -39,11 +40,11 @@ public class Usuario {
         this.idUsuario = id;
     }
 
-    public String getEmail() {
+    public String getCorreo() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setCorreo(String email) {
         this.email = email;
     }
 
@@ -79,11 +80,11 @@ public class Usuario {
         this.idGenero = idGenero;
     }
 
-    public Date getFechaNacimiento() {
+    public String getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(String fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -96,11 +97,11 @@ public class Usuario {
     }
 
     public int getCodigo_postal() {
-        return codigo_postal;
+        return codigoPostal;
     }
 
-    public void setCodigo_postal(int codigo_postal) {
-        this.codigo_postal = codigo_postal;
+    public void setCodigo_postal(int codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
 
     public String getTelefono() {
@@ -139,6 +140,14 @@ public class Usuario {
         return rutaImagen;
     }
 
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
@@ -159,19 +168,19 @@ public class Usuario {
         this.idFacebook = idFacebook;
     }
 
-    public String getApPaterno() {
-        return apPaterno;
+    public String getApellidoPaterno() {
+        return apellidoPaterno;
     }
 
-    public void setApPaterno(String apPaterno) {
-        this.apPaterno = apPaterno;
+    public void setApellidoPaterno(String apellidoPaterno) {
+        this.apellidoPaterno = apellidoPaterno;
     }
 
-    public String getApMaterno() {
-        return apMaterno;
+    public String getApellidoMaterno() {
+        return apellidoMaterno;
     }
 
-    public void setApMaterno(String apMaterno) {
-        this.apMaterno = apMaterno;
+    public void setApellidoMaterno(String apellidoMaterno) {
+        this.apellidoMaterno = apellidoMaterno;
     }
 }
