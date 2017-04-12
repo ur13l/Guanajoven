@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import mx.gob.jovenes.guanajuato.model.Publicidad;
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -13,10 +14,6 @@ import retrofit2.http.Query;
 
 public interface PublicidadAPI {
 
-    @POST("publicidad/get")
-    Call<Response<ArrayList<Publicidad>>> get(
-
-
-
-    );
+    @GET("publicidad")
+    Call<Response<ArrayList<Publicidad>>> get();
 }

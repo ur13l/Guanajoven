@@ -102,15 +102,15 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
         Bundle args = getArguments();
         usuario = new Usuario();
-        usuario.setEmail(args.getString(EMAIL));
+        usuario.setCorreo(args.getString(EMAIL));
         usuario.setIdGoogle(args.getString(ID_GOOGLE));
         usuario.setIdFacebook(args.getString(ID_FACEBOOK));
         usuario.setNombre(args.getString(NOMBRE));
-        usuario.setApPaterno(args.getString(AP_PATERNO));
+        usuario.setApellidoPaterno(args.getString(AP_PATERNO));
         usuario.setRutaImagen(args.getString(RUTA_IMAGEN));
         usuario.setIdGenero(args.getInt(ID_GENERO));
         if(args.getString(FECHA_NACIMIENTO) != null) {
-            usuario.setFechaNacimiento(new Date(args.getString(FECHA_NACIMIENTO)));
+            usuario.setFechaNacimiento(args.getString(FECHA_NACIMIENTO));
         }
     }
 
@@ -167,7 +167,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         btnContinuar.setOnClickListener(this);
 
         etNombre.setText(usuario.getNombre());
-        etApPaterno.setText(usuario.getApPaterno());
+        etApPaterno.setText(usuario.getApellidoPaterno());
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         if( usuario.getFechaNacimiento() != null) {
@@ -188,11 +188,11 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     public static DatosComplementariosFragment newInstance(Usuario usuario){
         DatosComplementariosFragment f = new DatosComplementariosFragment();
         Bundle args = new Bundle();
-        args.putString(EMAIL, usuario.getEmail());
+        args.putString(EMAIL, usuario.getCorreo());
         args.putString(ID_GOOGLE, usuario.getIdGoogle());
         args.putString(ID_FACEBOOK, usuario.getIdFacebook());
         args.putString(NOMBRE, usuario.getNombre());
-        args.putString(AP_PATERNO, usuario.getApPaterno());
+        args.putString(AP_PATERNO, usuario.getApellidoPaterno());
         args.putString(RUTA_IMAGEN, usuario.getRutaImagen());
         args.putInt(ID_GENERO, usuario.getIdGenero());
         if(usuario.getFechaNacimiento() != null) {
@@ -261,7 +261,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
             Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
                     new RegistroRequest(
-                            usuario.getEmail(),
+                            usuario.getCorreo(),
                             "_",
                             "_",
                             etApPaterno.getText().toString(),
