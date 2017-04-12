@@ -15,6 +15,7 @@ import mx.gob.jovenes.guanajuato.model.StatusReporte;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import mx.gob.jovenes.guanajuato.utils.MathFormat;
 
+
 /**
  * Created by code on 21/06/16.
  */

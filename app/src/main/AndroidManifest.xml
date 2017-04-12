@@ -35,7 +35,7 @@
         android:supportsRtl="true"
         android:authorities="mx.gob.jovenes.guanajuato"
         android:theme="@style/AppTheme">
-        <meta-data
+        <meta-dataSplashActivity
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
         <meta-data
@@ -55,6 +55,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
+
         <activity
             android:name=".activities.HomeActivity"
             android:alwaysRetainTaskState="true"
@@ -74,6 +77,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityStyle" />
+
         <activity
             android:name=".activities.SegundaActivity"
             android:label="@string/title_activity_segunda"

@@ -12,6 +12,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telecom.Call;
 import android.text.format.Time;
 import android.util.Log;
 import android.view.GestureDetector;
@@ -60,9 +61,13 @@ import java.util.concurrent.TimeUnit;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.activities.SegundaActivity;
+import mx.gob.jovenes.guanajuato.api.PublicidadAPI;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.Bitacora;
 import mx.gob.jovenes.guanajuato.model.Evento;
+import mx.gob.jovenes.guanajuato.model.Publicidad;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.model.PerfilPOJO;
@@ -75,15 +80,16 @@ import mx.gob.jovenes.guanajuato.receivers.RetrieveVideosBroadcastReceiver;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import mx.gob.jovenes.guanajuato.utils.FileUtils;
+import mx.gob.jovenes.guanajuato.utils.ImageHandler;
 import mx.gob.jovenes.guanajuato.utils.PublicidadSingleton;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 /**
  * Autor: Uriel Infante
  * Fragment de Home.
  * La ventana principal del proyecto, es la que se abre cuando el usuario inicia sesión.
- * Muestra una imagen de CODE, las barras de estado de agua y ejercicio, una vista del calendario de activación
- * y una sección de publicidad donde se van a promover eventos.
- * Fecha: 27/05/2016
+ * Fecha: 10/04/2017
  */
 public class HomeFragment extends CustomFragment {
     public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
@@ -92,6 +98,10 @@ public class HomeFragment extends CustomFragment {
     //Elementos gráficos
     private ImageButton btnSlide;
     private ViewGroup pnlPublicidad;
+
+    //Instancias de API
+    private Retrofit retrofit;
+    private PublicidadAPI publicidadAPI;
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
@@ -102,6 +112,10 @@ public class HomeFragment extends CustomFragment {
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
+        //Instancias de la API
+        retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
+        publicidadAPI = retrofit.create(PublicidadAPI.class);
+
         //Asignando al usuario activo
         session = new Sesion(getActivity().getApplicationContext());
 
@@ -110,7 +124,20 @@ public class HomeFragment extends CustomFragment {
 
         String fecha = prefs.getString(FECHA_ACTUALIZACION,  DateUtilities.dateToString(DateUtilities.stringToDate("2002-02-02 00:00:00")));
         new NuevosEventosAsyncTask().execute(fecha); //TODO: Cambiar por nuevo servicio
-        new RecibirImagenesAsyncTask().execute(); //TODO: Cambiar por otro servicio
+
+        //Se define la acción para cuando se descargan las imágenes publicitarias.
+        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get();
+        call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
+            @Override
+            public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
+                ImageHandler.start(response.body().data, pnlPublicidad);
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Response<ArrayList<Publicidad>>> call, Throwable t) {
+
+            }
+        });
 
     }
 

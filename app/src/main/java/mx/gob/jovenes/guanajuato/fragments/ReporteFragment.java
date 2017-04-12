@@ -18,6 +18,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
 import mx.gob.jovenes.guanajuato.adapters.RVReporteAdapter;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.StatusReporte;
@@ -38,6 +39,7 @@ public class ReporteFragment extends CustomFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_reportes, parent, false);
+
 
         return v;
     }
