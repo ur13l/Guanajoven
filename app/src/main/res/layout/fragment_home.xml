@@ -249,15 +249,17 @@
         android:layout_marginRight="16dp"
         app:srcCompat="@drawable/quantum_ic_volume_up_white_36" />
 
+
     <FrameLayout
         android:layout_width="match_parent"
         android:id="@+id/pnl_publicidad"
         android:layout_gravity="bottom"
-        android:layout_height="0dp">
+        android:layout_height="100dp">
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@color/background_gray"/>
+            android:scaleType="centerCrop"
+            android:id="@+id/img_container"
+            android:src="@drawable/background2"/>
     </FrameLayout>
-
 </FrameLayout>

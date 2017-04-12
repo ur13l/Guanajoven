@@ -107,9 +107,11 @@ public class HomeFragment extends CustomFragment {
     private SharedPreferences prefs;
 
 
+
+
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Instancias de la API
@@ -123,21 +125,9 @@ public class HomeFragment extends CustomFragment {
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         String fecha = prefs.getString(FECHA_ACTUALIZACION,  DateUtilities.dateToString(DateUtilities.stringToDate("2002-02-02 00:00:00")));
-        new NuevosEventosAsyncTask().execute(fecha); //TODO: Cambiar por nuevo servicio
+        //new NuevosEventosAsyncTask().execute(fecha); //TODO: Cambiar por nuevo servicio
 
-        //Se define la acción para cuando se descargan las imágenes publicitarias.
-        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get();
-        call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
-            @Override
-            public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
-                ImageHandler.start(response.body().data, pnlPublicidad);
-            }
 
-            @Override
-            public void onFailure(retrofit2.Call<Response<ArrayList<Publicidad>>> call, Throwable t) {
-
-            }
-        });
 
     }
 
@@ -152,6 +142,22 @@ public class HomeFragment extends CustomFragment {
             @Override
             public void onClick(View v) {
                 bottomUp();
+            }
+        });
+
+        //Se define la acción para cuando se descargan las imágenes publicitarias.
+        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get();
+        call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
+            @Override
+            public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
+                if(response.body().success) {
+                    ImageHandler.start(response.body().data, pnlPublicidad, getActivity());
+                }
+            }
+
+            @Override
+            public void onFailure(retrofit2.Call<Response<ArrayList<Publicidad>>> call, Throwable t) {
+Log.d("PEOAs", "PELAS");
             }
         });
        return v;
@@ -178,6 +184,7 @@ public class HomeFragment extends CustomFragment {
     public void onStop(){
 
         super.onStop();
+        ImageHandler.stopCambioPublicidadTask();
     }
 
     /**
