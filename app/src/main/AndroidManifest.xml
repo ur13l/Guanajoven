@@ -35,7 +35,7 @@
         android:supportsRtl="true"
         android:authorities="mx.gob.jovenes.guanajuato"
         android:theme="@style/AppTheme">
-        <meta-data
+        <meta-dataSplashActivity
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
         <meta-data
@@ -45,7 +45,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity
+        <!--<activity
             android:name=".activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
@@ -54,13 +54,25 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>-->
+
+        <activity
+            android:name=".activities.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <!--
         <activity
             android:name=".activities.HomeActivity"
             android:alwaysRetainTaskState="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar" />-->
         <activity
             android:name=".activities.BienvenidaActivity"
             android:screenOrientation="portrait"
@@ -74,6 +86,7 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityStyle" />
+
         <activity
             android:name=".activities.SegundaActivity"
             android:label="@string/title_activity_segunda"

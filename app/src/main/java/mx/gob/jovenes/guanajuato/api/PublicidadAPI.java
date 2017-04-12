@@ -14,5 +14,9 @@ import retrofit2.http.Query;
 public interface PublicidadAPI {
 
     @POST("publicidad/get")
-    Call<Response<ArrayList<Publicidad>>> get();
+    Call<Response<ArrayList<Publicidad>>> get(
+
+
+
+    );
 }

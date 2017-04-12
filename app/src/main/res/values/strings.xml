@@ -347,5 +347,12 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="hubo_error">Hubo un error al intentar recuperar tu contraseña</string>
     <string name="espera">Espera un momento</string>
     <string name="verificando">Verificando dirección de correo electrónico.</string>
+    <string name="correo_de_usuario">Correo de usuario</string>
+    <string name="nombre_cg">Nombre de usuario</string>
+    <string name="genero_cg">Genero</string>
+    <string name="fecha_de_nacimiento">Fecha de nacimiento</string>
+    <string name="curp_cg">CURP</string>
+    <string name="c_digo_postal">Código Postal</string>
+    <string name="estado">Estado</string>
 
 </resources>

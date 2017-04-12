@@ -15,14 +15,12 @@ import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
 import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
-import mx.gob.jovenes.guanajuato.fragments.ConvocatoriasFragment;
+import mx.gob.jovenes.guanajuato.fragments.ConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.DirectorioFragment;
 import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
 import mx.gob.jovenes.guanajuato.fragments.HistorialNotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.MisEventosFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
-import mx.gob.jovenes.guanajuato.fragments.PerfilFragment;
-import mx.gob.jovenes.guanajuato.fragments.ReporteFragment;
 
 
 /**
@@ -79,7 +77,7 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = EditarDatosFragment.newInstance(R.id.nav_perfil, R.string.datos_usuario, EditarDatosFragment.class);
                     break;
                 case R.id.nav_convocatorias:
-                    fragment = ConvocatoriasFragment.newInstance(R.id.nav_convocatorias, R.string.convocatorias, ConvocatoriasFragment.class);
+                    fragment = ConvocatoriaFragment.newInstance(R.id.nav_convocatorias, R.string.convocatorias, ConvocatoriaFragment.class);
                     break;
                 case R.id.nav_mis_eventos:
                     fragment = MisEventosFragment.newInstance(R.id.nav_mis_eventos, R.string.mis_eventos ,MisEventosFragment.class);
