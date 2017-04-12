@@ -1,5 +1,7 @@
 package mx.gob.jovenes.guanajuato.utils;
 
+import android.view.ViewGroup;
+
 import java.util.ArrayList;
 
 import mx.gob.jovenes.guanajuato.model.Publicidad;
@@ -14,7 +16,7 @@ public class ImageHandler {
 
     }
 
-    public static void start(ArrayList<Publicidad> lista, ViewGrop panel) {
+    public static void start(ArrayList<Publicidad> lista, ViewGroup panel) {
 
     }
 }
