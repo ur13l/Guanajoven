@@ -92,9 +92,9 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
 
         Bundle args = getArguments();
         usuario = new Usuario();
-        usuario.setEmail(args.getString(EMAIL));
+        usuario.setCorreo(args.getString(EMAIL));
         usuario.setNombre(args.getString(NOMBRE));
-        usuario.setApPaterno(args.getString(AP_PATERNO));
+        usuario.setApellidoPaterno(args.getString(AP_PATERNO));
         usuario.setRutaImagen(args.getString(RUTA_IMAGEN));
     }
 

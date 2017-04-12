@@ -28,6 +28,7 @@ public class Sesion {
     private static final String TELEFONO = "telefono";
     private static final String CURP = "curp";
     private static final String ID_ESTADO = "id_estado";
+    private static final String ESTADO = "estado";
     private static final String ID_MUNICIPIO = "id_municipio";
     private static final String RUTA_IMAGEN = "ruta_imagen";
 
@@ -40,7 +41,7 @@ public class Sesion {
         return prefs.getInt(ID_USUARIO, 0);
     }
 
-    public static String getEmail(){
+    public static String getCorreo(){
         return prefs.getString(EMAIL, null);
     }
 
@@ -88,6 +89,9 @@ public class Sesion {
         return prefs.getString(CURP, null);
     }
 
+    public static String getEstado(){
+        return prefs.getString(ESTADO, null);
+    }
     public static int getIdEstado(){
         return prefs.getInt(ID_ESTADO, 0);
     }
@@ -107,15 +111,16 @@ public class Sesion {
         prefs.edit().putInt(ID_USUARIO, usuario.getId()).apply();
         prefs.edit().putInt(ID_DATOS_USUARIO, usuario.getIdDatosUsuario()).apply();
         prefs.edit().putInt(ID_ESTADO, usuario.getIdEstado()).apply();
+        prefs.edit().putString(ESTADO, usuario.getEstado()).apply();
         prefs.edit().putInt(ID_MUNICIPIO, usuario.getIdMunicipio()).apply();
         prefs.edit().putInt(ID_GENERO, usuario.getIdGenero()).apply();
         prefs.edit().putInt(ID_OCUPACION, usuario.getIdOcupacion()).apply();
         prefs.edit().putInt(CODIGO_POSTAL, usuario.getCodigo_postal()).apply();
-        prefs.edit().putString(EMAIL, usuario.getEmail()).apply();
+        prefs.edit().putString(EMAIL, usuario.getCorreo()).apply();
         prefs.edit().putString(API_TOKEN, usuario.getApiToken()).apply();
         prefs.edit().putString(NOMBRE, usuario.getNombre()).apply();
-        prefs.edit().putString(APELLIDO_PATERNO, usuario.getApPaterno()).apply();
-        prefs.edit().putString(APELLIDO_MATERNO, usuario.getApMaterno()).apply();
+        prefs.edit().putString(APELLIDO_PATERNO, usuario.getApellidoPaterno()).apply();
+        prefs.edit().putString(APELLIDO_MATERNO, usuario.getApellidoMaterno()).apply();
         if (usuario.getFechaNacimiento() != null) {
             prefs.edit().putString(FECHA_NACIMIENTO, usuario.getFechaNacimiento().toString()).apply();
         }
@@ -133,6 +138,7 @@ public class Sesion {
         prefs.edit().remove(ID_USUARIO).apply();
         prefs.edit().remove(ID_DATOS_USUARIO).apply();
         prefs.edit().remove(ID_ESTADO).apply();
+        prefs.edit().remove(ESTADO).apply();
         prefs.edit().remove(ID_MUNICIPIO).apply();
         prefs.edit().remove(ID_GENERO).apply();
         prefs.edit().remove(ID_OCUPACION).apply();

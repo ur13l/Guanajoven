@@ -360,11 +360,11 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                             }
                                             else{
                                                 final Usuario u = new Usuario();
-                                                u.setEmail(email);
+                                                u.setCorreo(email);
                                                 u.setIdFacebook(id);
                                                 u.setNombre(nombre);
-                                                u.setApPaterno(apellido);
-                                                u.setFechaNacimiento(new Date(fecha));
+                                                u.setApellidoPaterno(apellido);
+                                                u.setFechaNacimiento(fecha);
                                                 u.setIdGenero(gender);
                                                 u.setRutaImagen("http://graph.facebook.com/"+id+"/picture?type=large");
 
@@ -519,8 +519,8 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                         //Datos complementarios para llenar el perfil.
                         Usuario u = new Usuario();
                         u.setNombre(acct.getGivenName());
-                        u.setApPaterno(acct.getFamilyName());
-                        u.setEmail(acct.getEmail());
+                        u.setApellidoPaterno(acct.getFamilyName());
+                        u.setCorreo(acct.getEmail());
                         u.setIdGoogle(acct.getId());
                         if(acct.getPhotoUrl() != null) {
                             u.setRutaImagen(acct.getPhotoUrl().toString());
