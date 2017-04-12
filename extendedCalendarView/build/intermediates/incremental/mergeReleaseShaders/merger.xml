@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <<<<<<< HEAD
+<merger version="3"><dataSet config="main"><source path="C:\Users\Uriel\Android\Guanajoven\extendedCalendarView\src\main\shaders"/></dataSet><dataSet config="release"><source path="C:\Users\Uriel\Android\Guanajoven\extendedCalendarView\src\release\shaders"/></dataSet></merger>
+=======
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="/home/esva/GitAndroid/Guanajoven/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/home/esva/GitAndroid/Guanajoven/extendedCalendarView/src/release/shaders"/></dataSet></merger>
 =======
 <merger version="3"><dataSet config="main"><source path="/Applications/XAMPP/xamppfiles/htdocs/CODE/Guanajoven/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/Applications/XAMPP/xamppfiles/htdocs/CODE/Guanajoven/extendedCalendarView/src/release/shaders"/></dataSet></merger>
 >>>>>>> b06ad5a42ac545bf65da1aa2a8284bfa8d1a3460
+>>>>>>> 315652fdb7ff1c4412376eb03f37b0785e1e2c21
