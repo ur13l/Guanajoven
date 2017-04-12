@@ -1,14 +1,25 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.Writer;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,25 +36,28 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     private String nombre,
                    correo,
                    genero,
-                   curp,
-                   cp,
+                   Curp,
                    estado;
 
-    Date fecha_nacimiento = null;
+    Date fechaNacimiento;
 
-    private int id_genero,
-                id_estado;
+    private int idGenero,
+                cp,
+                idEstado;
 
     private Resources res;
     private String[] estados;
 
     //Campos
-    private EditText input_nombre,
-                     input_correo,
-                     input_genero,
-                     input_fecha_nacimiento,
-                     input_curp, input_cp,
-                     input_estado;
+    private TextView inputNombre,
+                     inputCorreo,
+                     inputGenero,
+                     inputFechaNacimiento,
+                     inputCurp, inputCp,
+                     inputEstado;
+
+    //Imagen
+    private ImageView imagenQr, imagenUsuario;
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     SimpleDateFormat sdg = new SimpleDateFormat("yyyy-MM-dd");
@@ -56,44 +70,69 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         //Obtener datos de usuario
         nombre = Sesion.getNombre() + " " + Sesion.getApellidoPaterno() + " " + Sesion.getApellidoMaterno();
         correo = Sesion.getEmail();
-        id_genero = Sesion.getIdGenero();
+        idGenero = Sesion.getIdGenero();
 
-        if (id_genero == 1) genero = "Masculino";
+        if (idGenero == 1) genero = "Masculino";
         else genero = "Femenino";
 
         try {
-            fecha_nacimiento = sdg.parse(Sesion.getFechaNacimiento());
+            fechaNacimiento = sdg.parse(Sesion.getFechaNacimiento());
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        curp = Sesion.getCurp();
-        cp = Sesion.getCurp();
-        id_estado = Sesion.getIdEstado();
+        Curp = Sesion.getCurp();
+        cp = Sesion.getCodigoPostal();
 
+        idEstado = Sesion.getIdEstado();
         res = getResources();
         estados = res.getStringArray(R.array.estados);
-        estado = estados[id_estado];
+        estado = estados[idEstado];
 
         //Cargar datos de usuario
-        input_nombre = (EditText) vista.findViewById(R.id.nombre_usuario);
-        input_correo = (EditText) vista.findViewById(R.id.email);
-        input_genero = (EditText) vista.findViewById(R.id.genero);
-        input_fecha_nacimiento = (EditText) vista.findViewById(R.id.fecha);
-        input_curp = (EditText) vista.findViewById(R.id.curp);
-        input_cp = (EditText) vista.findViewById(R.id.cp);
-        input_estado = (EditText) vista.findViewById(R.id.estado);
+        inputNombre = (TextView) vista.findViewById(R.id.tv_nombreCG);
+        inputCorreo = (TextView) vista.findViewById(R.id.tv_correoCG);
+        inputGenero = (TextView) vista.findViewById(R.id.tv_generoCG);
+        inputFechaNacimiento = (TextView) vista.findViewById(R.id.tv_fechaCG);
+        inputCurp = (TextView) vista.findViewById(R.id.tv_curpCG);
+        inputCp = (TextView) vista.findViewById(R.id.tv_cpCG);
+        inputEstado = (TextView) vista.findViewById(R.id.tv_estadoCG);
+        imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
 
-        input_nombre.setText(nombre);
-        input_correo.setText(correo);
-        input_genero.setText(genero);
-        input_fecha_nacimiento.setText(sdf.format(fecha_nacimiento));
-        input_curp.setText(curp);
-        input_cp.setText(cp);
-        input_estado.setText(estado);
+        inputNombre.setText(nombre);
+        inputCorreo.setText(correo);
+        inputGenero.setText(genero);
+        //inputFechaNacimiento.setText(sdf.format(fechaNacimiento));
+        inputCurp.setText(Curp);
+        inputCp.setText(String.valueOf(cp));
+        inputEstado.setText(estado);
 
-        //TODO: Generar código QR
+        String dato = nombre + Curp;
+        try {
+            generarQR(dato, imagenQr);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
 
         return vista;
+    }
+
+    //Generar código QR
+    private void generarQR(String dato, ImageView objeto) throws WriterException {
+        Writer generador = new QRCodeWriter();
+        String datoFinal = Uri.encode(dato, "utf-8");
+
+        BitMatrix bm = generador.encode(datoFinal, BarcodeFormat.QR_CODE, 150, 150);
+        Bitmap imagenBitMap = Bitmap.createBitmap(150, 150, Bitmap.Config.ARGB_8888);
+
+        for (int i = 0; i < 150; i++) { //width
+            for (int j = 0; j  < 150; j++) { //height
+                imagenBitMap.setPixel(i, j, bm.get(i, j) ? Color.BLACK : Color.WHITE);
+            }
+        }
+
+        if (imagenBitMap != null) {
+            objeto.setImageBitmap(imagenBitMap);
+        }
     }
 }

@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="/home/esva/GitAndroid/Guanajoven/extendedCalendarView/src/main/assets"/><source path="/home/esva/GitAndroid/Guanajoven/extendedCalendarView/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/home/esva/GitAndroid/Guanajoven/extendedCalendarView/src/release/assets"/></dataSet></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="/Applications/XAMPP/xamppfiles/htdocs/CODE/Guanajoven/extendedCalendarView/src/main/assets"/><source path="/Applications/XAMPP/xamppfiles/htdocs/CODE/Guanajoven/extendedCalendarView/build/generated/assets/shaders/release"/></dataSet><dataSet config="release"><source path="/Applications/XAMPP/xamppfiles/htdocs/CODE/Guanajoven/extendedCalendarView/src/release/assets"/></dataSet></merger>
+>>>>>>> b06ad5a42ac545bf65da1aa2a8284bfa8d1a3460
