@@ -130,7 +130,7 @@ public class HomeFragment extends CustomFragment {
         call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
             @Override
             public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
-                ImageHandler.start(response.body().data, pnlPublicidad);
+//                ImageHandler.start(response.body().data, pnlPublicidad);
             }
 
             @Override
