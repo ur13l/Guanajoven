@@ -7,55 +7,67 @@ import java.util.Date;
  */
 
 public class Convocatoria {
-    int id;
+    int idConvocatoria;
     String titulo;
     String descripcion;
     String rutaImagen;
-    Date fechaInicio;
-    Date fechaFinalizacion;
-    int status;
-    Date fechaCreacion;
-    Date fechaActualizacion;
-    Date fechaBorrado;
+    String fechaInicio;
+    String fechaCierre;
+    int estatus;
 
-    public int getId() { return this.id; }
+    public int getIdConvocatoria() {
+        return idConvocatoria;
+    }
 
-    public void setId(int id) { this.id = id; }
+    public void setIdConvocatoria(int idConvocatoria) {
+        this.idConvocatoria = idConvocatoria;
+    }
 
-    public String getTitulo() { return this.titulo; }
+    public String getTitulo() {
+        return titulo;
+    }
 
-    public void setTitulo(String titulo) { this.titulo = titulo; }
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
 
-    public String getDescripcion() { return this.descripcion; }
+    public String getDescripcion() {
+        return descripcion;
+    }
 
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
 
-    public String getRutaImagen() { return this.rutaImagen; }
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
 
-    public void setRutaImagen(String rutaImagen) { this.rutaImagen = rutaImagen; }
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
+    }
 
-    public Date getFechaInicio() { return this.fechaInicio; }
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
 
-    public void setFechaInicio(Date fechaInicio) { this.fechaInicio = fechaInicio; }
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
 
-    public Date getFechaFinalizacion() { return this.fechaFinalizacion; }
+    public String getFechaCierre() {
+        return fechaCierre;
+    }
 
-    public void setFechaFinalizacion(Date fechaFinalizacion) { this.fechaFinalizacion = fechaFinalizacion; }
+    public void setFechaCierre(String fechaCierre) {
+        this.fechaCierre = fechaCierre;
+    }
 
-    public int getStatus() { return this.status; }
+    public int getEstatus() {
+        return estatus;
+    }
 
-    public void setStatus(int status) { this.status = status; }
-
-    public Date getFechaCreacion() { return this.fechaCreacion; }
-
-    public void setFechaCreacion(Date fechaCreacion) { this.fechaCreacion = fechaCreacion; }
-
-    public Date getFechaActualizacion() { return this.fechaActualizacion; }
-
-    public void setFechaActualizacion(Date fechaActualizacion) { this.fechaActualizacion = fechaActualizacion; }
-
-    public Date getFechaBorrado() { return this.fechaBorrado; }
-
-    public void setFechaBorrado(Date fechaBorrado) { this.fechaBorrado = fechaBorrado; }
-
+    public void setEstatus(int estatus) {
+        this.estatus = estatus;
+    }
 }

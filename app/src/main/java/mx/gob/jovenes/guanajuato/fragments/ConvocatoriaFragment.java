@@ -69,7 +69,7 @@ public class ConvocatoriaFragment extends CustomFragment{
 
             @Override
             public void onFailure(Call<Response<ArrayList<Convocatoria>>> call, Throwable t) {
-                Log.d("Titulo","puto...");
+                Log.d("Titulo","...");
             }
         });
 

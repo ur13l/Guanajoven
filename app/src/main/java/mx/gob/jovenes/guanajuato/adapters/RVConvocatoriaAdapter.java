@@ -63,7 +63,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
           with - establece el contexto en el que pertenece la imagen en este caso es a nuestra activity
           load - carga la imagen pasandole una url con un get que lo obtiene directamente del modelo
           into - establece en donde lo va a cargar, osea en que elemento pondra la imagen*/
-        Picasso.with(context)
+       Picasso.with(context)
         .load(convocatorias.get(position).getRutaImagen())
         .into(holder.imagenConvocatoria);
 
@@ -72,7 +72,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
         holder.descripcionConvocatoria.setText(convocatorias.get(position).getDescripcion());
 
         holder.fechasConvocatoria.setText(convocatorias.get(position).getFechaInicio() + " - " +
-                                          convocatorias.get(position).getFechaFinalizacion());
+                                          convocatorias.get(position).getFechaCierre());
     }
 
 
@@ -112,7 +112,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
         ConvocatoriaViewHolder(View itemView) {
             super(itemView);
             imagenConvocatoria = (ImageView) itemView.findViewById(R.id.img_convocatoria);
-            tituloConvocatoria = (TextView) itemView.findViewById(R.id.tv_titulo);
+            tituloConvocatoria = (TextView) itemView.findViewById(R.id.tv_titulo_convocatoria);
             descripcionConvocatoria = (TextView) itemView.findViewById(R.id.tv_descripcion_convocatoria);
             fechasConvocatoria = (TextView) itemView.findViewById(R.id.tv_fechas_convocatoria);
         }
