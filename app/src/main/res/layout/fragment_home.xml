@@ -243,11 +243,11 @@
         android:id="@+id/btn_slide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|center"
         android:background="@android:color/transparent"
         android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/quantum_ic_volume_up_white_36" />
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/ic_keyboard_arrow_up_white_24dp" />
 
 
     <FrameLayout
@@ -261,5 +261,13 @@
             android:scaleType="centerCrop"
             android:id="@+id/img_container"
             android:src="@drawable/background2"/>
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:id="@+id/close"
+            android:src="@drawable/ic_close_white_24dp"
+            android:layout_gravity="right|top"
+            />
     </FrameLayout>
 </FrameLayout>

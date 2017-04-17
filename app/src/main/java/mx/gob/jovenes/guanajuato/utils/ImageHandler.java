@@ -1,5 +1,6 @@
 package mx.gob.jovenes.guanajuato.utils;
 
+import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
@@ -44,6 +45,8 @@ public class ImageHandler {
                     Picasso.with(context)
                             .load(publicidad.get(randInt).getRutaImagen())
                             .into(ivContainer);
+
+
                     ivContainer.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -55,20 +58,16 @@ public class ImageHandler {
                         }
                     });
 
+                    if(randInt == 0) {
+                        Log.d("Wow", "Wow");
+
+                    }
+                    else {
+                        Log.d("Hide", "Hide");
+                    }
+
                 }
             }
-            /**
-            ivContainer.animate()
-                    .translationY(0)
-                    .alpha(0.0f)
-                    .setListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            view.setVisibility(View.GONE);
-                        }
-                    });
-             **/
             handlerPublicidad.postDelayed(handlerPublicidadTask, INTERVALO_PUBLICIDAD);
         }
     };

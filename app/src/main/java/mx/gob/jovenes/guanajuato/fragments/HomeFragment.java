@@ -1,5 +1,7 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -98,6 +100,7 @@ public class HomeFragment extends CustomFragment {
     //Elementos gráficos
     private ImageButton btnSlide;
     private ViewGroup pnlPublicidad;
+    private ImageButton btnClose;
 
     //Instancias de API
     private Retrofit retrofit;
@@ -149,11 +152,30 @@ public class HomeFragment extends CustomFragment {
 
         pnlPublicidad = (ViewGroup) v.findViewById(R.id.pnl_publicidad);
         btnSlide = (ImageButton) v.findViewById(R.id.btn_slide);
+        btnClose = (ImageButton) v.findViewById(R.id.close);
+        pnlPublicidad.animate()
+                .translationY(pnlPublicidad.getHeight());
 
         btnSlide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomUp();
+                pnlPublicidad.animate()
+                        .translationY(0)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                pnlPublicidad.setVisibility(View.VISIBLE);
+                            }
+                        });
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pnlPublicidad.animate()
+                        .translationY(pnlPublicidad.getHeight());
             }
         });
 
@@ -169,6 +191,7 @@ public class HomeFragment extends CustomFragment {
 
             @Override
             public void onFailure(retrofit2.Call<Response<ArrayList<Publicidad>>> call, Throwable t) {
+                Log.d("Error", "Error");
             }
         });
        return v;
@@ -199,28 +222,6 @@ public class HomeFragment extends CustomFragment {
     }
 
     /**
-     * Método para realizar la animación de aparición de la barra de publicidad.
-     */
-    private void bottomUp() {
-
-        Animation bottomUp = AnimationUtils.loadAnimation(getContext(),
-                R.anim.bottom_up);
-        pnlPublicidad.startAnimation(bottomUp);
-        pnlPublicidad.setVisibility(View.VISIBLE);
-    }
-
-    /**
-     * Método para la animación que desaparece la barra de publicidad.
-     */
-    private void bottomDown() {
-        Animation bottomDown = AnimationUtils.loadAnimation(getContext(),
-                R.anim.bottom_down);
-        pnlPublicidad.startAnimation(bottomDown);
-        pnlPublicidad.setVisibility(View.INVISIBLE);
-    }
-
-
-    /**
      * Asigna los valores de la sesión y la bitácora.
      * @throws ParseException
      */
@@ -231,10 +232,6 @@ public class HomeFragment extends CustomFragment {
         //new EnviarTokenAsyncTask().execute(); //TODO: Servicio para el token
 
     }
-
-
-
-
 
 
     /**
