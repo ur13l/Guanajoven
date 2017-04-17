@@ -1,14 +1,19 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -74,5 +79,32 @@ public class ConvocatoriaFragment extends CustomFragment{
         });
 
         return v;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
+        getActivity().findViewById(R.id.collapsing_toolbar).setVisibility(View.GONE);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
+        getActivity().findViewById(R.id.collapsing_toolbar).setVisibility(View.VISIBLE);
+        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar2);
+        //final Drawable d = Drawable.createFromPath("@drawable/reports");
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Convocatorias");
+        ((CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsing_toolbar)).setTitle("Convocatorias");
+        //((CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsing_toolbar)).setStatusBarScrim(d);
+
     }
 }

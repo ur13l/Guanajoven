@@ -127,10 +127,6 @@ public class HomeFragment extends CustomFragment {
         String fecha = prefs.getString(FECHA_ACTUALIZACION, DateUtilities.dateToString(DateUtilities.stringToDate("2002-02-02 00:00:00")));
         //new NuevosEventosAsyncTask().execute(fecha); //TODO: Cambiar por nuevo servicio
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 8c77ea7a5c58af7aa118fb12f358e920cea12fbc
         //Se define la acción para cuando se descargan las imágenes publicitarias.
         retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get();
         call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
