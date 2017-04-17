@@ -24,7 +24,7 @@ import mx.gob.jovenes.guanajuato.model.models_tmp.Imagen;
  */
 
 public class ImageHandler {
-    private static int INTERVALO_PUBLICIDAD = 10;
+    private static int INTERVALO_PUBLICIDAD = 10000;
     private static ArrayList<Publicidad> publicidad;
     private static ImageView ivContainer;
     private static Context context;

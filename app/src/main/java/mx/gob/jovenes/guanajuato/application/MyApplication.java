@@ -17,12 +17,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MyApplication extends MultiDexApplication {
     Retrofit retrofit;
+<<<<<<< HEAD
 //<<<<<<< HEAD
     //
     public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 //=======
     // public static final String BASE_URL = "http://192.168.0.78/CODE/GuanajovenWeb/public/api/";
 //>>>>>>> a47941f6412b0a5eaedab999434588f575a005f4
+=======
+    public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
+>>>>>>> 8c77ea7a5c58af7aa118fb12f358e920cea12fbc
 
     @Override
     public void onCreate() {
