@@ -95,15 +95,18 @@ public class ConvocatoriaFragment extends CustomFragment{
     @Override
     public void onResume() {
         super.onResume();
-        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
-        getActivity().findViewById(R.id.collapsing_toolbar).setVisibility(View.VISIBLE);
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar2);
-        //final Drawable d = Drawable.createFromPath("@drawable/reports");
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Convocatorias");
-        ((CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsing_toolbar)).setTitle("Convocatorias");
+        AppCompatActivity activity = ((AppCompatActivity) getActivity());
+        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        CollapsingToolbarLayout cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
+        ImageView imagen = (ImageView)cToolbar.findViewById(R.id.image);
+
+        toolbar.setVisibility(View.GONE);
+        cToolbar.setVisibility(View.VISIBLE);
+        activity.getSupportActionBar().setHomeButtonEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setTitle("Convocatorias");
+        cToolbar.setTitle("Convocatorias");
+        imagen.setImageResource(R.drawable.background2);
         //((CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsing_toolbar)).setStatusBarScrim(d);
 
     }

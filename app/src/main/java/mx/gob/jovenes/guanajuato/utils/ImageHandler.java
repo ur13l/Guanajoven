@@ -1,5 +1,6 @@
 package mx.gob.jovenes.guanajuato.utils;
 
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -56,6 +57,18 @@ public class ImageHandler {
 
                 }
             }
+            /**
+            ivContainer.animate()
+                    .translationY(0)
+                    .alpha(0.0f)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            view.setVisibility(View.GONE);
+                        }
+                    });
+             **/
             handlerPublicidad.postDelayed(handlerPublicidadTask, INTERVALO_PUBLICIDAD);
         }
     };

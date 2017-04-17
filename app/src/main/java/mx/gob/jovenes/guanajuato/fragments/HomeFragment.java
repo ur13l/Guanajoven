@@ -169,7 +169,6 @@ public class HomeFragment extends CustomFragment {
 
             @Override
             public void onFailure(retrofit2.Call<Response<ArrayList<Publicidad>>> call, Throwable t) {
-Log.d("PEOAs", "PELAS");
             }
         });
        return v;
