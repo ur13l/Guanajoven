@@ -39,10 +39,9 @@ public class ConvocatoriaFragment extends CustomFragment{
     private Retrofit retrofit;
     private ArrayList<Convocatoria> convocatorias;
 
-    AppCompatActivity activity = ((AppCompatActivity) getActivity());
-    Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
-    CollapsingToolbarLayout cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
-    ImageView imagen = (ImageView)cToolbar.findViewById(R.id.image);
+    AppCompatActivity activity;
+    Toolbar toolbar;
+    CollapsingToolbarLayout cToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +50,9 @@ public class ConvocatoriaFragment extends CustomFragment{
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         convocatoriaAPI = retrofit.create(ConvocatoriaAPI.class);
 
+        activity = ((AppCompatActivity) getActivity());
+        toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
+        cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
     }
 
     @Nullable
@@ -79,7 +81,7 @@ public class ConvocatoriaFragment extends CustomFragment{
 
             @Override
             public void onFailure(Call<Response<ArrayList<Convocatoria>>> call, Throwable t) {
-                Log.d("Error","Ha fallado la conexión...");
+                Log.d("Titulo","...");
             }
         });
 
@@ -99,6 +101,8 @@ public class ConvocatoriaFragment extends CustomFragment{
     @Override
     public void onResume() {
         super.onResume();
+        ImageView imagen = (ImageView)cToolbar.findViewById(R.id.image);
+
         getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
         cToolbar.setVisibility(View.VISIBLE);
         activity.setSupportActionBar(toolbar);
@@ -107,5 +111,6 @@ public class ConvocatoriaFragment extends CustomFragment{
         activity.getSupportActionBar().setTitle("Convocatorias");
         cToolbar.setTitle("Convocatorias");
         imagen.setImageResource(R.drawable.background2);
+
     }
 }
