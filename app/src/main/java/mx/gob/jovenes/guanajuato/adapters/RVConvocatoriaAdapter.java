@@ -1,7 +1,12 @@
 package mx.gob.jovenes.guanajuato.adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +19,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.fragments.DetalleConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.model.Convocatoria;
 import mx.gob.jovenes.guanajuato.model.StatusReporte;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
@@ -25,7 +31,7 @@ import mx.gob.jovenes.guanajuato.utils.MathFormat;
  */
 public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAdapter.ConvocatoriaViewHolder> {
     public static List<Convocatoria> convocatorias;
-    private Context context;
+    public Context context;
 
     /**
      * Constructor
@@ -99,7 +105,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
      * Clase interna que define el holder que contiene los datos que le vamos a pasar a los
      * item de convocatorias
      */
-    public static class ConvocatoriaViewHolder extends RecyclerView.ViewHolder {
+    public class ConvocatoriaViewHolder extends RecyclerView.ViewHolder {
         ImageView imagenConvocatoria;
         TextView tituloConvocatoria;
         TextView descripcionConvocatoria;
@@ -115,6 +121,18 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
             tituloConvocatoria = (TextView) itemView.findViewById(R.id.tv_titulo_convocatoria);
             descripcionConvocatoria = (TextView) itemView.findViewById(R.id.tv_descripcion_convocatoria);
             fechasConvocatoria = (TextView) itemView.findViewById(R.id.tv_fechas_convocatoria);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DetalleConvocatoriaFragment f = DetalleConvocatoriaFragment.newInstance(
+                            convocatorias.get(getAdapterPosition())
+                    );
+                    FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
+                    FragmentTransaction ft = fm.beginTransaction();
+                    ft.replace(R.id.segunda_fragment_container, f).commit();
+                }
+            });
         }
     }
 }

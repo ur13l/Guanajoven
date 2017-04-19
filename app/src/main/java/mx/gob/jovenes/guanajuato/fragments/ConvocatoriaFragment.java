@@ -39,6 +39,10 @@ public class ConvocatoriaFragment extends CustomFragment{
     private Retrofit retrofit;
     private ArrayList<Convocatoria> convocatorias;
 
+    AppCompatActivity activity;
+    Toolbar toolbar;
+    CollapsingToolbarLayout cToolbar;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +50,9 @@ public class ConvocatoriaFragment extends CustomFragment{
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         convocatoriaAPI = retrofit.create(ConvocatoriaAPI.class);
 
+        activity = ((AppCompatActivity) getActivity());
+        toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
+        cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
     }
 
     @Nullable
@@ -84,30 +91,26 @@ public class ConvocatoriaFragment extends CustomFragment{
     @Override
     public void onStop() {
         super.onStop();
-        final Toolbar toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar);
         getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
-        getActivity().findViewById(R.id.collapsing_toolbar).setVisibility(View.GONE);
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        cToolbar.setVisibility(View.GONE);
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setHomeButtonEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        AppCompatActivity activity = ((AppCompatActivity) getActivity());
-        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
-        CollapsingToolbarLayout cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
         ImageView imagen = (ImageView)cToolbar.findViewById(R.id.image);
 
-        toolbar.setVisibility(View.GONE);
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
         cToolbar.setVisibility(View.VISIBLE);
+        activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setTitle("Convocatorias");
         cToolbar.setTitle("Convocatorias");
         imagen.setImageResource(R.drawable.background2);
-        //((CollapsingToolbarLayout)getActivity().findViewById(R.id.collapsing_toolbar)).setStatusBarScrim(d);
 
     }
 }
