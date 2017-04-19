@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyApplication extends MultiDexApplication {
     Retrofit retrofit;
 
-    public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
     //public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
 
