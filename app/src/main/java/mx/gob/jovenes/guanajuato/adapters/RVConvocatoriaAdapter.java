@@ -2,6 +2,7 @@ package mx.gob.jovenes.guanajuato.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,6 +116,13 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
             tituloConvocatoria = (TextView) itemView.findViewById(R.id.tv_titulo_convocatoria);
             descripcionConvocatoria = (TextView) itemView.findViewById(R.id.tv_descripcion_convocatoria);
             fechasConvocatoria = (TextView) itemView.findViewById(R.id.tv_fechas_convocatoria);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("Prueba","Si paso :D" + getAdapterPosition());
+                }
+            });
         }
     }
 }

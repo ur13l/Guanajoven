@@ -1,5 +1,6 @@
 package mx.gob.jovenes.guanajuato.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -14,6 +15,17 @@ public class Convocatoria {
     String fechaInicio;
     String fechaCierre;
     int estatus;
+    ArrayList<Documento> documentos;
+
+    public Convocatoria(int idConvocatoria, String titulo, String descripcion, String rutaImagen, String fechaInicio, String fechaCierre, int estatus) {
+        this.idConvocatoria = idConvocatoria;
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.rutaImagen = rutaImagen;
+        this.fechaInicio = fechaInicio;
+        this.fechaCierre = fechaCierre;
+        this.estatus = estatus;
+    }
 
     public int getIdConvocatoria() {
         return idConvocatoria;
@@ -70,4 +82,8 @@ public class Convocatoria {
     public void setEstatus(int estatus) {
         this.estatus = estatus;
     }
+
+    public ArrayList<Documento> getDocumentos() { return documentos; }
+
+    public void setDocumentos(ArrayList<Documento> documentos) { this.documentos = documentos; }
 }
