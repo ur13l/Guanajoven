@@ -42,10 +42,16 @@
                 android:text="Descripcion del evento: Aquí va toda la descripción de la convocatoria"/>
 
             <TextView
-                android:id="@+id/tv_fechas_convocatoria"
+                android:id="@+id/tv_estatus_convocatoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="24/02/2016 - 24/03/2016"/>
+                android:text="estatus de la convocatoria"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Leer más..."
+                android:textColor="@color/com_facebook_button_send_background_color"/>
 
         </LinearLayout>
 

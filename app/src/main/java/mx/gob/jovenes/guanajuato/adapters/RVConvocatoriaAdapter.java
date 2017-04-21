@@ -77,8 +77,16 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
 
         holder.descripcionConvocatoria.setText(convocatorias.get(position).getDescripcion());
 
-        holder.fechasConvocatoria.setText(convocatorias.get(position).getFechaInicio() + " - " +
-                                          convocatorias.get(position).getFechaCierre());
+        switch(convocatorias.get(position).getEstatus()){
+            case 1:
+                holder.estatusConvocatoria.setText("Activa");
+                break;
+            case 2:
+                holder.estatusConvocatoria.setText("Terminada");
+                break;
+            default:
+                holder.estatusConvocatoria.setText("Sin asignar");
+        }
     }
 
 
@@ -109,7 +117,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
         ImageView imagenConvocatoria;
         TextView tituloConvocatoria;
         TextView descripcionConvocatoria;
-        TextView fechasConvocatoria;
+        TextView estatusConvocatoria;
 
         /**
          * Constructor de clase interna
@@ -120,7 +128,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
             imagenConvocatoria = (ImageView) itemView.findViewById(R.id.img_convocatoria);
             tituloConvocatoria = (TextView) itemView.findViewById(R.id.tv_titulo_convocatoria);
             descripcionConvocatoria = (TextView) itemView.findViewById(R.id.tv_descripcion_convocatoria);
-            fechasConvocatoria = (TextView) itemView.findViewById(R.id.tv_fechas_convocatoria);
+            estatusConvocatoria = (TextView) itemView.findViewById(R.id.tv_estatus_convocatoria);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

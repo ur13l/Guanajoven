@@ -48,8 +48,9 @@
 
     <!--Estilo de encabezado -->
     <style name="AppTheme.EncabezadoTheme">
-        <item name="android:textSize">40sp</item>
+        <item name="android:textSize">20dp</item>
         <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textAlignment">center</item>
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">Arial</item>
     </style>

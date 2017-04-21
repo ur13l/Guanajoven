@@ -1,21 +1,18 @@
 package mx.gob.jovenes.guanajuato.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.squareup.picasso.Picasso;
-
 import java.util.List;
-
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.model.Convocatoria;
 import mx.gob.jovenes.guanajuato.model.Documento;
+
 
 /**
  * Created by esva on 19/04/17.
@@ -23,7 +20,8 @@ import mx.gob.jovenes.guanajuato.model.Documento;
 
 public class RVDocumentoAdapter  extends RecyclerView.Adapter<RVDocumentoAdapter.DocumentoViewHolder>{
     public static List<Documento> documentos;
-    private Context context;
+    public Context context;
+    public String url;
 
     /**
      * Constructor
@@ -45,6 +43,7 @@ public class RVDocumentoAdapter  extends RecyclerView.Adapter<RVDocumentoAdapter
     public RVDocumentoAdapter.DocumentoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_documento, parent, false);
         RVDocumentoAdapter.DocumentoViewHolder pvh = new RVDocumentoAdapter.DocumentoViewHolder(v);
+        System.out.println(getItemCount());
         return pvh;
     }
 
@@ -57,10 +56,26 @@ public class RVDocumentoAdapter  extends RecyclerView.Adapter<RVDocumentoAdapter
      */
     @Override
     public void onBindViewHolder(RVDocumentoAdapter.DocumentoViewHolder holder, int position) {
-        //TODO poner un getNombre en formato
-        //holder.imagenFormato.setImageResource(documentos.get(position).getFormato());
+        int tipoDocumento = documentos.get(position).getFormato().getIdFormato();
+
+        switch(tipoDocumento) {
+            case 1:
+                holder.imagenFormato.setImageResource(R.mipmap.ic_pdf);
+                break;
+            case 2:
+                holder.imagenFormato.setImageResource(R.mipmap.ic_doc);
+                break;
+            case 3:
+                holder.imagenFormato.setImageResource(R.mipmap.ic_xls);
+                break;
+            default:
+                holder.imagenFormato.setImageResource(R.mipmap.ic_unknow);
+                break;
+        }
 
         holder.tituloDocumento.setText(documentos.get(position).getTitulo());
+        holder.url = documentos.get(position).getRutaDocumento();
+        holder.context = context;
     }
 
 
@@ -90,7 +105,8 @@ public class RVDocumentoAdapter  extends RecyclerView.Adapter<RVDocumentoAdapter
     public static class DocumentoViewHolder extends RecyclerView.ViewHolder {
         ImageView imagenFormato;
         TextView tituloDocumento;
-
+        String url;
+        Context context;
         /**
          * Constructor de clase interna
          * @param itemView - Le pasa un elemento de tipo itemView
@@ -103,7 +119,9 @@ public class RVDocumentoAdapter  extends RecyclerView.Adapter<RVDocumentoAdapter
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("Prueba","Si paso :D" + getAdapterPosition());
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(url));
+                    context.startActivity(i);
                 }
             });
         }

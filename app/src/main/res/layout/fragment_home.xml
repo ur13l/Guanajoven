@@ -260,7 +260,7 @@
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:id="@+id/img_container"
-            android:src="@drawable/background2"/>
+            android:src="@drawable/publicidad1"/>
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

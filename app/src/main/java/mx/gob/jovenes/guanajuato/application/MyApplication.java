@@ -19,13 +19,16 @@ public class MyApplication extends MultiDexApplication {
     Retrofit retrofit;
 
     //dirección publica
-    //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
 
     //uriel publica
-    public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
     //dirección uriel
     //public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
+
+    //dirección local
+    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
     @Override
     public void onCreate() {

@@ -8,10 +8,10 @@
 
     <!-- Strings related to usuario -->
     <string name="usuario">Inicia Sesión</string>
-    <string name="mensaje_bienvenida">Somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y politícas publicas, orientada a elevar la calidad de vida de los jóvenes Guanajuatenses.</string>
+    <string name="mensaje_bienvenida">En Guanajoven somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y políticas públicas, orientada a elevar la calidad de vida de los jóvenes guanajuatenses.</string>
 
     <string name="home">Home</string>
-    <string name="bienvenida">#MarcaTuRumbo</string>
+    <string name="bienvenida">HAZ DE GUANAJUATO TU PROYECTO DE VIDA</string>
     <string name="comenzar">Comenzar</string>
     <string name="registrar">Registrar</string>
     <string name="copyright">Copyright © \nInQuality 2017.</string>
