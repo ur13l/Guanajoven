@@ -3,6 +3,7 @@ package mx.gob.jovenes.guanajuato.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -83,7 +84,15 @@ public class Convocatoria implements Parcelable{
     }
 
     public void setFechaInicio(String fechaInicio) {
-        this.fechaInicio = fechaInicio;
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat fmt2 = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date date = fmt.parse(fechaInicio);
+            this.fechaInicio = fmt2.format(date);
+        }
+        catch(ParseException pe) {
+            this.fechaInicio = "Error";
+        }
     }
 
     public String getFechaCierre() {
@@ -91,7 +100,15 @@ public class Convocatoria implements Parcelable{
     }
 
     public void setFechaCierre(String fechaCierre) {
-        this.fechaCierre = fechaCierre;
+        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
+        SimpleDateFormat fmt2 = new SimpleDateFormat("dd-MM-yyyy");
+        try {
+            Date date = fmt.parse(fechaCierre);
+            this.fechaCierre = fmt2.format(date);
+        }
+        catch(ParseException pe) {
+            this.fechaCierre = "Error";
+        }
     }
 
     public int getEstatus() {
@@ -105,6 +122,7 @@ public class Convocatoria implements Parcelable{
     public ArrayList<Documento> getDocumentos() { return documentos; }
 
     public void setDocumentos(ArrayList<Documento> documentos) { this.documentos = documentos; }
+
 
     @Override
     public int describeContents() {
