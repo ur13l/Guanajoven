@@ -70,14 +70,13 @@
     </style>
 
     <!-- Tema de las Toolbars -->
-
-
     <style name="ActionBarTheme" parent="Widget.AppCompat.Toolbar">
         <item name="android:textColorPrimary">@color/white</item>
         <item name="colorControlNormal">@color/white</item>
         <item name="selectableItemBackground">?android:selectableItemBackground</item>
         <item name="selectableItemBackgroundBorderless">?android:selectableItemBackground</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>

@@ -108,8 +108,11 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         tvDescripcionConvocatoria.setText(convocatoria.getDescripcion());
 
-        //tvFechasConvocatoria.setText(fecha1 + " - " + fecha2);
+        tvFechasConvocatoria.setText(convocatoria.getFechaInicio() + " - " + convocatoria.getFechaCierre());
         rvDocumentosConvocatoria.setAdapter(adapter);
+
+
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Prueba");
 
         return v;
     }
