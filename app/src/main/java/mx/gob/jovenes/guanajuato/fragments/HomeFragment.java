@@ -161,8 +161,6 @@ public class HomeFragment extends CustomFragment {
         slidePublicidad = v.findViewById(R.id.slide_publicidad);
 
 
-
-
         btnSlide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,15 +184,7 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-        slidePublicidad.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if(event.getAction() == MotionEvent.LEF){
-                    //do something
-                }
-                return true;
-            }
-        });
+        SlideHandler.initSlider(slidePublicidad);
 
 
         //Se define la acción para cuando se descargan las imágenes publicitarias.
