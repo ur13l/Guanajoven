@@ -40,7 +40,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private Convocatoria convocatoria;
     private ImageView imgConvocatoria;
     private TextView tvDescripcionConvocatoria;
-    private TextView tvFechasConvocatoria;
+    private TextView tvFechaInicioConvocatoria;
+    private TextView tvFechaCierreConvocatoria;
     private RecyclerView rvDocumentosConvocatoria;
     private ArrayList<Documento> documentos;
     private RVDocumentoAdapter adapter;
@@ -93,7 +94,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         imgConvocatoria = (ImageView) v.findViewById(R.id.img_convocatoria);
         tvDescripcionConvocatoria = (TextView) v.findViewById(R.id.tv_descripcion_convocatoria);
-        tvFechasConvocatoria = (TextView) v.findViewById(R.id.tv_fechas_convocatoria);
+        tvFechaInicioConvocatoria = (TextView) v.findViewById(R.id.tv_fecha_inicio_convocatoria);
+        tvFechaCierreConvocatoria = (TextView) v.findViewById(R.id.tv_fecha_cierre_convocatoria);
         rvDocumentosConvocatoria = (RecyclerView) v.findViewById(R.id.rv_documentos_convocatoria);
         adapter = new RVDocumentoAdapter(getActivity(), convocatoria.getDocumentos());
 
@@ -107,7 +109,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         tvDescripcionConvocatoria.setText(convocatoria.getDescripcion());
 
-        tvFechasConvocatoria.setText(convocatoria.getFechaInicio() + " - " + convocatoria.getFechaCierre());
+        tvFechaInicioConvocatoria.setText(convocatoria.getFechaInicio());
+        tvFechaCierreConvocatoria.setText(convocatoria.getFechaCierre());
         rvDocumentosConvocatoria.setAdapter(adapter);
 
 
