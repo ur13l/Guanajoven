@@ -113,8 +113,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
         tvDescripcionConvocatoria.setText(convocatoria.getDescripcion());
 
 
-        tvFechaInicioConvocatoria.setText("Fecha inicio: " + getFechaCast(convocatoria.getFechaInicio()).toString());
-        tvFechaCierreConvocatoria.setText("Fecha cierre: " + getFechaCast(convocatoria.getFechaCierre()).toString());
+        tvFechaInicioConvocatoria.setText("Fecha inicio: " + getFechaCast(convocatoria.getFechaInicio()));
+        tvFechaCierreConvocatoria.setText("Fecha cierre: " + getFechaCast(convocatoria.getFechaCierre()));
         rvDocumentosConvocatoria.setAdapter(adapter);
 
 
@@ -124,16 +124,14 @@ public class DetalleConvocatoriaFragment extends Fragment {
     }
 
     private String getFechaCast(String fecha) {
-        SimpleDateFormat formatoSQL = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat formatoDDMMYY = new SimpleDateFormat("dd/MM/YYYY");
-        Date fechaDate = null;
-        try {
-            fechaDate = formatoSQL.parse(fecha);
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
 
-
-            return formatoDDMMYY.format(fechaDate);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
+        try{
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
