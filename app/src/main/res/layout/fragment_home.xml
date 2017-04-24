@@ -252,11 +252,9 @@
             android:background="@android:color/transparent"
             android:layout_marginTop="70dp"
             android:layout_marginBottom="10dp"
-<<<<<<< HEAD
-            app:srcCompat="@drawable/ic_keyboard_arrow_left_white_24" />
-=======
+
             app:srcCompat="@drawable/ic_keyboard_arrow_left_white_24dp" />
->>>>>>> 4c23b3d88f634ffd9e08becfb24f74cdf1159364
+
     </FrameLayout>
 
 
