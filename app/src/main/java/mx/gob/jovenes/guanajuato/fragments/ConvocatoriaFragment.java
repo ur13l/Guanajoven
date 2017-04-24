@@ -79,7 +79,7 @@ public class ConvocatoriaFragment extends CustomFragment{
             @Override
             public void onResponse(Call<Response<ArrayList<Convocatoria>>> call, retrofit2.Response<Response<ArrayList<Convocatoria>>> response) {
                 if(response.body().success) {
-                    Realm realm = Realm.getDefaultInstance();
+                    //Realm realm = Realm.getDefaultInstance();
                     convocatorias = response.body().data;
 
 

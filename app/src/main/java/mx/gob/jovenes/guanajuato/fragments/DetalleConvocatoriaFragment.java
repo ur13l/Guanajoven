@@ -22,7 +22,9 @@ import org.w3c.dom.Text;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
@@ -40,7 +42,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private Convocatoria convocatoria;
     private ImageView imgConvocatoria;
     private TextView tvDescripcionConvocatoria;
-    private TextView tvFechasConvocatoria;
+    private TextView tvFechaInicioConvocatoria;
+    private TextView tvFechaCierreConvocatoria;
     private RecyclerView rvDocumentosConvocatoria;
     private ArrayList<Documento> documentos;
     private RVDocumentoAdapter adapter;
@@ -93,7 +96,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         imgConvocatoria = (ImageView) v.findViewById(R.id.img_convocatoria);
         tvDescripcionConvocatoria = (TextView) v.findViewById(R.id.tv_descripcion_convocatoria);
-        tvFechasConvocatoria = (TextView) v.findViewById(R.id.tv_fechas_convocatoria);
+        tvFechaInicioConvocatoria = (TextView) v.findViewById(R.id.tv_fecha_inicio_convocatoria);
+        tvFechaCierreConvocatoria = (TextView) v.findViewById(R.id.tv_fecha_cierre_convocatoria);
         rvDocumentosConvocatoria = (RecyclerView) v.findViewById(R.id.rv_documentos_convocatoria);
         adapter = new RVDocumentoAdapter(getActivity(), convocatoria.getDocumentos());
 
@@ -108,13 +112,32 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         tvDescripcionConvocatoria.setText(convocatoria.getDescripcion());
 
-        tvFechasConvocatoria.setText(convocatoria.getFechaInicio() + " - " + convocatoria.getFechaCierre());
+
+        tvFechaInicioConvocatoria.setText("Fecha inicio: " + getFechaCast(convocatoria.getFechaInicio()));
+        tvFechaCierreConvocatoria.setText("Fecha cierre: " + getFechaCast(convocatoria.getFechaCierre()));
         rvDocumentosConvocatoria.setAdapter(adapter);
 
 
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Prueba");
-
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(convocatoria.getTitulo());
         return v;
     }
 
+    private String getFechaCast(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Convocatoria");
+    }
 }

@@ -26,7 +26,9 @@ public class CustomFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
         int string_title = getArguments().getInt("string_title");
-        //((SegundaActivity)getActivity()).getSupportActionBar().setTitle(string_title);
+        if(((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
+            ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(string_title);
+        }
 
 
 

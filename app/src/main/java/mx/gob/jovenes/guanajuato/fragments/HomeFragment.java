@@ -224,7 +224,7 @@ public class HomeFragment extends CustomFragment {
                 Log.d("Error", "Error");
             }
         });
-       return v;
+        return v;
     }
 
     @Override

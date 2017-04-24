@@ -14,7 +14,7 @@
     <string name="bienvenida">HAZ DE GUANAJUATO TU PROYECTO DE VIDA</string>
     <string name="comenzar">Comenzar</string>
     <string name="registrar">Registrar</string>
-    <string name="copyright">Copyright © \nInQuality 2017.</string>
+    <string name="copyright">Copyright © \nGuanajuato 2017.</string>
     <string name="inicio">Inicio</string>
     <string name="pass">Contraseña</string>
     <string name="ejercicio">Ejercicio</string>
@@ -354,5 +354,6 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="curp_cg">CURP</string>
     <string name="c_digo_postal">Código Postal</string>
     <string name="estado">Estado</string>
+    <string name="btn_quiero_mas_informacion">Quiero mas información</string>
 
 </resources>
