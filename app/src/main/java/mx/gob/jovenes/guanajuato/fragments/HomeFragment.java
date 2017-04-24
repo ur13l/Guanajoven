@@ -184,23 +184,7 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-<<<<<<< HEAD
-        slidePublicidad.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-
-<<<<<<< HEAD
-                if(event.getAction() == MotionEvent.ACTION_MOVE){
-=======
-                if(event.getAction() == MotionEvent.LEF){
->>>>>>> 4c23b3d88f634ffd9e08becfb24f74cdf1159364
-                    //do something
-                }
-                return true;
-            }
-        });
-=======
         SlideHandler.initSlider(slidePublicidad);
->>>>>>> 582fb44199ca3d89d95c742edee22fb35cd69791
 
 
         //Se define la acción para cuando se descargan las imágenes publicitarias.
@@ -218,7 +202,7 @@ public class HomeFragment extends CustomFragment {
                 Log.d("Error", "Error");
             }
         });
-       return v;
+        return v;
     }
 
     @Override

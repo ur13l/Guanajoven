@@ -22,7 +22,9 @@ import org.w3c.dom.Text;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
@@ -110,14 +112,30 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         tvDescripcionConvocatoria.setText(convocatoria.getDescripcion());
 
-        tvFechaInicioConvocatoria.setText(convocatoria.getFechaInicio());
-        tvFechaCierreConvocatoria.setText(convocatoria.getFechaCierre());
+
+        tvFechaInicioConvocatoria.setText("Fecha inicio: " + getFechaCast(convocatoria.getFechaInicio()).toString());
+        tvFechaCierreConvocatoria.setText("Fecha cierre: " + getFechaCast(convocatoria.getFechaCierre()).toString());
         rvDocumentosConvocatoria.setAdapter(adapter);
 
 
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Prueba");
 
         return v;
+    }
+
+    private String getFechaCast(String fecha) {
+        SimpleDateFormat formatoSQL = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat formatoDDMMYY = new SimpleDateFormat("dd/MM/YYYY");
+        Date fechaDate = null;
+        try {
+            fechaDate = formatoSQL.parse(fecha);
+
+
+            return formatoDDMMYY.format(fechaDate);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 
 }
