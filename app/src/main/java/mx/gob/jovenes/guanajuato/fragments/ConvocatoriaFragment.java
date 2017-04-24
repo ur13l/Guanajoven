@@ -1,6 +1,8 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +17,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
+import io.realm.Realm;
+import io.realm.RealmList;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
 import mx.gob.jovenes.guanajuato.api.ConvocatoriaAPI;
@@ -36,6 +43,7 @@ public class ConvocatoriaFragment extends CustomFragment{
     private RVConvocatoriaAdapter adapter;
     private Retrofit retrofit;
     private ArrayList<Convocatoria> convocatorias;
+    private SharedPreferences prefs;
 
     AppCompatActivity activity;
     Toolbar toolbar;
@@ -47,6 +55,7 @@ public class ConvocatoriaFragment extends CustomFragment{
         //Instancias de la API
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         convocatoriaAPI = retrofit.create(ConvocatoriaAPI.class);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplication());
 
         activity = ((AppCompatActivity) getActivity());
         toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
@@ -63,17 +72,22 @@ public class ConvocatoriaFragment extends CustomFragment{
 
         rvConvocatoria.setLayoutManager(llm);
 
-        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get();
+        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, 0));
 
         //Llamada a servidor caso de acertar o fallar
         call.enqueue(new Callback<Response<ArrayList<Convocatoria>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<Convocatoria>>> call, retrofit2.Response<Response<ArrayList<Convocatoria>>> response) {
                 if(response.body().success) {
-
+                    Realm realm = Realm.getDefaultInstance();
                     convocatorias = response.body().data;
+
+
                     adapter = new RVConvocatoriaAdapter(getActivity(), convocatorias);
                     rvConvocatoria.setAdapter(adapter);
+
+                    long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
+                    prefs.edit().putLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, timestamp).apply();
                 }
             }
 

@@ -4,7 +4,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.function.Function;
+
+import mx.gob.jovenes.guanajuato.Funcion;
 
 /**
  * Created by Uriel on 24/04/2017.
@@ -21,7 +22,7 @@ public class SlideHandler {
     private static final int ACTION_TYPE_LEFT = 4;
     private static final int SLIDE_RANGE = 100;
 
-    public static void initSlider(View view) {
+    public static void initSlider(View view, final String direccion, final Funcion f) {
         view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
 
@@ -46,12 +47,12 @@ public class SlideHandler {
                     case MotionEvent.ACTION_UP:
                         if (actionType == ACTION_TYPE_UP) {
                             //Acción arriba
-                        } else if (actionType == ACTION_TYPE_RIGHT) {
-                            //Derecha
+                        } else if (actionType == ACTION_TYPE_RIGHT  && direccion.equals("right")) {
+                            f.exec();
                         } else if (actionType == ACTION_TYPE_DOWN) {
                             //Izquierda
-                        } else if (actionType == ACTION_TYPE_LEFT) {
-                            Log.d("IZQUIERDA", "IZQUIRDA"); //sdsa
+                        } else if (actionType == ACTION_TYPE_LEFT && direccion.equals("left")) {
+                           f.exec();
                         }
                         break;
                     default:

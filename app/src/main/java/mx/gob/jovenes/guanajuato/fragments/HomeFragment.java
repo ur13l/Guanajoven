@@ -61,6 +61,7 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import mx.gob.jovenes.guanajuato.Funcion;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.activities.SegundaActivity;
@@ -184,7 +185,28 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-        SlideHandler.initSlider(slidePublicidad);
+        SlideHandler.initSlider(slidePublicidad, "left", new Funcion() {
+            @Override
+            public void exec() {
+                pnlPublicidad.animate()
+                        .translationX(0)
+                        .setListener(new AnimatorListenerAdapter() {
+                            @Override
+                            public void onAnimationEnd(Animator animation) {
+                                super.onAnimationEnd(animation);
+                                pnlPublicidad.setVisibility(View.VISIBLE);
+                            }
+                        });
+            }
+        });
+
+        SlideHandler.initSlider(pnlPublicidad, "right", new Funcion() {
+            @Override
+            public void exec() {
+                pnlPublicidad.animate()
+                        .translationX(pnlPublicidad.getWidth());
+            }
+        });
 
 
         //Se define la acción para cuando se descargan las imágenes publicitarias.
