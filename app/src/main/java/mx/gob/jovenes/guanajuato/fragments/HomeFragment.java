@@ -85,6 +85,7 @@ import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import mx.gob.jovenes.guanajuato.utils.FileUtils;
 import mx.gob.jovenes.guanajuato.utils.ImageHandler;
 import mx.gob.jovenes.guanajuato.utils.PublicidadSingleton;
+import mx.gob.jovenes.guanajuato.utils.SlideHandler;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
@@ -107,6 +108,7 @@ public class HomeFragment extends CustomFragment {
     //Instancias de API
     private Retrofit retrofit;
     private PublicidadAPI publicidadAPI;
+    private SlideHandler slideHandler;
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
@@ -187,7 +189,11 @@ public class HomeFragment extends CustomFragment {
         slidePublicidad.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
 
+<<<<<<< HEAD
                 if(event.getAction() == MotionEvent.ACTION_MOVE){
+=======
+                if(event.getAction() == MotionEvent.LEF){
+>>>>>>> 4c23b3d88f634ffd9e08becfb24f74cdf1159364
                     //do something
                 }
                 return true;
