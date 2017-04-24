@@ -10,6 +10,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -101,6 +102,7 @@ public class HomeFragment extends CustomFragment {
     private ImageButton btnSlide;
     private ViewGroup pnlPublicidad;
     private ImageButton btnClose;
+    private View slidePublicidad;
 
     //Instancias de API
     private Retrofit retrofit;
@@ -146,6 +148,7 @@ public class HomeFragment extends CustomFragment {
         });
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
@@ -153,14 +156,16 @@ public class HomeFragment extends CustomFragment {
         pnlPublicidad = (ViewGroup) v.findViewById(R.id.pnl_publicidad);
         btnSlide = (ImageButton) v.findViewById(R.id.btn_slide);
         btnClose = (ImageButton) v.findViewById(R.id.close);
-        pnlPublicidad.animate()
-                .translationY(pnlPublicidad.getHeight());
+        slidePublicidad = v.findViewById(R.id.slide_publicidad);
+
+
+
 
         btnSlide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pnlPublicidad.animate()
-                        .translationY(0)
+                        .translationX(0)
                         .setListener(new AnimatorListenerAdapter() {
                             @Override
                             public void onAnimationEnd(Animator animation) {
@@ -175,9 +180,20 @@ public class HomeFragment extends CustomFragment {
             @Override
             public void onClick(View v) {
                 pnlPublicidad.animate()
-                        .translationY(pnlPublicidad.getHeight());
+                        .translationX(pnlPublicidad.getWidth());
             }
         });
+
+        slidePublicidad.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if(event.getAction() == MotionEvent.ACTION_MOVE){
+                    //do something
+                }
+                return true;
+            }
+        });
+
 
         //Se define la acción para cuando se descargan las imágenes publicitarias.
         retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get();
@@ -195,6 +211,14 @@ public class HomeFragment extends CustomFragment {
             }
         });
        return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        pnlPublicidad.animate()
+                .translationX(pnlPublicidad.getWidth());
+
     }
 
     @Override

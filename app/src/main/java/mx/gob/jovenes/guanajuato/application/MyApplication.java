@@ -25,10 +25,10 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
     //dirección uriel
-    //public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
 
     //dirección local
-    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
     @Override
     public void onCreate() {

@@ -239,26 +239,33 @@
         android:layout_marginRight="16dp"
         app:srcCompat="@drawable/ic_help" />
 
-    <ImageButton
-        android:id="@+id/btn_slide"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="10dp"
-        app:srcCompat="@drawable/ic_keyboard_arrow_up_white_24dp" />
+    <FrameLayout
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
+        android:id="@+id/slide_publicidad"
+        android:layout_gravity="right">
+        <ImageButton
+            android:id="@+id/btn_slide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|top"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="10dp"
+            app:srcCompat="@drawable/ic_keyboard_arrow_left_white_24" />
+    </FrameLayout>
+
 
 
     <FrameLayout
         android:layout_width="match_parent"
         android:id="@+id/pnl_publicidad"
-        android:layout_gravity="bottom"
-        android:layout_height="100dp">
+        android:layout_gravity="right"
+        android:background="@color/black"
+        android:layout_height="match_parent">
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
+            android:layout_height="match_parent"
             android:id="@+id/img_container"
             android:src="@drawable/publicidad1"/>
         <ImageButton
@@ -267,6 +274,8 @@
             android:background="@android:color/transparent"
             android:id="@+id/close"
             android:src="@drawable/ic_close_white_24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
             android:layout_gravity="right|top"
             />
     </FrameLayout>

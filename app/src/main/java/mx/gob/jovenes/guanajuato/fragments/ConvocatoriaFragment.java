@@ -1,10 +1,8 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -110,7 +108,7 @@ public class ConvocatoriaFragment extends CustomFragment{
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setTitle("Convocatorias");
         cToolbar.setTitle("Convocatorias");
-        imagen.setImageResource(R.drawable.background2);
+        imagen.setImageResource(R.drawable.login_background);
 
     }
 }

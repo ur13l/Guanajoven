@@ -100,6 +100,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
         adapter = new RVDocumentoAdapter(getActivity(), convocatoria.getDocumentos());
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
+        llm.setOrientation(LinearLayoutManager.HORIZONTAL);
 
         rvDocumentosConvocatoria.setLayoutManager(llm);
 

@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:text="Me interesa"
+                android:text="@string/btn_quiero_mas_informacion"
                 android:textColor="@color/white"/>
 
            </LinearLayout>
