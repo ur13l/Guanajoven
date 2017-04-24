@@ -1,5 +1,6 @@
 package mx.gob.jovenes.guanajuato.utils;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -10,10 +11,9 @@ import java.util.function.Function;
  */
 
 public class SlideHandler {
-    private View view;
-    private float startPointX;
-    private float startPointY;
-    private int actionType;
+    private static float startPointX;
+    private static float startPointY;
+    private static int actionType;
     private static final int ACTION_TYPE_DEFAULT = 0;
     private static final int ACTION_TYPE_UP = 1;
     private static final int ACTION_TYPE_RIGHT = 2;
@@ -21,9 +21,8 @@ public class SlideHandler {
     private static final int ACTION_TYPE_LEFT = 4;
     private static final int SLIDE_RANGE = 100;
 
-    public SlideHandler(View view, Function f) {
-        this.view = view;
-        view.onTouchEvent(new View.OnTouchListener() {
+    public static void initSlider(View view) {
+        view.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
 
                 int x = (int) event.getRawX();
@@ -46,13 +45,13 @@ public class SlideHandler {
                         break;
                     case MotionEvent.ACTION_UP:
                         if (actionType == ACTION_TYPE_UP) {
-                            f.
+                            //Acción arriba
                         } else if (actionType == ACTION_TYPE_RIGHT) {
-                            slideToRight();
+                            //Derecha
                         } else if (actionType == ACTION_TYPE_DOWN) {
-                            slideDown();
+                            //Izquierda
                         } else if (actionType == ACTION_TYPE_LEFT) {
-                            slideToLeft();
+                            Log.d("IZQUIERDA", "IZQUIRDA"); //sdsa
                         }
                         break;
                     default:
@@ -60,6 +59,6 @@ public class SlideHandler {
                 }
                 return true;
             }
-        })
+        });
     }
 }
