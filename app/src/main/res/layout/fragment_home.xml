@@ -274,7 +274,7 @@
             android:background="@android:color/transparent"
             android:id="@+id/close"
             android:src="@drawable/ic_close_white_24dp"
-            android:layout_padding="16dp"
+            android:padding="16dp"
             android:layout_gravity="right|top"
             />
     </FrameLayout>
