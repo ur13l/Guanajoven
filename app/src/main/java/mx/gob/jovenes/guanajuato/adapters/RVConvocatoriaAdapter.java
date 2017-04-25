@@ -134,7 +134,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
                 @Override
                 public void onClick(View v) {
                     DetalleConvocatoriaFragment f = DetalleConvocatoriaFragment.newInstance(
-                            convocatorias.get(getAdapterPosition())
+                            convocatorias.get(getAdapterPosition()).getIdConvocatoria()
                     );
                     FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();

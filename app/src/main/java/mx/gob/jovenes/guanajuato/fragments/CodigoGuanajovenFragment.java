@@ -7,12 +7,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.ImageView;
 
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
@@ -52,7 +54,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                      inputEstado;
 
     //Imagen
-    private ImageView imagenQr;
+    private ImageView imagenQr,
+                      imgBackground;
     private CircleImageView imagenUsuario;
 
     @Nullable
@@ -84,6 +87,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputEstado = (TextView) vista.findViewById(R.id.tv_estadoCG);
         imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
         imagenUsuario = (CircleImageView) vista.findViewById(R.id.iv_imagenCG);
+        imgBackground = (ImageView) vista.findViewById(R.id.img_background);
 
         inputNombre.setText(nombre);
         inputCorreo.setText(correo);
@@ -93,6 +97,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputCp.setText(String.valueOf(cp));
         inputEstado.setText(estado);
         Picasso.with(getActivity()).load(rutaImagen).into(imagenUsuario);
+        Picasso.with(getActivity()).load(rutaImagen).into(imgBackground);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(nombre);
 
         String dato = nombre + Curp;
         try {
@@ -121,5 +127,11 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         if (imagenBitMap != null) {
             objeto.setImageBitmap(imagenBitMap);
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Código Guanajoven");
     }
 }

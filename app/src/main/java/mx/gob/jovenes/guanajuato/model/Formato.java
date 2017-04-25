@@ -3,30 +3,23 @@ package mx.gob.jovenes.guanajuato.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by esva on 19/04/17.
  */
 
-public class Formato implements Parcelable{
+public class Formato extends RealmObject {
+
+    @PrimaryKey
     private int idFormato;
     private String nombre;
+    private String createdAt;
+    private String updatedAt;
+    private String deletedAt;
 
-    protected Formato(Parcel in) {
-        idFormato = in.readInt();
-        nombre = in.readString();
-    }
-
-    public static final Creator<Formato> CREATOR = new Creator<Formato>() {
-        @Override
-        public Formato createFromParcel(Parcel in) {
-            return new Formato(in);
-        }
-
-        @Override
-        public Formato[] newArray(int size) {
-            return new Formato[size];
-        }
-    };
+    public Formato () {}
 
     public int getIdFormato() {
         return idFormato;
@@ -44,14 +37,23 @@ public class Formato implements Parcelable{
         this.nombre = nombre;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(idFormato);
-        dest.writeString(nombre);
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(String deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

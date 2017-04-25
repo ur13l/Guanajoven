@@ -13,9 +13,9 @@ public class Region extends RealmObject{
     private String descripcion;
     private double latitud;
     private double longitud;
-    private String fechaCreacion;
-    private String fechaRegistro;
-    private String fechaBorrado;
+    private String createdAt;
+    private String updatedAt;
+    private String deletedAt;
 
 
 

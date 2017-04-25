@@ -240,7 +240,7 @@
         app:srcCompat="@drawable/ic_help" />
 
     <FrameLayout
-        android:layout_width="10dp"
+        android:layout_width="30dp"
         android:layout_height="match_parent"
         android:id="@+id/slide_publicidad"
         android:layout_gravity="right">
@@ -251,8 +251,7 @@
             android:layout_gravity="right|top"
             android:background="@android:color/transparent"
             android:layout_marginTop="70dp"
-            android:layout_marginBottom="10dp"
-
+            android:layout_marginRight="16dp"
             app:srcCompat="@drawable/ic_keyboard_arrow_left_white_24dp" />
 
     </FrameLayout>
