@@ -15,7 +15,7 @@
             android:layout_height="match_parent"/>
 
         <TextView
-            android:id="@+id/empty_regiones"
+            android:id="@+id/tv_empty_regiones"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"

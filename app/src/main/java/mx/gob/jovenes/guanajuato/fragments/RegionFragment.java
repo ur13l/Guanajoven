@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,28 +24,28 @@ import java.util.TimeZone;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
-import mx.gob.jovenes.guanajuato.api.ConvocatoriaAPI;
+import mx.gob.jovenes.guanajuato.adapters.RVRegionAdapter;
+import mx.gob.jovenes.guanajuato.api.RegionAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
-import mx.gob.jovenes.guanajuato.model.Convocatoria;
+import mx.gob.jovenes.guanajuato.model.Region;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 /**
- * Created by Juan José Estrada Valtierra on 12/04/17.
+ * Created by Juan José Estrada Valtierra on 25/04/17.
  */
-public class ConvocatoriaFragment extends CustomFragment{
-    private ConvocatoriaAPI convocatoriaAPI;
-    private RecyclerView rvConvocatoria;
-    private TextView tvEmptyConvocatoria;
-    private RVConvocatoriaAdapter adapter;
+
+public class RegionFragment extends CustomFragment {
+    private RegionAPI regionAPI;
+    private RecyclerView rvRegion;
+    private TextView tvEmptyRegion;
+    private RVRegionAdapter adapter;
     private Retrofit retrofit;
     private Realm realm;
-    private List<Convocatoria> convocatorias;
+    private List<Region> regiones;
     private SharedPreferences prefs;
-
     private AppCompatActivity activity;
     private Toolbar toolbar;
     private CollapsingToolbarLayout cToolbar;
@@ -52,9 +53,8 @@ public class ConvocatoriaFragment extends CustomFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Instancias de la API
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
-        convocatoriaAPI = retrofit.create(ConvocatoriaAPI.class);
+        regionAPI = retrofit.create(RegionAPI.class);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplication());
         realm = MyApplication.getRealmInstance();
 
@@ -66,63 +66,55 @@ public class ConvocatoriaFragment extends CustomFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_convocatorias, container, false);
-        rvConvocatoria = (RecyclerView) v.findViewById(R.id.rv_convocatoria);
-        tvEmptyConvocatoria = (TextView) v.findViewById(R.id.tv_empty_convocatoria);
+        View v = inflater.inflate(R.layout.fragment_regiones, container, false);
+        rvRegion = (RecyclerView) v.findViewById(R.id.rv_regiones);
+        tvEmptyRegion = (TextView) v.findViewById(R.id.tv_empty_regiones);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        rvConvocatoria.setLayoutManager(llm);
+        rvRegion.setLayoutManager(llm);
         updateList();
 
-        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, 0));
+        Call<Response<ArrayList<Region>>> call = regionAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_REGIONES, 0));
 
-        //Llamada a servidor caso de acertar o fallar
-        call.enqueue(new Callback<Response<ArrayList<Convocatoria>>>() {
+        call.enqueue(new Callback<Response<ArrayList<Region>>>() {
             @Override
-            public void onResponse(Call<Response<ArrayList<Convocatoria>>> call, retrofit2.Response<Response<ArrayList<Convocatoria>>> response) {
-                if(response.body().success) {
-
-                    List<Convocatoria> conv = response.body().data;
-
-                    //Transacción de realm, se itera sobre las convocatorias obtenidas desde el servidor.
+            public void onResponse(Call<Response<ArrayList<Region>>> call, retrofit2.Response<Response<ArrayList<Region>>> response) {
+                if (response.body().success) {
+                    List<Region> reg = response.body().data;
                     realm.beginTransaction();
-                    for(Convocatoria c : conv) {
-                        if(c.getDeletedAt() != null) {
-                            c.deleteFromRealm();
-                        }
-                        else {
-                            realm.copyToRealmOrUpdate(c);
+                    for (Region r : reg) {
+                        if (r.getDeletedAt() != null) {
+                            r.deleteFromRealm();
+                        } else {
+                            realm.copyToRealmOrUpdate(r);
                         }
                     }
                     realm.commitTransaction();
 
-                    //La lista se actualiza cuando se carga al menos un registro desde el servidor.
-                    if(conv.size() > 0) {
+                    if (reg.size() > 0) {
                         updateList();
                     }
-
-                    //Actualizando el timestamp para no descargar el contenido ya existente.
                     long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                    prefs.edit().putLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, timestamp).apply();
-                    //que perron...
+                    prefs.edit().putLong(MyApplication.LAST_UPDATE_REGIONES, timestamp).apply();
                 }
             }
 
             @Override
-            public void onFailure(Call<Response<ArrayList<Convocatoria>>> call, Throwable t) {
-
+            public void onFailure(Call<Response<ArrayList<Region>>> call, Throwable t) {
+                Log.d("Error", "Error al cargar los datos");
             }
         });
 
-        return v;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 
     public void updateList() {
-        RealmResults<Convocatoria> result = realm.where(Convocatoria.class).findAll();
-        convocatorias = realm.copyFromRealm(result);
-        adapter = new RVConvocatoriaAdapter(getActivity(), convocatorias);
-        rvConvocatoria.setAdapter(adapter);
+        RealmResults<Region> result = realm.where(Region.class).findAll();
+        regiones = realm.copyFromRealm(result);
+        adapter = new RVRegionAdapter(getActivity(), regiones);
+        rvRegion.setAdapter(adapter);
     }
+
 
     @Override
     public void onStop() {

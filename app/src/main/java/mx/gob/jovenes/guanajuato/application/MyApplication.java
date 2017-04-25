@@ -29,6 +29,7 @@ public class MyApplication extends MultiDexApplication {
     private Retrofit retrofit;
     private static Realm realm;
     public static String LAST_UPDATE_CONVOCATORIAS = "last_update_convocatorias";
+    public static String LAST_UPDATE_REGIONES = "last_update_regiones";
 
     //dirección publica
     //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";

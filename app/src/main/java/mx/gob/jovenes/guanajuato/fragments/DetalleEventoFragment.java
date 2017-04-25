@@ -42,7 +42,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         direccionTV = (TextView) v.findViewById(R.id.tv_direccion);
         telefonoTV = (TextView) v.findViewById(R.id.tv_telefono);
         emailTV = (TextView) v.findViewById(R.id.tv_email);
-        adminTV = (TextView) v.findViewById(R.id.tv_admin);
+        //adminTV = (TextView) v.findViewById(R.id.tv_admin);
 
         return v;
     }

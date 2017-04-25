@@ -29,9 +29,6 @@ public class CustomFragment extends Fragment {
         if(((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(string_title);
         }
-
-
-
     }
 
 

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.adapters.RVLugaresAdapter;
+//import mx.gob.jovenes.guanajuato.adapters.RVLugaresAdapter;
 import mx.gob.jovenes.guanajuato.model.Lugar;
 import mx.gob.jovenes.guanajuato.persistencia.LugarDBHelper;
 
@@ -29,7 +29,7 @@ import mx.gob.jovenes.guanajuato.persistencia.LugarDBHelper;
 public class DirectorioFragment extends CustomFragment implements SearchView.OnQueryTextListener{
     private ArrayList<Lugar> lugares;
     private RecyclerView rv;
-    private RVLugaresAdapter adapter;
+    //private RVLugaresAdapter adapter;
     private SearchView searchView;
     private LugarDBHelper dbHelper;
     private TextView emptyView;
@@ -43,10 +43,10 @@ public class DirectorioFragment extends CustomFragment implements SearchView.OnQ
 
         setDatos();
 
-        adapter = new RVLugaresAdapter(lugares);
+  //      adapter = new RVLugaresAdapter(lugares);
 
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setAdapter(adapter);
+    //    rv.setAdapter(adapter);
 
         setHasOptionsMenu(true);
         return v;
@@ -85,9 +85,9 @@ public class DirectorioFragment extends CustomFragment implements SearchView.OnQ
     @Override
     public boolean onQueryTextChange(String query) {
         final List<Lugar> filteredList = filter(lugares, query);
-        adapter.setFilter(filteredList);
+      //  adapter.setFilter(filteredList);
         rv.scrollToPosition(0);
-        adapter.notifyDataSetChanged();
+        //adapter.notifyDataSetChanged();
 
         if(filteredList.isEmpty()){
             rv.setVisibility(View.GONE);

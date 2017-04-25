@@ -1,13 +1,5 @@
 package mx.gob.jovenes.guanajuato.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -70,32 +62,8 @@ public class Convocatoria extends RealmObject{
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio) {
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat fmt2 = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            Date date = fmt.parse(fechaInicio);
-            this.fechaInicio = fmt2.format(date);
-        }
-        catch(ParseException pe) {
-            this.fechaInicio = "Error";
-        }
-    }
-
     public String getFechaCierre() {
         return fechaCierre;
-    }
-
-    public void setFechaCierre(String fechaCierre) {
-        SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
-        SimpleDateFormat fmt2 = new SimpleDateFormat("dd-MM-yyyy");
-        try {
-            Date date = fmt.parse(fechaCierre);
-            this.fechaCierre = fmt2.format(date);
-        }
-        catch(ParseException pe) {
-            this.fechaCierre = "Error";
-        }
     }
 
     public int getEstatus() {
