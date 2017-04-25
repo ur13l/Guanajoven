@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.support.multidex.MultiDexApplication;
 
 import com.facebook.FacebookSdk;
+import com.google.android.gms.cast.framework.Session;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -13,15 +14,20 @@ import java.io.File;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * Created by code on 6/03/17.
+ * Created by Uriel on 6/03/17.
  */
 
+/**
+ * Clase de la aplicación que se ejecutará en el dispositivo (punto de partida).
+ */
 public class MyApplication extends MultiDexApplication {
-    Retrofit retrofit;
+    private Retrofit retrofit;
+    private static Realm realm;
     public static String LAST_UPDATE_CONVOCATORIAS = "last_update_convocatorias";
 
     //dirección publica
@@ -36,26 +42,40 @@ public class MyApplication extends MultiDexApplication {
     //dirección local
     //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
+    /**
+     * Punto de partida que ejecuta la app al iniciar.
+     */
     @Override
     public void onCreate() {
         super.onCreate();
 
+        //Método para iniciar la instancia de la sesión.
+        Sesion.sessionStart(this);
+
+        //Instancia de gson utilizada por Retrofit para usarse en otra sección de la app.
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .setDateFormat("d/M/yyyy")
                 .create();
+
+        //Instancia de retrofit, utilizada en la app.
          retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-        Realm.init(this);
-        RealmConfiguration realmConfig = new RealmConfiguration.Builder().name("guanajoven").directory(new File(rootPath + "/realm/")).build();
-        Realm.setDefaultConfiguration(realmConfig);
+        //Instancia por defecto de Realm.
+        //TODO: Revisar si se puede hacer la configuración específica.
 
+        //String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath();
+        Realm.init(this);
+        //RealmConfiguration realmConfig = new RealmConfiguration.Builder().name("guanajoven").directory(new File(rootPath + "/realm/")).build();
+        //Realm.setDefaultConfiguration(realmConfig);
+        realm = Realm.getDefaultInstance();
 
     }
+
+    public static Realm getRealmInstance() { return realm; }
 
     public Retrofit getRetrofitInstance(){
         return retrofit;

@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
 import mx.gob.jovenes.guanajuato.adapters.RVDocumentoAdapter;
@@ -39,6 +40,7 @@ import retrofit2.Retrofit;
  */
 
 public class DetalleConvocatoriaFragment extends Fragment {
+    private static String ID_CONVOCATORIA = "id_convocatoria";
     private Convocatoria convocatoria;
     private ImageView imgConvocatoria;
     private TextView tvDescripcionConvocatoria;
@@ -51,23 +53,14 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private SimpleDateFormat sdf;
     private String fecha1;
     private String fecha2;
+    private Realm realm;
 
-    public static DetalleConvocatoriaFragment newInstance(Convocatoria convocatoria) {
+    public static DetalleConvocatoriaFragment newInstance(int idConvocatoria) {
         DetalleConvocatoriaFragment detalleConvocatoriaFragment = new DetalleConvocatoriaFragment();
 
         //Guarda todos los datos del fragment anterior en una variable Bundle
         Bundle args = new Bundle();
-        args.putParcelable("convocatoria", convocatoria);
-        /*
-        args.putInt("idConvocatoria", convocatoria.getIdConvocatoria());
-        args.putString("titulo", convocatoria.getTitulo());
-        args.putString("descripcion", convocatoria.getDescripcion());
-        args.putString("rutaImagen", convocatoria.getRutaImagen());
-        args.putString("fechaInicio", convocatoria.getFechaInicio());
-        args.putString("fechaCierre", convocatoria.getFechaCierre());
-        args.putInt("estatus", convocatoria.getEstatus());
-        args.putParcelableArrayList("documentos", convocatoria.getDocumentos());
-        */
+        args.putInt(ID_CONVOCATORIA, idConvocatoria);
         detalleConvocatoriaFragment.setArguments(args);
 
         return detalleConvocatoriaFragment;
@@ -77,13 +70,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
-        /*sdf = new SimpleDateFormat("DD-MM-YYYY");
-        try {
-            fecha1 = sdf.parse(convocatoria.getFechaInicio()).toString();
-            fecha2 = sdf.parse(convocatoria.getFechaCierre()).toString();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }*/
+        realm = MyApplication.getRealmInstance();
     }
 
 
@@ -92,7 +79,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_detalle_convocatoria, container, false);
         Bundle args = getArguments();
-        convocatoria = args.getParcelable("convocatoria");
+       //convocatoria = args.getParcelable("convocatoria");
 
         imgConvocatoria = (ImageView) v.findViewById(R.id.img_convocatoria);
         tvDescripcionConvocatoria = (TextView) v.findViewById(R.id.tv_descripcion_convocatoria);
@@ -104,7 +91,12 @@ public class DetalleConvocatoriaFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(context);
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
 
+
         rvDocumentosConvocatoria.setLayoutManager(llm);
+
+        convocatoria = realm.where(Convocatoria.class)
+                .equalTo("idConvocatoria", getArguments().getInt(ID_CONVOCATORIA))
+                .findFirst();
 
         Picasso.with(context)
                 .load(convocatoria.getRutaImagen())

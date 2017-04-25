@@ -3,35 +3,24 @@ package mx.gob.jovenes.guanajuato.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by esva on 19/04/17.
  */
 
-public class Documento implements Parcelable{
-    int idDocumento;
-    String titulo;
-    String rutaDocumento;
-    Formato formato;
+public class Documento extends RealmObject{
+    @PrimaryKey
+    private int idDocumento;
+    private String titulo;
+    private String rutaDocumento;
+    private Formato formato;
+    private String createdAt;
+    private String updatedAt;
+    private String deletedAt;
 
-
-    protected Documento(Parcel in) {
-        idDocumento = in.readInt();
-        titulo = in.readString();
-        rutaDocumento = in.readString();
-        formato = in.readParcelable(Formato.class.getClassLoader());
-    }
-
-    public static final Creator<Documento> CREATOR = new Creator<Documento>() {
-        @Override
-        public Documento createFromParcel(Parcel in) {
-            return new Documento(in);
-        }
-
-        @Override
-        public Documento[] newArray(int size) {
-            return new Documento[size];
-        }
-    };
+    public Documento () {}
 
     public int getIdDocumento() {
         return idDocumento;
@@ -65,16 +54,27 @@ public class Documento implements Parcelable{
         this.formato = formato;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(idDocumento);
-        dest.writeString(titulo);
-        dest.writeString(rutaDocumento);
-        dest.writeParcelable(formato, flags);
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(String deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

@@ -19,10 +19,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import io.realm.Realm;
 import io.realm.RealmList;
+import io.realm.RealmResults;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
 import mx.gob.jovenes.guanajuato.api.ConvocatoriaAPI;
@@ -42,12 +44,13 @@ public class ConvocatoriaFragment extends CustomFragment{
     private TextView tvEmptyConvocatoria;
     private RVConvocatoriaAdapter adapter;
     private Retrofit retrofit;
-    private ArrayList<Convocatoria> convocatorias;
+    private Realm realm;
+    private List<Convocatoria> convocatorias;
     private SharedPreferences prefs;
 
-    AppCompatActivity activity;
-    Toolbar toolbar;
-    CollapsingToolbarLayout cToolbar;
+    private AppCompatActivity activity;
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout cToolbar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +59,7 @@ public class ConvocatoriaFragment extends CustomFragment{
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         convocatoriaAPI = retrofit.create(ConvocatoriaAPI.class);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplication());
+        realm = MyApplication.getRealmInstance();
 
         activity = ((AppCompatActivity) getActivity());
         toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
@@ -69,8 +73,8 @@ public class ConvocatoriaFragment extends CustomFragment{
         rvConvocatoria = (RecyclerView) v.findViewById(R.id.rv_convocatoria);
         tvEmptyConvocatoria = (TextView) v.findViewById(R.id.tv_empty_convocatoria);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-
         rvConvocatoria.setLayoutManager(llm);
+        updateList();
 
         Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, 0));
 
@@ -79,25 +83,48 @@ public class ConvocatoriaFragment extends CustomFragment{
             @Override
             public void onResponse(Call<Response<ArrayList<Convocatoria>>> call, retrofit2.Response<Response<ArrayList<Convocatoria>>> response) {
                 if(response.body().success) {
-                    //Realm realm = Realm.getDefaultInstance();
-                    convocatorias = response.body().data;
 
+                    List<Convocatoria> conv = response.body().data;
 
-                    adapter = new RVConvocatoriaAdapter(getActivity(), convocatorias);
-                    rvConvocatoria.setAdapter(adapter);
+                    //Transacción de realm, se itera sobre las convocatorias obtenidas desde el servidor.
+                    realm.beginTransaction();
+                    for(Convocatoria c : conv) {
+                        if(c.getDeletedAt() != null) {
+                            c.deleteFromRealm();
+                        }
+                        else {
+                            realm.copyToRealmOrUpdate(c);
+                        }
+                    }
+                    realm.commitTransaction();
 
+                    //La lista se actualiza cuando se carga al menos un registro desde el servidor.
+                    if(conv.size() > 0) {
+                        updateList();
+                    }
+
+                    //Actualizando el timestamp para no descargar el contenido ya existente.
                     long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
                     prefs.edit().putLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, timestamp).apply();
+
                 }
             }
 
             @Override
             public void onFailure(Call<Response<ArrayList<Convocatoria>>> call, Throwable t) {
-                Log.d("Titulo","...");
+
             }
         });
 
         return v;
+    }
+
+
+    public void updateList() {
+        RealmResults<Convocatoria> result = realm.where(Convocatoria.class).findAll();
+        convocatorias = realm.copyFromRealm(result);
+        adapter = new RVConvocatoriaAdapter(getActivity(), convocatorias);
+        rvConvocatoria.setAdapter(adapter);
     }
 
     @Override
