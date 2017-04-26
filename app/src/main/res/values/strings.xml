@@ -355,5 +355,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="c_digo_postal">Código Postal</string>
     <string name="estado">Estado</string>
     <string name="btn_quiero_mas_informacion">Quiero mas información</string>
+    <string name="no_hay_convocatorias">No se encontraron documentos</string>
+    <string name="no_documentos">No se encontraron documentos</string>
 
 </resources>

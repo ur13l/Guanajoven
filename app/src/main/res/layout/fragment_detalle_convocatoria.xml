@@ -15,15 +15,11 @@
 
             <ImageView
                 android:id="@+id/img_convocatoria"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_gravity="center"
+                android:layout_margin="16dp"
                 android:src="@drawable/convocatoria_impulsojoven"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@color/background_gray"/>
 
             <TextView
                 android:id="@+id/tv_descripcion_convocatoria"
@@ -82,17 +78,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="20dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:id="@+id/tv_empty_documentos"
+                        android:visibility="gone"
+                        android:padding="30dp"
+                        android:text="@string/no_documentos"/>
                 </LinearLayout>
 
             </ScrollView>
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:text="@string/btn_quiero_mas_informacion"
-                android:textColor="@color/white"/>
+                <Button
+
+                    android:background="@drawable/bordered_button_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:text="@string/btn_quiero_mas_informacion"
+
+                    android:textColor="@color/white" />
 
            </LinearLayout>
 

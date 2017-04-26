@@ -61,6 +61,7 @@ import java.util.Random;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.Funcion;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
@@ -109,7 +110,7 @@ public class HomeFragment extends CustomFragment {
     //Instancias de API
     private Retrofit retrofit;
     private PublicidadAPI publicidadAPI;
-    private SlideHandler slideHandler;
+    private Realm realm;
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
@@ -126,29 +127,16 @@ public class HomeFragment extends CustomFragment {
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         publicidadAPI = retrofit.create(PublicidadAPI.class);
 
+        //Instancia de Realm
+        realm = MyApplication.getRealmInstance();
+
         //Asignando al usuario activo
         session = new Sesion(getActivity().getApplicationContext());
 
         //Declarando las preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
-        String fecha = prefs.getString(FECHA_ACTUALIZACION, DateUtilities.dateToString(DateUtilities.stringToDate("2002-02-02 00:00:00")));
-        //new NuevosEventosAsyncTask().execute(fecha); //TODO: Cambiar por nuevo servicio
 
-        //Se define la acción para cuando se descargan las imágenes publicitarias.
-        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get();
-        call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
-            @Override
-            public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
-//                ImageHandler.start(response.body().data, pnlPublicidad);
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<Response<ArrayList<Publicidad>>> call, Throwable t) {
-
-
-            }
-        });
     }
 
 
@@ -208,15 +196,40 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-
+        ImageHandler.start( pnlPublicidad, getActivity());
         //Se define la acción para cuando se descargan las imágenes publicitarias.
-        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get();
+        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get(prefs.getString(MyApplication.LAST_UPDATE_PUBLICIDAD, "0000-00-00 00:00:00"));
         call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
             @Override
             public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
                 if(response.body().success) {
-                    ImageHandler.start(response.body().data, pnlPublicidad, getActivity());
+                    //Se ejecuta el guardado de elementos en Realm a partir de lo obtenido en el servicio.
+
+                    List<Publicidad> publicidades = response.body().data;
+
+                    //Transacción de realm, se itera sobre las publicidades obtenidas desde el servidor.
+                    realm.beginTransaction();
+                    for(Publicidad p : publicidades) {
+                        if(p.getDeletedAt() != null) {
+                            Publicidad pr = realm.where(Publicidad.class)
+                                    .equalTo("idPublicidad", p.getIdPublicidad())
+                                    .findFirst();
+                            if(pr != null) {
+                                pr.deleteFromRealm();
+                            }
+                        }
+                        else {
+                            realm.copyToRealmOrUpdate(p);
+                        }
+                    }
+                    realm.commitTransaction();
+
+                    //Actualizando el timestamp para no descargar el contenido ya existente.
+                    String lastUpdate = DateUtilities.dateToString(new Date());
+                    prefs.edit().putString(MyApplication.LAST_UPDATE_PUBLICIDAD, lastUpdate).apply();
                 }
+
+
             }
 
             @Override

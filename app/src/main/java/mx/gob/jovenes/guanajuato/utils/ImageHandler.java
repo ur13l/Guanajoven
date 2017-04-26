@@ -14,10 +14,16 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
 
 
+import io.realm.Realm;
+import io.realm.RealmResults;
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Publicidad;
 import mx.gob.jovenes.guanajuato.model.models_tmp.Imagen;
 
@@ -27,10 +33,11 @@ import mx.gob.jovenes.guanajuato.model.models_tmp.Imagen;
 
 public class ImageHandler {
     private static int INTERVALO_PUBLICIDAD = 10000;
-    private static ArrayList<Publicidad> publicidad;
+    private static List<Publicidad> publicidad;
     private static ImageView ivContainer;
     private static Context context;
     private static Handler handlerPublicidad;
+    private static Realm realm;
 
     //Código que ejecuta el handler para cambiar la publicidad cada 10 segundos
     private static Runnable handlerPublicidadTask =  new Runnable(){
@@ -58,13 +65,6 @@ public class ImageHandler {
                         }
                     });
 
-                    if(randInt == 0) {
-                        Log.d("Wow", "Wow");
-
-                    }
-                    else {
-                        Log.d("Hide", "Hide");
-                    }
 
                 }
             }
@@ -92,8 +92,14 @@ public class ImageHandler {
     }
 
 
-    public static void start(ArrayList<Publicidad> lista, ViewGroup panel, Context ctx) {
-        publicidad = lista;
+    public static void start(ViewGroup panel, Context ctx) {
+        realm = MyApplication.getRealmInstance();
+        RealmResults<Publicidad> results = realm.where(Publicidad.class)
+                .findAll();
+        publicidad = realm.copyFromRealm(results);
+
+        publicidad.removeIf(p -> DateUtilities.stringToDate(p.getFechaFin()).before(new Date()));
+
         ivContainer = (ImageView) panel.findViewById(R.id.img_container);
         context = ctx;
 

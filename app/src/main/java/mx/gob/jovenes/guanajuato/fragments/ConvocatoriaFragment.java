@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ import mx.gob.jovenes.guanajuato.api.ConvocatoriaAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Convocatoria;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -76,7 +78,7 @@ public class ConvocatoriaFragment extends CustomFragment{
         rvConvocatoria.setLayoutManager(llm);
         updateList();
 
-        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, 0));
+        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getString(MyApplication.LAST_UPDATE_CONVOCATORIAS, "0000-00-00 00:00:00"));
 
         //Llamada a servidor caso de acertar o fallar
         call.enqueue(new Callback<Response<ArrayList<Convocatoria>>>() {
@@ -90,7 +92,12 @@ public class ConvocatoriaFragment extends CustomFragment{
                     realm.beginTransaction();
                     for(Convocatoria c : conv) {
                         if(c.getDeletedAt() != null) {
-                            c.deleteFromRealm();
+                            Convocatoria cr = realm.where(Convocatoria.class)
+                                    .equalTo("idConvocatoria", c.getIdConvocatoria())
+                                    .findFirst();
+                            if(cr != null) {
+                                cr.deleteFromRealm();
+                            }
                         }
                         else {
                             realm.copyToRealmOrUpdate(c);
@@ -104,9 +111,8 @@ public class ConvocatoriaFragment extends CustomFragment{
                     }
 
                     //Actualizando el timestamp para no descargar el contenido ya existente.
-                    long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                    prefs.edit().putLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, timestamp).apply();
-
+                    String lastUpdate = DateUtilities.dateToString(new Date());
+                    prefs.edit().putString(MyApplication.LAST_UPDATE_CONVOCATORIAS, lastUpdate).apply();
                 }
             }
 
@@ -119,7 +125,10 @@ public class ConvocatoriaFragment extends CustomFragment{
         return v;
     }
 
-
+    /**
+     * Método que permite la actualización de la lista de convocatorias a partir de los nuevos
+     * resultados arrojados por el servidor.
+     */
     public void updateList() {
         RealmResults<Convocatoria> result = realm.where(Convocatoria.class).findAll();
         convocatorias = realm.copyFromRealm(result);
@@ -135,6 +144,7 @@ public class ConvocatoriaFragment extends CustomFragment{
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppBarLayout)cToolbar.getParent()).setExpanded(true);
     }
 
     @Override
