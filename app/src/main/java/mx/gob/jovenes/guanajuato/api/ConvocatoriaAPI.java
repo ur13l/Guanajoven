@@ -15,6 +15,6 @@ public interface ConvocatoriaAPI {
 
     @GET("convocatorias")
     Call<Response<ArrayList<Convocatoria>>> get(
-        @Query("timestamp") long timestamp
+        @Query("timestamp") String timestamp
     );
 }

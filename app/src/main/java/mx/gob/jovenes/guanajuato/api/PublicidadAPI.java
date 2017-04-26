@@ -15,5 +15,7 @@ import retrofit2.http.Query;
 public interface PublicidadAPI {
 
     @GET("publicidad")
-    Call<Response<ArrayList<Publicidad>>> get();
+    Call<Response<ArrayList<Publicidad>>> get(
+            @Query("timestamp") String timestamp
+    );
 }

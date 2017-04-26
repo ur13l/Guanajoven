@@ -46,6 +46,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private TextView tvDescripcionConvocatoria;
     private TextView tvFechaInicioConvocatoria;
     private TextView tvFechaCierreConvocatoria;
+    private TextView tvEmptyDocumentos;
     private RecyclerView rvDocumentosConvocatoria;
     private ArrayList<Documento> documentos;
     private RVDocumentoAdapter adapter;
@@ -80,11 +81,15 @@ public class DetalleConvocatoriaFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detalle_convocatoria, container, false);
         Bundle args = getArguments();
        //convocatoria = args.getParcelable("convocatoria");
+        convocatoria = realm.where(Convocatoria.class)
+                .equalTo("idConvocatoria", getArguments().getInt(ID_CONVOCATORIA))
+                .findFirst();
 
         imgConvocatoria = (ImageView) v.findViewById(R.id.img_convocatoria);
         tvDescripcionConvocatoria = (TextView) v.findViewById(R.id.tv_descripcion_convocatoria);
         tvFechaInicioConvocatoria = (TextView) v.findViewById(R.id.tv_fecha_inicio_convocatoria);
         tvFechaCierreConvocatoria = (TextView) v.findViewById(R.id.tv_fecha_cierre_convocatoria);
+        tvEmptyDocumentos = (TextView) v.findViewById(R.id.tv_empty_documentos);
         rvDocumentosConvocatoria = (RecyclerView) v.findViewById(R.id.rv_documentos_convocatoria);
         adapter = new RVDocumentoAdapter(getActivity(), convocatoria.getDocumentos());
 
@@ -94,9 +99,6 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         rvDocumentosConvocatoria.setLayoutManager(llm);
 
-        convocatoria = realm.where(Convocatoria.class)
-                .equalTo("idConvocatoria", getArguments().getInt(ID_CONVOCATORIA))
-                .findFirst();
 
         Picasso.with(context)
                 .load(convocatoria.getRutaImagen())
@@ -109,8 +111,12 @@ public class DetalleConvocatoriaFragment extends Fragment {
         tvFechaCierreConvocatoria.setText("Fecha cierre: " + getFechaCast(convocatoria.getFechaCierre()));
         rvDocumentosConvocatoria.setAdapter(adapter);
 
+        if( convocatoria.getDocumentos().size() == 0) {
+            rvDocumentosConvocatoria.setVisibility(View.GONE);
+            tvEmptyDocumentos.setVisibility(View.VISIBLE);
+        }
 
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(convocatoria.getTitulo());
+
         return v;
     }
 
@@ -128,8 +134,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Convocatoria");
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(convocatoria.getTitulo());
     }
 }
