@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
 
             <ImageView
@@ -45,17 +45,17 @@
                 android:padding="10dp"
                 android:text="Fecha inicio"/>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/background_gray"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/background_gray"/>
 
-                <TextView
-                    android:id="@+id/tv_fecha_cierre_convocatoria"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Fecha cierre"/>
+            <TextView
+                android:id="@+id/tv_fecha_cierre_convocatoria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="Fecha cierre"/>
 
             <View
                 android:layout_width="match_parent"
@@ -94,6 +94,6 @@
                 android:text="@string/btn_quiero_mas_informacion"
                 android:textColor="@color/white"/>
 
-           </LinearLayout>
 
+        </LinearLayout>
 </LinearLayout>

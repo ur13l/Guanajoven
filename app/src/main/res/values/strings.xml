@@ -356,5 +356,6 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="estado">Estado</string>
     <string name="btn_quiero_mas_informacion">Quiero mas información</string>
     <string name="empty_regiones">No hay regiones registradas</string>
+    <string name="titulo_regiones">Regiones</string>
 
 </resources>
