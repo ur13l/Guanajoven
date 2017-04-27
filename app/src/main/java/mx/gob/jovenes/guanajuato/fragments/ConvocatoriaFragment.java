@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -108,14 +109,12 @@ public class ConvocatoriaFragment extends CustomFragment{
                     }
 
                     //Actualizando el timestamp para no descargar el contenido ya existente.
-<<<<<<< HEAD
                     long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
                     prefs.edit().putLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, timestamp).apply();
-                    //que perron...
-=======
+
                     String lastUpdate = DateUtilities.dateToString(new Date());
                     prefs.edit().putString(MyApplication.LAST_UPDATE_CONVOCATORIAS, lastUpdate).apply();
->>>>>>> 9561355a00c0413f5e6f0d0861484c1ff424d610
+
                 }
             }
 

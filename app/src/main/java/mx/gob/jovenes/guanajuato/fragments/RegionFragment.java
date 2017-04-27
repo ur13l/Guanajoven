@@ -73,7 +73,7 @@ public class RegionFragment extends CustomFragment {
         rvRegion.setLayoutManager(llm);
         updateList();
 
-        Call<Response<ArrayList<Region>>> call = regionAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_REGIONES, 0));
+        Call<Response<ArrayList<Region>>> call = regionAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, 0));
 
         call.enqueue(new Callback<Response<ArrayList<Region>>>() {
             @Override

@@ -70,7 +70,7 @@
     <item android:title="@string/general">
         <menu>
             <group android:checkableBehavior="single">
-                <item android:id="@+id/nav_directorio"
+                <item android:id="@+id/nav_regiones"
                     android:icon="@drawable/ic_directorio"
                     android:title="@string/regiones"/>
                 <item

@@ -333,7 +333,6 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="checkin_texto">Check-in</string>
     <string name="social">Redes sociales</string>
     <string name="notificaciones">Notificaciones</string>
-    <string name="regiones">Regiones</string>
     <string name="necesitamos">Por favor, introduce tu correo para enviarte un email con las instrucciones para restaurar tu contraseña.</string>
     <string name="datos_comp">Dinos algo sobre ti</string>
     <string name="ocupacion">Ocupación</string>
@@ -355,12 +354,9 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="c_digo_postal">Código Postal</string>
     <string name="estado">Estado</string>
     <string name="btn_quiero_mas_informacion">Quiero mas información</string>
-<<<<<<< HEAD
     <string name="empty_regiones">No hay regiones registradas</string>
-    <string name="titulo_regiones">Regiones</string>
-=======
+    <string name="regiones">Regiones</string>
     <string name="no_hay_convocatorias">No se encontraron documentos</string>
     <string name="no_documentos">No se encontraron documentos</string>
->>>>>>> 9561355a00c0413f5e6f0d0861484c1ff424d610
 
 </resources>

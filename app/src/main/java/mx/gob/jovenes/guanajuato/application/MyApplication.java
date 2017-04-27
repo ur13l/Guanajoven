@@ -29,11 +29,11 @@ public class MyApplication extends MultiDexApplication {
     private Retrofit retrofit;
     private static Realm realm;
     public static String LAST_UPDATE_CONVOCATORIAS = "last_update_convocatorias";
-<<<<<<< HEAD
+
     public static String LAST_UPDATE_REGIONES = "last_update_regiones";
-=======
+
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
->>>>>>> 9561355a00c0413f5e6f0d0861484c1ff424d610
+
 
     //dirección publica
     //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
@@ -42,10 +42,10 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
     //dirección uriel
-    public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.121/GuanajovenWeb/public/api/";
 
     //dirección local
-    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.

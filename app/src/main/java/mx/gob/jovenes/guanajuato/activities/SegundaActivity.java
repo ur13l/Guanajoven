@@ -96,8 +96,8 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = HistorialNotificacionesFragment.newInstance(R.id.nav_historial_notificaciones, R.string.historial_notificaciones, HistorialNotificacionesFragment.class);
                     break;
 
-                case R.id.nav_directorio:
-                    fragment = AlarmasActivacionFragment.newInstance(R.id.nav_directorio, R.string.directorio_code, DirectorioFragment.class);
+                case R.id.nav_regiones:
+                    fragment = AlarmasActivacionFragment.newInstance(R.id.nav_regiones, R.string.regiones, AlarmasActivacionFragment.class);
                     break;
                 case R.id.nav_chat_ayuda:
                     fragment = ChatFragment.newInstance(R.id.nav_chat_ayuda, R.string.chat, ChatFragment.class);

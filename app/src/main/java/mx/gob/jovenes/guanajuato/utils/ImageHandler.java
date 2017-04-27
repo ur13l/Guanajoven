@@ -98,7 +98,7 @@ public class ImageHandler {
                 .findAll();
         publicidad = realm.copyFromRealm(results);
 
-        publicidad.removeIf(p -> DateUtilities.stringToDate(p.getFechaFin()).before(new Date()));
+        //publicidad.removeIf(p -> DateUtilities.stringToDate(p.getFechaFin()).before(new Date()));
 
         ivContainer = (ImageView) panel.findViewById(R.id.img_container);
         context = ctx;
