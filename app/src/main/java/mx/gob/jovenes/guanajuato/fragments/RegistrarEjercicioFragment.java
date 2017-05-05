@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +29,8 @@ import mx.gob.jovenes.guanajuato.persistencia.BitacoraDBHelper;
 import mx.gob.jovenes.guanajuato.persistencia.EjercicioDBHelper;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.MathFormat;
+
+import static android.os.Looper.getMainLooper;
 
 /**
  * Created by Uriel on 01/02/2016.
@@ -72,6 +75,7 @@ public class RegistrarEjercicioFragment extends CustomFragment {
             Log.e("DB", e.getMessage());
         }
         ejercicioPb = (ProgressBar) v.findViewById(R.id.progress_bar_ejercicio);
+
         registrarBtn = (Button) v.findViewById(R.id.button_registrar_agua);
         ejercicioIndicator = (TextView) v.findViewById(R.id.ejercicio_indicator);
         ejercicios = dbHelper.getEjerciciosActivos();
@@ -85,6 +89,8 @@ public class RegistrarEjercicioFragment extends CustomFragment {
             nombreEjercicioTv.setText(ejercicio.getNombre());
             tiempoEjercicioTv.setText(MathFormat.removeDots(ejercicio.getTiempo()) + " mins.");
             caloriasEjercicioTv.setText(MathFormat.removeDots(ejercicio.getCalorías()) + " kcal.");
+
+
             ejercicioChk.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

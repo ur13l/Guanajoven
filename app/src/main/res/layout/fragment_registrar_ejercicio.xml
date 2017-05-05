@@ -105,7 +105,8 @@
                     android:indeterminate="false"
                     android:progressDrawable="@drawable/custom_progress_bar"
                     android:max="30"
-                    android:progress="0" />
+                    android:progress="10"
+                    android:visibility="visible"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

@@ -108,12 +108,6 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = CodigoGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, CodigoGuanajovenFragment.class);
                     //fragment.getView().setBackgroundColor(R.color.colorPrimary);
                     break;
-                case R.id.nav_registro_agua:
-                    fragment = RegistrarAguaFragment.newInstance(R.id.nav_registro_agua, R.string.registro_agua, RegistrarAguaFragment.class);
-                    break;
-                case R.id.nav_registro_ejercicio:
-                    fragment = RegistrarEjercicioFragment.newInstance(R.id.nav_registro_ejercicio, R.string.registro_ejercicio, RegistrarEjercicioFragment.class);
-                    break;
 
             }
         } catch (IllegalAccessException e) {
