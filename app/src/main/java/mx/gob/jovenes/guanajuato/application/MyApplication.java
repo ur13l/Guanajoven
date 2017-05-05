@@ -14,6 +14,7 @@ import java.io.File;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import io.realm.RealmMigration;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

@@ -11,7 +11,7 @@ import io.realm.annotations.PrimaryKey;
 
 public class Region extends RealmObject{
     @PrimaryKey
-    private int id;
+    private int idRegion;
     private String nombre;
     private String direccion;
     private String responsable;
@@ -22,12 +22,12 @@ public class Region extends RealmObject{
     private String updatedAt;
     private String deletedAt;
 
-    public int getId() {
-        return id;
+    public int getIdRegion() {
+        return idRegion;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setIdRegion(int idRegion) {
+        this.idRegion = idRegion;
     }
 
     public String getNombre() {

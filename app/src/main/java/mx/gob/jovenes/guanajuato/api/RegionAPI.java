@@ -16,6 +16,6 @@ public interface RegionAPI {
     @GET("regiones")
 
     Call<Response<ArrayList<Region>>> get(
-            @Query("timestamp") long timestamp
+            @Query("timestamp") String timestamp
     );
 }

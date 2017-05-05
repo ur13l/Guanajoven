@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -29,6 +30,7 @@ import mx.gob.jovenes.guanajuato.api.RegionAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Region;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -73,18 +75,25 @@ public class RegionFragment extends CustomFragment {
         rvRegion.setLayoutManager(llm);
         updateList();
 
-        Call<Response<ArrayList<Region>>> call = regionAPI.get(prefs.getLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, 0));
+        Call<Response<ArrayList<Region>>> call = regionAPI.get(prefs.getString(MyApplication.LAST_UPDATE_REGIONES, "0000-00-00 00:00:00"));
 
         call.enqueue(new Callback<Response<ArrayList<Region>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<Region>>> call, retrofit2.Response<Response<ArrayList<Region>>> response) {
                 if (response.body().success) {
                     List<Region> reg = response.body().data;
+
                     realm.beginTransaction();
                     for (Region r : reg) {
-                        if (r.getDeletedAt() != null) {
-                            r.deleteFromRealm();
-                        } else {
+                        if(r.getDeletedAt() != null) {
+                            Region re = realm.where(Region.class)
+                                    .equalTo("idRegion", r.getIdRegion())
+                                    .findFirst();
+                            if(re != null) {
+                                re.deleteFromRealm();
+                            }
+                        }
+                        else {
                             realm.copyToRealmOrUpdate(r);
                         }
                     }
@@ -93,8 +102,13 @@ public class RegionFragment extends CustomFragment {
                     if (reg.size() > 0) {
                         updateList();
                     }
+
                     long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
                     prefs.edit().putLong(MyApplication.LAST_UPDATE_REGIONES, timestamp).apply();
+
+                    String lastUpdate = DateUtilities.dateToString(new Date());
+                    prefs.edit().putString(MyApplication.LAST_UPDATE_REGIONES, lastUpdate).apply();
+
                 }
             }
 
@@ -136,9 +150,9 @@ public class RegionFragment extends CustomFragment {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle("Convocatorias");
-        cToolbar.setTitle("Convocatorias");
-        imagen.setImageResource(R.drawable.login_background);
+        activity.getSupportActionBar().setTitle("Regiones");
+        cToolbar.setTitle("Regiones");
+        imagen.setImageResource(R.drawable.background3);
 
     }
 }

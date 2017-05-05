@@ -26,7 +26,7 @@
             android:paddingRight="10dp"
             android:gravity="right"
             android:layout_gravity="bottom"
-            android:text="@string/registrar_ejercicio"
+            android:text="@string/registro_ejercicio_title"
             android:shadowColor="@color/black"
             android:shadowDx="7"
             android:shadowDy="7"
@@ -167,7 +167,7 @@
                     android:textColor="@color/white"
                     android:layout_height="wrap_content"
                     android:background="@drawable/blue_button"
-                    android:text="@string/registrar_ejercicio"/>
+                    android:text="@string/registro_ejercicio_title"/>
             </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

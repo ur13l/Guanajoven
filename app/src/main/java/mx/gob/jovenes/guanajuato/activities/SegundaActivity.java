@@ -22,6 +22,8 @@ import mx.gob.jovenes.guanajuato.fragments.HistorialNotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.MisEventosFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
+import mx.gob.jovenes.guanajuato.fragments.RegistrarAguaFragment;
+import mx.gob.jovenes.guanajuato.fragments.RegistrarEjercicioFragment;
 
 
 /**
@@ -97,7 +99,7 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_regiones:
-                    fragment = AlarmasActivacionFragment.newInstance(R.id.nav_regiones, R.string.regiones, AlarmasActivacionFragment.class);
+                    fragment = RegionFragment.newInstance(R.id.nav_regiones, R.string.regiones, RegionFragment.class);
                     break;
                 case R.id.nav_chat_ayuda:
                     fragment = ChatFragment.newInstance(R.id.nav_chat_ayuda, R.string.chat, ChatFragment.class);
@@ -105,6 +107,12 @@ public class SegundaActivity extends AppCompatActivity {
                 case R.id.nav_codigo_guanajoven:
                     fragment = CodigoGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, CodigoGuanajovenFragment.class);
                     //fragment.getView().setBackgroundColor(R.color.colorPrimary);
+                    break;
+                case R.id.nav_registro_agua:
+                    fragment = RegistrarAguaFragment.newInstance(R.id.nav_registro_agua, R.string.registro_agua, RegistrarAguaFragment.class);
+                    break;
+                case R.id.nav_registro_ejercicio:
+                    fragment = RegistrarEjercicioFragment.newInstance(R.id.nav_registro_ejercicio, R.string.registro_ejercicio, RegistrarEjercicioFragment.class);
                     break;
 
             }
