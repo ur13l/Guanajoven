@@ -108,10 +108,6 @@ public class ConvocatoriaFragment extends CustomFragment{
                         updateList();
                     }
 
-                    //Actualizando el timestamp para no descargar el contenido ya existente.
-                    long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                    prefs.edit().putLong(MyApplication.LAST_UPDATE_CONVOCATORIAS, timestamp).apply();
-
                     String lastUpdate = DateUtilities.dateToString(new Date());
                     prefs.edit().putString(MyApplication.LAST_UPDATE_CONVOCATORIAS, lastUpdate).apply();
 

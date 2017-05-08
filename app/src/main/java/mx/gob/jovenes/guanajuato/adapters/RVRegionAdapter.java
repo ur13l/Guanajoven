@@ -52,7 +52,7 @@ public class RVRegionAdapter extends RecyclerView.Adapter<RVRegionAdapter.Region
         TextView tvNombreRegion;
         TextView tvDireccionRegion;
 
-        public RegionViewHolder(View itemView) {
+        RegionViewHolder(View itemView) {
             super(itemView);
             tvNombreRegion = (TextView) itemView.findViewById(R.id.tv_nombre_region);
             tvDireccionRegion = (TextView) itemView.findViewById(R.id.tv_direccion_region);

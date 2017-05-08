@@ -16,7 +16,7 @@
 
             <TextView
                 android:id="@+id/tv_nombre_region"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Nombre de la región"
                 android:textSize="20dp"
@@ -24,7 +24,7 @@
 
             <TextView
                 android:id="@+id/tv_direccion_region"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Dirección de la región"/>
 

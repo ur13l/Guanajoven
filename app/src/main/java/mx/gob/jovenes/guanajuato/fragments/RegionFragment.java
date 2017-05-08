@@ -103,9 +103,6 @@ public class RegionFragment extends CustomFragment {
                         updateList();
                     }
 
-                    long timestamp = Calendar.getInstance(TimeZone.getTimeZone("UTC")).getTimeInMillis();
-                    prefs.edit().putLong(MyApplication.LAST_UPDATE_REGIONES, timestamp).apply();
-
                     String lastUpdate = DateUtilities.dateToString(new Date());
                     prefs.edit().putString(MyApplication.LAST_UPDATE_REGIONES, lastUpdate).apply();
 
@@ -118,7 +115,7 @@ public class RegionFragment extends CustomFragment {
             }
         });
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return v;
     }
 
 
