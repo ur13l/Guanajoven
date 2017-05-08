@@ -65,7 +65,7 @@ public class DetalleRegionFragment extends Fragment implements OnMapReadyCallbac
         tvNombreRegion.setText(region.getNombre());
         tvDireccionRegion.setText(region.getDireccion());
         tvResponsableRegion.setText(region.getResponsable());
-        tvDireccionRegion.setText(region.getDescripcion());
+        tvDescripcionRegion.setText(region.getDescripcion());
 
         return v;
     }
