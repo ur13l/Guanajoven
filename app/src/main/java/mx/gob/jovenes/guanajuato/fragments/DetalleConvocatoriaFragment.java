@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,23 +15,15 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.adapters.RVConvocatoriaAdapter;
 import mx.gob.jovenes.guanajuato.adapters.RVDocumentoAdapter;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Convocatoria;
 import mx.gob.jovenes.guanajuato.model.Documento;
-import retrofit2.Retrofit;
 
 /**
  * Created by esva on 19/04/17.
@@ -51,9 +41,6 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private ArrayList<Documento> documentos;
     private RVDocumentoAdapter adapter;
     private Context context;
-    private SimpleDateFormat sdf;
-    private String fecha1;
-    private String fecha2;
     private Realm realm;
 
     public static DetalleConvocatoriaFragment newInstance(int idConvocatoria) {

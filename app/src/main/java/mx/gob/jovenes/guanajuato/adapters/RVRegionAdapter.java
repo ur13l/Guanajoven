@@ -1,6 +1,9 @@
 package mx.gob.jovenes.guanajuato.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.fragments.DetalleRegionFragment;
 import mx.gob.jovenes.guanajuato.model.Region;
 
 /**
@@ -57,6 +61,15 @@ public class RVRegionAdapter extends RecyclerView.Adapter<RVRegionAdapter.Region
             tvNombreRegion = (TextView) itemView.findViewById(R.id.tv_nombre_region);
             tvDireccionRegion = (TextView) itemView.findViewById(R.id.tv_direccion_region);
 
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DetalleRegionFragment f = DetalleRegionFragment.newInstance(regiones.get(getAdapterPosition()).getIdRegion());
+                    FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
+                }
+            });
             //TODO implementar la accion de cada item al dar click
         }
     }
