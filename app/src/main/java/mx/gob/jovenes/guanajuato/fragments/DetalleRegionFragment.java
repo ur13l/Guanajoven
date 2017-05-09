@@ -37,7 +37,6 @@ public class DetalleRegionFragment extends Fragment implements OnMapReadyCallbac
     private TextView tvResponsableRegion;
     private TextView tvDescripcionRegion;
     private Realm realm;
-    private int pase = 0;
 
     public static DetalleRegionFragment newInstance(int idRegion) {
         DetalleRegionFragment detalleRegionFragment = new DetalleRegionFragment();
@@ -73,7 +72,6 @@ public class DetalleRegionFragment extends Fragment implements OnMapReadyCallbac
         tvResponsableRegion.setText(region.getResponsable());
         tvDescripcionRegion.setText(region.getDescripcion());
 
-        pase++;
         return v;
     }
 
