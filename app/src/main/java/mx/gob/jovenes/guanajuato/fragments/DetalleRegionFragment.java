@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -70,10 +71,12 @@ public class DetalleRegionFragment extends Fragment implements OnMapReadyCallbac
         return v;
     }
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LatLng coordenadas = new LatLng(region.getLatitud() , region.getLongitud());
-        googleMap.addMarker(new MarkerOptions().position(coordenadas).title(region.getNombre()));
+        float zoomLevel = (float) 16.0; //This goes up to 21
+        LatLng coordenadas = new LatLng(region.getLatitud() , region.getLongitud()); //coordenadas de la región
+        googleMap.addMarker(new MarkerOptions().position(coordenadas).title(region.getNombre())); //pone el puntero en las coordenadas
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel)); //hace el zoom en el mapa
     }
+
 }

@@ -35,7 +35,7 @@
         android:supportsRtl="true"
         android:authorities="mx.gob.jovenes.guanajuato"
         android:theme="@style/AppTheme">
-        <meta-dataSplashActivity
+        <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
         <meta-data

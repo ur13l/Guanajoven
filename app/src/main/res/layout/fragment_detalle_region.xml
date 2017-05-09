@@ -4,21 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <fragment
                 android:id="@+id/mapa_region"
                 android:name="com.google.android.gms.maps.MapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.57" />
+                android:layout_weight="1.40" />
 
 
             <LinearLayout
@@ -37,12 +29,6 @@
                     android:textColor="@color/colorMagenta"
                     android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/mdtp_light_gray" />
 
                 <TextView
                     android:id="@+id/tv_direccion_region"
@@ -51,26 +37,12 @@
                     android:padding="5dp"
                     android:text="Dirección de la región" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/mdtp_light_gray" />
-
                 <TextView
                     android:id="@+id/tv_responsable_region"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Responsable de la región" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/mdtp_light_gray" />
 
                 <TextView
                     android:id="@+id/tv_descripcion_region"
@@ -79,17 +51,7 @@
                     android:padding="5dp"
                     android:text="Descripción de la región" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:background="@color/mdtp_light_gray" />
-
             </LinearLayout>
 
-        </LinearLayout>
-
-    </ScrollView>
 
 </LinearLayout>

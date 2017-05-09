@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "686001899882-10pfdsujud8nusfkgd06m9dpiind9r9s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "mx.gob.jovenes.guanajuato",
+            "certificate_hash": "3411feacb9989160fb5f1b76e0e8570a15c1d524"
+          }
+        },
+        {
           "client_id": "686001899882-ogecms8l25kjvbaosslnko17ob68strs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
