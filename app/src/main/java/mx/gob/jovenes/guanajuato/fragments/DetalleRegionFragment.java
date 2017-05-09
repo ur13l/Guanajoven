@@ -3,6 +3,9 @@ package mx.gob.jovenes.guanajuato.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -33,6 +37,7 @@ public class DetalleRegionFragment extends Fragment implements OnMapReadyCallbac
     private TextView tvResponsableRegion;
     private TextView tvDescripcionRegion;
     private Realm realm;
+    private int pase = 0;
 
     public static DetalleRegionFragment newInstance(int idRegion) {
         DetalleRegionFragment detalleRegionFragment = new DetalleRegionFragment();
@@ -68,15 +73,24 @@ public class DetalleRegionFragment extends Fragment implements OnMapReadyCallbac
         tvResponsableRegion.setText(region.getResponsable());
         tvDescripcionRegion.setText(region.getDescripcion());
 
+        pase++;
         return v;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         float zoomLevel = (float) 16.0; //This goes up to 21
-        LatLng coordenadas = new LatLng(region.getLatitud() , region.getLongitud()); //coordenadas de la región
+        LatLng coordenadas = new LatLng(region.getLatitud(), region.getLongitud()); //coordenadas de la región
         googleMap.addMarker(new MarkerOptions().position(coordenadas).title(region.getNombre())); //pone el puntero en las coordenadas
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel)); //hace el zoom en el mapa
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mapaRegion = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapa_region);
+        if (mapaRegion != null)
+            getActivity().getFragmentManager().beginTransaction().remove(mapaRegion).commit();
     }
 
 }
