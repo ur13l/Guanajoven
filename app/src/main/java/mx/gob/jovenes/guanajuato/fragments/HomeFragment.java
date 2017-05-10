@@ -2,92 +2,49 @@ package mx.gob.jovenes.guanajuato.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.telecom.Call;
-import android.text.format.Time;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.zzb;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
-import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
-import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
-import com.squareup.picasso.Picasso;
-import com.tyczj.extendedcalendarview.CalendarProvider;
-import com.tyczj.extendedcalendarview.Day;
-import com.tyczj.extendedcalendarview.Event;
-import com.tyczj.extendedcalendarview.ExtendedCalendarView;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Random;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.Funcion;
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.activities.HomeActivity;
-import mx.gob.jovenes.guanajuato.activities.SegundaActivity;
+import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
 import mx.gob.jovenes.guanajuato.api.PublicidadAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
-import mx.gob.jovenes.guanajuato.model.Bitacora;
 import mx.gob.jovenes.guanajuato.model.Evento;
 import mx.gob.jovenes.guanajuato.model.Publicidad;
-import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.model.PerfilPOJO;
 import mx.gob.jovenes.guanajuato.model.models_tmp.Imagen;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
-import mx.gob.jovenes.guanajuato.persistencia.AlarmasDBHelper;
-import mx.gob.jovenes.guanajuato.persistencia.BitacoraDBHelper;
-import mx.gob.jovenes.guanajuato.receivers.AlarmaBootReceiver;
-import mx.gob.jovenes.guanajuato.receivers.RetrieveVideosBroadcastReceiver;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import mx.gob.jovenes.guanajuato.utils.FileUtils;
 import mx.gob.jovenes.guanajuato.utils.ImageHandler;
-import mx.gob.jovenes.guanajuato.utils.PublicidadSingleton;
 import mx.gob.jovenes.guanajuato.utils.SlideHandler;
+import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
@@ -99,8 +56,6 @@ import retrofit2.Retrofit;
  */
 public class HomeFragment extends CustomFragment {
     public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
-    private Sesion session;
-
     //Elementos gráficos
     private ImageButton btnSlide;
     private ViewGroup pnlPublicidad;
@@ -111,6 +66,7 @@ public class HomeFragment extends CustomFragment {
     private Retrofit retrofit;
     private PublicidadAPI publicidadAPI;
     private Realm realm;
+    private NotificacionAPI notificacionAPI;
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
@@ -126,15 +82,17 @@ public class HomeFragment extends CustomFragment {
         //Instancias de la API
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         publicidadAPI = retrofit.create(PublicidadAPI.class);
+        notificacionAPI = retrofit.create(NotificacionAPI.class);
 
         //Instancia de Realm
         realm = MyApplication.getRealmInstance();
 
-        //Asignando al usuario activo
-        session = new Sesion(getActivity().getApplicationContext());
+        Sesion.sessionStart(getActivity().getApplication());
 
         //Declarando las preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+
+
 
 
     }
@@ -277,11 +235,31 @@ public class HomeFragment extends CustomFragment {
      * @throws ParseException
      */
     public void setValoresSesion() throws ParseException {
-
-        FirebaseMessaging.getInstance().subscribeToTopic("mx.gob.jovenes.guanajuato.CODEApp");
+        FirebaseMessaging.getInstance().subscribeToTopic("mx.gob.jovenes.guanajuato.Guanajoven");
         FirebaseInstanceId.getInstance().getToken();
-        //new EnviarTokenAsyncTask().execute(); //TODO: Servicio para el token
+        String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
+        int idUsuario = Sesion.getIdUsuario();
+        Call<Response<Boolean>> call =  notificacionAPI.enviarToken(
+                token,
+                idUsuario,
+                "android"
+        );
+        call.enqueue(new Callback<Response<Boolean>>() {
+            @Override
+            public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                Response<Boolean> body = response.body();
+                if(body.success) {
+                    if(body.data) {
+                        //Código cuando fue exitoso
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+
+            }
+        });
     }
 
 
@@ -368,23 +346,6 @@ public class HomeFragment extends CustomFragment {
     }
 
 
-    private class EnviarTokenAsyncTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... args) {
-
-            String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
-            ClienteHttp clienteHttp = new ClienteHttp();
-            HashMap<String, String> params = new HashMap<>();
-            params.put("Token", token);
-            params.put("id_login_app", session.getIdUsuario()+"");
-            params.put("os", "1"); //1 Representa Android
-            clienteHttp.hacerRequestHttp("http://" + ClienteHttp.SERVER_IP + "//app_php/notificaciones/registrar.php",
-                    params);
-
-            return null;
-        }
-
-    }
 
 
     private class RecibirImagenesAsyncTask extends AsyncTask<Void, Void, ArrayList<Imagen>> {
