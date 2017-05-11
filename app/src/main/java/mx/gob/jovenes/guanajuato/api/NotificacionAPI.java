@@ -19,13 +19,13 @@ public interface NotificacionAPI {
     Call<Response<Boolean>> enviarToken (
             @Query("device_token") String deviceToken,
             @Query("id_usuario") int idUsuario,
-            @Query("so") String so
+            @Query("os") String os
     );
 
     //método para cancelar el token y dejen de llegar notificaciones
-    @GET("notificaciones/cancelartoken")
+    @POST("notificaciones/cancelartoken")
     Call<Response<Boolean>> cancelarToken (
-            @Query("device_token") String deviceToken
+            @Query("id_usuario") int idUsuario
     );
 
 }

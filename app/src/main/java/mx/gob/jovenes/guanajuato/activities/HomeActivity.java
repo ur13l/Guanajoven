@@ -28,6 +28,9 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.HashMap;
 
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.model.Usuario;
@@ -35,6 +38,9 @@ import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
 import mx.gob.jovenes.guanajuato.receivers.AlarmasBroadcastReceiver;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 
 /**
@@ -55,6 +61,8 @@ public class HomeActivity extends AppCompatActivity
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
 
+    private Retrofit retrofit;
+    private NotificacionAPI notificacionAPI;
 
     private SharedPreferences prefs;
 
@@ -117,6 +125,10 @@ public class HomeActivity extends AppCompatActivity
             prefs.edit().putBoolean(INSTRUCCIONES_CHECK, true).commit();
         }
 
+        //Configuración de retrofit
+        retrofit = ((MyApplication) getApplication()).getRetrofitInstance();
+        notificacionAPI = retrofit.create(NotificacionAPI.class);
+
 
     }
 
@@ -162,9 +174,18 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 break;
             case R.id.nav_logout:
-                //TODO:Ejecución para cancelar el Token
-                new CancelarTokenAsyncTask().execute();
+                Call<Response<Boolean>> call = notificacionAPI.cancelarToken(Sesion.getIdUsuario());
+                call.enqueue(new Callback<Response<Boolean>>() {
+                    @Override
+                    public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                        Log.d("WOW", "WW");
+                    }
 
+                    @Override
+                    public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                        Log.d("STOPO", "we");
+                    }
+                });
                 //Verifica si la sesión de google existe
                 if(mGoogleApiClient.isConnected()){
                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
@@ -229,14 +250,4 @@ public class HomeActivity extends AppCompatActivity
         }
     }
 
-
-    private class CancelarTokenAsyncTask extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... args) {
-
-            return null;
-
-        }
-
-    }
 }
