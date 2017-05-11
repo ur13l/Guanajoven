@@ -70,7 +70,6 @@ public class RVRegionAdapter extends RecyclerView.Adapter<RVRegionAdapter.Region
                     fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
                 }
             });
-            //TODO implementar la accion de cada item al dar click
         }
     }
 }

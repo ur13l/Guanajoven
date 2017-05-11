@@ -1,9 +1,13 @@
 package mx.gob.jovenes.guanajuato.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by code on 12/05/16.
  */
-public class Evento {
+public class Evento extends RealmObject {
+    @PrimaryKey
     private int id_evento;
     private String titulo;
     private String descripcion;
