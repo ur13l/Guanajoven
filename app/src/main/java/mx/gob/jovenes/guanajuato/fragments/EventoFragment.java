@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.tyczj.extendedcalendarview.Event;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
@@ -30,6 +31,7 @@ import mx.gob.jovenes.guanajuato.api.EventoAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Evento;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -85,15 +87,28 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
                     realm.beginTransaction();
                     for(Evento e : evn) {
                         if(e.getFecha_fin() != null) {
-                            //TODO completar validacion
+                            Evento ev = realm.where(Evento.class).equalTo("idEvento", e.getId_evento()).findFirst();
+                            if(ev != null) {
+                                ev.deleteFromRealm();
+                            }
+                        } else {
+                            realm.copyToRealmOrUpdate(e);
                         }
                     }
+                    realm.commitTransaction();
+
+                    if(evn.size() > 0) {
+                        updateList();
+                    }
+
+                    String lastUpdate = DateUtilities.dateToString(new Date());
+                    prefs.edit().putString(MyApplication.LAST_UPDATE_EVENTOS, lastUpdate).apply();
                 }
             }
 
             @Override
             public void onFailure(Call<Response<ArrayList<Evento>>> call, Throwable t) {
-
+                //En caso de fallar
             }
         });
 

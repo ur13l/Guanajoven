@@ -46,6 +46,7 @@ public class CalendarioActividadesFragment extends CustomFragment{
     private FloatingActionButton fab;
     private RVEventosAdapter adapter;
     private Calendar fecha;
+    /*
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
@@ -221,5 +222,5 @@ public class CalendarioActividadesFragment extends CustomFragment{
         dialog.show();
 
         return false;
-    }
+    }*/
 }
