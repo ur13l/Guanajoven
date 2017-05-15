@@ -360,5 +360,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="no_documentos">No se encontraron documentos</string>
     <string name="registro_agua_title">Registro de Agua</string>
     <string name="registro_ejercicio_title">Registro de ejercicio</string>
+    <string name="estado_residencia">Estado de residencia</string>
+    <string name="email">Email</string>
 
 </resources>

@@ -26,7 +26,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +41,9 @@ import android.widget.ImageView;
 
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -47,6 +52,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -86,6 +92,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     private EditText etEmail;
     private EditText etPassword1;
     private EditText etPassword2;
+    private EditText etCurp;
     private EditText etNombre;
     private EditText etApPaterno;
     private EditText etApMaterno;
@@ -124,6 +131,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         etEmail = (EditText) v.findViewById(R.id.et_emailreg);
         etPassword1 = (EditText) v.findViewById(R.id.et_passreg);
         etPassword2 = (EditText) v.findViewById(R.id.et_confpass);
+        etCurp = (EditText) v.findViewById(R.id.et_curp);
         continuarBtn = (Button) v.findViewById(R.id.btn_continuar);
         etNombre = (EditText) v.findViewById(R.id.et_nombre);
         etApPaterno = (EditText) v.findViewById(R.id.et_ap_paterno);
@@ -155,6 +163,83 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         etPassword2.setInputType(InputType.TYPE_CLASS_TEXT |
                 InputType.TYPE_TEXT_VARIATION_PASSWORD);
         etPassword2.setTypeface(Typeface.DEFAULT);
+
+        etCurp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //Cuando se encuentra un curp válido
+                if(s.length() == 18) {
+                    Call<Response<JSONObject>> call = usuarioAPI.consultarCurp(s.toString());
+                    call.enqueue(new Callback<Response<JSONObject>>() {
+                        @Override
+                        public void onResponse(Call<Response<JSONObject>> call, retrofit2.Response<Response<JSONObject>> response) {
+                            if(response.body().success) {
+                                continuarBtn.setEnabled(true);
+                                JSONObject object = response.body().data;
+                                try {
+                                    if(object.getString("statusOpet").equals("EXITOSO")) {
+
+                                        etNombre.setText(object.getString("nombres"));
+                                        etApPaterno.setText(object.getString("PrimerApellido"));
+                                        etApMaterno.setText(object.getString("SegundoApellido"));
+                                        etFechaNacimiento.setText(object.getString("fechNac"));
+                                        spnEstado.setSelection(Arrays.asList(estadosValueArray).indexOf(object.getString("cveEntidadNac")));
+
+                                        if (object.getString("sexo").equals("H")) {
+                                            spnGenero.setSelection(1);
+                                        } else if (object.getString("sexo").equals("M")) {
+                                            spnGenero.setSelection(2);
+                                        } else {
+                                            spnGenero.setSelection(0);
+                                        }
+                                    }
+                                    else {
+                                        etNombre.setText("");
+                                        etApPaterno.setText("");
+                                        etApMaterno.setText("");
+                                        etFechaNacimiento.setText("");
+                                        spnGenero.setSelection(0);
+                                        spnEstado.setSelection(0);
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Response<JSONObject>> call, Throwable t) {
+                            etNombre.setText("");
+                            etApPaterno.setText("");
+                            etApMaterno.setText("");
+                            etFechaNacimiento.setText("");
+                            spnGenero.setSelection(0);
+                            spnEstado.setSelection(0);
+                        }
+                    });
+                }
+                //Se limpian los campos en caso de que el CURP no sea válido
+                else {
+                    continuarBtn.setEnabled(false);
+                    etNombre.setText("");
+                    etApPaterno.setText("");
+                    etApMaterno.setText("");
+                    etFechaNacimiento.setText("");
+                    spnGenero.setSelection(0);
+                    spnEstado.setSelection(0);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         etFechaNacimiento.setKeyListener(null);
         etFechaNacimiento.setOnFocusChangeListener(this);
@@ -211,7 +296,6 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
      * Ejecución de lo que se hará al presionar el botón de contninuar, se realizan las validaciones
      * para pasar a la interfaz de Datos complementarios.
      */
-    //TODO: Validación para código postal, curp y género.
     public void continuar(){
         //Verifica que los campos no estén vacíos
         boolean emailEmpty = EditTextValidations.esCampoVacio(etEmail);

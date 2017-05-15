@@ -92,6 +92,11 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     private String[] generos = {"Masculino", "Femenino"};
 
 
+    /**
+     * Método del ciclo de vida onCreate para ejecutar código al inicializar el fragment antes
+     * de cargar la vista.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -171,7 +176,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         if( usuario.getFechaNacimiento() != null) {
-            etFechaNacimiento.setText(df.format(usuario.getFechaNacimiento()));
+            etFechaNacimiento.setText(usuario.getFechaNacimiento());
         }
         spnGenero.setSelection(usuario.getIdGenero());
          Picasso.with(getActivity()).load(usuario.getRutaImagen()).into(imgPerfil);
@@ -235,8 +240,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     }
 
     /**
-     * Ejecución de lo que se hará al presionar el botón de contninuar, se realizan las validaciones
-     * para pasar a la interfaz de Datos complementarios.
+     * Ejecución de lo que se hará al presionar el botón de Registrar, se realizan las validaciones.
      */
     public void continuar(){
         //Verifica que los campos no estén vacíos
