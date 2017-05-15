@@ -10,20 +10,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.fragments.AlarmasActivacionFragment;
 import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
 import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriaFragment;
-import mx.gob.jovenes.guanajuato.fragments.DirectorioFragment;
 import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
 import mx.gob.jovenes.guanajuato.fragments.HistorialNotificacionesFragment;
-import mx.gob.jovenes.guanajuato.fragments.MisEventosFragment;
+import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
-import mx.gob.jovenes.guanajuato.fragments.RegistrarAguaFragment;
-import mx.gob.jovenes.guanajuato.fragments.RegistrarEjercicioFragment;
 
 
 /**
@@ -83,15 +79,15 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = ConvocatoriaFragment.newInstance(R.id.nav_convocatorias, R.string.convocatorias, ConvocatoriaFragment.class);
                     break;
                 case R.id.nav_mis_eventos:
-                    fragment = MisEventosFragment.newInstance(R.id.nav_mis_eventos, R.string.mis_eventos ,MisEventosFragment.class);
+                    fragment = EventoFragment.newInstance(R.id.nav_mis_eventos, R.string.mis_eventos ,EventoFragment.class);
                     break;
 
                 case R.id.nav_colaboradores:
                     fragment = ColaboradoresFragment.newInstance(R.id.nav_colaboradores, R.string.colaboradores, ColaboradoresFragment.class);
                     break;
 
-                case R.id.nav_calendario:
-                    fragment = CalendarioActividadesFragment.newInstance(R.id.nav_calendario, R.string.calendario, CalendarioActividadesFragment.class);
+                case R.id.nav_calendario_eventos:
+                    fragment = CalendarioActividadesFragment.newInstance(R.id.nav_calendario_eventos, R.string.calendario, CalendarioActividadesFragment.class);
                     break;
 
                 case R.id.nav_historial_notificaciones:

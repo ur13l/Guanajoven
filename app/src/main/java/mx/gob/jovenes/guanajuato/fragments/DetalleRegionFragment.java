@@ -77,7 +77,7 @@ public class DetalleRegionFragment extends Fragment implements OnMapReadyCallbac
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        float zoomLevel = (float) 16.0; //This goes up to 21
+        float zoomLevel = (float) 16.0;
         LatLng coordenadas = new LatLng(region.getLatitud(), region.getLongitud()); //coordenadas de la región
         googleMap.addMarker(new MarkerOptions().position(coordenadas).title(region.getNombre())); //pone el puntero en las coordenadas
         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel)); //hace el zoom en el mapa

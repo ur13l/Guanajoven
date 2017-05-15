@@ -35,6 +35,8 @@ public class MyApplication extends MultiDexApplication {
 
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
 
+    public static String LAST_UPDATE_EVENTOS = "last_update_eventos";
+
 
     //dirección publica
     //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
@@ -43,10 +45,10 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
     //dirección uriel
-    public static final String BASE_URL = "http://10.0.7.113/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.118/GuanajovenWeb/public/api/";
 
     //dirección local
-    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.

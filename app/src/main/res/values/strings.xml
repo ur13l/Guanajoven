@@ -362,5 +362,6 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="registro_ejercicio_title">Registro de ejercicio</string>
     <string name="estado_residencia">Estado de residencia</string>
     <string name="email">Email</string>
+    <string name="empty_eventos">No se encontraron eventos</string>
 
 </resources>

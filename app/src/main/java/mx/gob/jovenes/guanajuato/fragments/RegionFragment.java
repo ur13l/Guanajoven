@@ -83,6 +83,7 @@ public class RegionFragment extends CustomFragment {
                 if (response.body().success) {
                     List<Region> reg = response.body().data;
 
+
                     realm.beginTransaction();
                     for (Region r : reg) {
                         if(r.getDeletedAt() != null) {
