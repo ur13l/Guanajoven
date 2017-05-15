@@ -1,6 +1,7 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -17,90 +18,92 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.SimpleDateFormat;
+
+import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.model.Evento;
 import mx.gob.jovenes.guanajuato.model.Lugar;
+import mx.gob.jovenes.guanajuato.model.Region;
 
 /**
  * Created by uriel on 21/06/16.
  */
 public class DetalleEventoFragment extends Fragment implements OnMapReadyCallback{
-    private Lugar lugar;
-    private TextView nombreTV;
-    private TextView direccionTV;
-    private TextView telefonoTV;
-    private TextView emailTV;
-    private TextView adminTV;
+    private static String ID_EVENTO = "id_evento";
+    private Evento evento;
+    private MapFragment mapaEvento;
+    private TextView tvNombreEvento;
+    private TextView tvDireccionEvento;
+    private TextView tvDescripcionEvento;
+    private TextView tvFechaEvento;
+    private Realm realm;
+
+    public static DetalleEventoFragment newInstance(int idEvento) {
+        DetalleEventoFragment detalleEventoFragment = new DetalleEventoFragment();
+        Bundle args = new Bundle();
+        args.putInt(ID_EVENTO, idEvento);//cambia el valor de la variable por el id de la region seleccionada
+        detalleEventoFragment.setArguments(args);
+        return detalleEventoFragment;
+    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_detalle_evento, parent, false);
-        MapFragment mapFragment = (MapFragment) getActivity().getFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        realm = MyApplication.getRealmInstance();
+    }
 
-        nombreTV = (TextView) v.findViewById(R.id.tv_nombre);
-        direccionTV = (TextView) v.findViewById(R.id.tv_direccion);
-        telefonoTV = (TextView) v.findViewById(R.id.tv_telefono);
-        emailTV = (TextView) v.findViewById(R.id.tv_email);
-        //adminTV = (TextView) v.findViewById(R.id.tv_admin);
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_detalle_evento, container, false);
+
+        evento = realm.where(Evento.class).equalTo("idEvento", getArguments().getInt(ID_EVENTO)).findFirst();
+
+        mapaEvento = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapa_evento);
+        mapaEvento.getMapAsync(this);
+
+        tvNombreEvento = (TextView) v.findViewById(R.id.tv_nombre_evento);
+        tvDireccionEvento = (TextView) v.findViewById(R.id.tv_direccion_evento);
+        tvDescripcionEvento = (TextView) v.findViewById(R.id.tv_descripcion_evento);
+        tvFechaEvento = (TextView) v.findViewById(R.id.tv_fechas_evento);
+
+        tvNombreEvento.setText(evento.getTitulo());
+        tvDireccionEvento.setText(evento.getDireccion());
+        tvDescripcionEvento.setText(evento.getDescripcion());
+        tvFechaEvento.setText(getFechaCast(evento.getFechaInicio()) + " - " + getFechaCast(evento.getFechaFin()));
 
         return v;
     }
 
-    @Override
-    public void onMapReady(GoogleMap map) {
-        /*lugar = getLugar();
-        LatLng latLng = new LatLng(lugar.getLatitud(),lugar.getLongitud());
-        map.addMarker(new MarkerOptions()
-                .position(latLng)
-                .title(lugar.getNombre()));
+    private String getFechaCast(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
 
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(14.0f).build();
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
-        map.moveCamera(cameraUpdate);
-
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(lugar.getNombre());
-
-        nombreTV.setText(lugar.getNombre());
-        direccionTV.setText(lugar.getDireccion() + ", "+ lugar.getColonia() +", " + lugar.getCp() + ", "
-            + lugar.getMunicipio());
-        emailTV.setText(lugar.getEmail());
-        telefonoTV.setText(lugar.getTelefono());
-        adminTV.setText(lugar.getAdministrador());
-        */
+        try {
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-
-    public static DetalleEventoFragment newInstance(){
-        /*
-        Bundle args = new Bundle();
-        args.putInt("id_lugar", lugar.getId_lugar());
-        args.putString("nombre", lugar.getNombre());
-        args.putString("direccion", lugar.getDireccion());
-        args.putString("colonia", lugar.getColonia());
-        args.putString("municipio", lugar.getMunicipio());
-        args.putInt("cp", lugar.getCp());
-        args.putString("telefono", lugar.getTelefono());
-        args.putString("tipo_instalacion", lugar.getTipo_instalacion());
-        args.putString("administrador", lugar.getAdministrador());
-        args.putString("email", lugar.getEmail());
-        args.putFloat("latitud", lugar.getLatitud());
-        args.putFloat("longitud", lugar.getLongitud());
-        */
-        DetalleEventoFragment fragment = new DetalleEventoFragment();
-        //fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        float zoomLevel = (float) 16.0;
+        LatLng coordenadas = new LatLng(evento.getLatitud(), evento.getLongitud()); //coordenadas de la región
+        googleMap.addMarker(new MarkerOptions().position(coordenadas).title(evento.getTitulo())); //pone el puntero en las coordenadas
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel)); //hace el zoom en el mapa
     }
 
-
     @Override
-    public void onDestroyView(){
-        /*
+    public void onDestroyView() {
         super.onDestroyView();
-        android.app.Fragment fragment = (getActivity().getFragmentManager().findFragmentById(R.id.map));
-        android.app.FragmentTransaction ft = getActivity().getFragmentManager().beginTransaction();
-        ft.remove(fragment);
-        ft.commit();
-        */
+        mapaEvento = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapa_evento);
+        if (mapaEvento != null)
+            getActivity().getFragmentManager().beginTransaction().remove(mapaEvento).commit();
     }
+
 }

@@ -1,6 +1,9 @@
 package mx.gob.jovenes.guanajuato.adapters;
 
 import android.content.Context;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.fragments.DetalleEventoFragment;
+import mx.gob.jovenes.guanajuato.fragments.DetalleRegionFragment;
 import mx.gob.jovenes.guanajuato.model.Evento;
 
 /**
@@ -43,7 +48,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
     }
 
     @Override
-    public void onBindViewHolder(final EventosViewHolder holder, int position) {
+    public void onBindViewHolder(EventosViewHolder holder, int position) {
         holder.tituloTv.setText(eventos.get(position).getTitulo());
         holder.descripcionTv.setText(eventos.get(position).getDescripcion());
         holder.fechaTv.setText(getFechaCast(eventos.get(position).getFechaInicio()) + " - " + getFechaCast(eventos.get(position).getFechaFin()));
@@ -93,7 +98,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
         return selectedEvent;
     }*/
 
-    public static class EventosViewHolder extends RecyclerView.ViewHolder /*implements View.OnLongClickListener, View.OnCreateContextMenuListener*/{
+    public class EventosViewHolder extends RecyclerView.ViewHolder /*implements View.OnLongClickListener, View.OnCreateContextMenuListener*/{
         TextView tituloTv;
         TextView descripcionTv;
         TextView fechaTv;
@@ -106,7 +111,18 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             fechaTv = (TextView) itemView.findViewById(R.id.tv_fecha);
             //itemView.setOnLongClickListener(this);
             //itemView.setOnCreateContextMenuListener(this);
+            itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DetalleEventoFragment f = DetalleEventoFragment.newInstance(eventos.get(getAdapterPosition()).getIdEvento());
+                FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
+            }
+        });
         }
+
+
 
         /*
         public void setLongClickListener(LongClickListener lc){

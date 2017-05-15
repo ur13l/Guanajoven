@@ -51,15 +51,14 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
     private SharedPreferences prefs;
     private Toolbar toolbar;
     private CollapsingToolbarLayout cToolBar;
-    private Context context;
+    //private Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        context = getActivity().getApplication();
-        retrofit = ((MyApplication) context).getRetrofitInstance();
+        retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         eventoAPI = retrofit.create(EventoAPI.class);
-        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplication());
         realm = MyApplication.getRealmInstance();
 
         activity = ((AppCompatActivity) getActivity());
@@ -82,12 +81,13 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
         call.enqueue(new Callback<Response<ArrayList<Evento>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<Evento>>> call, retrofit2.Response<Response<ArrayList<Evento>>> response) {
+
                 if(response.body().success) {
                     List<Evento> evn = response.body().data;
 
                     realm.beginTransaction();
                     for(Evento e : evn) {
-                        if(e.getFechaFin() != null) {
+                        if(e.getDeletedAt() != null) {
                             Evento ev = realm.where(Evento.class).equalTo("idEvento", e.getIdEvento()).findFirst();
                             if(ev != null) {
                                 ev.deleteFromRealm();
@@ -97,6 +97,8 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
                         }
                     }
                     realm.commitTransaction();
+
+                    System.out.println(eventos.size());
 
                     if(evn.size() > 0) {
                         updateList();
@@ -109,7 +111,7 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
 
             @Override
             public void onFailure(Call<Response<ArrayList<Evento>>> call, Throwable t) {
-                //En caso de fallar
+                System.err.println("Fallo");
             }
         });
 

@@ -35,7 +35,7 @@ public class MyApplication extends MultiDexApplication {
 
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
 
-    public static final String LAST_UPDATE_EVENTOS = "last_update_eventos";
+    public static String LAST_UPDATE_EVENTOS = "last_update_eventos";
 
 
     //dirección publica

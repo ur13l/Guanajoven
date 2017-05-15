@@ -13,9 +13,13 @@ public class Evento extends RealmObject {
     private String descripcion;
     private String fechaInicio;
     private String fechaFin;
-    private int tipo;
-    private String fechaActualizacion;
-    private int estado;
+    private int idTipoEvento;
+    private String direccion;
+    private double latitud;
+    private double longitud;
+    private String createdAt;
+    private String updatedAt;
+    private String deletedAt;
 
     public int getIdEvento() {
         return idEvento;
@@ -57,27 +61,59 @@ public class Evento extends RealmObject {
         this.fechaFin = fechaFin;
     }
 
-    public int getTipo() {
-        return tipo;
+    public int getIdTipoEvento() {
+        return idTipoEvento;
     }
 
-    public void setTipo(int tipo) {
-        this.tipo = tipo;
+    public void setIdTipoEvento(int idTipoEvento) {
+        this.idTipoEvento = idTipoEvento;
     }
 
-    public String getFechaActualizacion() {
-        return fechaActualizacion;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setFechaActualizacion(String fechaActualizacion) {
-        this.fechaActualizacion = fechaActualizacion;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public int getEstado() {
-        return estado;
+    public double getLatitud() {
+        return latitud;
     }
 
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(String deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }

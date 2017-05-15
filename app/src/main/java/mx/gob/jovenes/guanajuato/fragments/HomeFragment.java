@@ -72,8 +72,6 @@ public class HomeFragment extends CustomFragment {
     private SharedPreferences prefs;
 
 
-
-
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -91,8 +89,6 @@ public class HomeFragment extends CustomFragment {
 
         //Declarando las preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-
-
 
 
     }
@@ -154,29 +150,28 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-        ImageHandler.start( pnlPublicidad, getActivity());
+        ImageHandler.start(pnlPublicidad, getActivity());
         //Se define la acción para cuando se descargan las imágenes publicitarias.
         retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get(prefs.getString(MyApplication.LAST_UPDATE_PUBLICIDAD, "0000-00-00 00:00:00"));
         call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
             @Override
             public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
-                if(response.body().success) {
+                if (response.body().success) {
                     //Se ejecuta el guardado de elementos en Realm a partir de lo obtenido en el servicio.
 
                     List<Publicidad> publicidades = response.body().data;
 
                     //Transacción de realm, se itera sobre las publicidades obtenidas desde el servidor.
                     realm.beginTransaction();
-                    for(Publicidad p : publicidades) {
-                        if(p.getDeletedAt() != null) {
+                    for (Publicidad p : publicidades) {
+                        if (p.getDeletedAt() != null) {
                             Publicidad pr = realm.where(Publicidad.class)
                                     .equalTo("idPublicidad", p.getIdPublicidad())
                                     .findFirst();
-                            if(pr != null) {
+                            if (pr != null) {
                                 pr.deleteFromRealm();
                             }
-                        }
-                        else {
+                        } else {
                             realm.copyToRealmOrUpdate(p);
                         }
                     }
@@ -207,13 +202,13 @@ public class HomeFragment extends CustomFragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState){
+    public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //Haciendo que la barra se pueda ocultar
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
         try {
@@ -224,7 +219,7 @@ public class HomeFragment extends CustomFragment {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
 
         super.onStop();
         ImageHandler.stopCambioPublicidadTask();
@@ -232,6 +227,7 @@ public class HomeFragment extends CustomFragment {
 
     /**
      * Asigna los valores de la sesión y la bitácora.
+     *
      * @throws ParseException
      */
     public void setValoresSesion() throws ParseException {
@@ -239,7 +235,7 @@ public class HomeFragment extends CustomFragment {
         FirebaseInstanceId.getInstance().getToken();
         String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
         int idUsuario = Sesion.getIdUsuario();
-        Call<Response<Boolean>> call =  notificacionAPI.enviarToken(
+        Call<Response<Boolean>> call = notificacionAPI.enviarToken(
                 token,
                 idUsuario,
                 "android"
@@ -248,8 +244,8 @@ public class HomeFragment extends CustomFragment {
             @Override
             public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                 Response<Boolean> body = response.body();
-                if(body.success) {
-                    if(body.data) {
+                if (body.success) {
+                    if (body.data) {
                         //Código cuando fue exitoso
                     }
                 }
@@ -278,10 +274,11 @@ public class HomeFragment extends CustomFragment {
             String result = cliente.hacerRequestHttp(url, params);
             Gson gson = new Gson();
             Log.d("RESULTAD", result);
-            return gson.fromJson(result, new TypeToken<List<Evento>>(){
+            return gson.fromJson(result, new TypeToken<List<Evento>>() {
             }.getType());
         }
 
+        /*
         @Override
         public void onPostExecute(ArrayList<Evento> result) {
             super.onPostExecute(result);
@@ -290,7 +287,7 @@ public class HomeFragment extends CustomFragment {
 
                 if(result.size() > 0) {
                     for (Evento e : result) {
-                        if(e.getEstado() == 0){
+                        if(e.ge == 0){
                             DateUtilities.deleteEvento(getActivity(), e.getIdEvento());
                         }
                         else {
@@ -308,70 +305,68 @@ public class HomeFragment extends CustomFragment {
                 }
             }
         }
-    }
+    }*/
 
 
-
-    private class ObternerAsyncTask extends AsyncTask<Integer, Void, String>{
-        @Override
-        protected String doInBackground(Integer... args) {
-            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/obtenerPerfil.php";
-            ClienteHttp cliente = new ClienteHttp();
-            HashMap<String,String> param = new HashMap<>();
-            param.put("id_login_app",args[0]+"");
-            String result = cliente.hacerRequestHttp(url, param);
-            Log.d("RESULT", result);
-            Gson gson = new Gson();
-            PerfilPOJO perfilpo = gson.fromJson(result, PerfilPOJO.class);
-            if(perfilpo != null) {
-                Perfil perfil = new Perfil(getActivity().getApplicationContext());
-                perfil.setNombreCompleto(perfilpo.getNombre());
-                perfil.setGenero(perfilpo.getId_genero());
-                String fechaBaseDatos = perfilpo.getFec_nacimiento();
-                perfil.setFecha(fechaBaseDatos);
-                perfil.setOcupacion(perfilpo.getId_ocupacion());
-                perfil.setCodigo_postal(perfilpo.getCodigo_postal());
-                perfil.setTelefono(perfilpo.getTelefono());
-                perfil.setSuccess(perfilpo.getSuccess());
-                perfil.setPeso(perfilpo.getPeso());
-                perfil.setEstatura(perfilpo.getEstatura());
-                perfil.setPresion(perfilpo.getPresion());
-                perfil.setGlucosa(perfilpo.getGlucosa());
-                perfil.setActividad(perfilpo.getActividad());
-                perfil.setLesion(perfilpo.getLesion());
-            }
-            Log.d("result",result);
-            return result;
-        }
-    }
-
-
-
-
-    private class RecibirImagenesAsyncTask extends AsyncTask<Void, Void, ArrayList<Imagen>> {
-
-        @Override
-        protected ArrayList<Imagen> doInBackground(Void... voids) {
-            HashMap<String, String> params = new HashMap<>();
-            String url = "http://" + ClienteHttp.SERVER_IP + "/app_php/imagenes/imagenes.php";
-            ClienteHttp cliente = new ClienteHttp();
-            String result = cliente.hacerRequestHttp(url, params);
-            Gson gson = new Gson();
-            Log.d("RESULTAD", result);
-            return gson.fromJson(result, new TypeToken<List<Imagen>>(){
-            }.getType());
-        }
-
-        @Override
-        public void onPostExecute(ArrayList<Imagen> result) {
-            super.onPostExecute(result);
-            Gson gson = new Gson();
-            if(result != null) {
-                JsonArray jsonArray = gson.toJsonTree(result).getAsJsonArray();
-                FileUtils.writeToFile(jsonArray.toString(), getActivity());
+        private class ObternerAsyncTask extends AsyncTask<Integer, Void, String> {
+            @Override
+            protected String doInBackground(Integer... args) {
+                String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/obtenerPerfil.php";
+                ClienteHttp cliente = new ClienteHttp();
+                HashMap<String, String> param = new HashMap<>();
+                param.put("id_login_app", args[0] + "");
+                String result = cliente.hacerRequestHttp(url, param);
+                Log.d("RESULT", result);
+                Gson gson = new Gson();
+                PerfilPOJO perfilpo = gson.fromJson(result, PerfilPOJO.class);
+                if (perfilpo != null) {
+                    Perfil perfil = new Perfil(getActivity().getApplicationContext());
+                    perfil.setNombreCompleto(perfilpo.getNombre());
+                    perfil.setGenero(perfilpo.getId_genero());
+                    String fechaBaseDatos = perfilpo.getFec_nacimiento();
+                    perfil.setFecha(fechaBaseDatos);
+                    perfil.setOcupacion(perfilpo.getId_ocupacion());
+                    perfil.setCodigo_postal(perfilpo.getCodigo_postal());
+                    perfil.setTelefono(perfilpo.getTelefono());
+                    perfil.setSuccess(perfilpo.getSuccess());
+                    perfil.setPeso(perfilpo.getPeso());
+                    perfil.setEstatura(perfilpo.getEstatura());
+                    perfil.setPresion(perfilpo.getPresion());
+                    perfil.setGlucosa(perfilpo.getGlucosa());
+                    perfil.setActividad(perfilpo.getActividad());
+                    perfil.setLesion(perfilpo.getLesion());
+                }
+                Log.d("result", result);
+                return result;
             }
         }
+
+
+        private class RecibirImagenesAsyncTask extends AsyncTask<Void, Void, ArrayList<Imagen>> {
+
+            @Override
+            protected ArrayList<Imagen> doInBackground(Void... voids) {
+                HashMap<String, String> params = new HashMap<>();
+                String url = "http://" + ClienteHttp.SERVER_IP + "/app_php/imagenes/imagenes.php";
+                ClienteHttp cliente = new ClienteHttp();
+                String result = cliente.hacerRequestHttp(url, params);
+                Gson gson = new Gson();
+                Log.d("RESULTAD", result);
+                return gson.fromJson(result, new TypeToken<List<Imagen>>() {
+                }.getType());
+            }
+
+            @Override
+            public void onPostExecute(ArrayList<Imagen> result) {
+                super.onPostExecute(result);
+                Gson gson = new Gson();
+                if (result != null) {
+                    JsonArray jsonArray = gson.toJsonTree(result).getAsJsonArray();
+                    FileUtils.writeToFile(jsonArray.toString(), getActivity());
+                }
+            }
+        }
+
+
     }
-
-
 }

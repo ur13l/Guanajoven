@@ -15,7 +15,7 @@ public interface EventoAPI {
 
     @GET("eventos")
 
-    Call<Response<ArrayList<Evento>>> obtenerEventos (
+    Call<Response<ArrayList<Evento>>> obtenerEventos(
             @Query("timestamp") String timestamp
     );
 }

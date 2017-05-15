@@ -86,8 +86,8 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = ColaboradoresFragment.newInstance(R.id.nav_colaboradores, R.string.colaboradores, ColaboradoresFragment.class);
                     break;
 
-                case R.id.nav_calendario:
-                    fragment = CalendarioActividadesFragment.newInstance(R.id.nav_calendario, R.string.calendario, CalendarioActividadesFragment.class);
+                case R.id.nav_calendario_eventos:
+                    fragment = CalendarioActividadesFragment.newInstance(R.id.nav_calendario_eventos, R.string.calendario, CalendarioActividadesFragment.class);
                     break;
 
                 case R.id.nav_historial_notificaciones:
