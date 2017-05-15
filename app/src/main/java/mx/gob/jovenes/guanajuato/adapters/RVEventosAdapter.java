@@ -46,7 +46,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
     public void onBindViewHolder(final EventosViewHolder holder, int position) {
         holder.tituloTv.setText(eventos.get(position).getTitulo());
         holder.descripcionTv.setText(eventos.get(position).getDescripcion());
-        holder.fechaTv.setText(getFechaCast(eventos.get(position).getFecha_inicio()) + " - " + getFechaCast(eventos.get(position).getFecha_fin()));
+        holder.fechaTv.setText(getFechaCast(eventos.get(position).getFechaInicio()) + " - " + getFechaCast(eventos.get(position).getFechaFin()));
         /*
         holder.setLongClickListener(new LongClickListener(){
 

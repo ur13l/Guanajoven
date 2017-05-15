@@ -8,21 +8,21 @@ import io.realm.annotations.PrimaryKey;
  */
 public class Evento extends RealmObject {
     @PrimaryKey
-    private int id_evento;
+    private int idEvento;
     private String titulo;
     private String descripcion;
-    private String fecha_inicio;
-    private String fecha_fin;
+    private String fechaInicio;
+    private String fechaFin;
     private int tipo;
-    private String fecha_actualizacion;
+    private String fechaActualizacion;
     private int estado;
 
-    public int getId_evento() {
-        return id_evento;
+    public int getIdEvento() {
+        return idEvento;
     }
 
-    public void setId_evento(int id_evento) {
-        this.id_evento = id_evento;
+    public void setIdEvento(int idEvento) {
+        this.idEvento = idEvento;
     }
 
     public String getTitulo() {
@@ -41,6 +41,21 @@ public class Evento extends RealmObject {
         this.descripcion = descripcion;
     }
 
+    public String getFechaInicio() {
+        return fechaInicio;
+    }
+
+    public void setFechaInicio(String fechaInicio) {
+        this.fechaInicio = fechaInicio;
+    }
+
+    public String getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
+    }
 
     public int getTipo() {
         return tipo;
@@ -50,28 +65,12 @@ public class Evento extends RealmObject {
         this.tipo = tipo;
     }
 
-    public String getFecha_inicio() {
-        return fecha_inicio;
+    public String getFechaActualizacion() {
+        return fechaActualizacion;
     }
 
-    public void setFecha_inicio(String fecha_inicio) {
-        this.fecha_inicio = fecha_inicio;
-    }
-
-    public String getFecha_fin() {
-        return fecha_fin;
-    }
-
-    public void setFecha_fin(String fecha_fin) {
-        this.fecha_fin = fecha_fin;
-    }
-
-    public String getFecha_actualizacion() {
-        return fecha_actualizacion;
-    }
-
-    public void setFecha_actualizacion(String fecha_actualizacion) {
-        this.fecha_actualizacion = fecha_actualizacion;
+    public void setFechaActualizacion(String fechaActualizacion) {
+        this.fechaActualizacion = fechaActualizacion;
     }
 
     public int getEstado() {

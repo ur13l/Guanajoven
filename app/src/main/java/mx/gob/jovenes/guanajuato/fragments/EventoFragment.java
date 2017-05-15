@@ -73,10 +73,11 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
         View v = inflater.inflate(R.layout.fragment_eventos, container, false);
         rvEvento = (RecyclerView) v.findViewById(R.id.rv_eventos);
         tvEmptyEvento = (TextView) v.findViewById(R.id.tv_empty_eventos);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        rvEvento.setLayoutManager(llm);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        rvEvento.setLayoutManager(linearLayoutManager);
+        updateList();
 
-        Call<Response<ArrayList<Evento>>> call = eventoAPI.obtenerEventos(prefs.getString(MyApplication.LAST_UPDATE_EVENTOS, ""));
+        Call<Response<ArrayList<Evento>>> call = eventoAPI.obtenerEventos(prefs.getString(MyApplication.LAST_UPDATE_EVENTOS, "0000-00-00 00:00:00"));
 
         call.enqueue(new Callback<Response<ArrayList<Evento>>>() {
             @Override
@@ -86,8 +87,8 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
 
                     realm.beginTransaction();
                     for(Evento e : evn) {
-                        if(e.getFecha_fin() != null) {
-                            Evento ev = realm.where(Evento.class).equalTo("idEvento", e.getId_evento()).findFirst();
+                        if(e.getFechaFin() != null) {
+                            Evento ev = realm.where(Evento.class).equalTo("idEvento", e.getIdEvento()).findFirst();
                             if(ev != null) {
                                 ev.deleteFromRealm();
                             }

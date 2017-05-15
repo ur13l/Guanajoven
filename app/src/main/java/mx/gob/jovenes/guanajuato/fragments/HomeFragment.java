@@ -291,13 +291,13 @@ public class HomeFragment extends CustomFragment {
                 if(result.size() > 0) {
                     for (Evento e : result) {
                         if(e.getEstado() == 0){
-                            DateUtilities.deleteEvento(getActivity(), e.getId_evento());
+                            DateUtilities.deleteEvento(getActivity(), e.getIdEvento());
                         }
                         else {
                             DateUtilities.setFechas(getActivity(),
-                                    e.getId_evento(),
-                                    DateUtilities.stringToDate(e.getFecha_inicio()),
-                                    DateUtilities.stringToDate(e.getFecha_fin()),
+                                    e.getIdEvento(),
+                                    DateUtilities.stringToDate(e.getFechaInicio()),
+                                    DateUtilities.stringToDate(e.getFechaFin()),
                                     e.getTitulo(),
                                     e.getDescripcion(),
                                     e.getTipo()
