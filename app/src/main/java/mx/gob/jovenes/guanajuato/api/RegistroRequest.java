@@ -6,6 +6,7 @@ package mx.gob.jovenes.guanajuato.api;
 
 public class RegistroRequest {
 
+    private String curp;
     private String email;
     private String password;
     private String confirmarPassword;
@@ -21,11 +22,12 @@ public class RegistroRequest {
     private String idFacebook;
 
 
-    public RegistroRequest(String email, String password, String confirmarPassword,
+    public RegistroRequest(String curp, String email, String password, String confirmarPassword,
                            String apellidoPaterno, String apellidoMaterno, String nombre,
                            String genero, String fechaNacimiento, String codigoPostal,
                            String estadoNacimiento, String rutaImagen, String idGoogle,
                            String idFacebook) {
+        this.curp = curp;
         this.email = email;
         this.password = password;
         this.confirmarPassword = confirmarPassword;

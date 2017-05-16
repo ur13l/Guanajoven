@@ -139,6 +139,7 @@
                     android:maxLength="50"
                     android:textColorHint="@color/gray"
                     android:typeface="normal"
+                    android:inputType="textCapCharacters"
                     android:textSize="16dp"
                     android:hint="@string/curp" />
             </android.support.design.widget.TextInputLayout>

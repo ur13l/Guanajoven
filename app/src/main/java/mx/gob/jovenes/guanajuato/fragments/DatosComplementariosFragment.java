@@ -184,28 +184,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     }
 
 
-    /**
-     * Método para inicializar el fragment con los nuevos datos para ser dados de alta. Este
-     * formulario debe ser llenado para completar el registro.
-     * @param usuario {Usuario}
-     * @return {DatosComplementariosFragment}
-     */
-    public static DatosComplementariosFragment newInstance(Usuario usuario){
-        DatosComplementariosFragment f = new DatosComplementariosFragment();
-        Bundle args = new Bundle();
-        args.putString(EMAIL, usuario.getCorreo());
-        args.putString(ID_GOOGLE, usuario.getIdGoogle());
-        args.putString(ID_FACEBOOK, usuario.getIdFacebook());
-        args.putString(NOMBRE, usuario.getNombre());
-        args.putString(AP_PATERNO, usuario.getApellidoPaterno());
-        args.putString(RUTA_IMAGEN, usuario.getRutaImagen());
-        args.putInt(ID_GENERO, usuario.getIdGenero());
-        if(usuario.getFechaNacimiento() != null) {
-            args.putString(FECHA_NACIMIENTO, usuario.getFechaNacimiento().toString());
-        }
-        f.setArguments(args);
-        return f;
-    }
+
 
 
     /**
@@ -265,6 +244,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
             Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
                     new RegistroRequest(
+                            usuario.getCurp(),
                             usuario.getCorreo(),
                             "_",
                             "_",
