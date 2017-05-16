@@ -3,6 +3,7 @@ package mx.gob.jovenes.guanajuato.api;
 import org.json.JSONObject;
 
 import mx.gob.jovenes.guanajuato.model.Usuario;
+import mx.gob.jovenes.guanajuato.model.models_tmp.Curp;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -89,7 +90,7 @@ public interface UsuarioAPI {
      * @return
      */
     @POST("usuarios/curp")
-    Call<Response<JSONObject>> consultarCurp(
+    Call<Response<Curp>> consultarCurp(
             @Query("curp") String curp
     );
 }

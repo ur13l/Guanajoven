@@ -39,6 +39,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import org.json.JSONException;
@@ -68,6 +70,7 @@ import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.Usuario;
+import mx.gob.jovenes.guanajuato.model.models_tmp.Curp;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
@@ -143,6 +146,10 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         imgPerfil = (CircleImageView) v.findViewById(R.id.img_profile);
         btnBack = (ImageButton) v.findViewById(R.id.btn_back);
 
+
+        spnGenero.setEnabled(false);
+        spnEstado.setEnabled(false);
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, generos);
 
         String[] estadosArray = getActivity().getResources().getStringArray(R.array.estados);
@@ -172,48 +179,49 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Cuando se encuentra un curp válido
                 if(s.length() == 18) {
-                    Call<Response<JSONObject>> call = usuarioAPI.consultarCurp(s.toString());
-                    call.enqueue(new Callback<Response<JSONObject>>() {
+                    progressDialog = ProgressDialog.show(getActivity(), "Buscando CURP en base de datos", "Buscando datos de CURP", true);
+
+                    Call<Response<Curp>> call = usuarioAPI.consultarCurp(s.toString());
+                    call.enqueue(new Callback<Response<Curp>>() {
                         @Override
-                        public void onResponse(Call<Response<JSONObject>> call, retrofit2.Response<Response<JSONObject>> response) {
+                        public void onResponse(Call<Response<Curp>> call, retrofit2.Response<Response<Curp>> response) {
+                            progressDialog.dismiss();
                             if(response.body().success) {
                                 continuarBtn.setEnabled(true);
-                                JSONObject object = response.body().data;
-                                try {
-                                    if(object.getString("statusOpet").equals("EXITOSO")) {
+                                Curp curp = response.body().data;
+                                if(curp.getStatusOper() != null) {
 
-                                        etNombre.setText(object.getString("nombres"));
-                                        etApPaterno.setText(object.getString("PrimerApellido"));
-                                        etApMaterno.setText(object.getString("SegundoApellido"));
-                                        etFechaNacimiento.setText(object.getString("fechNac"));
-                                        spnEstado.setSelection(Arrays.asList(estadosValueArray).indexOf(object.getString("cveEntidadNac")));
-
-                                        if (object.getString("sexo").equals("H")) {
-                                            spnGenero.setSelection(1);
-                                        } else if (object.getString("sexo").equals("M")) {
-                                            spnGenero.setSelection(2);
-                                        } else {
-                                            spnGenero.setSelection(0);
-                                        }
-                                    }
-                                    else {
-                                        etNombre.setText("");
-                                        etApPaterno.setText("");
-                                        etApMaterno.setText("");
-                                        etFechaNacimiento.setText("");
+                                    etNombre.setText(curp.getNombres());
+                                    etApPaterno.setText(curp.getPrimerApellido());
+                                    etApMaterno.setText(curp.getSegundoApellido());
+                                    etFechaNacimiento.setText(curp.getFechNac());
+                                    spnEstado.setSelection(Arrays.asList(estadosValueArray).indexOf(curp.getCveEntidadNac()) + 1);
+                                    etFechaNacimiento.setText(curp.getFechNac());
+                                    if (curp.getSexo().equals("H")) {
+                                        spnGenero.setSelection(1);
+                                    } else if (curp.getSexo().equals("M")) {
+                                        spnGenero.setSelection(2);
+                                    } else {
                                         spnGenero.setSelection(0);
-                                        spnEstado.setSelection(0);
                                     }
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                                }
+                                else {
+                                    OKDialog.showOKDialog(getActivity(), "No se encontraron datos", "No se encontró tu CURP en la base de datos, intenta nuevamente.");
+                                    etNombre.setText("");
+                                    etApPaterno.setText("");
+                                    etApMaterno.setText("");
+                                    etFechaNacimiento.setText("");
+                                    spnGenero.setSelection(0);
+                                    spnEstado.setSelection(0);
                                 }
                             }
 
                         }
 
                         @Override
-                        public void onFailure(Call<Response<JSONObject>> call, Throwable t) {
+                        public void onFailure(Call<Response<Curp>> call, Throwable t) {
+                            progressDialog.dismiss();
+                            OKDialog.showOKDialog(getActivity(), "Error de conexión", "Hubo un error tratando de recuperar los datos del servidor.");
                             etNombre.setText("");
                             etApPaterno.setText("");
                             etApMaterno.setText("");
@@ -247,6 +255,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
         imgPerfil.setOnClickListener(this);
 
+        EditTextValidations.removeErrorTyping(etCurp);
         EditTextValidations.removeErrorTyping(etEmail);
         EditTextValidations.removeErrorTyping(etNombre);
         EditTextValidations.removeErrorTyping(etApPaterno);
@@ -298,6 +307,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
      */
     public void continuar(){
         //Verifica que los campos no estén vacíos
+        boolean curpEmpty = EditTextValidations.esCampoVacio(etCurp);
         boolean emailEmpty = EditTextValidations.esCampoVacio(etEmail);
         boolean pass1Empty = EditTextValidations.esCampoVacio(etPassword1);
         boolean pass2Empty = EditTextValidations.esCampoVacio(etPassword2);
@@ -314,7 +324,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         boolean cpV = false;
 
         //Si ninguno de los campos es vacío
-        if(!emailEmpty && !pass1Empty && !pass2Empty &&
+        if(!curpEmpty && !emailEmpty && !pass1Empty && !pass2Empty &&
                 !fechaEmpty && !estadoEmpty && !nombreEmpty &&
                 !generoEmpty && !apPaternoEmpty && !cpEmpty){
             emailV = EditTextValidations.esEmailValido(etEmail);
