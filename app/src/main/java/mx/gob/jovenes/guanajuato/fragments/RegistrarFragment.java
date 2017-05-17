@@ -26,7 +26,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +39,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.squareup.picasso.Picasso;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -47,6 +55,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -62,6 +71,7 @@ import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.Usuario;
+import mx.gob.jovenes.guanajuato.model.models_tmp.Curp;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
@@ -70,6 +80,7 @@ import retrofit2.Callback;
 import retrofit2.Retrofit;
 
 import static android.app.Activity.RESULT_OK;
+import static android.view.View.GONE;
 
 
 /**
@@ -82,10 +93,15 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     private static final int SELECT_FROM_GALLERY = 102;
     private static final int CAMERA_PERMISSION_CODE = 1;
     private static final int READ_EXTERNAL_STORAGE_CODE = 2;
+    private static final String EMAIL = "email";
+    private static final String ID_GOOGLE = "id_google";
+    private static final String ID_FACEBOOK = "id_facebook";
+    private static final String RUTA_IMAGEN = "ruta_imagen";
     private Button continuarBtn;
     private EditText etEmail;
     private EditText etPassword1;
     private EditText etPassword2;
+    private EditText etCurp;
     private EditText etNombre;
     private EditText etApPaterno;
     private EditText etApMaterno;
@@ -96,7 +112,6 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     private EditText etCodigoPostal;
     private ProgressDialog progressDialog;
     private ImageButton btnBack;
-    private Uri picUri;
 
 
     private String[] estadosValueArray;
@@ -104,6 +119,8 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     private Calendar calendar;
 
     private UsuarioAPI usuarioAPI;
+
+    private Usuario usuario;
 
     private String[] generos = {"Masculino", "Femenino"};
 
@@ -114,6 +131,15 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         calendar = Calendar.getInstance();
         Retrofit retrofit = ((MyApplication)getActivity().getApplication()).getRetrofitInstance();
         usuarioAPI = retrofit.create(UsuarioAPI.class);
+
+        Bundle args = getArguments();
+        if(args != null) {
+            usuario = new Usuario();
+            usuario.setCorreo(args.getString(EMAIL));
+            usuario.setIdGoogle(args.getString(ID_GOOGLE));
+            usuario.setIdFacebook(args.getString(ID_FACEBOOK));
+            usuario.setRutaImagen(args.getString(RUTA_IMAGEN));
+        }
     }
 
     @Override
@@ -124,6 +150,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         etEmail = (EditText) v.findViewById(R.id.et_emailreg);
         etPassword1 = (EditText) v.findViewById(R.id.et_passreg);
         etPassword2 = (EditText) v.findViewById(R.id.et_confpass);
+        etCurp = (EditText) v.findViewById(R.id.et_curp);
         continuarBtn = (Button) v.findViewById(R.id.btn_continuar);
         etNombre = (EditText) v.findViewById(R.id.et_nombre);
         etApPaterno = (EditText) v.findViewById(R.id.et_ap_paterno);
@@ -134,13 +161,26 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         spnEstado = (MaterialSpinner) v.findViewById(R.id.spn_estado);
         imgPerfil = (CircleImageView) v.findViewById(R.id.img_profile);
         btnBack = (ImageButton) v.findViewById(R.id.btn_back);
+        if(usuario != null) {
+            etEmail.setText(usuario.getCorreo());
+            etEmail.setEnabled(false);
+            etPassword1.setVisibility(GONE);
+            etPassword2.setVisibility(GONE);
+            if(usuario.getRutaImagen() != null) {
+                Picasso.with(getActivity()).load(usuario.getRutaImagen()).into(imgPerfil);
+            }
+        }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, generos);
+
+        spnGenero.setEnabled(false);
+        spnEstado.setEnabled(false);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_style, generos);
 
         String[] estadosArray = getActivity().getResources().getStringArray(R.array.estados);
         estadosValueArray = getActivity().getResources().getStringArray(R.array.estados_values);
 
-        ArrayAdapter<String> estadosAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, estadosArray);
+        ArrayAdapter<String> estadosAdapter = new ArrayAdapter<String>(getActivity(), R.layout.spinner_style, estadosArray);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         estadosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
@@ -156,12 +196,91 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                 InputType.TYPE_TEXT_VARIATION_PASSWORD);
         etPassword2.setTypeface(Typeface.DEFAULT);
 
+        etCurp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //Cuando se encuentra un curp válido
+                if(s.length() == 18) {
+                    progressDialog = ProgressDialog.show(getActivity(), "Recuperando información", "Buscando información de CURP en base de datos", true);
+
+                    Call<Response<Curp>> call = usuarioAPI.consultarCurp(s.toString());
+                    call.enqueue(new Callback<Response<Curp>>() {
+                        @Override
+                        public void onResponse(Call<Response<Curp>> call, retrofit2.Response<Response<Curp>> response) {
+                            progressDialog.dismiss();
+                            if(response.body().success) {
+                                continuarBtn.setEnabled(true);
+                                Curp curp = response.body().data;
+                                if(curp.getStatusOper() != null) {
+
+                                    etNombre.setText(curp.getNombres());
+                                    etApPaterno.setText(curp.getPrimerApellido());
+                                    etApMaterno.setText(curp.getSegundoApellido());
+                                    etFechaNacimiento.setText(curp.getFechNac());
+                                    spnEstado.setSelection(Arrays.asList(estadosValueArray).indexOf(curp.getCveEntidadNac()) + 1);
+                                    etFechaNacimiento.setText(curp.getFechNac());
+                                    if (curp.getSexo().equals("H")) {
+                                        spnGenero.setSelection(1);
+                                    } else if (curp.getSexo().equals("M")) {
+                                        spnGenero.setSelection(2);
+                                    } else {
+                                        spnGenero.setSelection(0);
+                                    }
+                                }
+                                else {
+                                    OKDialog.showOKDialog(getActivity(), "No se encontraron datos", "No se encontró tu CURP en la base de datos, intenta nuevamente.");
+                                    etNombre.setText("");
+                                    etApPaterno.setText("");
+                                    etApMaterno.setText("");
+                                    etFechaNacimiento.setText("");
+                                    spnGenero.setSelection(0);
+                                    spnEstado.setSelection(0);
+                                }
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Response<Curp>> call, Throwable t) {
+                            progressDialog.dismiss();
+                            OKDialog.showOKDialog(getActivity(), "Error de conexión", "Hubo un error tratando de recuperar los datos del servidor.");
+                            etNombre.setText("");
+                            etApPaterno.setText("");
+                            etApMaterno.setText("");
+                            etFechaNacimiento.setText("");
+                            spnGenero.setSelection(0);
+                            spnEstado.setSelection(0);
+                        }
+                    });
+                }
+                //Se limpian los campos en caso de que el CURP no sea válido
+                else {
+                    continuarBtn.setEnabled(false);
+                    etNombre.setText("");
+                    etApPaterno.setText("");
+                    etApMaterno.setText("");
+                    etFechaNacimiento.setText("");
+                    spnGenero.setSelection(0);
+                    spnEstado.setSelection(0);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         etFechaNacimiento.setKeyListener(null);
         etFechaNacimiento.setOnFocusChangeListener(this);
         etFechaNacimiento.setOnClickListener(this);
 
         imgPerfil.setOnClickListener(this);
 
+        EditTextValidations.removeErrorTyping(etCurp);
         EditTextValidations.removeErrorTyping(etEmail);
         EditTextValidations.removeErrorTyping(etNombre);
         EditTextValidations.removeErrorTyping(etApPaterno);
@@ -211,12 +330,12 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
      * Ejecución de lo que se hará al presionar el botón de contninuar, se realizan las validaciones
      * para pasar a la interfaz de Datos complementarios.
      */
-    //TODO: Validación para código postal, curp y género.
     public void continuar(){
         //Verifica que los campos no estén vacíos
+        boolean curpEmpty = EditTextValidations.esCampoVacio(etCurp);
         boolean emailEmpty = EditTextValidations.esCampoVacio(etEmail);
-        boolean pass1Empty = EditTextValidations.esCampoVacio(etPassword1);
-        boolean pass2Empty = EditTextValidations.esCampoVacio(etPassword2);
+        boolean pass1Empty = usuario == null ? EditTextValidations.esCampoVacio(etPassword1) : false;
+        boolean pass2Empty = usuario == null ? EditTextValidations.esCampoVacio(etPassword2) : false;
         boolean nombreEmpty = EditTextValidations.esCampoVacio(etNombre);
         boolean fechaEmpty = EditTextValidations.esCampoVacio(etFechaNacimiento);
         boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(spnGenero);
@@ -230,12 +349,12 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         boolean cpV = false;
 
         //Si ninguno de los campos es vacío
-        if(!emailEmpty && !pass1Empty && !pass2Empty &&
+        if(!curpEmpty && !emailEmpty && !pass1Empty && !pass2Empty &&
                 !fechaEmpty && !estadoEmpty && !nombreEmpty &&
                 !generoEmpty && !apPaternoEmpty && !cpEmpty){
             emailV = EditTextValidations.esEmailValido(etEmail);
-            pass1V = EditTextValidations.esContrasenaValida(etPassword1);
-            pass2V = EditTextValidations.esContrasenaValida(etPassword2);
+            pass1V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword1) : true ;
+            pass2V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword2) : true;
             passEq = EditTextValidations.contrasenasCoinciden(etPassword1, etPassword2);
             cpV = EditTextValidations.esCodigoPostalValido(etCodigoPostal);
         }
@@ -247,9 +366,10 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
             Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
                     new RegistroRequest(
+                        etCurp.getText().toString(),
                         etEmail.getText().toString(),
-                        etPassword1.getText().toString(),
-                        etPassword2.getText().toString(),
+                        usuario == null ? etPassword1.getText().toString() : "_",
+                        usuario == null ? etPassword2.getText().toString() : "_",
                         etApPaterno.getText().toString(),
                         etApMaterno.getText().toString(),
                         etNombre.getText().toString(),
@@ -258,8 +378,8 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                         etCodigoPostal.getText().toString(),
                         estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
                         "data:image/jpeg;base64," + getBase64(imgPerfil),
-                        null,
-                        null
+                        usuario.getIdGoogle(),
+                        usuario.getIdFacebook()
                 )
             );
 
@@ -273,7 +393,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                         ((LoginActivity) getActivity()).startHomeActivity();
 
                     } else {
-                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), body.errors[0], Snackbar.LENGTH_LONG).show();
                     }
                 }
 
@@ -524,6 +644,22 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         }
     }
 
+    /**
+     * Método para inicializar el fragment con los nuevos datos para ser dados de alta. Este
+     * formulario debe ser llenado para completar el registro.
+     * @param usuario {Usuario}
+     * @return {DatosComplementariosFragment}
+     */
+    public static RegistrarFragment newInstance(Usuario usuario) {
+        RegistrarFragment f = new RegistrarFragment();
+        Bundle args = new Bundle();
+        args.putString(EMAIL, usuario.getCorreo());
+        args.putString(ID_GOOGLE, usuario.getIdGoogle());
+        args.putString(ID_FACEBOOK, usuario.getIdFacebook());
+        args.putString(RUTA_IMAGEN, usuario.getRutaImagen());
+        f.setArguments(args);
+        return f;
+    }
     /**
      * Función que obtiene el path de un bitmap para cargarlo en el imageView.
      * @param uri

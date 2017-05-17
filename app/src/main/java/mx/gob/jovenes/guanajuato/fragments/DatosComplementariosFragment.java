@@ -92,6 +92,11 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     private String[] generos = {"Masculino", "Femenino"};
 
 
+    /**
+     * Método del ciclo de vida onCreate para ejecutar código al inicializar el fragment antes
+     * de cargar la vista.
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -171,7 +176,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         if( usuario.getFechaNacimiento() != null) {
-            etFechaNacimiento.setText(df.format(usuario.getFechaNacimiento()));
+            etFechaNacimiento.setText(usuario.getFechaNacimiento());
         }
         spnGenero.setSelection(usuario.getIdGenero());
          Picasso.with(getActivity()).load(usuario.getRutaImagen()).into(imgPerfil);
@@ -179,28 +184,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     }
 
 
-    /**
-     * Método para inicializar el fragment con los nuevos datos para ser dados de alta. Este
-     * formulario debe ser llenado para completar el registro.
-     * @param usuario {Usuario}
-     * @return {DatosComplementariosFragment}
-     */
-    public static DatosComplementariosFragment newInstance(Usuario usuario){
-        DatosComplementariosFragment f = new DatosComplementariosFragment();
-        Bundle args = new Bundle();
-        args.putString(EMAIL, usuario.getCorreo());
-        args.putString(ID_GOOGLE, usuario.getIdGoogle());
-        args.putString(ID_FACEBOOK, usuario.getIdFacebook());
-        args.putString(NOMBRE, usuario.getNombre());
-        args.putString(AP_PATERNO, usuario.getApellidoPaterno());
-        args.putString(RUTA_IMAGEN, usuario.getRutaImagen());
-        args.putInt(ID_GENERO, usuario.getIdGenero());
-        if(usuario.getFechaNacimiento() != null) {
-            args.putString(FECHA_NACIMIENTO, usuario.getFechaNacimiento().toString());
-        }
-        f.setArguments(args);
-        return f;
-    }
+
 
 
     /**
@@ -235,8 +219,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
     }
 
     /**
-     * Ejecución de lo que se hará al presionar el botón de contninuar, se realizan las validaciones
-     * para pasar a la interfaz de Datos complementarios.
+     * Ejecución de lo que se hará al presionar el botón de Registrar, se realizan las validaciones.
      */
     public void continuar(){
         //Verifica que los campos no estén vacíos
@@ -261,6 +244,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
             Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
                     new RegistroRequest(
+                            usuario.getCurp(),
                             usuario.getCorreo(),
                             "_",
                             "_",

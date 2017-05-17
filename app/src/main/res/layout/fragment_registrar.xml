@@ -74,6 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:text="@string/ingresa_datos"/>
+
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -84,11 +85,12 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:maxLength="50"
+
                     android:textColorHint="@color/gray"
                     android:inputType="textEmailAddress"
                     android:typeface="normal"
                     android:textSize="16dp"
-                    android:hint="Email" />
+                    android:hint="@string/email" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
@@ -127,6 +129,23 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_curp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="50"
+                    android:textColorHint="@color/gray"
+                    android:typeface="normal"
+                    android:inputType="textCapCharacters"
+                    android:textSize="16dp"
+                    android:hint="@string/curp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp">
 
@@ -137,7 +156,9 @@
                     android:singleLine="true"
                     android:typeface="normal"
                     android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
                     android:inputType="textCapWords"
+                    android:enabled="false"
                     android:textSize="16dp"
                     android:maxLength="15"
                     android:hint="@string/nombre" />
@@ -155,6 +176,8 @@
                     android:singleLine="true"
                     android:typeface="normal"
                     android:inputType="textCapWords"
+                    android:textColor="@color/black"
+                    android:enabled="false"
                     android:textColorHint="@color/gray"
                     android:textSize="16dp"
                     android:maxLength="15"
@@ -172,6 +195,8 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:typeface="normal"
+                    android:textColor="@color/black"
+                    android:enabled="false"
                     android:inputType="textCapWords"
                     android:textColorHint="@color/gray"
                     android:textSize="16dp"
@@ -190,6 +215,8 @@
                     android:layout_height="wrap_content"
                     android:singleLine="true"
                     android:maxLength="50"
+                    android:textColor="@color/black"
+                    android:enabled="false"
                     android:typeface="normal"
                     android:textColorHint="@color/gray"
                     android:textSize="16dp"
@@ -202,6 +229,8 @@
                 android:layout_height="wrap_content"
                 app:ms_hintColor="@color/colorPrimary"
                 app:ms_arrowColor="@color/colorPrimary"
+                android:enabled="false"
+                android:textColor="@color/black"
                 app:ms_arrowSize="16dp"
                 app:ms_floatingLabelColor="@color/gray"
                 app:ms_floatingLabelText="@string/genero"
@@ -215,6 +244,8 @@
                 android:layout_height="wrap_content"
                 app:ms_hintColor="@color/colorPrimary"
                 app:ms_arrowColor="@color/colorPrimary"
+                android:enabled="false"
+                android:textColor="@color/black"
                 app:ms_arrowSize="16dp"
                 app:ms_floatingLabelColor="@color/gray"
                 app:ms_floatingLabelText="@string/estado_nacimiento"
@@ -243,6 +274,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/registrar"
+                android:enabled="false"
                 android:id="@+id/btn_continuar"
                 android:background="@drawable/bordered_button_blue"
                 android:layout_gravity="center_horizontal"

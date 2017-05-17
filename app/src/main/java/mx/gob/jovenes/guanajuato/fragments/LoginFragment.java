@@ -379,7 +379,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                                                 JSONObject object = response.getJSONObject();
                                                                 String url = object.optJSONObject("data").optString("url");
                                                                 u.setRutaImagen(url);
-                                                                DatosComplementariosFragment f = DatosComplementariosFragment.newInstance(u);
+                                                                RegistrarFragment f = RegistrarFragment.newInstance(u);
                                                                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                                                                 ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
                                                             }
@@ -526,7 +526,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                             u.setRutaImagen(acct.getPhotoUrl().toString());
                         }
 
-                        DatosComplementariosFragment f = DatosComplementariosFragment.newInstance(u);
+                        RegistrarFragment f = RegistrarFragment.newInstance(u);
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
                     }
