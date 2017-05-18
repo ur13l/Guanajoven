@@ -31,6 +31,8 @@ public class Usuario {
     private String rutaImagen;
     private String idGoogle;
     private String idFacebook;
+    private String codigoGuanajoven;
+    private String tokenGuanajoven;
 
     public int getId() {
         return idUsuario;
@@ -182,5 +184,21 @@ public class Usuario {
 
     public void setApellidoMaterno(String apellidoMaterno) {
         this.apellidoMaterno = apellidoMaterno;
+    }
+
+    public String getTokenGuanajoven() {
+        return tokenGuanajoven;
+    }
+
+    public void setTokenGuanajoven(String tokenGuanajoven) {
+        this.tokenGuanajoven = tokenGuanajoven;
+    }
+
+    public String getCodigoGuanajoven() {
+        return codigoGuanajoven;
+    }
+
+    public void setCodigoGuanajoven(String codigoGuanajoven) {
+        this.codigoGuanajoven = codigoGuanajoven;
     }
 }

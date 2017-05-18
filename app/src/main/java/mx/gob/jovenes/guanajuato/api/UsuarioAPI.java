@@ -93,4 +93,15 @@ public interface UsuarioAPI {
     Call<Response<Curp>> consultarCurp(
             @Query("curp") String curp
     );
+
+
+    /**
+     * Método para actualizar el token Guanajoven del código QR
+     * @param apiToken
+     * @return
+     */
+    @POST("usuarios/actualizar-token-guanajoven")
+    Call<Response<String>> actualizarTokenGuanajoven(
+            @Query("api_token") String apiToken
+    );
 }

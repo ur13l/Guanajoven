@@ -32,6 +32,8 @@ public class Sesion {
     private static final String ESTADO = "estado";
     private static final String ID_MUNICIPIO = "id_municipio";
     private static final String RUTA_IMAGEN = "ruta_imagen";
+    private static final String TOKEN_GUANAJOVEN = "token_guanajoven";
+    private static final String CODIGO_GUANAJOVEN = "codigo_guanajoven";
 
     public Sesion(Context ctx){
 
@@ -107,7 +109,8 @@ public class Sesion {
     public static String getRutaImagen (){
         return prefs.getString(RUTA_IMAGEN, null);
     }
-
+    public static String getCodigoGuanajoven () { return prefs.getString(CODIGO_GUANAJOVEN, null); }
+    public static String getTokenGuanajoven () { return prefs.getString(TOKEN_GUANAJOVEN, null); }
 
     /**
      * Permite cargar una instancia de Usuario como el objeto de sesión en el momento.
@@ -133,6 +136,8 @@ public class Sesion {
         prefs.edit().putString(TELEFONO, usuario.getTelefono()).apply();
         prefs.edit().putString(CURP, usuario.getCurp()).apply();
         prefs.edit().putString(RUTA_IMAGEN, usuario.getRutaImagen()).apply();
+        prefs.edit().putString(CODIGO_GUANAJOVEN, usuario.getCodigoGuanajoven()).apply();
+        prefs.edit().putString(TOKEN_GUANAJOVEN, usuario.getTokenGuanajoven()).apply();
 
 
     }
@@ -158,6 +163,8 @@ public class Sesion {
         prefs.edit().remove(TELEFONO).apply();
         prefs.edit().remove(CURP).apply();
         prefs.edit().remove(RUTA_IMAGEN).apply();
+        prefs.edit().remove(TOKEN_GUANAJOVEN).apply();
+        prefs.edit().remove(CODIGO_GUANAJOVEN).apply();
     }
 
 }

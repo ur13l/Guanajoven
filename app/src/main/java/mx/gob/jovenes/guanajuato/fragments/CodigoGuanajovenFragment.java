@@ -24,7 +24,14 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 /**
  * Created by leonardolirabecerra on 28/03/17.
@@ -51,12 +58,48 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                      inputGenero,
                      inputFechaNacimiento,
                      inputCurp, inputCp,
-                     inputEstado;
+                     inputEstado,
+                     inputCodigoGuanajoven;
 
     //Imagen
     private ImageView imagenQr,
                       imgBackground;
     private CircleImageView imagenUsuario;
+
+    private UsuarioAPI usuarioAPI;
+    private Retrofit retrofit;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Sesion.sessionStart(getActivity());
+        retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
+        usuarioAPI = retrofit.create(UsuarioAPI.class);
+
+        Call<Response<String>> call = usuarioAPI.actualizarTokenGuanajoven(Sesion.getApiToken());
+        call.enqueue(new Callback<Response<String>>() {
+            @Override
+            public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
+                if(response.body().success) {
+                    String tokenGuanajoven = response.body().data;
+                    try {
+                        generarQR(tokenGuanajoven, imagenQr);
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<String>> call, Throwable t) {
+
+            }
+        });
+    }
 
     @Nullable
     @Override
@@ -80,6 +123,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         //Cargar datos de usuario
         inputNombre = (TextView) vista.findViewById(R.id.tv_nombreCG);
         inputCorreo = (TextView) vista.findViewById(R.id.tv_correoCG);
+        inputCodigoGuanajoven = (TextView) vista.findViewById(R.id.tv_codigoCG);
         inputGenero = (TextView) vista.findViewById(R.id.tv_generoCG);
         inputFechaNacimiento = (TextView) vista.findViewById(R.id.tv_fechaCG);
         inputCurp = (TextView) vista.findViewById(R.id.tv_curpCG);
@@ -92,6 +136,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputNombre.setText(nombre);
         inputCorreo.setText(correo);
         inputGenero.setText(genero);
+        inputCodigoGuanajoven.setText(Sesion.getCodigoGuanajoven());
         inputFechaNacimiento.setText(fechaNacimiento);
         inputCurp.setText(Curp);
         inputCp.setText(String.valueOf(cp));
@@ -100,7 +145,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         Picasso.with(getActivity()).load(rutaImagen).into(imgBackground);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(nombre);
 
-        String dato = nombre + Curp;
+        String dato = Sesion.getTokenGuanajoven();
         try {
             generarQR(dato, imagenQr);
         } catch (WriterException e) {
