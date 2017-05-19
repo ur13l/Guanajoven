@@ -22,7 +22,7 @@ public class RVNotificacionAdapter extends RecyclerView.Adapter<RVNotificacionAd
     private List<Notificacion> notificaciones;
     private Context contexto;
 
-    public RVNotificacionAdapter(List<Notificacion> notificaciones, Context context) {
+    public RVNotificacionAdapter(Context context, List<Notificacion> notificaciones) {
         this.notificaciones = notificaciones;
         this.contexto = context;
     }
@@ -31,7 +31,7 @@ public class RVNotificacionAdapter extends RecyclerView.Adapter<RVNotificacionAd
     public NotificacionViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_notificacion, parent, false);
         NotificacionViewHolder nvh = new NotificacionViewHolder(v);
-        return null;
+        return nvh;
     }
 
     @Override

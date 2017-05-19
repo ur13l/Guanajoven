@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.messaging.RemoteMessage;
@@ -21,6 +22,7 @@ import org.w3c.dom.Text;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmResults;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVNotificacionAdapter;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
@@ -66,11 +68,43 @@ public class NotificacionesFragment extends CustomFragment {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rvNotificaciones.setLayoutManager(llm);
 
-        realm.beginTransaction();
-
-        realm.commitTransaction();
-
+        updateList();
 
         return v;
+    }
+
+
+    private void updateList() {
+        RealmResults<Notificacion> result = realm.where(Notificacion.class).findAll();
+        notificaciones = realm.copyFromRealm(result);
+        adapter = new RVNotificacionAdapter(getActivity(), notificaciones);
+        rvNotificaciones.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.VISIBLE);
+        cToolbar.setVisibility(View.GONE);
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setHomeButtonEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ImageView imagen = (ImageView)cToolbar.findViewById(R.id.image);
+
+        getActivity().findViewById(R.id.toolbar).setVisibility(View.GONE);
+        cToolbar.setVisibility(View.VISIBLE);
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setHomeButtonEnabled(true);
+        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        activity.getSupportActionBar().setTitle("Notificaciones");
+        cToolbar.setTitle("Notificaciones");
+        imagen.setImageResource(R.drawable.background4);
+
     }
 }

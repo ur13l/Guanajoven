@@ -19,6 +19,7 @@ import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
 import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
+import mx.gob.jovenes.guanajuato.fragments.RedesSocialesFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
 
 
@@ -103,6 +104,9 @@ public class SegundaActivity extends AppCompatActivity {
                 case R.id.nav_codigo_guanajoven:
                     fragment = CodigoGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, CodigoGuanajovenFragment.class);
                     //fragment.getView().setBackgroundColor(R.color.colorPrimary);
+                    break;
+                case R.id.nav_redes_sociales:
+                    fragment = RedesSocialesFragment.newInstance(R.id.nav_redes_sociales, R.string.redes_sociales, RedesSocialesFragment.class);
                     break;
 
             }
