@@ -112,7 +112,7 @@ public class RegionFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<ArrayList<Region>>> call, Throwable t) {
-                Log.d("Error", "Error al cargar los datos");
+                tvEmptyRegion.setVisibility(View.VISIBLE);
             }
         });
 

@@ -16,7 +16,7 @@ import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
-import mx.gob.jovenes.guanajuato.fragments.HistorialNotificacionesFragment;
+import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
@@ -91,7 +91,7 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
 
                 case R.id.nav_historial_notificaciones:
-                    fragment = HistorialNotificacionesFragment.newInstance(R.id.nav_historial_notificaciones, R.string.historial_notificaciones, HistorialNotificacionesFragment.class);
+                    fragment = NotificacionesFragment.newInstance(R.id.nav_historial_notificaciones, R.string.historial_notificaciones, NotificacionesFragment.class);
                     break;
 
                 case R.id.nav_regiones:
