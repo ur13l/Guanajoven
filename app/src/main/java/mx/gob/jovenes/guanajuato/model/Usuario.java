@@ -27,6 +27,8 @@ public class Usuario {
     private String curp;
     private int idEstado;
     private String estado;
+    private String estadoNacimiento;
+    private String municipio;
     private int idMunicipio;
     private String rutaImagen;
     private String idGoogle;
@@ -148,6 +150,22 @@ public class Usuario {
 
     public String getEstado() {
         return estado;
+    }
+
+    public String getEstadoNacimiento() {
+        return estadoNacimiento;
+    }
+
+    public void setEstadoNacimiento(String estadoNacimiento) {
+        this.estadoNacimiento = estadoNacimiento;
+    }
+
+    public String getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
     }
 
     public void setRutaImagen(String rutaImagen) {

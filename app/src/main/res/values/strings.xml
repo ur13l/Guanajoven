@@ -363,5 +363,6 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="estado_residencia">Estado de residencia</string>
     <string name="email">Email</string>
     <string name="empty_eventos">No se encontraron eventos</string>
+    <string name="municipio">Municipio</string>
 
 </resources>

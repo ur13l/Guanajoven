@@ -259,14 +259,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/codigo_postal" />
+                            android:text="@string/municipio" />
 
                         <TextView
-                            android:id="@+id/tv_cpCG"
+                            android:id="@+id/tv_municipioCG"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="@string/codigo_postal"
+                            android:text="@string/municipio"
                             android:textColor="@color/black"
                             android:textSize="14sp"
                             android:textStyle="bold" />

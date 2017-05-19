@@ -30,6 +30,8 @@ public class Sesion {
     private static final String CURP = "curp";
     private static final String ID_ESTADO = "id_estado";
     private static final String ESTADO = "estado";
+    private static final String ESTADO_NACIMIENTO = "estado_nacimiento";
+    private static final String MUNICIPIO = "municipio";
     private static final String ID_MUNICIPIO = "id_municipio";
     private static final String RUTA_IMAGEN = "ruta_imagen";
     private static final String TOKEN_GUANAJOVEN = "token_guanajoven";
@@ -111,6 +113,8 @@ public class Sesion {
     }
     public static String getCodigoGuanajoven () { return prefs.getString(CODIGO_GUANAJOVEN, null); }
     public static String getTokenGuanajoven () { return prefs.getString(TOKEN_GUANAJOVEN, null); }
+    public static String getEstadoNacimiento () { return prefs.getString(ESTADO_NACIMIENTO, null); }
+    public static String getMunicipio () { return prefs.getString(MUNICIPIO, null); }
 
     /**
      * Permite cargar una instancia de Usuario como el objeto de sesión en el momento.
@@ -121,6 +125,8 @@ public class Sesion {
         prefs.edit().putInt(ID_DATOS_USUARIO, usuario.getIdDatosUsuario()).apply();
         prefs.edit().putInt(ID_ESTADO, usuario.getIdEstado()).apply();
         prefs.edit().putString(ESTADO, usuario.getEstado()).apply();
+        prefs.edit().putString(ESTADO_NACIMIENTO, usuario.getEstadoNacimiento()).apply();
+        prefs.edit().putString(MUNICIPIO, usuario.getMunicipio()).apply();
         prefs.edit().putInt(ID_MUNICIPIO, usuario.getIdMunicipio()).apply();
         prefs.edit().putInt(ID_GENERO, usuario.getIdGenero()).apply();
         prefs.edit().putInt(ID_OCUPACION, usuario.getIdOcupacion()).apply();
@@ -150,6 +156,8 @@ public class Sesion {
         prefs.edit().remove(ID_DATOS_USUARIO).apply();
         prefs.edit().remove(ID_ESTADO).apply();
         prefs.edit().remove(ESTADO).apply();
+        prefs.edit().remove(ESTADO_NACIMIENTO).apply();
+        prefs.edit().remove(MUNICIPIO).apply();
         prefs.edit().remove(ID_MUNICIPIO).apply();
         prefs.edit().remove(ID_GENERO).apply();
         prefs.edit().remove(ID_OCUPACION).apply();

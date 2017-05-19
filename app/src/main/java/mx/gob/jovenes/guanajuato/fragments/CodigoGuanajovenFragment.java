@@ -44,10 +44,10 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                    Curp,
                    estado,
                    rutaImagen,
+                   municipio,
                    fechaNacimiento;
 
-    private int idGenero,
-                cp;
+    private int idGenero;
 
     private Resources res;
     private String[] estados;
@@ -57,7 +57,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                      inputCorreo,
                      inputGenero,
                      inputFechaNacimiento,
-                     inputCurp, inputCp,
+                     inputCurp,
+                     inputMunicipio,
                      inputEstado,
                      inputCodigoGuanajoven;
 
@@ -77,6 +78,10 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         usuarioAPI = retrofit.create(UsuarioAPI.class);
 
+
+        /**
+         * Llamada para actualizar el nuevo token guanajoven con nueva validez.
+         */
         Call<Response<String>> call = usuarioAPI.actualizarTokenGuanajoven(Sesion.getApiToken());
         call.enqueue(new Callback<Response<String>>() {
             @Override
@@ -116,8 +121,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
 
         fechaNacimiento = Sesion.getFechaNacimiento();
         Curp = Sesion.getCurp();
-        cp = Sesion.getCodigoPostal();
-        estado = Sesion.getEstado();
+        municipio = Sesion.getMunicipio();
+        estado = Sesion.getEstadoNacimiento();
         rutaImagen = Sesion.getRutaImagen();
 
         //Cargar datos de usuario
@@ -127,7 +132,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputGenero = (TextView) vista.findViewById(R.id.tv_generoCG);
         inputFechaNacimiento = (TextView) vista.findViewById(R.id.tv_fechaCG);
         inputCurp = (TextView) vista.findViewById(R.id.tv_curpCG);
-        inputCp = (TextView) vista.findViewById(R.id.tv_cpCG);
+        inputMunicipio = (TextView) vista.findViewById(R.id.tv_municipioCG);
         inputEstado = (TextView) vista.findViewById(R.id.tv_estadoCG);
         imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
         imagenUsuario = (CircleImageView) vista.findViewById(R.id.iv_imagenCG);
@@ -139,7 +144,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputCodigoGuanajoven.setText(Sesion.getCodigoGuanajoven());
         inputFechaNacimiento.setText(fechaNacimiento);
         inputCurp.setText(Curp);
-        inputCp.setText(String.valueOf(cp));
+        inputMunicipio.setText(municipio);
         inputEstado.setText(estado);
         Picasso.with(getActivity()).load(rutaImagen).into(imagenUsuario);
         Picasso.with(getActivity()).load(rutaImagen).into(imgBackground);
