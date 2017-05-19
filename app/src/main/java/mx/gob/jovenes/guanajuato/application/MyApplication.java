@@ -44,8 +44,7 @@ public class MyApplication extends MultiDexApplication {
     //dirección uriel
     public static final String BASE_URL = "http://10.0.7.134/GuanajovenWeb/public/api/";
 
-    //dirección local
-    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.113/GuanajovenWeb/public/api/";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.

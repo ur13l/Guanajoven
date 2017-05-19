@@ -21,6 +21,15 @@ public class Notificacion extends RealmObject{
     private String updatedAt;
     private String deletedAt;
 
+    public Notificacion() { }
+
+    public Notificacion(int idNotificacion, String titulo, String mensaje, String fechaEmision) {
+        this.idNotificacion = idNotificacion;
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.fechaEmision = fechaEmision;
+    }
+
     public int getIdNotificacion() {
         return idNotificacion;
     }
