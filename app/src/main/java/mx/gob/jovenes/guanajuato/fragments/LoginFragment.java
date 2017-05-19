@@ -643,6 +643,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
 
     /**
      * Método que realiza el cierre de sesión de Facebook.
+     *
      */
     public void logOutFacebook() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
