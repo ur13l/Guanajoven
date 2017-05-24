@@ -89,13 +89,14 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
 
         Retrofit retrofit = ((MyApplication)getActivity().getApplication()).getRetrofitInstance();
         usuarioAPI = retrofit.create(UsuarioAPI.class);
-
+/*
         Bundle args = getArguments();
         usuario = new Usuario();
         usuario.setCorreo(args.getString(EMAIL));
         usuario.setNombre(args.getString(NOMBRE));
         usuario.setApellidoPaterno(args.getString(AP_PATERNO));
         usuario.setRutaImagen(args.getString(RUTA_IMAGEN));
+        */
     }
 
     /**

@@ -60,6 +60,8 @@ import mx.gob.jovenes.guanajuato.activities.LoginActivity;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.model.DatosUsuario;
+import mx.gob.jovenes.guanajuato.model.Genero;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
@@ -360,13 +362,17 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                             }
                                             else{
                                                 final Usuario u = new Usuario();
-                                                u.setCorreo(email);
+                                                final DatosUsuario du = new DatosUsuario();
+                                                final Genero g = new Genero();
+                                                u.setEmail(email);
                                                 u.setIdFacebook(id);
-                                                u.setNombre(nombre);
-                                                u.setApellidoPaterno(apellido);
-                                                u.setFechaNacimiento(fecha);
-                                                u.setIdGenero(gender);
-                                                u.setRutaImagen("http://graph.facebook.com/"+id+"/picture?type=large");
+                                                du.setNombre(nombre);
+                                                du.setApellidoPaterno(apellido);
+                                                du.setFechaNacimiento(fecha);
+                                                g.setIdGenero(gender);
+                                                du.setRutaImagen("http://graph.facebook.com/"+id+"/picture?type=large");
+                                                du.setGenero(g);
+                                                u.setDatosUsuario(du);
 
                                             /* make the API call */
                                                 new GraphRequest(
@@ -378,7 +384,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                                                             public void onCompleted(GraphResponse response) {
                                                                 JSONObject object = response.getJSONObject();
                                                                 String url = object.optJSONObject("data").optString("url");
-                                                                u.setRutaImagen(url);
+                                                                du.setRutaImagen(url);
                                                                 RegistrarFragment f = RegistrarFragment.newInstance(u);
                                                                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                                                                 ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
@@ -518,14 +524,16 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                         //Caso contrario, se genera una instancia de usuario que se pasará a
                         //Datos complementarios para llenar el perfil.
                         Usuario u = new Usuario();
-                        u.setNombre(acct.getGivenName());
-                        u.setApellidoPaterno(acct.getFamilyName());
-                        u.setCorreo(acct.getEmail());
+                        DatosUsuario du = new DatosUsuario();
+
+                        du.setNombre(acct.getGivenName());
+                        du.setApellidoPaterno(acct.getFamilyName());
+                        u.setEmail(acct.getEmail());
                         u.setIdGoogle(acct.getId());
                         if(acct.getPhotoUrl() != null) {
-                            u.setRutaImagen(acct.getPhotoUrl().toString());
+                            du.setRutaImagen(acct.getPhotoUrl().toString());
                         }
-
+                        u.setDatosUsuario(du);
                         RegistrarFragment f = RegistrarFragment.newInstance(u);
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         ft.replace(R.id.login_fragment_container, f).addToBackStack(null).commit();
