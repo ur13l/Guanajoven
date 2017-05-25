@@ -365,5 +365,17 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="email">Email</string>
     <string name="empty_eventos">No se encontraron eventos</string>
     <string name="municipio">Municipio</string>
+    <string name="nivel_estudios">Último nivel de estudios</string>
+    <string name="confirm_programa_gobierno">¿Eres beneficiario de algún programa de gobierno?</string>
+    <string name="de_que_tipo">¿De qué tipo?</string>
+    <string name="trabajas">¿Trabajas?</string>
+    <string name="confirm_pueblo_indigena">¿Eres de algún pueblo originario o comunidad indígena?</string>
+    <string name="de_cual">¿De cuál?</string>
+    <string name="confirm_capacidad_diferente">¿Presentas alguna capacidad diferente?</string>
+    <string name="idiomas_adicionales">Idiomas que dominas adicionales al español</string>
+    <string name="premios">¿Has obtenido premios o distinciones?</string>
+    <string name="menciona_cuales">Menciona cuál(es)</string>
+    <string name="proyectos_sociales">¿Participas en algún proyecto social que beneficie a tu comunidad?</string>
+    <string name="sueldo_proyectos_sociales">¿Recibes sueldo o apoyo económico por esto?</string>
 
 </resources>

@@ -60,18 +60,7 @@
                     android:layout_marginBottom="10dp"
                     android:text="@string/datos_comp"/>
 
-                <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/spn_ocupacion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ms_hintColor="@color/colorPrimary"
-                    app:ms_arrowColor="@color/colorPrimary"
-                    app:ms_arrowSize="16dp"
-                    app:ms_floatingLabelColor="@color/gray"
-                    app:ms_floatingLabelText="@string/ocupacion"
-                    app:ms_hint="@string/ocupacion"
-                    app:ms_multiline="true"
-                    android:layout_marginTop="5dp" />
+                <!--
                 <fr.ganfra.materialspinner.MaterialSpinner
                     android:id="@+id/spn_estado_civil"
                     android:layout_width="match_parent"
@@ -84,16 +73,108 @@
                     app:ms_hint="@string/estado_civil"
                     app:ms_multiline="true"
                     android:layout_marginTop="5dp" />
+                    -->
                 <fr.ganfra.materialspinner.MaterialSpinner
-                    android:id="@+id/spn_nivel_academico"
+                    android:id="@+id/spn_nivel_estudios"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ms_hintColor="@color/colorPrimary"
                     app:ms_arrowColor="@color/colorPrimary"
                     app:ms_arrowSize="16dp"
                     app:ms_floatingLabelColor="@color/gray"
-                    app:ms_floatingLabelText="@string/nivel_academico"
-                    app:ms_hint="@string/nivel_academico"
+                    app:ms_floatingLabelText="@string/nivel_estudios"
+                    app:ms_hint="@string/nivel_estudios"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_confirm_programa_gobierno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/confirm_programa_gobierno"
+                    app:ms_hint="@string/confirm_programa_gobierno"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_programa_gobierno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/de_que_tipo"
+                    app:ms_hint="@string/de_que_tipo"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_trabaja"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/trabajas"
+                    app:ms_hint="@string/trabajas"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_confirm_pueblo_indigena"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/confirm_pueblo_indigena"
+                    app:ms_hint="@string/confirm_pueblo_indigena"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_pueblo_indigena"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/de_cual"
+                    app:ms_hint="@string/de_cual"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_confirm_capacidad_diferente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/confirm_capacidad_diferente"
+                    app:ms_hint="@string/confirm_capacidad_diferente"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_capacidad_diferente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/de_que_tipo"
+                    app:ms_hint="@string/de_que_tipo"
                     app:ms_multiline="true"
                     android:layout_marginTop="5dp" />
 
@@ -103,18 +184,89 @@
                     android:layout_marginTop="5dp">
 
                     <EditText
-                        android:id="@+id/et_pasatiempo_favorito"
+                        android:id="@+id/et_idiomas_adicionales"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:typeface="normal"
                         android:textColorHint="@color/gray"
-                        android:inputType="textCapWords"
                         android:textSize="16dp"
                         android:maxLength="15"
-                        android:hint="@string/pasatiempo_favorito" />
+                        android:hint="@string/idiomas_adicionales" />
                 </android.support.design.widget.TextInputLayout>
 
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_confirm_premios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/premios"
+                    app:ms_hint="@string/premios"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_premios"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:typeface="normal"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16dp"
+                        android:maxLength="15"
+                        android:hint="@string/menciona_cuales" />
+                </android.support.design.widget.TextInputLayout>
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_confirm_proyectos_sociales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/proyectos_sociales"
+                    app:ms_hint="@string/proyectos_sociales"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/et_proyecto_social"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:typeface="normal"
+                        android:textColorHint="@color/gray"
+                        android:textSize="16dp"
+                        android:maxLength="15"
+                        android:hint="@string/menciona_cuales" />
+                </android.support.design.widget.TextInputLayout>
+
+                <fr.ganfra.materialspinner.MaterialSpinner
+                    android:id="@+id/spn_sueldo_proyectos_sociales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ms_hintColor="@color/colorPrimary"
+                    app:ms_arrowColor="@color/colorPrimary"
+                    app:ms_arrowSize="16dp"
+                    app:ms_floatingLabelColor="@color/gray"
+                    app:ms_floatingLabelText="@string/sueldo_proyectos_sociales"
+                    app:ms_hint="@string/sueldo_proyectos_sociales"
+                    app:ms_multiline="true"
+                    android:layout_marginTop="5dp" />
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

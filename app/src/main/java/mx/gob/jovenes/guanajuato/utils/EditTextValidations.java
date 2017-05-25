@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 
 import java.util.Date;
@@ -173,5 +174,36 @@ public class EditTextValidations {
         else{
             return true;
         }
+    }
+
+
+    public static void dependencySpinners(MaterialSpinner spn1, View[] views) {
+        for(int i = views.length -1 ; i >= 0 ; i -= 1) {
+            views[i].setVisibility(View.GONE);
+        }
+        spn1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
+                if(position == 0) {
+                    for(int i = views.length -1 ; i >= 0 ; i -= 1) {
+                        views[i].setVisibility(View.VISIBLE);
+                    }
+                }
+                else {
+                    for(int i = views.length -1 ; i >= 0 ; i -= 1) {
+                        Log.d("Classsss", views[i].getClass().getName());
+                        if(views[i].getClass().equals(MaterialSpinner.class)){
+                            ((MaterialSpinner)views[i]).setSelection(0);
+                        }
+                        views[i].setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
     }
 }
