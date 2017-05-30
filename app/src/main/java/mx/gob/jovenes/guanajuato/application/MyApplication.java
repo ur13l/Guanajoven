@@ -32,11 +32,8 @@ public class MyApplication extends MultiDexApplication {
 
     private static Realm realm;
     public static String LAST_UPDATE_CONVOCATORIAS = "last_update_convocatorias";
-
     public static String LAST_UPDATE_REGIONES = "last_update_regiones";
-
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
-
     public static String LAST_UPDATE_EVENTOS = "last_update_eventos";
 
 
@@ -47,10 +44,9 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
     //dirección uriel
-    //public static final String BASE_URL = "http://10.0.7.113/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.134/GuanajovenWeb/public/api/";
 
-    //dirección local
-    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.113/GuanajovenWeb/public/api/";
 
     //dirección API Twitter
     public static final String URL_TWITTER = "https://api.twitter.com/1.1/statuses/";

@@ -24,7 +24,14 @@ import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 /**
  * Created by leonardolirabecerra on 28/03/17.
@@ -37,10 +44,10 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                    Curp,
                    estado,
                    rutaImagen,
+                   municipio,
                    fechaNacimiento;
 
-    private int idGenero,
-                cp;
+    private int idGenero;
 
     private Resources res;
     private String[] estados;
@@ -50,40 +57,80 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                      inputCorreo,
                      inputGenero,
                      inputFechaNacimiento,
-                     inputCurp, inputCp,
-                     inputEstado;
+                     inputCurp,
+                     inputMunicipio,
+                     inputEstado,
+                     inputCodigoGuanajoven;
 
     //Imagen
     private ImageView imagenQr,
                       imgBackground;
     private CircleImageView imagenUsuario;
 
+    private UsuarioAPI usuarioAPI;
+    private Retrofit retrofit;
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Sesion.sessionStart(getActivity());
+        retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
+        usuarioAPI = retrofit.create(UsuarioAPI.class);
+
+
+        /**
+         * Llamada para actualizar el nuevo token guanajoven con nueva validez.
+         */
+        Call<Response<String>> call = usuarioAPI.actualizarTokenGuanajoven(Sesion.getUsuario().getApiToken());
+        call.enqueue(new Callback<Response<String>>() {
+            @Override
+            public void onResponse(Call<Response<String>> call, retrofit2.Response<Response<String>> response) {
+                if(response.body().success) {
+                    String tokenGuanajoven = response.body().data;
+                    try {
+                        generarQR(tokenGuanajoven, imagenQr);
+                    } catch (WriterException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response<String>> call, Throwable t) {
+
+            }
+        });
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_codigo_guanajoven, container, false);
-
+        Usuario u = Sesion.getUsuario();
         //Obtener datos de usuario
-        nombre = Sesion.getNombre() + " " + Sesion.getApellidoPaterno() + " " + Sesion.getApellidoMaterno();
-        correo = Sesion.getCorreo();
-        idGenero = Sesion.getIdGenero();
+        nombre = u.getDatosUsuario().getNombre() + " " + u.getDatosUsuario().getApellidoPaterno() +
+                " " + u.getDatosUsuario().getApellidoMaterno();
+        correo = u.getEmail();
+        genero = u.getDatosUsuario().getGenero().getNombre();
 
-        if (idGenero == 1) genero = "Masculino";
-        else genero = "Femenino";
-
-        fechaNacimiento = Sesion.getFechaNacimiento();
-        Curp = Sesion.getCurp();
-        cp = Sesion.getCodigoPostal();
-        estado = Sesion.getEstado();
-        rutaImagen = Sesion.getRutaImagen();
+        fechaNacimiento = u.getDatosUsuario().getFechaNacimiento();
+        Curp = u.getDatosUsuario().getCurp();
+        municipio = u.getDatosUsuario().getMunicipio().getNombre();
+        estado = u.getDatosUsuario().getEstadoNacimiento().getNombre();
+        rutaImagen = u.getDatosUsuario().getRutaImagen();
 
         //Cargar datos de usuario
         inputNombre = (TextView) vista.findViewById(R.id.tv_nombreCG);
         inputCorreo = (TextView) vista.findViewById(R.id.tv_correoCG);
+        inputCodigoGuanajoven = (TextView) vista.findViewById(R.id.tv_codigoCG);
         inputGenero = (TextView) vista.findViewById(R.id.tv_generoCG);
         inputFechaNacimiento = (TextView) vista.findViewById(R.id.tv_fechaCG);
         inputCurp = (TextView) vista.findViewById(R.id.tv_curpCG);
-        inputCp = (TextView) vista.findViewById(R.id.tv_cpCG);
+        inputMunicipio = (TextView) vista.findViewById(R.id.tv_municipioCG);
         inputEstado = (TextView) vista.findViewById(R.id.tv_estadoCG);
         imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
         imagenUsuario = (CircleImageView) vista.findViewById(R.id.iv_imagenCG);
@@ -92,21 +139,21 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputNombre.setText(nombre);
         inputCorreo.setText(correo);
         inputGenero.setText(genero);
+        inputCodigoGuanajoven.setText(u.getCodigoGuanajoven().getIdCodigoGuanajoven() + "");
         inputFechaNacimiento.setText(fechaNacimiento);
         inputCurp.setText(Curp);
-        inputCp.setText(String.valueOf(cp));
+        inputMunicipio.setText(municipio);
         inputEstado.setText(estado);
         Picasso.with(getActivity()).load(rutaImagen).into(imagenUsuario);
         Picasso.with(getActivity()).load(rutaImagen).into(imgBackground);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(nombre);
 
-        String dato = nombre + Curp;
+        String dato = u.getCodigoGuanajoven().getToken();
         try {
             generarQR(dato, imagenQr);
         } catch (WriterException e) {
             e.printStackTrace();
         }
-
         return vista;
     }
 

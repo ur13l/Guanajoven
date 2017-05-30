@@ -234,7 +234,7 @@ public class HomeFragment extends CustomFragment {
         FirebaseMessaging.getInstance().subscribeToTopic("mx.gob.jovenes.guanajuato.Guanajoven");
         FirebaseInstanceId.getInstance().getToken();
         String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
-        int idUsuario = Sesion.getIdUsuario();
+        int idUsuario = Sesion.getUsuario().getId();
         Call<Response<Boolean>> call = notificacionAPI.enviarToken(
                 token,
                 idUsuario,

@@ -197,7 +197,7 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 break;
             case R.id.nav_logout:
-                Call<Response<Boolean>> call = notificacionAPI.cancelarToken(Sesion.getIdUsuario());
+                Call<Response<Boolean>> call = notificacionAPI.cancelarToken(Sesion.getUsuario().getId());
                 call.enqueue(new Callback<Response<Boolean>>() {
                     @Override
                     public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {

@@ -41,6 +41,7 @@ import mx.gob.jovenes.guanajuato.api.RegistroRequest;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.model.DatosUsuario;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
@@ -107,9 +108,11 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
         Bundle args = getArguments();
         usuario = new Usuario();
-        usuario.setCorreo(args.getString(EMAIL));
+        usuario.setEmail(args.getString(EMAIL));
         usuario.setIdGoogle(args.getString(ID_GOOGLE));
         usuario.setIdFacebook(args.getString(ID_FACEBOOK));
+/**
+        DatosUsuario du = new DatosUsuario()
         usuario.setNombre(args.getString(NOMBRE));
         usuario.setApellidoPaterno(args.getString(AP_PATERNO));
         usuario.setRutaImagen(args.getString(RUTA_IMAGEN));
@@ -117,6 +120,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         if(args.getString(FECHA_NACIMIENTO) != null) {
             usuario.setFechaNacimiento(args.getString(FECHA_NACIMIENTO));
         }
+ **/
     }
 
     /**
@@ -171,6 +175,8 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
         btnContinuar.setOnClickListener(this);
 
+
+        /**
         etNombre.setText(usuario.getNombre());
         etApPaterno.setText(usuario.getApellidoPaterno());
 
@@ -180,6 +186,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
         }
         spnGenero.setSelection(usuario.getIdGenero());
          Picasso.with(getActivity()).load(usuario.getRutaImagen()).into(imgPerfil);
+         **/
         return v;
     }
 
@@ -239,7 +246,7 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
         //Si todas las validaciones se cumplen, se genera el nuevo fragment.
         if(cpV) {
-
+/**
             progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
 
             Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
@@ -303,6 +310,8 @@ public class DatosComplementariosFragment extends Fragment implements View.OnCli
 
                 }
             });
+
+ **/
         }
     }
 

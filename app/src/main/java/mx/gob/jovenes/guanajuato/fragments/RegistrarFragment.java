@@ -70,6 +70,7 @@ import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
+import mx.gob.jovenes.guanajuato.model.DatosUsuario;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.models_tmp.Curp;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
@@ -135,10 +136,12 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         Bundle args = getArguments();
         if(args != null) {
             usuario = new Usuario();
-            usuario.setCorreo(args.getString(EMAIL));
+            DatosUsuario du = new DatosUsuario();
+            usuario.setEmail(args.getString(EMAIL));
             usuario.setIdGoogle(args.getString(ID_GOOGLE));
             usuario.setIdFacebook(args.getString(ID_FACEBOOK));
-            usuario.setRutaImagen(args.getString(RUTA_IMAGEN));
+            du.setRutaImagen(args.getString(RUTA_IMAGEN));
+            usuario.setDatosUsuario(du);
         }
     }
 
@@ -162,12 +165,12 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         imgPerfil = (CircleImageView) v.findViewById(R.id.img_profile);
         btnBack = (ImageButton) v.findViewById(R.id.btn_back);
         if(usuario != null) {
-            etEmail.setText(usuario.getCorreo());
+            etEmail.setText(usuario.getEmail());
             etEmail.setEnabled(false);
             etPassword1.setVisibility(GONE);
             etPassword2.setVisibility(GONE);
-            if(usuario.getRutaImagen() != null) {
-                Picasso.with(getActivity()).load(usuario.getRutaImagen()).into(imgPerfil);
+            if(usuario.getDatosUsuario().getRutaImagen() != null) {
+                Picasso.with(getActivity()).load(usuario.getDatosUsuario().getRutaImagen()).into(imgPerfil);
             }
         }
 
@@ -653,10 +656,10 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     public static RegistrarFragment newInstance(Usuario usuario) {
         RegistrarFragment f = new RegistrarFragment();
         Bundle args = new Bundle();
-        args.putString(EMAIL, usuario.getCorreo());
+        args.putString(EMAIL, usuario.getEmail());
         args.putString(ID_GOOGLE, usuario.getIdGoogle());
         args.putString(ID_FACEBOOK, usuario.getIdFacebook());
-        args.putString(RUTA_IMAGEN, usuario.getRutaImagen());
+        args.putString(RUTA_IMAGEN, usuario.getDatosUsuario().getRutaImagen());
         f.setArguments(args);
         return f;
     }
