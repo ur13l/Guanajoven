@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_twitter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Twitter"/>
+    <!--Frame interno donde se efectuan los cambios -->
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-</android.support.v4.widget.NestedScrollView>
+        <!--RecyclerView que contiene la lista de tweets -->
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_tweets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <!--Texto en caso de que no exista ningun tweet -->
+        <TextView
+            android:id="@+id/tv_empty_tweets"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No se encontraron tweets"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:visibility="gone"/>
+
+    </FrameLayout>
+
+</LinearLayout>

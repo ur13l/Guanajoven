@@ -19,11 +19,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
@@ -66,6 +69,10 @@ public class HomeActivity extends AppCompatActivity
 
     private SharedPreferences prefs;
 
+    private ImageView imagenUsuarioDrawer;
+    private TextView nombreUsuarioDrawer;
+    private TextView correoUsuarioDrawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +110,22 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
 
+
+
+        imagenUsuarioDrawer = (ImageView) navigationView.findViewById(R.id.imagen_usuario_drawer);
+        nombreUsuarioDrawer = (TextView) navigationView.findViewById(R.id.nombre_usuario_drawer);
+        correoUsuarioDrawer = (TextView) navigationView.findViewById(R.id.correo_usuario_drawer);
+
+        //Picasso.with(getApplicationContext()).load(Sesion.getRutaImagen()).into(imagenUsuarioDrawer);
+        //nombreUsuarioDrawer.setText(Sesion.getNombre() + " " + Sesion.getApellidoPaterno() + " " + Sesion.getApellidoMaterno());
+        //correoUsuarioDrawer.setText(Sesion.getCorreo());
+        System.err.println("---------------------------------------------");
+
+        System.err.println(Sesion.getRutaImagen());
+        System.err.println(Sesion.getNombre());
+        System.err.println(Sesion.getCorreo());
+
+        System.err.println("---------------------------------------------");
         //Si no se ha iniciado la Activity genera una nueva (Evita generar nuevas al rotar la pantalla).
         if (savedInstanceState == null) {
             FragmentManager fm = getSupportFragmentManager();

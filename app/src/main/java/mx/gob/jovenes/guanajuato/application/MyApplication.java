@@ -28,6 +28,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class MyApplication extends MultiDexApplication {
     private Retrofit retrofit;
+    private Retrofit retrofitTwitter;
+
     private static Realm realm;
     public static String LAST_UPDATE_CONVOCATORIAS = "last_update_convocatorias";
 
@@ -49,6 +51,9 @@ public class MyApplication extends MultiDexApplication {
 
     //dirección local
     public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+
+    //dirección API Twitter
+    public static final String URL_TWITTER = "https://api.twitter.com/1.1/statuses/";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.
@@ -72,6 +77,10 @@ public class MyApplication extends MultiDexApplication {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
+
+        //Instancia de retrofit twitter
+        retrofitTwitter = new Retrofit.Builder().baseUrl(URL_TWITTER).addConverterFactory(GsonConverterFactory.create(gson)).build();
+
         //Instancia por defecto de Realm.
         //TODO: Revisar si se puede hacer la configuración específica.
 
@@ -87,5 +96,9 @@ public class MyApplication extends MultiDexApplication {
 
     public Retrofit getRetrofitInstance(){
         return retrofit;
+    }
+
+    public Retrofit getRetrofitTwitterInstance() {
+        return retrofitTwitter;
     }
 }
