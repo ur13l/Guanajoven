@@ -9,4 +9,5 @@ public class Response<T> {
     public String[] errors;
     public int status;
     public T data;
+
 }
