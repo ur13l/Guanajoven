@@ -16,6 +16,7 @@ import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
 import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
+import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
@@ -52,6 +53,7 @@ public class SegundaActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();
         Fragment fragment = null;
         int id = getIntent().getExtras().getInt(HomeActivity.MENU_ID);
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         if (fab != null){

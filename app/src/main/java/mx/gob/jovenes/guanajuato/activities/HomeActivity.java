@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -26,10 +27,12 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.maps.model.Circle;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 
+import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
@@ -69,7 +72,7 @@ public class HomeActivity extends AppCompatActivity
 
     private SharedPreferences prefs;
 
-    private ImageView imagenUsuarioDrawer;
+    private CircleImageView imagenUsuarioDrawer;
     private TextView nombreUsuarioDrawer;
     private TextView correoUsuarioDrawer;
 
@@ -110,22 +113,12 @@ public class HomeActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
 
+        View headerLayout = navigationView.getHeaderView(0);
 
+        imagenUsuarioDrawer = (CircleImageView) headerLayout.findViewById(R.id.imagen_usuario_drawer);
+        nombreUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.nombre_usuario_drawer);
+        correoUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.correo_usuario_drawer);
 
-        imagenUsuarioDrawer = (ImageView) navigationView.findViewById(R.id.imagen_usuario_drawer);
-        nombreUsuarioDrawer = (TextView) navigationView.findViewById(R.id.nombre_usuario_drawer);
-        correoUsuarioDrawer = (TextView) navigationView.findViewById(R.id.correo_usuario_drawer);
-
-        //Picasso.with(getApplicationContext()).load(Sesion.getRutaImagen()).into(imagenUsuarioDrawer);
-        //nombreUsuarioDrawer.setText(Sesion.getNombre() + " " + Sesion.getApellidoPaterno() + " " + Sesion.getApellidoMaterno());
-        //correoUsuarioDrawer.setText(Sesion.getCorreo());
-        System.err.println("---------------------------------------------");
-
-        System.err.println(Sesion.getRutaImagen());
-        System.err.println(Sesion.getNombre());
-        System.err.println(Sesion.getCorreo());
-
-        System.err.println("---------------------------------------------");
         //Si no se ha iniciado la Activity genera una nueva (Evita generar nuevas al rotar la pantalla).
         if (savedInstanceState == null) {
             FragmentManager fm = getSupportFragmentManager();
@@ -263,6 +256,10 @@ public class HomeActivity extends AppCompatActivity
     protected  void onStart(){
         super.onStart();
         mGoogleApiClient.connect();
+
+        Picasso.with(getApplicationContext()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
+        nombreUsuarioDrawer.setText(Sesion.getUsuario().getDatosUsuario().getNombre() + " " +Sesion.getUsuario().getDatosUsuario().getApellidoPaterno() + " " +Sesion.getUsuario().getDatosUsuario().getApellidoMaterno());
+        correoUsuarioDrawer.setText(Sesion.getUsuario().getEmail());
     }
 
     @Override

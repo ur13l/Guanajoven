@@ -381,8 +381,8 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                         etCodigoPostal.getText().toString(),
                         estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
                         "data:image/jpeg;base64," + getBase64(imgPerfil),
-                        usuario.getIdGoogle(),
-                        usuario.getIdFacebook()
+                        usuario == null ? null : usuario.getIdGoogle(),
+                        usuario == null ? null : usuario.getIdFacebook()
                 )
             );
 

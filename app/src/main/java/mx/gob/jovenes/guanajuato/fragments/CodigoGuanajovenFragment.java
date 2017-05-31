@@ -41,6 +41,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     private String nombre,
                    correo,
                    genero,
+                   codigoGuanajoven,
                    Curp,
                    estado,
                    rutaImagen,
@@ -116,12 +117,16 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                 " " + u.getDatosUsuario().getApellidoMaterno();
         correo = u.getEmail();
         genero = u.getDatosUsuario().getGenero().getNombre();
-
         fechaNacimiento = u.getDatosUsuario().getFechaNacimiento();
+        codigoGuanajoven = String.valueOf(u.getCodigoGuanajoven().getIdCodigoGuanajoven());
         Curp = u.getDatosUsuario().getCurp();
         municipio = u.getDatosUsuario().getMunicipio().getNombre();
         estado = u.getDatosUsuario().getEstadoNacimiento().getNombre();
         rutaImagen = u.getDatosUsuario().getRutaImagen();
+
+        System.err.println("------------------------------------------");
+        System.err.println(codigoGuanajoven);
+        System.err.println("-----------------------------------------");
 
         //Cargar datos de usuario
         inputNombre = (TextView) vista.findViewById(R.id.tv_nombreCG);
@@ -139,7 +144,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         inputNombre.setText(nombre);
         inputCorreo.setText(correo);
         inputGenero.setText(genero);
-        inputCodigoGuanajoven.setText(u.getCodigoGuanajoven().getIdCodigoGuanajoven() + "");
+        inputCodigoGuanajoven.setText(codigoGuanajoven);
         inputFechaNacimiento.setText(fechaNacimiento);
         inputCurp.setText(Curp);
         inputMunicipio.setText(municipio);

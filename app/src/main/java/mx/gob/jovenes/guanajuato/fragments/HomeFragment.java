@@ -2,15 +2,24 @@ package mx.gob.jovenes.guanajuato.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.ButtonBarLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -28,6 +37,8 @@ import java.util.List;
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.Funcion;
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.activities.HomeActivity;
+import mx.gob.jovenes.guanajuato.activities.SegundaActivity;
 import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
 import mx.gob.jovenes.guanajuato.api.PublicidadAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
@@ -62,6 +73,17 @@ public class HomeFragment extends CustomFragment {
     private ImageButton btnClose;
     private View slidePublicidad;
 
+    public static String MENU_ID = "menu_id";
+
+    //Botones
+    ImageButton botonNavigationDrawer;
+    Button botonCodigoGuanajoven;
+    Button botonEventos;
+    Button botonCheckIn;
+    Button botonConvocatorias;
+    Button botonRedesSociales;
+    Button botonChat;
+
     //Instancias de API
     private Retrofit retrofit;
     private PublicidadAPI publicidadAPI;
@@ -70,6 +92,10 @@ public class HomeFragment extends CustomFragment {
 
     //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
+
+    //Cambio de fragments
+    FragmentTransaction fragmentTransaction;
+    Fragment fragment = null;
 
 
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
@@ -90,7 +116,7 @@ public class HomeFragment extends CustomFragment {
         //Declarando las preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
-
+        fragmentTransaction = getFragmentManager().beginTransaction();
     }
 
 
@@ -98,12 +124,22 @@ public class HomeFragment extends CustomFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
 
+        //Elementos publicidad
         pnlPublicidad = (ViewGroup) v.findViewById(R.id.pnl_publicidad);
         btnSlide = (ImageButton) v.findViewById(R.id.btn_slide);
         btnClose = (ImageButton) v.findViewById(R.id.close);
         slidePublicidad = v.findViewById(R.id.slide_publicidad);
 
+        //Elementos menu
+        botonNavigationDrawer = (ImageButton) v.findViewById(R.id.boton_navigation_drawer);
+        botonCodigoGuanajoven = (Button) v.findViewById(R.id.boton_codigo_guanajoven);
+        botonEventos = (Button) v.findViewById(R.id.boton_eventos);
+        botonCheckIn = (Button) v.findViewById(R.id.boton_check_in);
+        botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
+        botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
+        botonChat = (Button) v.findViewById(R.id.boton_chat);
 
+        //Listeners de publicidad
         btnSlide.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,6 +162,78 @@ public class HomeFragment extends CustomFragment {
                         .translationX(pnlPublicidad.getWidth());
             }
         });
+
+
+
+        //Listeners botones menu
+
+        botonNavigationDrawer.setOnClickListener((View) -> {
+            DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+            drawer.openDrawer(GravityCompat.START);
+        });
+
+        botonCodigoGuanajoven.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_codigo_guanajoven);
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
+        botonEventos.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_mis_eventos);
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
+        botonCheckIn.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_calendario_eventos);
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
+        botonConvocatorias.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_convocatorias);
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
+        botonRedesSociales.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_redes_sociales);
+                fragment = RedesSocialesFragment.newInstance(R.id.nav_redes_sociales, R.string.redes_sociales, RedesSocialesFragment.class);
+
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
+        botonChat.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_chat_ayuda);
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
 
         SlideHandler.initSlider(slidePublicidad, "left", new Funcion() {
             @Override
@@ -240,6 +348,7 @@ public class HomeFragment extends CustomFragment {
                 idUsuario,
                 "android"
         );
+
         call.enqueue(new Callback<Response<Boolean>>() {
             @Override
             public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
@@ -366,6 +475,7 @@ public class HomeFragment extends CustomFragment {
                 }
             }
         }
+
 
 
     }

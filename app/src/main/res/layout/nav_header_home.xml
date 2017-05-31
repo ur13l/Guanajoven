@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/nav_header_home"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
@@ -15,11 +17,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-    <ImageView
-        android:id="@+id/imagen_usuario_drawer"
-        android:layout_width="70dp"
-        android:layout_height="85dp"
-        android:src="@drawable/logo" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagen_usuario_drawer"
+            android:layout_width="70dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:src="@drawable/placeholder"/>
 
     </FrameLayout>
 
