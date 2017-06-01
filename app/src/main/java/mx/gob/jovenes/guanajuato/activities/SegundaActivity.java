@@ -13,10 +13,9 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
 import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
-import mx.gob.jovenes.guanajuato.fragments.ColaboradoresFragment;
+import mx.gob.jovenes.guanajuato.fragments.AcercaDeFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
-import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
@@ -85,8 +84,8 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = EventoFragment.newInstance(R.id.nav_mis_eventos, R.string.mis_eventos ,EventoFragment.class);
                     break;
 
-                case R.id.nav_colaboradores:
-                    fragment = ColaboradoresFragment.newInstance(R.id.nav_colaboradores, R.string.colaboradores, ColaboradoresFragment.class);
+                case R.id.nav_acerca_de:
+                    fragment = AcercaDeFragment.newInstance(R.id.nav_acerca_de, R.string.acerca_de, AcercaDeFragment.class);
                     break;
 
                 case R.id.nav_calendario_eventos:

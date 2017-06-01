@@ -76,8 +76,8 @@
                     android:icon="@drawable/ic_directorio"
                     android:title="@string/regiones"/>
                 <item
-                    android:id="@+id/nav_colaboradores"
-                    android:icon="@drawable/ic_colaboradores"
+                    android:id="@+id/nav_acerca_de"
+                    android:icon="@drawable/ayuda"
                     android:title="@string/acerca_de" />
 
 

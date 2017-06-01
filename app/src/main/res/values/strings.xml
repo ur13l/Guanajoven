@@ -378,4 +378,27 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="proyectos_sociales">¿Participas en algún proyecto social que beneficie a tu comunidad?</string>
     <string name="sueldo_proyectos_sociales">¿Recibes sueldo o apoyo económico por esto?</string>
 
+    <!--Strings fragments conocenos-->
+    <string name="conocenos_titulo">Conocenos</string>
+    <string name="conocenos_que_hacemos">¿Que hacemos?</string>
+    <string name="conocenos_titulo_descripcion">Descripción</string>
+    <string name="conocenos_titulo_mision">Misión</string>
+    <string name="conocenos_titulo_vision">Visión</string>
+    <string name="conocenos_titulo_valores">Valores</string>
+    <string name="conocenos_descripcion">En Guanajoven somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y políticas públicas, orientada a elevar la calidad de vida de los jóvenes guanajuatenses.</string>
+    <string name="conocenos_mision">Somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y politícas publicas, orientada a elevar la calidad de vida de los jóvenes Guanajuatenses.</string>
+    <string name="conocenos_vision">En Guanajuato tenemos jóvenes con una mejor calidad de vida, integrados en una comunidad global, que participan de manera solidaria y comprometida en el desarrollo integral de su entorno.</string>
+    <string name="conocenos_valores">Solidaridad\n
+                                     Integridad\n
+                                     Respeto\n
+                                     Responsabilidad\n
+                                     Creatividad\n
+                                     Humildad</string>
+    <string name="conocenos_titulo_logros_estadisticas">Logros y estadísticas</string>
+    <string name="conocenos_logros_estadisticas">Contenido de logros y estadísticas</string>
+    <string name="conocenos_enlaces">Enlaces</string>
+    <string name="conocenos_lineas_de_accion">Líneas de acción</string>
+    <string name="conocenos_diagnostico_juvenil">Diagnóstico juvenil</string>
+    <string name="conocenos_encuesta_juventud">Encuesta de juventud</string>
+    <string name="conocenos_directorio">Directorio</string>
 </resources>

@@ -77,6 +77,7 @@ public class HomeFragment extends CustomFragment {
 
     //Botones
     ImageButton botonNavigationDrawer;
+    ImageButton botonHelp;
     Button botonCodigoGuanajoven;
     Button botonEventos;
     Button botonCheckIn;
@@ -132,6 +133,7 @@ public class HomeFragment extends CustomFragment {
 
         //Elementos menu
         botonNavigationDrawer = (ImageButton) v.findViewById(R.id.boton_navigation_drawer);
+        botonHelp = (ImageButton) v.findViewById(R.id.boton_help);
         botonCodigoGuanajoven = (Button) v.findViewById(R.id.boton_codigo_guanajoven);
         botonEventos = (Button) v.findViewById(R.id.boton_eventos);
         botonCheckIn = (Button) v.findViewById(R.id.boton_check_in);
@@ -170,6 +172,16 @@ public class HomeFragment extends CustomFragment {
         botonNavigationDrawer.setOnClickListener((View) -> {
             DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
             drawer.openDrawer(GravityCompat.START);
+        });
+
+        botonHelp.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_acerca_de);
+                startActivity(intent);
+            } catch (Exception e) {
+
+            }
         });
 
         botonCodigoGuanajoven.setOnClickListener((View) -> {
