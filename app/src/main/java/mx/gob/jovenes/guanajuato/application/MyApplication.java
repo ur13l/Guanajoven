@@ -44,12 +44,12 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
     //dirección uriel
-     public static final String BASE_URL = "http://10.0.7.134/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.134/GuanajovenWeb/public/api/";
 
     //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
     //dirección API Twitter
-    public static final String URL_TWITTER = "https://api.twitter.com/1.1/statuses/";
+    public static final String URL_TWITTER = "https://api.twitter.com";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.
