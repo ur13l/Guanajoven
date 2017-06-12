@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.ArrayList;
@@ -104,9 +107,9 @@ public class TwitterFragment extends Fragment {
         String oauthNonce = uuiString.replaceAll("-", "");
 
         //Calculated parameters
-        String header = "";
-        String parameterString = "";
-        String signatureBaseString = "";
+        String header;
+        String parameterString;
+        String signatureBaseString;
         String oauthSignature = "";
 
         parameterString = "oauth_consumer_key=" + oauthConsumerKey + "&oauth_nonce=" + oauthNonce + "&oauth_signature_method=" + oauthSignatureMethod + "&oauth_timestamp=" + oauthTimeStamp + "&oauth_version=" + oauthVersion;
@@ -114,7 +117,18 @@ public class TwitterFragment extends Fragment {
         System.err.println("Parameter String: " + parameterString);
         System.err.println("Paremeter String encode: " + encode(parameterString));
 
-        signatureBaseString = "GET&" + encode("https://api.twitter.com/1.1/statuses/user_timeline.json") + "&" + encode(parameterString);
+        try {
+            URL url = new URL(parameterString);
+            URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
+            String urlString = uri.toASCIIString();
+            System.out.println("---------------------------------------------------------------");
+            System.out.println("URL String" + urlString);
+            System.out.println("-------------------------------------------------------------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        signatureBaseString = "GET&" + encode("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=guanajoven") + "&" + encode(parameterString);
 
         String keyString = oauthConsumerSecret + "&" + oauthTokenSecret;
 
