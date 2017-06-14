@@ -119,17 +119,17 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
 
         btnQuieroMasInformacion.setOnClickListener((View) -> {
-            Call<Response<Boolean>> call = enviarCorreoAPI.enviarCorreo(Sesion.getUsuario().getEmail(), Sesion.getUsuario().getDatosUsuario().getNombre(), convocatoria.getTitulo());
+            Call<Response<Boolean>> call = enviarCorreoAPI.enviarCorreo(Sesion.getUsuario().getId(), convocatoria.getIdConvocatoria());
 
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Toast.makeText(context, "Correo enviado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Fallo en enviar", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    Toast.makeText(context, "Fallo en enviar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Correo enviado", Toast.LENGTH_SHORT).show();
                 }
             });
         });
