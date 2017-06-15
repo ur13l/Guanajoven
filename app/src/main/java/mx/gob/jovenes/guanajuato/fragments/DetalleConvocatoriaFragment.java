@@ -124,7 +124,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Toast.makeText(context, "Fallo en enviar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Fallo en enviar o ya se encuentra inscrito", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
