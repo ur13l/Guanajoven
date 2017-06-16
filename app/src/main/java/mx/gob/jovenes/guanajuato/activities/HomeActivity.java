@@ -257,9 +257,11 @@ public class HomeActivity extends AppCompatActivity
         super.onStart();
         mGoogleApiClient.connect();
 
-        if(Sesion.getUsuario()
+
+        if(Sesion.getUsuario().getDatosUsuario().getRutaImagen() != null ) {
             Picasso.with(getApplicationContext()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
         }
+
         nombreUsuarioDrawer.setText(Sesion.getUsuario().getDatosUsuario().getNombre() + " " +Sesion.getUsuario().getDatosUsuario().getApellidoPaterno() + " " +Sesion.getUsuario().getDatosUsuario().getApellidoMaterno());
         correoUsuarioDrawer.setText(Sesion.getUsuario().getEmail());
     }
