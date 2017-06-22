@@ -48,8 +48,6 @@ public class MyApplication extends MultiDexApplication {
 
     //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
-    //dirección API Twitter
-    public static final String URL_TWITTER = "https://api.twitter.com";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.
@@ -73,10 +71,6 @@ public class MyApplication extends MultiDexApplication {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
-
-        //Instancia de retrofit twitter
-        retrofitTwitter = new Retrofit.Builder().baseUrl(URL_TWITTER).addConverterFactory(GsonConverterFactory.create(gson)).build();
-
         //Instancia por defecto de Realm.
         //TODO: Revisar si se puede hacer la configuración específica.
 
@@ -92,9 +86,5 @@ public class MyApplication extends MultiDexApplication {
 
     public Retrofit getRetrofitInstance(){
         return retrofit;
-    }
-
-    public Retrofit getRetrofitTwitterInstance() {
-        return retrofitTwitter;
     }
 }
