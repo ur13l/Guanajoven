@@ -37,18 +37,12 @@
 
                 <item
                     android:id="@+id/nav_convocatorias"
-                    android:icon="@drawable/convocatoria"
+                    android:icon="@drawable/ic_convocatoria"
                     android:title="@string/convocatorias" />
 
                 <item
-                    android:id="@+id/nav_calendario_eventos"
-                    android:icon="@drawable/evento"
-                    android:title="@string/calendario" />
-
-
-                <item
                     android:id="@+id/nav_historial_notificaciones"
-                    android:icon="@drawable/ic_notificaciones"
+                    android:icon="@drawable/ic_notifications"
                     android:title="@string/notificaciones" />
 
 
@@ -73,7 +67,7 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item android:id="@+id/nav_regiones"
-                    android:icon="@drawable/ic_directorio"
+                    android:icon="@drawable/ic_regiones"
                     android:title="@string/regiones"/>
                 <item
                     android:id="@+id/nav_acerca_de"

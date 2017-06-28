@@ -147,7 +147,7 @@ public class EventoFragment extends CustomFragment /*implements View.OnClickList
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setTitle("Eventos");
         cToolBar.setTitle("Eventos");
-        imagen.setImageResource(R.drawable.background4);
+        imagen.setImageResource(R.drawable.registro_usuario);
 
     }
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -39,6 +40,7 @@ public class TwitterFragment extends Fragment {
     private Retrofit retrofit;
     private SharedPreferences sharedPreferences;
     private List<Status> statuses;
+    LinearLayoutManager llm;
 
 
 
@@ -57,7 +59,7 @@ public class TwitterFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_twitter, container, false);
         rvTweets = (RecyclerView) v.findViewById(R.id.rv_tweets);
         tvEmptyTweets = (TextView) v.findViewById(R.id.tv_empty_tweets);
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm = new LinearLayoutManager(getActivity());
         rvTweets.setLayoutManager(llm);
 
         Call<TwitterResponse> call = twitterAPI.get(sharedPreferences.getString(MyApplication.BASE_URL, "guanajoven"));
@@ -73,14 +75,10 @@ public class TwitterFragment extends Fragment {
 
             @Override
             public void onFailure(Call<TwitterResponse> call, Throwable t) {
-                System.err.println("--------------------------");
-                System.err.println(t.getMessage());
                 tvEmptyTweets.setVisibility(View.VISIBLE);
             }
         });
 
-
         return v;
     }
-
 }

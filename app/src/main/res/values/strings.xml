@@ -401,4 +401,9 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="conocenos_diagnostico_juvenil">Diagnóstico juvenil</string>
     <string name="conocenos_encuesta_juventud">Encuesta de juventud</string>
     <string name="conocenos_directorio">Directorio</string>
+    
+    
+    <string name="puntuaje_participacion_drawer">2000 Puntos</string>
+    <string name="nivel_drawer">Joven Destacado</string>
+    <string name="podium_drawer">5to Lugar</string>
 </resources>

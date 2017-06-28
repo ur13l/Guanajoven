@@ -157,7 +157,7 @@ public class ConvocatoriaFragment extends CustomFragment{
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setTitle("Convocatorias");
         cToolbar.setTitle("Convocatorias");
-        imagen.setImageResource(R.drawable.login_background);
+        imagen.setImageResource(R.drawable.convocatorias);
 
     }
 }

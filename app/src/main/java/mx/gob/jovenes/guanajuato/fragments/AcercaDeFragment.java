@@ -8,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import mx.gob.jovenes.guanajuato.R;
 
@@ -15,10 +18,10 @@ import mx.gob.jovenes.guanajuato.R;
  * Created by Uriel on 01/02/2016.
  */
 public class AcercaDeFragment extends CustomFragment {
-    private CardView cardViewLineasAccion;
-    private CardView cardViewDiagnosticoJuvenil;
-    private CardView cardViewEncuestaJuventud;
-    private CardView cardViewDirectorio;
+    private TextView textViewLineasAccion;
+    private TextView textViewDiagnosticoJuvenil;
+    private TextView textViewEncuestaJuventud;
+    private TextView textViewDirectorio;
 
 
     @Override
@@ -26,27 +29,27 @@ public class AcercaDeFragment extends CustomFragment {
         View v = inflater.inflate(R.layout.fragment_acerca_de, parent, false);
 
         //Instancias
-        //cardViewLineasAccion = (CardView) v.findViewById(R.id.card_view_lineas_accion);
-        //cardViewDiagnosticoJuvenil = (CardView) v.findViewById(R.id.card_view_diagnostico_juvenil);
-        //cardViewEncuestaJuventud = (CardView) v.findViewById(R.id.card_view_encuesta_juventud);
-        //cardViewDirectorio = (CardView) v.findViewById(R.id.card_view_directorio);
+        textViewLineasAccion = (TextView) v.findViewById(R.id.enlace_lineas_de_accion);
+        textViewDiagnosticoJuvenil = (TextView) v.findViewById(R.id.enlace_diagnostico_juvenil);
+        textViewEncuestaJuventud = (TextView) v.findViewById(R.id.enlace_encuesta_de_juventud);
+        textViewDirectorio = (TextView) v.findViewById(R.id.enlace_directorio);
 
         //Implementación
-        /*cardViewLineasAccion.setOnClickListener((View) -> {
+        textViewLineasAccion.setOnClickListener((View) -> {
             enlace("http://jovenes.guanajuato.gob.mx/index.php/702-2/");
         });
 
-        cardViewDiagnosticoJuvenil.setOnClickListener((View) -> {
+        textViewDiagnosticoJuvenil.setOnClickListener((View) -> {
             enlace("http://jovenes.guanajuato.gob.mx/index.php/diagnostico-juvenil/");
         });
 
-        cardViewEncuestaJuventud.setOnClickListener((View) -> {
+        textViewEncuestaJuventud.setOnClickListener((View) -> {
             enlace("http://jovenes.guanajuato.gob.mx/index.php/encuesta-de-juventud/");
         });
 
-        cardViewDirectorio.setOnClickListener((View) -> {
+        textViewDirectorio.setOnClickListener((View) -> {
             enlace("http://transparencia.guanajuato.gob.mx/transparencia/informacion_publica_directorio.php");
-        });*/
+        });
 
         return v;
     }

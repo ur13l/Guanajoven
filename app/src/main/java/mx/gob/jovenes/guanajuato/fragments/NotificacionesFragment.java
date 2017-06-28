@@ -104,7 +104,7 @@ public class NotificacionesFragment extends CustomFragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setTitle("Notificaciones");
         cToolbar.setTitle("Notificaciones");
-        imagen.setImageResource(R.drawable.background4);
+        imagen.setImageResource(R.drawable.notificaciones);
 
     }
 }

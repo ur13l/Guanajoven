@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/background1" />
+            android:src="@drawable/regiones" />
 
         <FrameLayout
             android:layout_width="match_parent"

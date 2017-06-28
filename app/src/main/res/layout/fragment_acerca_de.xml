@@ -21,7 +21,7 @@
         <android.support.v7.widget.CardView
             style="@style/AppTheme.CardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
             app:cardCornerRadius="4dp">
 
@@ -48,57 +48,6 @@
                     android:textAlignment="center" />
 
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_titulo_mision"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_mision"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_titulo_vision"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_vision"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_titulo_valores"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_valores"
-                    android:textAlignment="center" />
-
             </LinearLayout>
 
         </android.support.v7.widget.CardView>
@@ -106,7 +55,7 @@
         <android.support.v7.widget.CardView
             style="@style/AppTheme.CardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
             app:cardCornerRadius="4dp">
 
@@ -137,7 +86,7 @@
         <android.support.v7.widget.CardView
             style="@style/AppTheme.CardViewStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="4dp"
             app:cardCornerRadius="4dp">
 
@@ -157,9 +106,34 @@
                     android:layout_margin="5dp"/>
 
                 <TextView
+                    android:id="@+id/enlace_lineas_de_accion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/conocenos_lineas_de_accion"
+                    android:textAlignment="center"
+                    android:layout_margin="5dp"/>
+                
+                <TextView
+                    android:id="@+id/enlace_encuesta_de_juventud"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/conocenos_encuesta_juventud"
+                    android:textAlignment="center"
+                    android:layout_margin="5dp" />
+                
+                <TextView
+                    android:id="@+id/enlace_diagnostico_juvenil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/conocenos_diagnostico_juvenil"
+                    android:textAlignment="center"
+                    android:layout_margin="5dp"/>
+
+                <TextView
+                    android:id="@+id/enlace_directorio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/conocenos_directorio"
                     android:textAlignment="center"
                     android:layout_margin="5dp"/>
 

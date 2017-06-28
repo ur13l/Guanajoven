@@ -146,7 +146,7 @@ public class RegionFragment extends CustomFragment {
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         activity.getSupportActionBar().setTitle("Regiones");
         cToolbar.setTitle("Regiones");
-        imagen.setImageResource(R.drawable.background3);
+        imagen.setImageResource(R.drawable.regiones);
 
     }
 }

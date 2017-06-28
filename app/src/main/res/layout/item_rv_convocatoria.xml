@@ -39,8 +39,8 @@
                 android:id="@+id/tv_descripcion_convocatoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="3"
-                android:text="Descripcion del evento: Aquí va toda la descripción de la convocatoria"/>
+                android:maxLines="2"
+                android:text="Descripcion del evento: Aquí va toda la descripción de la convocatoria" />
 
             <TextView
                 android:id="@+id/tv_estatus_convocatoria"

@@ -80,7 +80,7 @@ public class HomeFragment extends CustomFragment {
     ImageButton botonHelp;
     Button botonCodigoGuanajoven;
     Button botonEventos;
-    Button botonCheckIn;
+    Button botonNotificaciones;
     Button botonConvocatorias;
     Button botonRedesSociales;
     Button botonChat;
@@ -136,7 +136,7 @@ public class HomeFragment extends CustomFragment {
         botonHelp = (ImageButton) v.findViewById(R.id.boton_help);
         botonCodigoGuanajoven = (Button) v.findViewById(R.id.boton_codigo_guanajoven);
         botonEventos = (Button) v.findViewById(R.id.boton_eventos);
-        botonCheckIn = (Button) v.findViewById(R.id.boton_check_in);
+        botonNotificaciones = (Button) v.findViewById(R.id.boton_notificaciones);
         botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
         botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
         botonChat = (Button) v.findViewById(R.id.boton_chat);
@@ -204,16 +204,6 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-        botonCheckIn.setOnClickListener((View) -> {
-            try {
-                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
-                intent.putExtra(MENU_ID, R.id.nav_calendario_eventos);
-                startActivity(intent);
-            } catch (Exception e) {
-                System.err.println("que pendejo...");
-            }
-        });
-
         botonConvocatorias.setOnClickListener((View) -> {
             try {
                 Intent intent = new Intent(this.getContext(), SegundaActivity.class);
@@ -240,6 +230,16 @@ public class HomeFragment extends CustomFragment {
             try {
                 Intent intent = new Intent(this.getContext(), SegundaActivity.class);
                 intent.putExtra(MENU_ID, R.id.nav_chat_ayuda);
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
+        botonNotificaciones.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_historial_notificaciones);
                 startActivity(intent);
             } catch (Exception e) {
                 System.err.println("que pendejo...");
