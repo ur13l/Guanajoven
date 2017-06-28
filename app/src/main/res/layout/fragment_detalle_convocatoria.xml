@@ -94,6 +94,7 @@
             </ScrollView>
 
                 <Button
+                    android:id="@+id/btn_quiero_mas_informacion"
                     android:background="@drawable/bordered_button_blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -10,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,9 +23,15 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVDocumentoAdapter;
+import mx.gob.jovenes.guanajuato.api.EnviarCorreoAPI;
+import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Convocatoria;
 import mx.gob.jovenes.guanajuato.model.Documento;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 /**
  * Created by esva on 19/04/17.
@@ -42,6 +50,9 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private RVDocumentoAdapter adapter;
     private Context context;
     private Realm realm;
+    private Button btnQuieroMasInformacion;
+    private EnviarCorreoAPI enviarCorreoAPI;
+    private Retrofit retrofit;
 
     public static DetalleConvocatoriaFragment newInstance(int idConvocatoria) {
         DetalleConvocatoriaFragment detalleConvocatoriaFragment = new DetalleConvocatoriaFragment();
@@ -59,6 +70,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
         realm = MyApplication.getRealmInstance();
+        retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
+        enviarCorreoAPI = retrofit.create(EnviarCorreoAPI.class);
     }
 
 
@@ -78,6 +91,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
         tvFechaCierreConvocatoria = (TextView) v.findViewById(R.id.tv_fecha_cierre_convocatoria);
         tvEmptyDocumentos = (TextView) v.findViewById(R.id.tv_empty_documentos);
         rvDocumentosConvocatoria = (RecyclerView) v.findViewById(R.id.rv_documentos_convocatoria);
+        btnQuieroMasInformacion = (Button) v.findViewById(R.id.btn_quiero_mas_informacion);
         adapter = new RVDocumentoAdapter(getActivity(), convocatoria.getDocumentos());
 
         LinearLayoutManager llm = new LinearLayoutManager(context);
@@ -103,6 +117,22 @@ public class DetalleConvocatoriaFragment extends Fragment {
             tvEmptyDocumentos.setVisibility(View.VISIBLE);
         }
 
+
+        btnQuieroMasInformacion.setOnClickListener((View) -> {
+            Call<Response<Boolean>> call = enviarCorreoAPI.enviarCorreo(Sesion.getUsuario().getId(), convocatoria.getIdConvocatoria());
+
+            call.enqueue(new Callback<Response<Boolean>>() {
+                @Override
+                public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                    Toast.makeText(context, "Fallo en enviar o ya se encuentra inscrito", Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                    Toast.makeText(context, "Correo enviado", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
 
         return v;
     }

@@ -257,6 +257,7 @@ public class HomeActivity extends AppCompatActivity
         super.onStart();
         mGoogleApiClient.connect();
 
+
         if(Sesion.getUsuario().getDatosUsuario().getRutaImagen() != null ) {
             Picasso.with(getApplicationContext()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
         }

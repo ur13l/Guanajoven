@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by codigus on 26/05/2017.
  */
 
-public class Tweet  {
+public class Status {
     @SerializedName("id_str")
     private String idStr;
     @SerializedName("text")
