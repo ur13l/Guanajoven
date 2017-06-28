@@ -3,6 +3,7 @@ package mx.gob.jovenes.guanajuato.fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -124,12 +125,12 @@ public class DetalleConvocatoriaFragment extends Fragment {
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Toast.makeText(context, "Fallo en enviar o ya se encuentra inscrito", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscritoo", Snackbar.LENGTH_LONG).show();
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    Toast.makeText(context, "Correo enviado", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(getView(), "Correo enviado", Snackbar.LENGTH_LONG).show();
                 }
             });
         });

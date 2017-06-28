@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.v4.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:name="com.google.android.gms.maps.MapFragment"
         android:id="@+id/mapa_evento"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.20"/>
+        android:layout_height="300dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,13 +64,17 @@
 
         <Button
             android:id="@+id/btn_asistencia"
-            android:layout_width="fill_parent"
-            android:layout_height="51dp"
-            android:layout_marginTop="16dp"
             android:background="@drawable/bordered_button_blue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
             android:text="Asistí al evento"
             android:textColor="@color/white"/>
 
 
     </LinearLayout>
+
     </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>

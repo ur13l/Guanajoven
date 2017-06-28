@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -132,6 +133,7 @@ public class RegionFragment extends CustomFragment {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppBarLayout)cToolbar.getParent()).setExpanded(true);
     }
 
     @Override

@@ -130,9 +130,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
                     DetalleConvocatoriaFragment f = DetalleConvocatoriaFragment.newInstance(convocatorias.get(getAdapterPosition()).getIdConvocatoria());
                     FragmentManager fm = ((AppCompatActivity)context).getSupportFragmentManager();
                     FragmentTransaction ft = fm.beginTransaction();
-                    ft.replace(R.id.segunda_fragment_container, f)
-                            .addToBackStack(null)
-                            .commit();
+                    ft.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
                 }
             });
         }

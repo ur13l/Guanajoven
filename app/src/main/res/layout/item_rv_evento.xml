@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:text="02-02-2016"
                 android:textColor="@color/colorPrimary" />
+
             <TextView
                 android:id="@+id/estado"
                 android:layout_width="match_parent"

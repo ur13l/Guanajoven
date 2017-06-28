@@ -136,4 +136,10 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             getActivity().getFragmentManager().beginTransaction().remove(mapaEvento).commit();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(evento.getTitulo());
+    }
+
 }

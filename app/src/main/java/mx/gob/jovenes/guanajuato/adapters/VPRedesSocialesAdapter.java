@@ -26,9 +26,6 @@ public class VPRedesSocialesAdapter extends FragmentPagerAdapter {
             case 0:
                 fragment = new TwitterFragment();
                 break;
-            case 1:
-                fragment = new FacebookFragment();
-                break;
         }
         return fragment;
     }
@@ -36,7 +33,7 @@ public class VPRedesSocialesAdapter extends FragmentPagerAdapter {
     //Regresa el número de elementos en el tabLayout
     @Override
     public int getCount() {
-        return 2;
+        return 1;
     }
 
 

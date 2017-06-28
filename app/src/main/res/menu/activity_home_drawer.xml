@@ -18,7 +18,7 @@
                 android:id="@+id/nav_codigo_guanajoven"
                 android:icon="@drawable/qr"
                 android:title="@string/codigo_guanajoven" />
-            <intem
+            <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_sesion"
                 android:title="@string/cerrar_sesion"/>

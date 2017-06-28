@@ -111,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/conocenos_lineas_de_accion"
                     android:textAlignment="center"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimary"/>
                 
                 <TextView
                     android:id="@+id/enlace_encuesta_de_juventud"
@@ -119,7 +120,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/conocenos_encuesta_juventud"
                     android:textAlignment="center"
-                    android:layout_margin="5dp" />
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimary"/>
                 
                 <TextView
                     android:id="@+id/enlace_diagnostico_juvenil"
@@ -127,7 +129,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/conocenos_diagnostico_juvenil"
                     android:textAlignment="center"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/enlace_directorio"
@@ -135,7 +138,8 @@
                     android:layout_height="wrap_content"
                     android:text="@string/conocenos_directorio"
                     android:textAlignment="center"
-                    android:layout_margin="5dp"/>
+                    android:layout_margin="5dp"
+                    android:textColor="@color/colorPrimary"/>
 
             </LinearLayout>
 
