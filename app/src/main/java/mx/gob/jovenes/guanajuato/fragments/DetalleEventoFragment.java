@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -18,7 +19,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.SQLOutput;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
@@ -38,6 +44,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     private TextView tvDireccionEvento;
     private TextView tvDescripcionEvento;
     private TextView tvFechaEvento;
+    private Button btnAsistencia;
     private Realm realm;
 
     public static DetalleEventoFragment newInstance(int idEvento) {
@@ -68,13 +75,36 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         tvDireccionEvento = (TextView) v.findViewById(R.id.tv_direccion_evento);
         tvDescripcionEvento = (TextView) v.findViewById(R.id.tv_descripcion_evento);
         tvFechaEvento = (TextView) v.findViewById(R.id.tv_fechas_evento);
+        btnAsistencia = (Button) v.findViewById(R.id.btn_asistencia);
 
         tvNombreEvento.setText(evento.getTitulo());
         tvDireccionEvento.setText(evento.getDireccion());
         tvDescripcionEvento.setText(evento.getDescripcion());
         tvFechaEvento.setText(getFechaCast(evento.getFechaInicio()) + " - " + getFechaCast(evento.getFechaFin()));
-
+        checkAsist();
         return v;
+    }
+
+    public void checkAsist(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String dateInStringbegin = getFechaCast(evento.getFechaInicio());
+        String dateInStringend = getFechaCast(evento.getFechaFin());
+        try {
+            Date fechainicio = formatter.parse(dateInStringbegin);
+            Date fechafin = formatter.parse(dateInStringend);
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date newFormat = formatter.parse(dateFormat.format(date));
+            if(newFormat.after(fechainicio) && newFormat.before(fechafin)) {
+                btnAsistencia.setText("Estoy en el evento");
+                 } else if(newFormat.before(fechafin)){
+                btnAsistencia.setText("Asistiré al evento");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private String getFechaCast(String fecha) {

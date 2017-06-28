@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="C:\GitAndroid\Guanajoven\extendedCalendarView\src\main\shaders"/></dataSet><dataSet config="release"><source path="C:\GitAndroid\Guanajoven\extendedCalendarView\src\release\shaders"/></dataSet></merger>
+=======
+<merger version="3"><dataSet config="main"><source path="/Users/marioalbertonegreterodriguez/Documents/Android Projects/Guanajoven/extendedCalendarView/src/main/shaders"/></dataSet><dataSet config="release"><source path="/Users/marioalbertonegreterodriguez/Documents/Android Projects/Guanajoven/extendedCalendarView/src/release/shaders"/></dataSet></merger>
+>>>>>>> e43699ac52a5b1becdd9e4cd82bd1aac60435ebe
