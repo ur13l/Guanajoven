@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="/Users/marioalbertonegreterodriguez/Documents/Android Projects/Guanajoven/extendedCalendarView/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/Users/marioalbertonegreterodriguez/Documents/Android Projects/Guanajoven/extendedCalendarView/src/release/jniLibs"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="C:\Users\Uriel\Android\Guanajoven\extendedCalendarView\src\main\jniLibs"/></dataSet><dataSet config="release"><source path="C:\Users\Uriel\Android\Guanajoven\extendedCalendarView\src\release\jniLibs"/></dataSet></merger>
->>>>>>> 562fce1c1db5f9d49e45fbccff03981d5f727b3f

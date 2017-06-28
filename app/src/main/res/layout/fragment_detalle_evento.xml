@@ -54,6 +54,14 @@
             android:padding="5dp"
             android:text="Fecha del evento" />
 
+        <Button
+            android:id="@+id/btn_asistencia"
+            android:layout_width="fill_parent"
+            android:layout_height="51dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bordered_button_blue"
+            android:text="Asistí al evento"
+            android:textColor="@color/white"/>
 
 
     </LinearLayout>

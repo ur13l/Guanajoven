@@ -13,8 +13,11 @@ import android.widget.TextView;
 
 import com.tyczj.extendedcalendarview.Event;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
@@ -52,6 +55,19 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
         holder.tituloTv.setText(eventos.get(position).getTitulo());
         holder.descripcionTv.setText(eventos.get(position).getDescripcion());
         holder.fechaTv.setText(getFechaCast(eventos.get(position).getFechaInicio()) + " - " + getFechaCast(eventos.get(position).getFechaFin()));
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        String dateInStringend = getFechaCast(eventos.get(position).getFechaFin());
+        try {
+            Date fechafin = formatter.parse(dateInStringend);
+            Date date = new Date();
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            Date newFormat = formatter.parse(dateFormat.format(date));
+            if(newFormat.before(fechafin)){
+                holder.estado.setText("Evento abierto");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         /*
         holder.setLongClickListener(new LongClickListener(){
 
@@ -61,6 +77,8 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             }
         });*/
     }
+
+
 
     private String getFechaCast(String fecha) {
         SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -102,6 +120,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
         TextView tituloTv;
         TextView descripcionTv;
         TextView fechaTv;
+        TextView estado;
         //LongClickListener longClickListener;
 
         EventosViewHolder(View itemView) {
@@ -109,6 +128,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             tituloTv = (TextView) itemView.findViewById(R.id.tv_titulo);
             descripcionTv = (TextView) itemView.findViewById(R.id.tv_descripcion);
             fechaTv = (TextView) itemView.findViewById(R.id.tv_fecha);
+            estado = (TextView) itemView.findViewById(R.id.estado);
             //itemView.setOnLongClickListener(this);
             //itemView.setOnCreateContextMenuListener(this);
             itemView.setOnClickListener(new View.OnClickListener() {
