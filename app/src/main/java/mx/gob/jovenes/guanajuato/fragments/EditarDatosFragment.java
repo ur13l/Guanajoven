@@ -1,24 +1,8 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
-import android.Manifest;
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Base64;
+import android.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,31 +12,13 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import com.squareup.picasso.Picasso;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
-import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.activities.LoginActivity;
-import mx.gob.jovenes.guanajuato.api.RegistroRequest;
-import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Usuario;
-import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Autor: Uriel Infante
@@ -87,6 +53,8 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
     private EditText etIdiomasAdicionales;
     private ProgressDialog progressDialog;
     private ImageButton btnBack;
+
+    private Button btnSeleccionarIdiomas;
 
     private UsuarioAPI usuarioAPI;
 
@@ -131,9 +99,9 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         spnConfirmPremios = (MaterialSpinner) v.findViewById(R.id.spn_confirm_premios);
         spnConfirmProyectosSociales = (MaterialSpinner) v.findViewById(R.id.spn_confirm_proyectos_sociales);
         spnSueldoProyectosSociales = (MaterialSpinner) v.findViewById(R.id.spn_sueldo_proyectos_sociales);
-        etIdiomasAdicionales = (EditText) v.findViewById(R.id.et_idiomas_adicionales);
         etPremios = (EditText) v.findViewById(R.id.et_premios);
         etProyectosSociales = (EditText) v.findViewById(R.id.et_proyecto_social);
+        btnSeleccionarIdiomas = (Button) v.findViewById(R.id.btn_seleccionar_idiomas);
 
 
         imgPerfil = (ImageView) v.findViewById(R.id.img_profile);
@@ -170,6 +138,12 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         EditTextValidations.dependencySpinners(spnConfirmPremios, new View[] {etPremios });
         EditTextValidations.dependencySpinners(spnConfirmProyectosSociales, new View [] {etProyectosSociales, spnSueldoProyectosSociales});
 
+        btnSeleccionarIdiomas.setOnClickListener((View) -> {
+            FragmentManager fragmentManager = getActivity().getFragmentManager();
+            IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
+            idiomasAdicionalesDialogFragment.show(fragmentManager, null);
+        });
+
         btnContinuar.setOnClickListener(this);
 
         //Picasso.with(getActivity()).load(usuario.getRutaImagen()).into(imgPerfil);
@@ -179,7 +153,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
 
 
     /**
-     * Funcionalidad de la interfaz aplicada al Fragment para el clic
+     * Funcionalidad de la interfaz aplicada al Fragment para el click
      * @param view
      */
     @Override

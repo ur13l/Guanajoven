@@ -1,7 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/idiomas_fragment_container">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:id="@+id/checkbox_aleman"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="@string/idioma_adicional_aleman" />
+
+        <CheckBox
+            android:id="@+id/checkbox_arabe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/idioma_adicional_arabe"
+            android:layout_margin="2dp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_chino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="@string/idioma_adicional_chino" />
+
+        <CheckBox
+            android:id="@+id/checkbox_coreano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/idioma_adicional_coreano"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_frances"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="@string/idioma_adicional_frances" />
+
+        <CheckBox
+            android:id="@+id/checkbox_ingles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="@string/idioma_adicional_ingles" />
+
+        <CheckBox
+            android:id="@+id/checkbox_italiano"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:text="@string/idioma_adicional_italiano" />
+
+        <CheckBox
+            android:id="@+id/checkbox_japones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/idioma_adicional_japones"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_polaco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/idioma_adicional_polaco"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_portugues"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/idioma_adicional_portugues"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_ruso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/idioma_adicional_ruso"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/checkbox_otro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/idioma_adicional_otro"
+            android:layout_margin="2dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <Button
+                android:id="@+id/btn_aceptar_idiomas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/btn_seleccionar_idiomas_aceptar"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/btn_cancelar_idiomas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/btn_seleccionar_idiomas_cancelar"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
