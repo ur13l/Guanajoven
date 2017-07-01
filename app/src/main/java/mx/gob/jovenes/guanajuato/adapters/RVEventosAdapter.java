@@ -31,17 +31,11 @@ import mx.gob.jovenes.guanajuato.model.Evento;
 public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.EventosViewHolder> {
     private List<Evento> eventos;
     private Context context;
-    //public Event selectedEvent;
 
-    public RVEventosAdapter(Context context, List<Evento> eventos){
+    public RVEventosAdapter(Context context, List<Evento> eventos) {
         this.context = context;
         this.eventos = eventos;
     }
-
-    /*
-    public interface LongClickListener{
-        void onItemLongClick(int position);
-    }*/
 
     @Override
     public EventosViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -62,22 +56,13 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             Date date = new Date();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date newFormat = formatter.parse(dateFormat.format(date));
-            if(newFormat.before(fechafin)){
+            if (newFormat.before(fechafin)) {
                 holder.estado.setText("Evento abierto");
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        /*
-        holder.setLongClickListener(new LongClickListener(){
-
-            @Override
-            public void onItemLongClick(int position) {
-                selectedEvent = eventos.get(position);
-            }
-        });*/
     }
-
 
 
     private String getFechaCast(String fecha) {
@@ -103,25 +88,11 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
         return eventos.size();
     }
 
-
-    /*
-    public void setFilter(List<Event> evs) {
-        eventos = new ArrayList<>();
-        eventos.addAll(evs);
-        notifyDataSetChanged();
-    }
-
-
-    public Event getSelectedEvent(){
-        return selectedEvent;
-    }*/
-
-    public class EventosViewHolder extends RecyclerView.ViewHolder /*implements View.OnLongClickListener, View.OnCreateContextMenuListener*/{
+    public class EventosViewHolder extends RecyclerView.ViewHolder {
         TextView tituloTv;
         TextView descripcionTv;
         TextView fechaTv;
         TextView estado;
-        //LongClickListener longClickListener;
 
         EventosViewHolder(View itemView) {
             super(itemView);
@@ -129,38 +100,13 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             descripcionTv = (TextView) itemView.findViewById(R.id.tv_descripcion);
             fechaTv = (TextView) itemView.findViewById(R.id.tv_fecha);
             estado = (TextView) itemView.findViewById(R.id.estado);
-            //itemView.setOnLongClickListener(this);
-            //itemView.setOnCreateContextMenuListener(this);
-            itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DetalleEventoFragment f = DetalleEventoFragment.newInstance(eventos.get(getAdapterPosition()).getIdEvento());
-                FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
-            }
-        });
+            itemView.setOnClickListener((View) -> {
+                    DetalleEventoFragment f = DetalleEventoFragment.newInstance(eventos.get(getAdapterPosition()).getIdEvento());
+                    FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
+            });
         }
-
-
-
-        /*
-        public void setLongClickListener(LongClickListener lc){
-            this.longClickListener = lc;
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            this.longClickListener.onItemLongClick(getLayoutPosition());
-            return false;
-        }
-
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            menu.setHeaderTitle(R.string.selecciona_accion);
-            menu.add(0, v.getId(), 0, R.string.eliminar);//groupId, itemId, order, title
-
-        }*/
 
     }
 

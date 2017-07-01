@@ -8,10 +8,12 @@ public class IdiomaAdicional {
     private int idIdiomaAdicional;
     private String nombre;
 
-    //TODO: Obtener niveles de idioma
+    public IdiomaAdicional(int idIdiomaAdicional, String nombre) {
+        this.idIdiomaAdicional = idIdiomaAdicional;
+        this.nombre = nombre;
+    }
 
-
-    public int getIdIdiomaAdicional() {
+     public int getIdIdiomaAdicional() {
         return idIdiomaAdicional;
     }
 
@@ -26,4 +28,5 @@ public class IdiomaAdicional {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
 }

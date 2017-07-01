@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -98,6 +100,8 @@ public class HomeFragment extends CustomFragment {
     FragmentTransaction fragmentTransaction;
     Fragment fragment = null;
 
+    private TextView textViewBolsaTrabajo;
+
 
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
     @Override
@@ -140,6 +144,12 @@ public class HomeFragment extends CustomFragment {
         botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
         botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
         botonChat = (Button) v.findViewById(R.id.boton_chat);
+
+        textViewBolsaTrabajo = (TextView) v.findViewById(R.id.textview_bolsa_de_trabajo);
+
+        textViewBolsaTrabajo.setOnClickListener((View) -> {
+            enlace("http://jovenes.guanajuato.gob.mx/index.php/empresas-incluyentes/");
+        });
 
         //Listeners de publicidad
         btnSlide.setOnClickListener(new View.OnClickListener() {
@@ -487,8 +497,9 @@ public class HomeFragment extends CustomFragment {
                 }
             }
         }
+    }
 
-
-
+    public void enlace(String link){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
 }

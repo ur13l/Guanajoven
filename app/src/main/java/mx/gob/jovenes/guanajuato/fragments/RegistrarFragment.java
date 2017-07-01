@@ -38,6 +38,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -125,6 +126,8 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
     private String[] generos = {"Masculino", "Femenino"};
 
+    private TextView textViewConsultarCurp;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -164,6 +167,13 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         spnEstado = (MaterialSpinner) v.findViewById(R.id.spn_estado);
         imgPerfil = (CircleImageView) v.findViewById(R.id.img_profile);
         btnBack = (ImageButton) v.findViewById(R.id.btn_back);
+
+        textViewConsultarCurp = (TextView) v.findViewById(R.id.textview_consultar_curp);
+
+        textViewConsultarCurp.setOnClickListener((View) -> {
+            enlace("https://consultas.curp.gob.mx/CurpSP/inicio2_2.jsp");
+        });
+
         if(usuario != null) {
             etEmail.setText(usuario.getEmail());
             etEmail.setEnabled(false);
@@ -693,6 +703,10 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         String image = Base64.encodeToString(bb, 0);
 
         return image;
+    }
+
+    public void enlace(String link){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
 
 }

@@ -423,4 +423,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="idioma_adicional_portugues">Portugués</string>
     <string name="idioma_adicional_ruso">Ruso</string>
     <string name="idioma_adicional_otro">Otro</string>
+    <string name="idiomas_seleccionados_title">Idiomas seleccionados:</string>
+    <string name="bolsa_de_trabajo">Bolsa de trabajo</string>
+    <string name="consultar_curp">No conoces tu curp?, Consultalo aquí!</string>
 </resources>

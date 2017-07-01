@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textview_nombre_idioma"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_nombre_idioma"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/seleccionar_idioma_porcentajes_nombre_idioma"
         android:textSize="20sp"
@@ -13,35 +15,34 @@
         android:layout_margin="10dp"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Escritura"
+        android:text="Conversación"
         android:padding="10dp"/>
 
     <TextView
-        android:id="@+id/tv_porcentaje_escritura"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_porcentaje_conversacion"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0%"
-        android:textAlignment="textEnd"
         android:padding="10dp"/>
 
     </LinearLayout>
 
     <SeekBar
-        android:id="@+id/seek_bar_escritura"
+        android:id="@+id/seek_bar_conversacion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:max="100" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
@@ -53,10 +54,9 @@
 
         <TextView
             android:id="@+id/tv_porcentaje_lectura"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0%"
-            android:textAlignment="textEnd"
             android:padding="10dp"/>
 
     </LinearLayout>
@@ -69,32 +69,36 @@
         android:max="100" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Redacción"
+            android:text="Escritura"
             android:padding="10dp"/>
 
         <TextView
-            android:id="@+id/tv_porcentaje_redaccion"
-            android:layout_width="match_parent"
+            android:id="@+id/tv_porcentaje_escritura"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0%"
-            android:textAlignment="textEnd"
             android:padding="10dp"/>
 
     </LinearLayout>
 
     <SeekBar
-        android:id="@+id/seek_bar_redaccion"
+        android:id="@+id/seek_bar_escritura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:max="100" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
     <Button
         android:id="@+id/btn_aceptar_idiomas_porcentajes"
@@ -103,5 +107,15 @@
         android:layout_gravity="center"
         android:text="Aceptar"
         android:textColor="@color/white"/>
+
+    <Button
+        android:id="@+id/btn_cancelar_idiomas_porcentajes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Cancelar"
+        android:textColor="@color/white"/>
+
+        </LinearLayout>
 
 </LinearLayout>

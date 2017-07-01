@@ -256,6 +256,16 @@
 
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/textview_bolsa_de_trabajo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="@string/bolsa_de_trabajo"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:padding="10dp"/>
+
 
 
     <FrameLayout
