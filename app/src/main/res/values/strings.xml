@@ -401,4 +401,29 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="conocenos_diagnostico_juvenil">Diagnóstico juvenil</string>
     <string name="conocenos_encuesta_juventud">Encuesta de juventud</string>
     <string name="conocenos_directorio">Directorio</string>
+    
+    
+    <string name="puntuaje_participacion_drawer">2000 Puntos</string>
+    <string name="nivel_drawer">Joven Destacado</string>
+    <string name="podium_drawer">5to Lugar</string>
+    <string name="idioma_adicional_español">Español</string>
+    <string name="idioma_adicional_ingles">Inglés</string>
+    <string name="idioma_adicional_frances">Francés</string>
+    <string name="idioma_adicional_italiano">Italiano</string>
+    <string name="idioma_adicional_aleman">Alemán</string>
+    <string name="idioma_adicional_chino">Chino</string>
+    <string name="idioma_adicional_totonaca">Totonaca</string>
+    <string name="btn_seleccionar_idiomas_aceptar">Aceptar</string>
+    <string name="btn_seleccionar_idiomas_cancelar">Cancelar</string>
+    <string name="seleccionar_idioma_porcentajes_nombre_idioma">Nombre idioma</string>
+    <string name="idioma_adicional_arabe">Árabe</string>
+    <string name="idioma_adicional_coreano">Coreano</string>
+    <string name="idioma_adicional_japones">Japonés</string>
+    <string name="idioma_adicional_polaco">Polaco</string>
+    <string name="idioma_adicional_portugues">Portugués</string>
+    <string name="idioma_adicional_ruso">Ruso</string>
+    <string name="idioma_adicional_otro">Otro</string>
+    <string name="idiomas_seleccionados_title">Idiomas seleccionados:</string>
+    <string name="bolsa_de_trabajo">Bolsa de trabajo</string>
+    <string name="consultar_curp">No conoces tu curp?, Consultalo aquí!</string>
 </resources>

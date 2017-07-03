@@ -13,18 +13,60 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imagen_usuario_drawer"
-            android:layout_width="70dp"
-            android:layout_height="80dp"
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imagen_usuario_drawer"
+                android:layout_width="70dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:src="@drawable/placeholder"/>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_gravity="center"
-            android:src="@drawable/placeholder"/>
+            android:layout_margin="10dp">
 
-    </FrameLayout>
+            <TextView
+                android:id="@+id/tv_puntuaje_participacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textSize="10dp"
+                android:text="@string/puntuaje_participacion_drawer" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="10dp"
+                android:text="@string/nivel_drawer"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:textSize="10dp"
+                android:text="@string/podium_drawer"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/nombre_usuario_drawer"

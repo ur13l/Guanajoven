@@ -37,15 +37,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nombre de usuario"
-                    android:textStyle="bold"
-                    android:textSize="17dp"/>
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_screen_name_usuario"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="\@nombreusuario"
-                    android:paddingLeft="5dp"/>
+                    android:paddingLeft="5dp"
+                    android:text="\@nombreusuario" />
 
             </LinearLayout>
 
@@ -54,7 +54,7 @@
                 android:id="@+id/tv_texto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Texto  del tweet"/>
+                android:text="Texto  del tweet" />
 
         </LinearLayout>
 

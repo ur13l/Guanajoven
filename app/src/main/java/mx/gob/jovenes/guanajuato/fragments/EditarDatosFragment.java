@@ -1,24 +1,11 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.util.Base64;
+import android.app.FragmentManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,32 +14,24 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
-import java.io.ByteArrayOutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.activities.LoginActivity;
-import mx.gob.jovenes.guanajuato.api.RegistroRequest;
-import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.adapters.RVIdiomasSeleccionadosAdapter;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Retrofit;
-
-import static android.app.Activity.RESULT_OK;
 
 /**
  * Autor: Uriel Infante
@@ -68,7 +47,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
 
     private Usuario usuario; //instancia que se usará para cargar datos que vengan de la interfaz.
     private Button btnContinuar;
-    private ImageView imgPerfil;
+    private CircleImageView imgPerfil;
     //private MaterialSpinner spnEstadoCivil;
 
     private MaterialSpinner spnNivelEstudios;
@@ -88,6 +67,8 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
     private ProgressDialog progressDialog;
     private ImageButton btnBack;
 
+    private Button btnSeleccionarIdiomas;
+
     private UsuarioAPI usuarioAPI;
 
     //private String[] estadosCiviles = {"Soltero/a", "Comprometido/a", "Casado/a", "Divorciado/a", "Casado/a"};
@@ -97,7 +78,11 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
     private String[] pueblosIndigenas = {"Otomí", "Chichimeca-Jonaz", "Náhuatl", "Mazahua", "Otra"};
     private String[] capacidadesDiferentes = {"Física", "Sensorial", "Auditiva", "Visual", "Psíquica", "Intelectual", "Mental"};
 
-
+    private static TextView textViewTituloIdiomasSeleccionados;
+    private static LinearLayout layoutTablas;
+    private static RecyclerView recyclerViewIdiomasSeleccionados;
+    private static Activity thisActivity;
+    private static RVIdiomasSeleccionadosAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -105,6 +90,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
 
         Retrofit retrofit = ((MyApplication)getActivity().getApplication()).getRetrofitInstance();
         usuarioAPI = retrofit.create(UsuarioAPI.class);
+        thisActivity = getActivity();
 
     }
 
@@ -131,12 +117,12 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         spnConfirmPremios = (MaterialSpinner) v.findViewById(R.id.spn_confirm_premios);
         spnConfirmProyectosSociales = (MaterialSpinner) v.findViewById(R.id.spn_confirm_proyectos_sociales);
         spnSueldoProyectosSociales = (MaterialSpinner) v.findViewById(R.id.spn_sueldo_proyectos_sociales);
-        etIdiomasAdicionales = (EditText) v.findViewById(R.id.et_idiomas_adicionales);
         etPremios = (EditText) v.findViewById(R.id.et_premios);
         etProyectosSociales = (EditText) v.findViewById(R.id.et_proyecto_social);
+        btnSeleccionarIdiomas = (Button) v.findViewById(R.id.btn_seleccionar_idiomas);
 
 
-        imgPerfil = (ImageView) v.findViewById(R.id.img_profile);
+        imgPerfil = (CircleImageView) v.findViewById(R.id.imagen_usuario);
         ArrayAdapter<String> siNoAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, siNo);
         ArrayAdapter<String> nivelEstudioAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nivelesEstudio);
         ArrayAdapter<String> programaGobiernoAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, programasGobierno);
@@ -170,18 +156,30 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         EditTextValidations.dependencySpinners(spnConfirmPremios, new View[] {etPremios });
         EditTextValidations.dependencySpinners(spnConfirmProyectosSociales, new View [] {etProyectosSociales, spnSueldoProyectosSociales});
 
+        textViewTituloIdiomasSeleccionados = (TextView) v.findViewById(R.id.textview_titulo_idiomas_seleccionados);
+        layoutTablas = (LinearLayout) v.findViewById(R.id.layout_tabla);
+        recyclerViewIdiomasSeleccionados = (RecyclerView) v.findViewById(R.id.rv_idiomas_seleccionados);
+
+        btnSeleccionarIdiomas.setOnClickListener((View) -> {
+            if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
+                //En caso de que ya halla puesto idiomas le saldra una alerta
+            } else {
+                FragmentManager fragmentManager = getActivity().getFragmentManager();
+                IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
+                idiomasAdicionalesDialogFragment.show(fragmentManager, null);
+            }
+        });
+
+
+
         btnContinuar.setOnClickListener(this);
 
-        //Picasso.with(getActivity()).load(usuario.getRutaImagen()).into(imgPerfil);
+        Picasso.with(getActivity()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imgPerfil);
         return v;
     }
 
 
 
-    /**
-     * Funcionalidad de la interfaz aplicada al Fragment para el clic
-     * @param view
-     */
     @Override
     public void onClick(View view) {
         switch (view.getId()){
@@ -191,15 +189,32 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         }
     }
 
-    /**
-     * onStop: Ciclo de vida de fragment, se ejecuta cuando se detiene el fragment.
-     */
     @Override
     public void onStop() {
         super.onStop();
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;
+        }
+        //Limpia el arreglo de idiomas para que cuando vuelva a abrir el fragment se encuentre vacio
+        if (IdiomasAdicionalesDialogFragment.datosIdiomas != null) {
+            IdiomasAdicionalesDialogFragment.datosIdiomas.clear();
+        }
+
+    }
+
+    public static void validarIdiomas() {
+        if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
+            textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
+            layoutTablas.setVisibility(View.VISIBLE);
+            recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
+
+            LinearLayoutManager llm = new LinearLayoutManager(thisActivity);
+            adapter = new RVIdiomasSeleccionadosAdapter(thisActivity, IdiomasAdicionalesDialogFragment.datosIdiomas);
+            recyclerViewIdiomasSeleccionados.setLayoutManager(llm);
+            recyclerViewIdiomasSeleccionados.setAdapter(adapter);
+            textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
+            recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
         }
     }
 
@@ -279,9 +294,5 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         }
         */
     }
-
-
-
-
 
 }

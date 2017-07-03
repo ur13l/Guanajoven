@@ -20,7 +20,7 @@
             android:src="@drawable/ic_evento_64_px" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="15dp">
@@ -47,6 +47,15 @@
                 android:layout_height="wrap_content"
                 android:text="02-02-2016"
                 android:textColor="@color/colorPrimary" />
+
+            <TextView
+                android:id="@+id/estado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:lines="1"
+                android:text="Evento Cerrado" />
+
 
         </LinearLayout>
     </LinearLayout>

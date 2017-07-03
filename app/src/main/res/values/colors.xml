@@ -20,5 +20,6 @@
     <color name="colorAccentTransparent">#67c8648e</color>
     <color name="colorPrimaryTransparent">#83074677</color>
     <color name="black_overlay">#66000000</color>
+    <color name="link_color">#00b2ff</color>
 
 </resources>

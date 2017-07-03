@@ -12,24 +12,24 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.model.Tweet;
-import mx.gob.jovenes.guanajuato.model.Usuario;
-import mx.gob.jovenes.guanajuato.model.UsuarioTweet;
+import mx.gob.jovenes.guanajuato.model.Status;
+import mx.gob.jovenes.guanajuato.model.TwitterResponse;
 
 /**
  * Created by codigus on 26/05/2017.
  */
 
 public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetViewHolder>{
-    private List<Tweet> tweets;
+    private List<Status> statuses;
     private Context context;
 
-    public RVTweetAdapter(Context context, List<Tweet> tweets) {
+    public RVTweetAdapter(Context context, List<Status> statuses) {
         this.context = context;
-        this.tweets = tweets;
+        this.statuses = statuses;
     }
 
 
@@ -43,23 +43,23 @@ public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetVie
 
     @Override
     public void onBindViewHolder(TweetViewHolder holder, int position) {
-        String name = tweets.get(position).getUser().getName();
-        String screenName = tweets.get(position).getUser().getScreenName();
-        String profileImageURL = tweets.get(position).getUser().getProfileImageUrl();
+        String name = statuses.get(position).getUser().getName();
+        String screenName = statuses.get(position).getUser().getScreenName();
+        String profileImageURL = statuses.get(position).getUser().getProfileImageUrl();
 
         Picasso.with(context).load(profileImageURL).into(holder.imagenUsuario);
         holder.tvUserName.setText(name);
         holder.tvScreenName.setText("@" + screenName);
 
-        holder.tvTexto.setText(tweets.get(position).getText());
+        holder.tvTexto.setText(statuses.get(position).getText());
         holder.context = context;
-        holder.url = "https://twitter.com/i/web/status/" + tweets.get(position).getIdStr();
+        holder.url = "https://twitter.com/i/web/status/" + statuses.get(position).getIdStr();
 
     }
 
     @Override
     public int getItemCount() {
-        return tweets.size();
+        return statuses.size();
     }
 
     public class TweetViewHolder extends RecyclerView.ViewHolder {

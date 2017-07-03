@@ -14,7 +14,7 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/login_background" />
+            android:src="@drawable/registro_usuario" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -126,6 +126,15 @@
                     android:maxLength="15"
                     android:hint="@string/confirmar_password" />
             </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textview_consultar_curp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/consultar_curp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"/>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

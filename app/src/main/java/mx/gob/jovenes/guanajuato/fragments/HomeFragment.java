@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -80,7 +82,7 @@ public class HomeFragment extends CustomFragment {
     ImageButton botonHelp;
     Button botonCodigoGuanajoven;
     Button botonEventos;
-    Button botonCheckIn;
+    Button botonNotificaciones;
     Button botonConvocatorias;
     Button botonRedesSociales;
     Button botonChat;
@@ -97,6 +99,8 @@ public class HomeFragment extends CustomFragment {
     //Cambio de fragments
     FragmentTransaction fragmentTransaction;
     Fragment fragment = null;
+
+    private TextView textViewBolsaTrabajo;
 
 
     //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
@@ -136,10 +140,16 @@ public class HomeFragment extends CustomFragment {
         botonHelp = (ImageButton) v.findViewById(R.id.boton_help);
         botonCodigoGuanajoven = (Button) v.findViewById(R.id.boton_codigo_guanajoven);
         botonEventos = (Button) v.findViewById(R.id.boton_eventos);
-        botonCheckIn = (Button) v.findViewById(R.id.boton_check_in);
+        botonNotificaciones = (Button) v.findViewById(R.id.boton_notificaciones);
         botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
         botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
         botonChat = (Button) v.findViewById(R.id.boton_chat);
+
+        textViewBolsaTrabajo = (TextView) v.findViewById(R.id.textview_bolsa_de_trabajo);
+
+        textViewBolsaTrabajo.setOnClickListener((View) -> {
+            enlace("http://jovenes.guanajuato.gob.mx/index.php/empresas-incluyentes/");
+        });
 
         //Listeners de publicidad
         btnSlide.setOnClickListener(new View.OnClickListener() {
@@ -204,16 +214,6 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-        botonCheckIn.setOnClickListener((View) -> {
-            try {
-                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
-                intent.putExtra(MENU_ID, R.id.nav_calendario_eventos);
-                startActivity(intent);
-            } catch (Exception e) {
-                System.err.println("que pendejo...");
-            }
-        });
-
         botonConvocatorias.setOnClickListener((View) -> {
             try {
                 Intent intent = new Intent(this.getContext(), SegundaActivity.class);
@@ -240,6 +240,16 @@ public class HomeFragment extends CustomFragment {
             try {
                 Intent intent = new Intent(this.getContext(), SegundaActivity.class);
                 intent.putExtra(MENU_ID, R.id.nav_chat_ayuda);
+                startActivity(intent);
+            } catch (Exception e) {
+                System.err.println("que pendejo...");
+            }
+        });
+
+        botonNotificaciones.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_historial_notificaciones);
                 startActivity(intent);
             } catch (Exception e) {
                 System.err.println("que pendejo...");
@@ -487,8 +497,9 @@ public class HomeFragment extends CustomFragment {
                 }
             }
         }
+    }
 
-
-
+    public void enlace(String link){
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
 }

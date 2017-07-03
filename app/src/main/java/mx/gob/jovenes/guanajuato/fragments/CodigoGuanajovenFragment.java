@@ -1,5 +1,6 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.app.ActionBar;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -9,6 +10,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -70,7 +73,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
 
     private UsuarioAPI usuarioAPI;
     private Retrofit retrofit;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,6 +161,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         } catch (WriterException e) {
             e.printStackTrace();
         }
+
         return vista;
     }
 
