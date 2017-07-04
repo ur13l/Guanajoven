@@ -145,7 +145,6 @@ public class RegistrarAguaFragment extends CustomFragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_agua, menu);
-
     }
 
     @Override

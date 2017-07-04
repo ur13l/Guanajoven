@@ -21,6 +21,7 @@ import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.RedesSocialesFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
+import mx.gob.jovenes.guanajuato.fragments.RegistrarAguaFragment;
 
 
 /**
