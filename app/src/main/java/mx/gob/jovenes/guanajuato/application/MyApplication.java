@@ -35,9 +35,9 @@ public class MyApplication extends MultiDexApplication {
     //uriel publica
     //public static final String BASE_URL = "http://192.168.0.93/GuanajovenWeb/public/api/";
 
-    //public static final String BASE_URL = "http://10.0.7.128/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.128/GuanajovenWeb/public/api/";
 
-    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
 
     /**
@@ -71,4 +71,5 @@ public class MyApplication extends MultiDexApplication {
     public Retrofit getRetrofitInstance(){
         return retrofit;
     }
+
 }

@@ -1,5 +1,7 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,78 +11,34 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import mx.gob.jovenes.guanajuato.R;
 
 /**
  * Created by code on 26/10/16.
  */
-public class AyudaFragment extends Fragment {
-    private static int FIRST_SLIDE = 1;
-    private static int LAST_SLIDE = 4;
-    private int slide;
-    private int nextSlide;
-
-    private ImageView imageView;
-    private TextView textView;
-    private Button continuarBtn;
-    private View backgroundView;
+public class AyudaFragment extends CustomFragment {
+    private VideoView videoView;
+    private MediaController mediaController;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_ayuda, container, false);
-        imageView = (ImageView) v.findViewById(R.id.img_tutorial);
-        textView = (TextView) v.findViewById(R.id.tv_texto_tutorial);
-        continuarBtn = (Button) v.findViewById(R.id.btn_continuar);
-        backgroundView = v.findViewById(R.id.background);
 
-        slide = getArguments().getInt("slide");
-        nextSlide = slide + 1;
-        switch (slide){
-            case 1:
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark));
-                imageView.setImageResource(R.drawable.slide1);
-                textView.setText(R.string.slide1);
-                break;
-            case 2:
-                imageView.setImageResource(R.drawable.slide2);
-                textView.setText(R.string.slide1);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorAccentDark));
-                break;
-            case 3:
-                imageView.setImageResource(R.drawable.slide3);
-                textView.setText(R.string.slide1);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorMagenta));
-                break;
-            case 4:
-                imageView.setImageResource(R.drawable.slide4);
-                textView.setText(R.string.slide1);
-                backgroundView.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                break;
-        }
+        videoView = (VideoView) v.findViewById(R.id.ayuda_video);
+        mediaController = new MediaController(getContext());
+        mediaController.setAnchorView(videoView);
+        Uri uri = Uri.parse("rtsp://r6---sn-q4fl6n7s.googlevideo.com/Cj0LENy73wIaNAkqK5JKrTlWthMYDSANFC0ncF1ZMOCoAUIASARghonFwbWQteNYigELSVlkR3hXcTcyZm8M/57AE8D5D8DE10553CBC0FB1A08C2498E4769AEB0.154DD16FDE3A1C233E2778CEBB0AC17B2F0AB4E0/yt6/1/video.3gp");
+        videoView.setMediaController(mediaController);
+        videoView.setVideoURI(uri);
+        videoView.requestFocus();
+        videoView.start();
 
-        continuarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(nextSlide <= LAST_SLIDE) {
-                    FragmentTransaction ft = getFragmentManager().beginTransaction();
-                    AyudaFragment a = AyudaFragment.newInstance(nextSlide);
-                    ft.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.fragment_container, a).addToBackStack(null).commit();
-                }else{
-                    getActivity().finish();
-                }
-            }
-        });
         return v;
     }
 
-    public static AyudaFragment newInstance(int slide){
-        AyudaFragment a = new AyudaFragment();
-        Bundle args = new Bundle();
-        args.putInt("slide", slide);
-        a.setArguments(args);
-        return a;
-    }
 }

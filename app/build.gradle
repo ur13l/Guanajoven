@@ -70,6 +70,8 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.itextpdf:itextg:5.5.10'
     compile 'com.itextpdf.tool:xmlworker:5.5.10'
+    compile 'org.twitter4j:twitter4j-http2-support:4.0.6'
+
 
 }
 

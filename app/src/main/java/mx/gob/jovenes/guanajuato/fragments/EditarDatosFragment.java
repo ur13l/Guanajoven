@@ -2,13 +2,16 @@ package mx.gob.jovenes.guanajuato.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,18 +23,26 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVIdiomasSeleccionadosAdapter;
+import mx.gob.jovenes.guanajuato.api.RegistroModificarPerfil;
+import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.model.DatosModificarPerfil;
 import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
+
+import static android.R.id.list;
 
 /**
  * Autor: Uriel Infante
@@ -45,10 +56,8 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
     private static final String AP_PATERNO = "ap_paterno";
     private static final String RUTA_IMAGEN = "ruta_imagen";
 
-    private Usuario usuario; //instancia que se usará para cargar datos que vengan de la interfaz.
     private Button btnContinuar;
     private CircleImageView imgPerfil;
-    //private MaterialSpinner spnEstadoCivil;
 
     private MaterialSpinner spnNivelEstudios;
     private MaterialSpinner spnConfirmProgramaGobierno;
@@ -63,44 +72,38 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
     private MaterialSpinner spnConfirmProyectosSociales;
     private EditText etProyectosSociales;
     private MaterialSpinner spnSueldoProyectosSociales;
-    private EditText etIdiomasAdicionales;
     private ProgressDialog progressDialog;
-    private ImageButton btnBack;
 
     private Button btnSeleccionarIdiomas;
 
-    private UsuarioAPI usuarioAPI;
+    private RegistroModificarPerfil registroModificarPerfilAPI;
 
-    //private String[] estadosCiviles = {"Soltero/a", "Comprometido/a", "Casado/a", "Divorciado/a", "Casado/a"};
     private String[] siNo = {"Sí", "No"};
     private String[] nivelesEstudio = {"Primaria", "Secundaria", "Preparatoria", "TSU",  "Universidad", "Maestría", "Doctorado", "Otro"};
     private String[] programasGobierno = {"Municipal", "Estatal", "Federal", "Internacional"};
     private String[] pueblosIndigenas = {"Otomí", "Chichimeca-Jonaz", "Náhuatl", "Mazahua", "Otra"};
     private String[] capacidadesDiferentes = {"Física", "Sensorial", "Auditiva", "Visual", "Psíquica", "Intelectual", "Mental"};
 
-    private static TextView textViewTituloIdiomasSeleccionados;
-    private static LinearLayout layoutTablas;
-    private static RecyclerView recyclerViewIdiomasSeleccionados;
-    private static Activity thisActivity;
-    private static RVIdiomasSeleccionadosAdapter adapter;
+    public static TextView textViewTituloIdiomasSeleccionados;
+    public static LinearLayout layoutTablas;
+    public static RecyclerView recyclerViewIdiomasSeleccionados;
+    public static Activity thisActivity;
+    public static RVIdiomasSeleccionadosAdapter adapter;
+
+    private AlertDialog.Builder builder;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
         Retrofit retrofit = ((MyApplication)getActivity().getApplication()).getRetrofitInstance();
-        usuarioAPI = retrofit.create(UsuarioAPI.class);
+        registroModificarPerfilAPI = retrofit.create(RegistroModificarPerfil.class);
         thisActivity = getActivity();
 
+        builder = new AlertDialog.Builder(getContext());
+        builder.create();
     }
 
-    /**
-     * Método del ciclo de vida que se ejecuta después de que la vista ha sido generada
-     * @param inflater
-     * @param parent
-     * @param savedInstanceState
-     * @return
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
         View v = inflater.inflate(R.layout.fragment_editar_datos, parent, false);
@@ -123,11 +126,11 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
 
 
         imgPerfil = (CircleImageView) v.findViewById(R.id.imagen_usuario);
-        ArrayAdapter<String> siNoAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, siNo);
-        ArrayAdapter<String> nivelEstudioAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nivelesEstudio);
-        ArrayAdapter<String> programaGobiernoAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, programasGobierno);
-        ArrayAdapter<String> pueblosIndigenasAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, pueblosIndigenas);
-        ArrayAdapter<String> capacidadesDiferentesAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, capacidadesDiferentes);
+        ArrayAdapter<String> siNoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, siNo);
+        ArrayAdapter<String> nivelEstudioAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, nivelesEstudio);
+        ArrayAdapter<String> programaGobiernoAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, programasGobierno);
+        ArrayAdapter<String> pueblosIndigenasAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, pueblosIndigenas);
+        ArrayAdapter<String> capacidadesDiferentesAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, capacidadesDiferentes);
 
 
 
@@ -163,6 +166,24 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         btnSeleccionarIdiomas.setOnClickListener((View) -> {
             if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
                 //En caso de que ya halla puesto idiomas le saldra una alerta
+                AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
+                alerta.setMessage("Tienes idiomas seleccionados, en caso de aceptar se eliminaran, ¿Estás de acuerdo?");
+
+                alerta.setPositiveButton("Aceptar", (dialog, which) -> {
+                    IdiomasAdicionalesDialogFragment.datosIdiomas.clear();
+                    adapter.notifyDataSetChanged();
+
+                    textViewTituloIdiomasSeleccionados.setVisibility(android.view.View.GONE);
+                    layoutTablas.setVisibility(android.view.View.GONE);
+                    recyclerViewIdiomasSeleccionados.setVisibility(android.view.View.GONE);
+
+                    FragmentManager fragmentManager = getActivity().getFragmentManager();
+                    IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
+                    idiomasAdicionalesDialogFragment.show(fragmentManager, null);
+                });
+
+                alerta.show();
+
             } else {
                 FragmentManager fragmentManager = getActivity().getFragmentManager();
                 IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
@@ -170,15 +191,14 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
             }
         });
 
-
-
         btnContinuar.setOnClickListener(this);
 
         Picasso.with(getActivity()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imgPerfil);
+
+        cargarDatos();
+
         return v;
     }
-
-
 
     @Override
     public void onClick(View view) {
@@ -189,6 +209,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         }
     }
 
+    //Limpia el arreglo estatico de idiomas
     @Override
     public void onStop() {
         super.onStop();
@@ -203,6 +224,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
 
     }
 
+    //Cuando el usuario comience a ingresar idiomas o cuando los quite, actualiza la vista
     public static void validarIdiomas() {
         if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
             textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
@@ -215,84 +237,320 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
             recyclerViewIdiomasSeleccionados.setAdapter(adapter);
             textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
             recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
+        } else {
+            textViewTituloIdiomasSeleccionados.setVisibility(View.GONE);
+            layoutTablas.setVisibility(View.GONE);
+            recyclerViewIdiomasSeleccionados.setVisibility(View.GONE);
         }
     }
 
-    /**
-     * Ejecución de lo que se hará al presionar el botón de contninuar, se realizan las validaciones
-     * para pasar a la interfaz de Datos complementarios.
-     */
+    //Método para el botón de guardar
     public void continuar(){
-        //Verifica que los campos no estén vacíos
-            progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
-
-
-        /*
-            Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
-                    new RegistroRequest(
-                            usuario.getEmail(),
-                            "_",
-                            "_",
-                            etApPaterno.getText().toString(),
-                            etApMaterno.getText().toString(),
-                            etNombre.getText().toString(),
-                            spnGenero.getSelectedItemPosition() == 1? "H" m: "M",
-                            etFechaNacimiento.getText().toString(),
-                            etCodigoPostal.getText().toString(),
-                            estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
-                            "data:image/jpeg;base64," + getBase64(imgPerfil),
-                            usuario.getIdGoogle(),
-                            usuario.getIdFacebook()
-                    )
-            );
-
-
-            callRegistrar.enqueue(new Callback<Response<Usuario>>() {
-                @Override
-                public void onResponse(Call<Response<Usuario>> call, retrofit2.Response<Response<Usuario>> response) {
-                    if(progressDialog != null){
-                        progressDialog.dismiss();
-                    }
-                    Response<Usuario> body = response.body();
-                    if (body.success) {
-                        Sesion.cargarSesion(body.data);
-                        ((LoginActivity) getActivity()).startHomeActivity();
-
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setMessage(body.errors[0])
-                                .setCancelable(false)
-                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        //do things
-                                    }
-                                });
-                        AlertDialog alert = builder.create();
-                        alert.show();                    }
-                }
-
-                @Override
-                public void onFailure(Call<Response<Usuario>> call, Throwable t) {
-                    if(progressDialog != null){
-                        progressDialog.dismiss();
-                    }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setMessage("Error al conectar con el servidor, intente más adelante")
-                            .setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    //do things
-                                }
-                            });
-                    AlertDialog alert = builder.create();
-                    alert.show();
-
-                }
-            });
-
-
+        if (datosCompletos()) {
+            registrarDatos();
+        } else {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+            dialog.setMessage("Ingresa todas las opciones");
+            dialog.create();
+            dialog.show();
         }
-        */
+    }
+
+    private void registrarDatos() {
+        //Datos a registrar
+        String apiToken = Sesion.getUsuario().getApiToken();
+        int nivelEstudios = spnNivelEstudios.getSelectedItemPosition();
+        int beneficiarioPrograma = spnProgramaGobierno.getSelectedItemPosition();
+        int trabajo;
+
+        if (spnTrabaja.getSelectedItemPosition() == 1) {
+            trabajo = 1;
+        } else {
+            trabajo = 0;
+        }
+
+        int idPuebloIndigena = spnPuebloIndigena.getSelectedItemPosition();
+        int idCapacidadDiferente = spnCapacidadDiferente.getSelectedItemPosition();
+        String premios = etPremios.getText().toString();
+        String proyectos = etProyectosSociales.getText().toString();
+        int apoyoProyecto;
+
+        if (spnSueldoProyectosSociales.getSelectedItemPosition() == 1) {
+            apoyoProyecto = 1;
+        } else {
+            apoyoProyecto = 0;
+        }
+
+        DatosUsuarioIdioma[] idiomas = new DatosUsuarioIdioma[IdiomasAdicionalesDialogFragment.numeroDeIdiomas()];
+
+        for (int i = 0; i < idiomas.length; i++) {
+            idiomas[i] = IdiomasAdicionalesDialogFragment.datosIdiomas.get(i);
+        }
+
+
+        Call<Response<Boolean>> callRegistrar = registroModificarPerfilAPI.postModificarPerfil(apiToken, nivelEstudios, beneficiarioPrograma, trabajo, idPuebloIndigena, idCapacidadDiferente, premios, proyectos, apoyoProyecto, idiomas);
+
+
+        //TODO esperar a que mario modifique el servicio
+        callRegistrar.enqueue(new Callback<Response<Boolean>>() {
+            @Override
+            public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                builder.setMessage("Datos registrados");
+                builder.show();
+            }
+
+            @Override
+            public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                builder.setMessage("Error en registrar");
+                builder.show();
+            }
+        });
+    }
+
+    //Cuando abre el fragment se ejecuta
+    private void cargarDatos() {
+        String apiToken = Sesion.getUsuario().getApiToken();
+        Call<Response<DatosModificarPerfil>> cargarDatos = registroModificarPerfilAPI.getModificarPerfil(apiToken);
+
+        cargarDatos.enqueue(new Callback<Response<DatosModificarPerfil>>() {
+            @Override
+            public void onResponse(Call<Response<DatosModificarPerfil>> call, retrofit2.Response<Response<DatosModificarPerfil>> response) {
+                DatosModificarPerfil datosModificarPerfil = response.body().data;
+
+                spnNivelEstudios.setSelection(datosModificarPerfil.getIdNivelEstudios());
+
+                if (datosModificarPerfil.getIdProgramaGobierno() != 0) {
+                    spnConfirmProgramaGobierno.setSelection(1);
+                    spnProgramaGobierno.setSelection(datosModificarPerfil.getIdProgramaGobierno());
+                } else {
+                    spnConfirmProgramaGobierno.setSelection(2);
+                }
+
+                if (datosModificarPerfil.getTrabajo() == 0) {
+                    spnTrabaja.setSelection(2);
+                } else {
+                    spnTrabaja.setSelection(datosModificarPerfil.getTrabajo());
+                }
+
+                if (datosModificarPerfil.getIdPuebloIndigena() != 0) {
+                    spnConfirmPuebloIndigena.setSelection(1);
+                    spnPuebloIndigena.setSelection(datosModificarPerfil.getIdPuebloIndigena());
+                } else {
+                    spnConfirmPuebloIndigena.setSelection(2);
+                }
+
+                if (datosModificarPerfil.getIdCapacidadDiferente() != 0) {
+                    spnConfirmCapacidadDiferente.setSelection(1);
+                    spnCapacidadDiferente.setSelection(datosModificarPerfil.getIdPuebloIndigena());
+                } else {
+                    spnConfirmCapacidadDiferente.setSelection(2);
+                }
+
+                if (datosModificarPerfil.getPremios() != null) {
+                    spnConfirmPremios.setSelection(1);
+                    etPremios.setText(datosModificarPerfil.getPremios());
+                } else {
+                    spnConfirmPremios.setSelection(2);
+                }
+
+                if (datosModificarPerfil.getProyectosSociales() != null) {
+                    spnConfirmProyectosSociales.setSelection(1);
+                    etProyectosSociales.setText(datosModificarPerfil.getProyectosSociales());
+                } else {
+                    spnConfirmProyectosSociales.setSelection(2);
+                }
+
+                if (datosModificarPerfil.getApoyoProyectosSociales() != 0) {
+                    spnSueldoProyectosSociales.setSelection(1);
+                } else {
+                    spnSueldoProyectosSociales.setSelection(2);
+                }
+
+                if (datosModificarPerfil.getIdiomas().length > 0) {
+                    IdiomasAdicionalesDialogFragment.datosIdiomas = new ArrayList<>();
+
+                    textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
+                    layoutTablas.setVisibility(View.VISIBLE);
+                    recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
+
+                    LinearLayoutManager llm = new LinearLayoutManager(thisActivity);
+                    adapter = new RVIdiomasSeleccionadosAdapter(thisActivity, IdiomasAdicionalesDialogFragment.datosIdiomas);
+                    recyclerViewIdiomasSeleccionados.setLayoutManager(llm);
+                    recyclerViewIdiomasSeleccionados.setAdapter(adapter);
+                    textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
+                    recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
+
+                    IdiomasAdicionalesDialogFragment.datosIdiomas.addAll(Arrays.asList(datosModificarPerfil.getIdiomas()));
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Response<DatosModificarPerfil>> call, Throwable t) {
+                System.err.println("-------------------------------------------");
+                System.err.println("chale");
+                System.err.println("-------------------------------------------");
+            }
+        });
+
+    }
+
+    //Métodos para verificar que ingrese todos los datos
+    private boolean datosCompletos() {
+        if (confirmoNivelEstudios()) {
+            if (confirmoBeneficiario()) {
+                if (confirmoTrabajo()) {
+                    if (confirmoPuebloIndigena()) {
+                        if (confirmoCapacidadDiferente()) {
+                            if (confirmoPremios()) {
+                                if (confirmoProyectos()) {
+                                    return true;
+                                } else {
+                                    return false;
+                                }
+                            } else {
+                                return false;
+                            }
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private boolean confirmoNivelEstudios() {
+        if (spnNivelEstudios.getSelectedItemPosition() != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean confirmoBeneficiario() {
+        if (spnConfirmProgramaGobierno.getSelectedItemPosition() != 0) {
+            if (spnConfirmProgramaGobierno.getSelectedItemPosition() == 1) {
+                if (seleccionoTipoBeneficiario()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private boolean confirmoTrabajo() {
+        if (spnTrabaja.getSelectedItemPosition() != 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean confirmoPuebloIndigena() {
+        if (spnConfirmPuebloIndigena.getSelectedItemPosition() != 0) {
+            if (spnConfirmPuebloIndigena.getSelectedItemPosition() == 1) {
+                if (seleccionoPuebloIndigena()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private boolean confirmoCapacidadDiferente() {
+        if (spnConfirmCapacidadDiferente.getSelectedItemPosition() != 0) {
+            if (spnConfirmCapacidadDiferente.getSelectedItemPosition() == 1) {
+                if (seleccionoCapacidadDiferente()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private boolean confirmoPremios() {
+        if (spnConfirmPremios.getSelectedItemPosition() != 0) {
+            if (spnConfirmPremios.getSelectedItemPosition() == 1) {
+                if (ingresoPremios()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private boolean confirmoProyectos() {
+        if (spnConfirmProyectosSociales.getSelectedItemPosition() != 0) {
+            if (spnConfirmProyectosSociales.getSelectedItemPosition() == 1) {
+                if (ingresoProyectos()) {
+                    if (seleccionoApoyo()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private boolean seleccionoTipoBeneficiario() {
+        return spnProgramaGobierno.getSelectedItemPosition() != 0;
+    }
+
+    private boolean seleccionoPuebloIndigena() {
+        return spnPuebloIndigena.getSelectedItemPosition() != 0;
+    }
+
+    private boolean seleccionoCapacidadDiferente() {
+        return spnCapacidadDiferente.getSelectedItemPosition() != 0;
+    }
+
+    private boolean ingresoPremios() {
+        return !(etPremios.getText().toString().equals(""));
+    }
+
+    private boolean ingresoProyectos() {
+        return !(etProyectosSociales.getText().toString().equals(""));
+    }
+
+    private boolean seleccionoApoyo() {
+        return spnSueldoProyectosSociales.getSelectedItemPosition() != 0;
     }
 
 }

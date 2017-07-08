@@ -380,7 +380,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
 
     <!--Strings fragments conocenos-->
     <string name="conocenos_titulo">Conocenos</string>
-    <string name="conocenos_que_hacemos">¿Que hacemos?</string>
+    <string name="conocenos_que_hacemos">¿Qué hacemos?</string>
     <string name="conocenos_titulo_descripcion">Descripción</string>
     <string name="conocenos_titulo_mision">Misión</string>
     <string name="conocenos_titulo_vision">Visión</string>
@@ -425,5 +425,5 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="idioma_adicional_otro">Otro</string>
     <string name="idiomas_seleccionados_title">Idiomas seleccionados:</string>
     <string name="bolsa_de_trabajo">Bolsa de trabajo</string>
-    <string name="consultar_curp">No conoces tu curp?, Consultalo aquí!</string>
+    <string name="consultar_curp">No conoces tu curp, Consultalo aquí!</string>
 </resources>

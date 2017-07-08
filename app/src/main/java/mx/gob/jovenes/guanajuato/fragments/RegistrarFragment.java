@@ -576,8 +576,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
      * @param grantResults
      */
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case CAMERA_PERMISSION_CODE:
                 // If request is cancelled, the result arrays are empty.

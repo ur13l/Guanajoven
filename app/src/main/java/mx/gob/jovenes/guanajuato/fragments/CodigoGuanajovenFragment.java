@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +37,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -44,8 +46,19 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.TabStop;
+import com.itextpdf.text.pdf.PdfContentByte;
+import com.itextpdf.text.pdf.PdfGState;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.VerticalText;
 import com.itextpdf.text.pdf.codec.Base64;
+import com.itextpdf.text.pdf.draw.DottedLineSeparator;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+import com.itextpdf.text.pdf.draw.VerticalPositionMark;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 import com.squareup.picasso.Picasso;
 
@@ -56,6 +69,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
+import java.text.SimpleDateFormat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
@@ -100,7 +114,9 @@ public class CodigoGuanajovenFragment extends CustomFragment {
 
     //Imagen
     private ImageView imagenQr,
-            imgBackground;
+            imgBackground,
+            imgGuanajoven,
+            imgGuanajuato;
     private CircleImageView imagenUsuario;
 
     private UsuarioAPI usuarioAPI;
@@ -158,7 +174,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                 " " + u.getDatosUsuario().getApellidoMaterno();
         correo = u.getEmail();
         genero = u.getDatosUsuario().getGenero().getNombre();
-        fechaNacimiento = u.getDatosUsuario().getFechaNacimiento();
+        fechaNacimiento = getFechaCast(u.getDatosUsuario().getFechaNacimiento());
         codigoGuanajoven = String.valueOf(u.getCodigoGuanajoven().getIdCodigoGuanajoven());
         Curp = u.getDatosUsuario().getCurp();
         municipio = u.getDatosUsuario().getMunicipio().getNombre();
@@ -181,6 +197,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         imagenQr = (ImageView) vista.findViewById(R.id.iv_codigoCG);
         imagenUsuario = (CircleImageView) vista.findViewById(R.id.iv_imagenCG);
         imgBackground = (ImageView) vista.findViewById(R.id.img_background);
+        imgGuanajoven = (ImageView) vista.findViewById(R.id.logo_guanajoven);
+        imgGuanajuato = (ImageView) vista.findViewById(R.id.logo_guanajuato);
 
         inputNombre.setText(nombre);
         inputCorreo.setText(correo);
@@ -204,7 +222,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         return vista;
     }
 
-    //Generar código QR
     private void generarQR(String dato, ImageView objeto) throws WriterException {
         Writer generador = new QRCodeWriter();
         String datoFinal = Uri.encode(dato, "utf-8");
@@ -244,7 +261,11 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_generar_pdf:
-                pedirPermisos();
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    pedirPermisos();
+                } else {
+                    generarPDF();
+                }
                 break;
         }
 
@@ -275,22 +296,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                 }
             }
         }
-    }
-
-    //Validar si la app tiene el permiso de escribir
-    private boolean tienePermisos() {
-        int res;
-        String[] permisos = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
-        for (String permiso : permisos) {
-            res = getActivity().checkCallingOrSelfPermission(permiso);
-            if (!(res == PackageManager.PERMISSION_DENIED)) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-        return true;
     }
 
     private void pedirPermisos() {
@@ -335,26 +340,36 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         }
 
         try {
-            PdfWriter.getInstance(documento, new FileOutputStream(nombreCompleto));
+            PdfWriter writer = PdfWriter.getInstance(documento, new FileOutputStream(nombreCompleto));
+
             documento.open();
 
+            PdfContentByte canvas = writer.getDirectContentUnder();
+
+            canvas.saveState();
+
+            PdfGState state = new PdfGState();
+            state.setFillOpacity(0.4f);
+            canvas.setGState(state);
+            canvas.addImage(fotoPerfil());
+            canvas.restoreState();
+
             agregarMetaDatos(documento);
-            documento.add(logo());
-            documento.add(new Paragraph(""));
+            documento.add(encabezado());
+            documento.add(new Chunk(new LineSeparator()));
+            documento.add(nombreUsuario());
             documento.add(Chunk.NEWLINE);
+            documento.add(correoUsuario());
             documento.add(Chunk.NEWLINE);
-            documento.add(Chunk.NEWLINE);
-            documento.add(saludo());
-            documento.add(Chunk.NEWLINE);
+            documento.add(camposConTitulo("Código Guanajoven", codigoGuanajoven));
             documento.add(Chunk.NEWLINE);
             documento.add(Chunk.NEWLINE);
             documento.add(codigoQR());
             documento.add(Chunk.NEWLINE);
+            documento.add(camposConTitulo("CURP", Curp));
             documento.add(Chunk.NEWLINE);
             documento.add(Chunk.NEWLINE);
-            documento.add(Chunk.NEWLINE);
-            documento.add(Chunk.NEWLINE);
-            documento.add(Chunk.NEWLINE);
+            documento.add(tabla());
             documento.add(Chunk.NEWLINE);
             documento.add(Chunk.NEWLINE);
             documento.add(Chunk.NEWLINE);
@@ -375,46 +390,117 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     }
 
     private void agregarMetaDatos(Document document) {
-        document.addTitle("Código Guanajoven - " + Sesion.getUsuario().getCodigoGuanajoven());
+        document.addTitle("Código Guanajoven - " + codigoGuanajoven);
         document.addSubject("Usa este código para identificarte");
         document.addKeywords("Código, Guanajoven, App");
         document.addAuthor("Guanajoven");
         document.addCreator("Guanajoven");
     }
 
-    private Paragraph titulo() {
-        Paragraph titulo = new Paragraph("Código Guanajoven", new Font(Font.FontFamily.HELVETICA, 22));
-        titulo.setAlignment(Element.ALIGN_CENTER);
-        return titulo;
+    private Paragraph encabezado() {
+        Paragraph p = new Paragraph();
+        Phrase logoGuanajoven = new Phrase(new Phrase(new Chunk(logoGuanajoven(), 0, 0, true)));
+        fuentePDF.setColor(new BaseColor(191, 51, 100));
+        Phrase titulo = new Phrase("Código Guanajoven", fuentePDF);
+        Phrase logoGuanajuato = new Phrase(new Chunk(logoGuanajuato(), 0, 0, true));
+        String SPACES = "                                ";
+        p.add(logoGuanajoven);
+        p.add(new Phrase(SPACES));
+        p.add(titulo);
+        p.add(new Phrase(SPACES));
+        p.add(logoGuanajuato);
+
+        return p;
     }
 
-    private Image logo() {
+    private Image logoGuanajoven() {
         Image logo = null;
         try {
-            Drawable drawable = getResources().getDrawable(R.drawable.logo);
+            Drawable drawable = imgGuanajoven.getDrawable();
             Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             logo = Image.getInstance(byteArrayOutputStream.toByteArray());
-            logo.scaleAbsolute(200, 170);
-            logo.setAlignment(Image.MIDDLE);
+            logo.scaleAbsolute(65, 50);
+            logo.setAlignment(Image.LEFT);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return logo;
     }
 
+    private Image logoGuanajuato() {
+        Image logo = null;
+        try {
+            Drawable drawable = imgGuanajuato.getDrawable();
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            logo = Image.getInstance(byteArrayOutputStream.toByteArray());
+            logo.scaleAbsolute(65, 50);
+            logo.setAlignment(Image.RIGHT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return logo;
+    }
+
+    private Paragraph nombreUsuario() {
+        fuentePDF.setColor(new BaseColor(7, 70, 119));
+        Paragraph nombreUsuario = new Paragraph(nombre, fuentePDF);
+        nombreUsuario.setAlignment(Element.ALIGN_CENTER);
+
+        return nombreUsuario;
+    }
+
+    private Paragraph correoUsuario() {
+        fuentePDF.setColor(new BaseColor(7, 70, 119));
+        String correoUsuario = Sesion.getUsuario().getEmail();
+        Paragraph correo = new Paragraph(correoUsuario, fuentePDF);
+        correo.setAlignment(Element.ALIGN_CENTER);
+
+        return correo;
+    }
+
+    private Paragraph codigoGuanajoven() {
+        Paragraph codigo = new Paragraph();
+        Paragraph titulo = new Paragraph("Código Guanajoven");
+        titulo.setAlignment(Element.ALIGN_CENTER);
+        Paragraph numeroCodigo = new Paragraph(codigoGuanajoven);
+        numeroCodigo.setAlignment(Element.ALIGN_CENTER);
+
+        codigo.add(titulo);
+        codigo.add(numeroCodigo);
+
+        return codigo;
+    }
+
+    private Image fotoPerfil() {
+        Image foto = null;
+        try {
+            Drawable drawable = imgBackground.getDrawable();
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            foto = Image.getInstance(byteArrayOutputStream.toByteArray());
+            foto.scaleAbsolute(PageSize.LETTER.getWidth(), PageSize.LETTER.getHeight() - 50);
+            foto.setAbsolutePosition(0, 0);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return foto;
+    }
+
     private Paragraph saludo() {
         Paragraph saludo = new Paragraph();
         saludo.setAlignment(Element.ALIGN_CENTER);
 
-        Paragraph parrafo1 = new Paragraph("Saludos " + Sesion.getUsuario().getDatosUsuario().getNombre() + "!", fuentePDF);
+        Paragraph parrafo1 = new Paragraph("Saludos!", new Font(Font.FontFamily.HELVETICA, 14));
         parrafo1.setAlignment(Element.ALIGN_CENTER);
 
-        Paragraph parrafo2 = new Paragraph("Te hacemos llegar tu código guanajoven con clave: " +
-                Sesion.getUsuario().getCodigoGuanajoven().getIdCodigoGuanajoven() +
-                " para que lo puedas usar en nuestros eventos y convocatorias, " +
-                "además te ayudara a identificarte como parte de la red Guanajoven!", new Font(Font.FontFamily.HELVETICA, 14));
+        Paragraph parrafo2 = new Paragraph("Te hacemos llegar tu código guanajoven para que lo puedas usar en nuestros eventos y convocatorias, " +
+                "además te ayudara a identificarte como parte de la comunidad Guanajoven!", new Font(Font.FontFamily.HELVETICA, 14));
         parrafo2.setAlignment(Element.ALIGN_CENTER);
 
         saludo.add(parrafo1);
@@ -423,6 +509,56 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         saludo.add(parrafo2);
 
         return saludo;
+    }
+
+    private Paragraph camposConTitulo(String titulo, String valor) {
+        Paragraph paragraphCampo = new Paragraph();
+
+        Paragraph paragraphTitulo = new Paragraph(titulo);
+        paragraphTitulo.setAlignment(Element.ALIGN_CENTER);
+
+        Paragraph paragraphValor = new Paragraph(valor);
+        paragraphValor.setAlignment(Element.ALIGN_CENTER);
+
+        paragraphCampo.add(paragraphTitulo);
+        paragraphCampo.add(paragraphValor);
+
+        return paragraphCampo;
+    }
+
+    private PdfPTable tabla() {
+        PdfPTable tabla = new PdfPTable(2);
+
+        tabla.addCell(celda("Género"));
+        tabla.addCell(celda("Fecha nacimiento"));
+        tabla.addCell(celda(genero));
+        tabla.addCell(celda(fechaNacimiento));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda(" "));
+        tabla.addCell(celda("Municipio"));
+        tabla.addCell(celda("Estado de nacimiento"));
+        tabla.addCell(celda(municipio));
+        tabla.addCell(celda(estado));
+        return tabla;
+    }
+
+    private PdfPCell celda(String contenido) {
+        Paragraph parrafo = new Paragraph(contenido);
+        parrafo.setAlignment(Element.ALIGN_CENTER);
+        PdfPCell celda = new PdfPCell();
+        celda.addElement(parrafo);
+        celda.setUseAscender(true);
+        celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+        celda.setBorder(Rectangle.NO_BORDER);
+        return celda;
     }
 
     private Image codigoQR() {
@@ -443,6 +579,20 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         footer.setAlignment(Element.ALIGN_CENTER);
 
         return footer;
+    }
+
+    //Castear fecha para que muestre solo dd/MM/yyyy
+    private String getFechaCast(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

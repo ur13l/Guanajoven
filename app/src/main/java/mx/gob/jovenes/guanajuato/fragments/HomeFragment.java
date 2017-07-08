@@ -187,7 +187,7 @@ public class HomeFragment extends CustomFragment {
         botonHelp.setOnClickListener((View) -> {
             try {
                 Intent intent = new Intent(this.getContext(), SegundaActivity.class);
-                intent.putExtra(MENU_ID, R.id.nav_acerca_de);
+                intent.putExtra(MENU_ID, R.id.boton_help);
                 startActivity(intent);
             } catch (Exception e) {
 
