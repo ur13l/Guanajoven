@@ -4,35 +4,12 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:id="@id/background"
-
     android:padding="20dp">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="350dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:id="@+id/img_tutorial"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_texto_tutorial"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/white"
-        android:layout_gravity="center"
-        android:gravity="center"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:id="@+id/btn_continuar"
-        android:textColor="@color/white"
-        android:background="@null"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="@string/continuar"/>
+    <VideoView
+        android:id="@+id/ayuda_video"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

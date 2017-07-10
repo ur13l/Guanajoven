@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.fragments.AyudaFragment;
 import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
 import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
@@ -21,6 +22,7 @@ import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.RedesSocialesFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
+import mx.gob.jovenes.guanajuato.fragments.RegistrarAguaFragment;
 
 
 /**
@@ -100,12 +102,13 @@ public class SegundaActivity extends AppCompatActivity {
                     break;
                 case R.id.nav_codigo_guanajoven:
                     fragment = CodigoGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, CodigoGuanajovenFragment.class);
-                    //fragment.getView().setBackgroundColor(R.color.colorPrimary);
                     break;
                 case R.id.nav_redes_sociales:
                     fragment = RedesSocialesFragment.newInstance(R.id.nav_redes_sociales, R.string.redes_sociales, RedesSocialesFragment.class);
                     break;
-
+                case R.id.boton_help:
+                    fragment = AyudaFragment.newInstance(R.id.boton_help, R.string.acerca_de, AyudaFragment.class);
+                    break;
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();

@@ -1,7 +1,5 @@
 package mx.gob.jovenes.guanajuato.model;
 
-
-import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 

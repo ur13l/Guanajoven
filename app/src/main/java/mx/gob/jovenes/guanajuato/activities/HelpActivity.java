@@ -18,8 +18,8 @@ public class HelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        AyudaFragment f = AyudaFragment.newInstance(1);
-        ft.replace(R.id.fragment_container, f).commit();
+        //AyudaFragment f = AyudaFragment.newInstance(1);
+        //ft.replace(R.id.fragment_container, f).commit();
     }
 
 

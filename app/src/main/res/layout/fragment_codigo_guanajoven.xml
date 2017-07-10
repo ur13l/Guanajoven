@@ -54,6 +54,7 @@
                         android:padding="5dp">
 
                         <ImageView
+                            android:id="@+id/logo_guanajoven"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:src="@drawable/logo" />
@@ -82,6 +83,7 @@
                         android:padding="5dp">
 
                         <ImageView
+                            android:id="@+id/logo_guanajuato"
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:layout_gravity="right"
@@ -201,6 +203,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/textView8"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"

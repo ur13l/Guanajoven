@@ -56,6 +56,13 @@ public class RVIdiomasSeleccionadosAdapter extends RecyclerView.Adapter<RVIdioma
             idiomasSeleccionados.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, idiomasSeleccionados.size());
+
+            if (idiomasSeleccionados.size() == 0) {
+                EditarDatosFragment.textViewTituloIdiomasSeleccionados.setVisibility(View.GONE);
+                EditarDatosFragment.layoutTablas.setVisibility(View.GONE);
+                EditarDatosFragment.recyclerViewIdiomasSeleccionados.setVisibility(View.GONE);
+            }
+
         });
     }
 
