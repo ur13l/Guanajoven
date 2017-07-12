@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,6 +53,7 @@ public class ConvocatoriaFragment extends CustomFragment{
     private AppCompatActivity activity;
     private Toolbar toolbar;
     private CollapsingToolbarLayout cToolbar;
+    private SwipeRefreshLayout swipeRefreshLayoutConvocatorias;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -70,18 +73,32 @@ public class ConvocatoriaFragment extends CustomFragment{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_convocatorias, container, false);
+        swipeRefreshLayoutConvocatorias = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout_convocatorias);
         rvConvocatoria = (RecyclerView) v.findViewById(R.id.rv_convocatoria);
         tvEmptyConvocatoria = (TextView) v.findViewById(R.id.tv_empty_convocatoria);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rvConvocatoria.setLayoutManager(llm);
         updateList();
 
-        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getString(MyApplication.LAST_UPDATE_CONVOCATORIAS, "0000-00-00 00:00:00"));
+        primeraLlamada();
 
+        if (noHayDatosEnRealm()) {
+            tvEmptyConvocatoria.setVisibility(View.VISIBLE);
+        }
+
+        swipeRefreshLayoutConvocatorias.setOnRefreshListener(() -> primeraLlamada());
+
+        return v;
+    }
+
+    public void primeraLlamada() {
+        swipeRefreshLayoutConvocatorias.setRefreshing(false);
+        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getString(MyApplication.LAST_UPDATE_CONVOCATORIAS, "0000-00-00 00:00:00"));
         //Llamada a servidor caso de acertar o fallar
         call.enqueue(new Callback<Response<ArrayList<Convocatoria>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<Convocatoria>>> call, retrofit2.Response<Response<ArrayList<Convocatoria>>> response) {
+                tvEmptyConvocatoria.setVisibility(View.GONE);
                 if(response.body().success) {
 
                     List<Convocatoria> conv = response.body().data;
@@ -116,22 +133,23 @@ public class ConvocatoriaFragment extends CustomFragment{
 
             @Override
             public void onFailure(Call<Response<ArrayList<Convocatoria>>> call, Throwable t) {
-
+                AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+                mensajeError.create();
+                mensajeError.setMessage("Necesitas estar conectado para poder ver las ultimas convocatorias");
+                mensajeError.show();
             }
         });
-
-        return v;
     }
 
-    /**
-     * Método que permite la actualización de la lista de convocatorias a partir de los nuevos
-     * resultados arrojados por el servidor.
-     */
     public void updateList() {
         RealmResults<Convocatoria> result = realm.where(Convocatoria.class).findAll();
         convocatorias = realm.copyFromRealm(result);
         adapter = new RVConvocatoriaAdapter(getActivity(), convocatorias);
         rvConvocatoria.setAdapter(adapter);
+    }
+
+    public boolean noHayDatosEnRealm() {
+        return (realm.where(Convocatoria.class).findAll().isEmpty());
     }
 
     @Override

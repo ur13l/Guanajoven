@@ -10,6 +10,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 
+import java.util.Map;
+
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
 import mx.gob.jovenes.guanajuato.model.IdiomaAdicional;
