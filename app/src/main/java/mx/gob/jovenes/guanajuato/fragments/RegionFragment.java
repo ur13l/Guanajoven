@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -48,6 +50,7 @@ public class RegionFragment extends CustomFragment {
     private AppCompatActivity activity;
     private Toolbar toolbar;
     private CollapsingToolbarLayout cToolbar;
+    private SwipeRefreshLayout swipeRefreshLayoutRegiones;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,23 +63,39 @@ public class RegionFragment extends CustomFragment {
         activity = ((AppCompatActivity) getActivity());
         toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
         cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_regiones, container, false);
+        swipeRefreshLayoutRegiones = (SwipeRefreshLayout) v.findViewById(R.id.swipelayout_regiones);
         rvRegion = (RecyclerView) v.findViewById(R.id.rv_regiones);
         tvEmptyRegion = (TextView) v.findViewById(R.id.tv_empty_regiones);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rvRegion.setLayoutManager(llm);
-        updateList();
+        actualizarLista();
 
+        primeraLlamada();
+
+        if (noHayDatosEnRealm()) {
+            tvEmptyRegion.setVisibility(View.VISIBLE);
+        }
+
+        swipeRefreshLayoutRegiones.setOnRefreshListener(() -> primeraLlamada());
+
+        return v;
+    }
+
+    public void primeraLlamada() {
+        swipeRefreshLayoutRegiones.setRefreshing(false);
         Call<Response<ArrayList<Region>>> call = regionAPI.get(prefs.getString(MyApplication.LAST_UPDATE_REGIONES, "0000-00-00 00:00:00"));
 
         call.enqueue(new Callback<Response<ArrayList<Region>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<Region>>> call, retrofit2.Response<Response<ArrayList<Region>>> response) {
+                tvEmptyRegion.setVisibility(View.GONE);
                 if (response.body().success) {
                     List<Region> reg = response.body().data;
 
@@ -98,7 +117,7 @@ public class RegionFragment extends CustomFragment {
                     realm.commitTransaction();
 
                     if (reg.size() > 0) {
-                        updateList();
+                        actualizarLista();
                     }
 
                     String lastUpdate = DateUtilities.dateToString(new Date());
@@ -109,21 +128,24 @@ public class RegionFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<ArrayList<Region>>> call, Throwable t) {
-                tvEmptyRegion.setVisibility(View.VISIBLE);
+                AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+                mensajeError.create();
+                mensajeError.setMessage("Necesitas estar conectado para poder ver las ultimas regiones");
+                mensajeError.show();
             }
         });
-
-        return v;
     }
 
-
-    public void updateList() {
+    public void actualizarLista() {
         RealmResults<Region> result = realm.where(Region.class).findAll();
         regiones = realm.copyFromRealm(result);
         adapter = new RVRegionAdapter(getActivity(), regiones);
         rvRegion.setAdapter(adapter);
     }
 
+    public boolean noHayDatosEnRealm() {
+        return (realm.where(Region.class).findAll().isEmpty());
+    }
 
     @Override
     public void onStop() {

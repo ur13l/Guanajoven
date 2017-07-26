@@ -426,4 +426,6 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="idiomas_seleccionados_title">Idiomas seleccionados:</string>
     <string name="bolsa_de_trabajo">Bolsa de trabajo</string>
     <string name="consultar_curp">No conoces tu curp, Consultalo aquí!</string>
+    <string name="tv_empty_notificaciones">No se encontraron notificaciones</string>
+    <string name="tv_empty_convocatorias">No se encontraron convocatorias</string>
 </resources>

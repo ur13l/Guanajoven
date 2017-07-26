@@ -49,7 +49,7 @@ public class TwitterFragment extends Fragment {
     //Variables twitter4j
     private ConfigurationBuilder CONFIGURATION_BUILDER = new ConfigurationBuilder().setDebugEnabled(true).setOAuthConsumerKey("zHb326FK2xT666c0olifieF9h").setOAuthConsumerSecret("ImFmtlFoLNuWWFRo4yAqbUTKhdeZElZCJ0UVn48UtVj1NkwS7d").setOAuthAccessToken("865314952470560768-BZ5AXIzHyRndtxWqcYe8u2rKMIb25cF").setOAuthAccessTokenSecret("cBqlyZVCekQNnCE5v4LAdDzpzOqgsdqHjocTpw26JThn4");
     private Twitter TWITTER = new TwitterFactory(CONFIGURATION_BUILDER.build()).getInstance();
-    private String USER = "@Strats1502";
+    private String USER = "@guanajoven";
     private List<Status> statuses;
 
     @Override
@@ -93,11 +93,15 @@ public class TwitterFragment extends Fragment {
     private void primerLlamada() {
 
         try {
+            tvEmptyTweets.setVisibility(View.GONE);
             Paging page = new Paging(PAGINA, 10);
             statuses.addAll(TWITTER.getUserTimeline(USER, page));
             PAGINA++;
         } catch (TwitterException exception) {
-            exception.printStackTrace();
+            AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+            mensajeError.create();
+            mensajeError.setMessage("Necesitas estar conectado para poder ver los ultimos tweets");
+            mensajeError.show();
             tvEmptyTweets.setVisibility(View.VISIBLE);
         }
 
@@ -111,6 +115,7 @@ public class TwitterFragment extends Fragment {
         List<Status> auxiliar = new ArrayList<>();
 
         try {
+            tvEmptyTweets.setVisibility(View.GONE);
             Paging page = new Paging(PAGINA, 10);
             auxiliar.addAll(TWITTER.getUserTimeline(USER, page));
             PAGINA++;
@@ -121,12 +126,10 @@ public class TwitterFragment extends Fragment {
             }
 
         } catch (TwitterException exception) {
-            exception.printStackTrace();
-
-            AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-            b.create();
-            b.setMessage("error primera llamada");
-            b.show();
+            AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+            mensajeError.create();
+            mensajeError.setMessage("Necesitas estar conectado para poder ver los ultimos tweets");
+            mensajeError.show();
         }
 
         adapter.agregarTweets(auxiliar);
@@ -139,11 +142,15 @@ public class TwitterFragment extends Fragment {
         adapter = null;
 
         try {
+            tvEmptyTweets.setVisibility(View.GONE);
             Paging page = new Paging(PAGINA, 10);
             statuses.addAll(TWITTER.getUserTimeline(USER, page));
             PAGINA++;
         } catch (TwitterException exception) {
-            exception.printStackTrace();
+            AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+            mensajeError.create();
+            mensajeError.setMessage("Necesitas estar conectado para poder ver los ultimos tweets");
+            mensajeError.show();
             tvEmptyTweets.setVisibility(View.VISIBLE);
         }
 

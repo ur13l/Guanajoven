@@ -24,6 +24,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -256,6 +260,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
         }
     }
 
+    //Registra los datos en BD
     private void registrarDatos() {
         //Datos a registrar
         String apiToken = Sesion.getUsuario().getApiToken();
@@ -281,17 +286,8 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
             apoyoProyecto = 0;
         }
 
-        DatosUsuarioIdioma[] idiomas = new DatosUsuarioIdioma[IdiomasAdicionalesDialogFragment.numeroDeIdiomas()];
+        Call<Response<Boolean>> callRegistrar = registroModificarPerfilAPI.postModificarPerfil(new DatosModificarPerfil(apiToken, nivelEstudios, idPuebloIndigena, idCapacidadDiferente, premios, proyectos, apoyoProyecto, IdiomasAdicionalesDialogFragment.datosIdiomas));
 
-        for (int i = 0; i < idiomas.length; i++) {
-            idiomas[i] = IdiomasAdicionalesDialogFragment.datosIdiomas.get(i);
-        }
-
-
-        Call<Response<Boolean>> callRegistrar = registroModificarPerfilAPI.postModificarPerfil(apiToken, nivelEstudios, beneficiarioPrograma, trabajo, idPuebloIndigena, idCapacidadDiferente, premios, proyectos, apoyoProyecto, idiomas);
-
-
-        //TODO esperar a que mario modifique el servicio
         callRegistrar.enqueue(new Callback<Response<Boolean>>() {
             @Override
             public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
@@ -366,7 +362,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
                     spnSueldoProyectosSociales.setSelection(2);
                 }
 
-                if (datosModificarPerfil.getIdiomas().length > 0) {
+                if (datosModificarPerfil.getIdiomas().size() > 0) {
                     IdiomasAdicionalesDialogFragment.datosIdiomas = new ArrayList<>();
 
                     textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
@@ -380,7 +376,7 @@ public class EditarDatosFragment extends CustomFragment implements View.OnClickL
                     textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);
                     recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
 
-                    IdiomasAdicionalesDialogFragment.datosIdiomas.addAll(Arrays.asList(datosModificarPerfil.getIdiomas()));
+                    IdiomasAdicionalesDialogFragment.datosIdiomas.addAll(datosModificarPerfil.getIdiomas());
                     adapter.notifyDataSetChanged();
                 }
 

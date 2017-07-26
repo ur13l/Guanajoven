@@ -1,5 +1,12 @@
 package mx.gob.jovenes.guanajuato.model;
 
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * Created by codigus on 30/06/2017.
  */
@@ -58,4 +65,5 @@ public class DatosUsuarioIdioma {
     public void setEscritura(int escritura) {
         this.escritura = escritura;
     }
+
 }

@@ -22,6 +22,7 @@ public class RegistroRequest {
     private String idFacebook;
 
 
+
     public RegistroRequest(String curp, String email, String password, String confirmarPassword,
                            String apellidoPaterno, String apellidoMaterno, String nombre,
                            String genero, String fechaNacimiento, String codigoPostal,

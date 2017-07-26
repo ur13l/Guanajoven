@@ -1,5 +1,7 @@
 package mx.gob.jovenes.guanajuato.model;
 
+import java.util.List;
+
 /**
  * Created by codigus on 04/07/2017.
  */
@@ -14,9 +16,9 @@ public class DatosModificarPerfil {
     private String premios;
     private String proyectosSociales;
     private int apoyoProyectosSociales;
-    private DatosUsuarioIdioma[] idiomas;
+    private List<DatosUsuarioIdioma> idiomas;
 
-    public DatosModificarPerfil(String apiToken, int idNivelEstudios, int idPuebloIndigena, int idCapacidadDiferente, String premios, String proyectosSociales, int apoyoProyectosSociales, DatosUsuarioIdioma[] idiomas) {
+    public DatosModificarPerfil(String apiToken, int idNivelEstudios, int idPuebloIndigena, int idCapacidadDiferente, String premios, String proyectosSociales, int apoyoProyectosSociales, List<DatosUsuarioIdioma> idiomas) {
         this.apiToken = apiToken;
         this.idNivelEstudios = idNivelEstudios;
         this.idPuebloIndigena = idPuebloIndigena;
@@ -99,11 +101,11 @@ public class DatosModificarPerfil {
         this.apoyoProyectosSociales = apoyoProyectosSociales;
     }
 
-    public DatosUsuarioIdioma[] getIdiomas() {
+    public List<DatosUsuarioIdioma> getIdiomas() {
         return idiomas;
     }
 
-    public void setIdiomas(DatosUsuarioIdioma[] idiomas) {
+    public void setIdiomas(List<DatosUsuarioIdioma> idiomas) {
         this.idiomas = idiomas;
     }
 }

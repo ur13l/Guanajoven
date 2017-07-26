@@ -70,7 +70,15 @@ public class NotificacionesFragment extends CustomFragment {
 
         updateList();
 
+        if (noHayDatosEnRealm()) {
+            tvEmptyNotificaciones.setVisibility(View.VISIBLE);
+        }
+
         return v;
+    }
+
+    public boolean noHayDatosEnRealm() {
+        return (realm.where(Notificacion.class).findAll().isEmpty());
     }
 
 
