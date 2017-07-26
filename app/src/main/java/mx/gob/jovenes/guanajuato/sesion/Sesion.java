@@ -3,7 +3,6 @@ package mx.gob.jovenes.guanajuato.sesion;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
 
 import com.google.gson.Gson;
 
@@ -62,6 +61,7 @@ public class Sesion {
      */
     public static void logout(){
         prefs.edit().remove(SESION).apply();
+        usuario = new Usuario();
     }
 
 }

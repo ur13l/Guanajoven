@@ -1,6 +1,8 @@
 package mx.gob.jovenes.guanajuato.utils;
 
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.widget.AppCompatEditText;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -29,6 +31,46 @@ public class EditTextValidations {
             return true;
         }
         else{
+            return false;
+        }
+    }
+
+    //la documentación para pendejos
+    public static boolean datosCURPInvalido(EditText editText) {
+        if (editText.getText().toString().length() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean spinnerDatosCurpInvalido(MaterialSpinner spinner){
+        if(spinner.getSelectedItemPosition() == 0){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    //pinches comentarios de relleno para verme bien cool
+    public static boolean curpValido(EditText editTextCurp, EditText editTextNombre, EditText editTextApellidoPaterno,
+                                     EditText editTextApellidoMaterno, EditText editTextFechaNacimiento,
+                                     MaterialSpinner spinnerGenero, MaterialSpinner spinnerEstadoNacimiento) {
+        if (editTextCurp.getText().length() == 18) {
+            if (editTextNombre.getText().toString().length() != 0 &&
+                    editTextApellidoPaterno.getText().toString().length() != 0 &&
+                    editTextApellidoMaterno.getText().toString().length() != 0 &&
+                    editTextFechaNacimiento.getText().toString().length() != 0 &&
+                    spinnerGenero.getSelectedItemPosition() != 0 &&
+                    spinnerEstadoNacimiento.getSelectedItemPosition() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            ((TextInputLayout)editTextCurp.getParent().getParent()).setErrorEnabled(true);
+            ((TextInputLayout)editTextCurp.getParent().getParent()).setError("CURP debe tener 18 caracteres");
             return false;
         }
     }
@@ -185,16 +227,22 @@ public class EditTextValidations {
             @Override
             public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
                 if(position == 0) {
+
                     for(int i = views.length -1 ; i >= 0 ; i -= 1) {
                         views[i].setVisibility(View.VISIBLE);
                     }
                 }
                 else {
                     for(int i = views.length -1 ; i >= 0 ; i -= 1) {
-                        Log.d("Classsss", views[i].getClass().getName());
+
+                        if (views[i] instanceof EditText) {
+                            ((EditText) views[i]).getText().clear();
+                        }
+
                         if(views[i].getClass().equals(MaterialSpinner.class)){
                             ((MaterialSpinner)views[i]).setSelection(0);
                         }
+
                         views[i].setVisibility(View.GONE);
                     }
                 }

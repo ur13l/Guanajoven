@@ -12,42 +12,54 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="20dp">
+        android:padding="10dp"
+        android:weightSum="1">
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo" />
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginRight="25dp"
+            android:orientation="vertical"
+            android:layout_weight="1.01">
 
             <TextView
                 android:id="@+id/tv_nombre_notificacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:text="Título notificación"
-                android:textStyle="bold"
                 android:textColor="@color/colorAccent"
-                android:textSize="20dp"/>
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/tv_mensaje_notificacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Mensaje notificación"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Mensaje notificación"
+                android:maxLines="1"/>
 
             <TextView
                 android:id="@+id/tv_fecha_notificacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Fecha notificación"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Fecha notificación"
+                android:maxLines="1"/>
 
         </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/imagebutton_eliminar_notificacion"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_eliminar"/>
 
     </LinearLayout>
 

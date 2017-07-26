@@ -112,12 +112,12 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="0dp"
             android:gravity="center_horizontal"
-            android:text="@string/notificaciones"
+            android:text="@string/promociones"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/boton_notificaciones"
-            app:layout_constraintLeft_toLeftOf="@+id/boton_notificaciones"
+            app:layout_constraintTop_toBottomOf="@+id/boton_promociones"
+            app:layout_constraintLeft_toLeftOf="@+id/boton_promociones"
             android:layout_marginRight="0dp"
-            app:layout_constraintRight_toRightOf="@+id/boton_notificaciones"
+            app:layout_constraintRight_toRightOf="@+id/boton_promociones"
             card_view:layout_editor_absoluteY="461dp" />
 
         <TextView
@@ -147,11 +147,11 @@
             app:layout_constraintHorizontal_bias="0.502" />
 
         <Button
-            android:id="@+id/boton_notificaciones"
+            android:id="@+id/boton_promociones"
             android:layout_width="54dp"
             android:layout_height="54dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_notificaciones_home"
+            android:drawableTop="@drawable/ic_promociones_home"
             android:paddingTop="10dp"
             android:textColor="#fff"
             app:layout_constraintRight_toLeftOf="@+id/boton_redes_sociales"
@@ -228,16 +228,6 @@
         android:layout_marginTop="16dp"
         android:layout_marginLeft="16dp"
         app:srcCompat="@drawable/ic_menu_white_24dp" />
-
-    <ImageButton
-        android:id="@+id/boton_help"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|top"
-        android:background="@android:color/transparent"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/ic_help" />
 
     <FrameLayout
         android:layout_width="30dp"

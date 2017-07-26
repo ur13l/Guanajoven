@@ -171,5 +171,9 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="AccentSeekBar" parent="Widget.AppCompat.SeekBar">
+        <item name="android:colorAccent">#C8648E</item>
+    </style>
+
 
 </resources>

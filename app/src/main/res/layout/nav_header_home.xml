@@ -39,26 +39,20 @@
             android:layout_margin="10dp">
 
             <TextView
-                android:id="@+id/tv_puntuaje_participacion"
+                android:id="@+id/textview_puntaje_drawer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
+                android:layout_gravity="top"
                 android:textSize="10dp"
-                android:text="@string/puntuaje_participacion_drawer" />
+                android:textAlignment="center" />
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textSize="10dp"
-                android:text="@string/nivel_drawer"/>
-
-            <TextView
+                android:id="@+id/textview_posicion_drawer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:textSize="10dp"
-                android:text="@string/podium_drawer"/>
+                android:textAlignment="center"/>
 
         </LinearLayout>
 

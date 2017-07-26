@@ -1,15 +1,35 @@
 package mx.gob.jovenes.guanajuato.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.deser.Deserializers;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.fragments.AyudaFragment;
 import mx.gob.jovenes.guanajuato.fragments.CalendarioActividadesFragment;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
@@ -17,12 +37,17 @@ import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
 import mx.gob.jovenes.guanajuato.fragments.AcercaDeFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
+import mx.gob.jovenes.guanajuato.fragments.EmpresaFragment;
 import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.RedesSocialesFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegistrarAguaFragment;
+import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 
 /**
@@ -31,12 +56,18 @@ import mx.gob.jovenes.guanajuato.fragments.RegistrarAguaFragment;
  * mx.gob.jovenes.guanajuato.fragments al seleccionar un elemento del Navigation Drawer.
  * Fecha: 02/05/2016
  */
-public class SegundaActivity extends AppCompatActivity {
+public class SegundaActivity extends BaseActivity {
+    public static SegundaActivity segundaActivity;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_segunda);
+
+        segundaActivity = this;
+        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        getLayoutInflater().inflate(R.layout.activity_segunda, contentFrameLayout);
+
+        //setContentView(R.layout.activity_segunda);
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -106,8 +137,11 @@ public class SegundaActivity extends AppCompatActivity {
                 case R.id.nav_redes_sociales:
                     fragment = RedesSocialesFragment.newInstance(R.id.nav_redes_sociales, R.string.redes_sociales, RedesSocialesFragment.class);
                     break;
-                case R.id.boton_help:
-                    fragment = AyudaFragment.newInstance(R.id.boton_help, R.string.acerca_de, AyudaFragment.class);
+                case R.id.boton_ayuda:
+                    //fragment = AyudaFragment.newInstance(R.id.boton_help, R.string.acerca_de, AyudaFragment.class);
+                    break;
+                case R.id.nav_promociones:
+                    fragment = EmpresaFragment.newInstance(R.id.nav_promociones, R.string.nav_promociones, EmpresaFragment.class);
                     break;
             }
         } catch (IllegalAccessException e) {
@@ -128,6 +162,10 @@ public class SegundaActivity extends AppCompatActivity {
     public void onBackPressed(){
         this.getSupportActionBar().setTitle(R.string.app_name);
         super.onBackPressed();
+    }
+
+    public static void cerrarSesion() {
+        segundaActivity.finish();
     }
 
 }

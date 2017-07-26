@@ -28,7 +28,7 @@ import mx.gob.jovenes.guanajuato.R;
 /**
  * Created by code on 26/10/16.
  */
-public class AyudaFragment extends CustomFragment {
+public class AyudaFragment extends Fragment {
     private WebView videoView;
 
     @Nullable

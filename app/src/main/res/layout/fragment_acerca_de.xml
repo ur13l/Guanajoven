@@ -11,139 +11,101 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-
         <ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_gravity="center"
             android:src="@drawable/logo" />
 
-        <android.support.v7.widget.CardView
-            style="@style/AppTheme.CardViewStyle"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:cardCornerRadius="4dp">
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_que_hacemos"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp"
+            android:textStyle="bold" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_que_hacemos"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_descripcion"
-                    android:textAlignment="center" />
-
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            style="@style/AppTheme.CardViewStyle"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:cardCornerRadius="4dp">
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_descripcion" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/conocenos_titulo_logros_estadisticas"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conocenos_logros_estadisticas"
-                    android:textAlignment="center" />
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            style="@style/AppTheme.CardViewStyle"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            app:cardCornerRadius="4dp">
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_titulo_logros_estadisticas"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp"
+            android:textStyle="bold"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/logro1" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conocenos_enlaces"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorAccent"
-                    android:layout_margin="5dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/logro2" />
 
-                <TextView
-                    android:id="@+id/enlace_lineas_de_accion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conocenos_lineas_de_accion"
-                    android:textAlignment="center"
-                    android:layout_margin="5dp"
-                    android:textColor="@color/colorPrimary"/>
-                
-                <TextView
-                    android:id="@+id/enlace_encuesta_de_juventud"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conocenos_encuesta_juventud"
-                    android:textAlignment="center"
-                    android:layout_margin="5dp"
-                    android:textColor="@color/colorPrimary"/>
-                
-                <TextView
-                    android:id="@+id/enlace_diagnostico_juvenil"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conocenos_diagnostico_juvenil"
-                    android:textAlignment="center"
-                    android:layout_margin="5dp"
-                    android:textColor="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/logro3" />
 
-                <TextView
-                    android:id="@+id/enlace_directorio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/conocenos_directorio"
-                    android:textAlignment="center"
-                    android:layout_margin="5dp"
-                    android:textColor="@color/colorPrimary"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/logro4" />
 
-            </LinearLayout>
 
-        </android.support.v7.widget.CardView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_enlaces"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/enlace_lineas_de_accion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_lineas_de_accion"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/enlace_encuesta_de_juventud"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_encuesta_juventud"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/enlace_diagnostico_juvenil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_diagnostico_juvenil"
+            android:textColor="@color/colorPrimary" />
+
+        <TextView
+            android:id="@+id/enlace_directorio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/conocenos_directorio"
+            android:textColor="@color/colorPrimary"/>
 
     </LinearLayout>
 

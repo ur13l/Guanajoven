@@ -1,6 +1,7 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -14,10 +15,12 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.firebase.client.utilities.Utilities;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
@@ -29,6 +32,7 @@ import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.models_tmp.RecuperarPass;
+import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,7 +44,7 @@ import retrofit2.Callback;
  * La interfaz solicita el correo electrónico para enviar un código de recuperación.
  * Fecha: 02/05/2016
  */
-public class RecuperarPasswordFragment extends Fragment implements View.OnClickListener{
+public class RecuperarPasswordFragment extends Fragment implements View.OnClickListener {
     private EditText correoEt;
     private Button recuperarPasswordBtn;
     private ProgressDialog progressDialog;
@@ -51,10 +55,11 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
 
     /**
      * Inicialización de las preferencias.
+     *
      * @param savedInstanceState
      */
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
@@ -63,6 +68,7 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
 
     /**
      * Método para hacer el inflate de la vista, se declaran también los elementos visuales.
+     *
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -74,18 +80,19 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
         View v = inflater.inflate(R.layout.fragment_recuperar_pass, container, false);
 
         //Declaración de los elementos visuales.
-        //Declaración de los elementos visuales.
         recuperarPasswordBtn = (Button) v.findViewById(R.id.btn_recuperar_password);
         correoEt = (EditText) v.findViewById(R.id.et_correo);
         btnBack = (ImageButton) v.findViewById(R.id.btn_back);
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
+        btnBack.setOnClickListener((View) -> {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+            getActivity().onBackPressed();
         });
+
         recuperarPasswordBtn.setOnClickListener(this);
+
+        EditTextValidations.removeErrorTyping(correoEt);
 
         return v;
     }
@@ -96,32 +103,39 @@ public class RecuperarPasswordFragment extends Fragment implements View.OnClickL
      */
     @Override
     public void onClick(View view) {
-        String correo = correoEt.getText().toString();
-        progressDialog = ProgressDialog.show(getActivity(), getString(R.string.espera), getString(R.string.verificando), true);
-        Call<Response<Boolean>> call = usuarioAPI.recuperarPassword(correo);
-        call.enqueue(new Callback<Response<Boolean>>() {
-            @Override
-            public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                if(progressDialog != null){
-                    progressDialog.dismiss();
-                }
-                Response<Boolean> resp = response.body();
-                if(resp.success){
-                    OKDialog.showOKDialog(getActivity(),  getString(R.string.correo_enviado), getString(R.string.enviado));
-                }
-                else{
-                    OKDialog.showOKDialog(getActivity(),  getString(R.string.error), resp.errors[0]);
-                }
-            }
+        boolean campoVacio = EditTextValidations.esCampoVacio(correoEt);
+        boolean esEmailValido = EditTextValidations.esEmailValido(correoEt);
 
-            @Override
-            public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                if(progressDialog != null){
-                    progressDialog.dismiss();
+        InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+        if (!campoVacio && esEmailValido) {
+            String correo = correoEt.getText().toString();
+            progressDialog = ProgressDialog.show(getActivity(), getString(R.string.espera), getString(R.string.verificando), true);
+            Call<Response<Boolean>> call = usuarioAPI.recuperarPassword(correo);
+            call.enqueue(new Callback<Response<Boolean>>() {
+                @Override
+                public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                    if (progressDialog != null) {
+                        progressDialog.dismiss();
+                    }
+                    Response<Boolean> resp = response.body();
+                    if (resp.success) {
+                        OKDialog.showOKDialog(getActivity(), getString(R.string.correo_enviado), getString(R.string.enviado));
+                    } else {
+                        OKDialog.showOKDialog(getActivity(), getString(R.string.error), resp.errors[0]);
+                    }
                 }
-                OKDialog.showOKDialog(getActivity(), getString(R.string.error), getString(R.string.hubo_error));
-            }
-        });
+
+                @Override
+                public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                    if (progressDialog != null) {
+                        progressDialog.dismiss();
+                    }
+                    OKDialog.showOKDialog(getActivity(), getString(R.string.error), getString(R.string.hubo_error));
+                }
+            });
+        }
 
     }
 

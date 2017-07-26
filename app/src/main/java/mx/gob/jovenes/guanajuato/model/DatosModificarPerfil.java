@@ -10,7 +10,7 @@ public class DatosModificarPerfil {
     private String apiToken;
     private int idNivelEstudios;
     private int idProgramaBeneficiario;
-    private int trabajo;
+    private int trabaja;
     private int idPuebloIndigena;
     private int idCapacidadDiferente;
     private String premios;
@@ -18,9 +18,11 @@ public class DatosModificarPerfil {
     private int apoyoProyectosSociales;
     private List<DatosUsuarioIdioma> idiomas;
 
-    public DatosModificarPerfil(String apiToken, int idNivelEstudios, int idPuebloIndigena, int idCapacidadDiferente, String premios, String proyectosSociales, int apoyoProyectosSociales, List<DatosUsuarioIdioma> idiomas) {
+    public DatosModificarPerfil(String apiToken, int idNivelEstudios, int idProgramaBeneficiario, int trabaja, int idPuebloIndigena, int idCapacidadDiferente, String premios, String proyectosSociales, int apoyoProyectosSociales, List<DatosUsuarioIdioma> idiomas) {
         this.apiToken = apiToken;
         this.idNivelEstudios = idNivelEstudios;
+        this.idProgramaBeneficiario = idProgramaBeneficiario;
+        this.trabaja = trabaja;
         this.idPuebloIndigena = idPuebloIndigena;
         this.idCapacidadDiferente = idCapacidadDiferente;
         this.premios = premios;
@@ -54,11 +56,11 @@ public class DatosModificarPerfil {
     }
 
     public int getTrabajo() {
-        return trabajo;
+        return trabaja;
     }
 
-    public void setTrabajo(int trabajo) {
-        this.trabajo = trabajo;
+    public void setTrabajo(int trabaja) {
+        this.trabaja = trabaja;
     }
 
     public int getIdPuebloIndigena() {

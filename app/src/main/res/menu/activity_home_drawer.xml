@@ -41,6 +41,11 @@
                     android:title="@string/convocatorias" />
 
                 <item
+                    android:id="@+id/nav_promociones"
+                    android:icon="@drawable/ic_promociones"
+                    android:title="@string/nav_promociones"/>
+
+                <item
                     android:id="@+id/nav_historial_notificaciones"
                     android:icon="@drawable/ic_notifications"
                     android:title="@string/notificaciones" />

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -28,12 +32,10 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="0dp"
         android:padding="10dp">
 
         <ImageView
-            android:layout_width="170dp"
+            android:layout_width="0dp"
             android:src="@drawable/logo"
             android:id="@+id/imageView10"
             android:layout_height="170dp"
@@ -61,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="42dp"
                 android:hint="Email"
-                android:maxLength="50"
+                android:maxLength="75"
                 android:singleLine="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:textColorHighlight="@color/colorPrimaryDark"
@@ -87,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/pass"
-        android:maxLength="15"
+        android:maxLength="25"
         android:singleLine="true"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHighlight="@color/colorPrimaryDark"
@@ -127,9 +129,6 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp" />
-
-
-
 
                 <Button
                     android:id="@+id/btn_google"
@@ -176,11 +175,13 @@
         <com.facebook.login.widget.LoginButton
             android:id="@+id/lgn_btn_facebook"
             style="@style/ButtonNoPadding"
-            android:layout_height="50dp"
+            android:layout_height="0dp"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"
             android:layout_weight="1"
-            android:layout_width="150dp" />
+            android:layout_width="0dp"
+            tools:layout_editor_absoluteY="91dp"
+            tools:layout_editor_absoluteX="10dp" />
         </android.support.constraint.ConstraintLayout>
 
     <ImageButton
@@ -192,3 +193,4 @@
         android:layout_marginLeft="16dp"
         app:srcCompat="@drawable/ic_arrow_back_blue_24dp" />
 </FrameLayout>
+</ScrollView>
