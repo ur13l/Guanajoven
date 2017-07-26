@@ -63,7 +63,7 @@
     <string name="reestablecer_pass">Reestablecer contraseña</string>
     <string name="reenviar_codigo">Volver a enviar código</string>
     <string name="enviar_codigo">Enviar código</string>
-    <string name="olvidaste"><u>¿Olvidaste tu contraseña?</u></string>
+    <string name="olvidaste">¿Olvidaste tu contraseña?</string>
     <string name="colaborador1">Ing. Felipe Uriel Infante Martínez</string>
     <string name="lider">Líder de desarrollo en Android</string>
     <string name="correo1">ur13l.infante@gmail.com</string>
@@ -333,8 +333,8 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="codigo_guanajoven">Código Guanajoven</string>
     <string name="checkin_texto">Check-in</string>
     <string name="social">Redes sociales</string>
-    <string name="notificaciones">Notificaciones</string>
-    <string name="necesitamos">Por favor, introduce tu correo para enviarte un email con las instrucciones para restaurar tu contraseña.</string>
+    <string name="promociones">Promociones</string>
+    <string name="necesitamos">Por favor, introduce tu correo,te haremos llegar las instrucciones para restaurar tu contraseña.</string>
     <string name="datos_comp">Dinos algo sobre ti</string>
     <string name="ocupacion">Ocupación</string>
     <string name="estado_civil">Estado civil</string>
@@ -385,7 +385,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="conocenos_titulo_mision">Misión</string>
     <string name="conocenos_titulo_vision">Visión</string>
     <string name="conocenos_titulo_valores">Valores</string>
-    <string name="conocenos_descripcion">En Guanajoven somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y políticas públicas, orientada a elevar la calidad de vida de los jóvenes guanajuatenses.</string>
+    <string name="conocenos_descripcion">En GUANAJOVEN fomentamos la creación y el desarrollo del proyecto de vida de los jóvenes guanajuatenses. Trabajamos para que los apoyos del Gobierno del Estado dirigidos al sector joven de la población lleguen de manera correcta a cada uno de ellos.</string>
     <string name="conocenos_mision">Somos la instancia de Gobierno del Estado rectora en el tema de juventud, generadora de programas y politícas publicas, orientada a elevar la calidad de vida de los jóvenes Guanajuatenses.</string>
     <string name="conocenos_vision">En Guanajuato tenemos jóvenes con una mejor calidad de vida, integrados en una comunidad global, que participan de manera solidaria y comprometida en el desarrollo integral de su entorno.</string>
     <string name="conocenos_valores">Solidaridad\n
@@ -395,14 +395,18 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
                                      Creatividad\n
                                      Humildad</string>
     <string name="conocenos_titulo_logros_estadisticas">Logros y estadísticas</string>
-    <string name="conocenos_logros_estadisticas">Contenido de logros y estadísticas</string>
+    <string name="logro1">• GUANAJUATO el estado de la República Mexicana más beneficiado con recurso económico por el IMJUVE (Federación).</string>
+    <string name="logro2">• En 2016 el Lic. Miguel Márquez Márquez fue reconocido como "El Gobernador de los Jóvenes" por la YABT.</string>
+    <string name="logro3">• Reconocimiento a nivel nacional por el IMJUVE como "Mejor Operatividad en Centros Poder Joven".</string>
+    <string name="logro4">• Logra GUANAJOVEN el GUINNESS WORLD RECORDS por "Concentración de mayor número de catrines y catrinas en 2016".</string>
+
     <string name="conocenos_enlaces">Enlaces</string>
-    <string name="conocenos_lineas_de_accion">Líneas de acción</string>
-    <string name="conocenos_diagnostico_juvenil">Diagnóstico juvenil</string>
-    <string name="conocenos_encuesta_juventud">Encuesta de juventud</string>
-    <string name="conocenos_directorio">Directorio</string>
-    
-    
+    <string name="conocenos_lineas_de_accion"><u>Líneas de acción</u></string>
+    <string name="conocenos_diagnostico_juvenil"><u>Diagnóstico juvenil</u></string>
+    <string name="conocenos_encuesta_juventud"><u>Encuesta de juventud</u></string>
+    <string name="conocenos_directorio"><u>Directorio</u></string>
+
+
     <string name="puntuaje_participacion_drawer">2000 Puntos</string>
     <string name="nivel_drawer">Joven Destacado</string>
     <string name="podium_drawer">5to Lugar</string>
@@ -425,7 +429,21 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="idioma_adicional_otro">Otro</string>
     <string name="idiomas_seleccionados_title">Idiomas seleccionados:</string>
     <string name="bolsa_de_trabajo">Bolsa de trabajo</string>
-    <string name="consultar_curp">No conoces tu curp, Consultalo aquí!</string>
+    <string name="consultar_curp">¿No conoces tu curp?, ¡Consúltalo aquí!</string>
     <string name="tv_empty_notificaciones">No se encontraron notificaciones</string>
     <string name="tv_empty_convocatorias">No se encontraron convocatorias</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tv_empty_empresas">No se encontraron empresas</string>
+    <string name="nav_promociones">Promociones</string>
+    <string name="tv_nombre_empresa">Nombre empresa</string>
+    <string name="texview_empty_promociones">No se encontraron promociones</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="textview_promocion_url">URL</string>
+    <string name="textview_promocion_fechas">Fechas</string>
+    <string name="textview_promocion_codigo">Código</string>
+    <string name="texview_promocion_descripcion">Descripción</string>
+    <string name="textview_promocion_bases">Bases</string>
+    <string name="aplicar_promocion">Aplicar promoción</string>
 </resources>

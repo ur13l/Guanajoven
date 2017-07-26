@@ -1,10 +1,12 @@
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<FrameLayout
     android:theme="@style/DarkStyle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:background="@color/colorPrimary">
@@ -30,9 +32,7 @@
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="89dp">
+        android:orientation="vertical">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
-                android:maxLength="50"
+                android:maxLength="75"
                 android:singleLine="true"
                 android:textSize="18dp"
                 android:textColor="@color/white"
@@ -137,3 +137,4 @@
         android:layout_marginLeft="6dp"
         app:srcCompat="@drawable/ic_arrow_back_white_24dp" />
 </FrameLayout>
+</ScrollView>

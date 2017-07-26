@@ -26,7 +26,7 @@ import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
 
 public class RVIdiomasSeleccionadosAdapter extends RecyclerView.Adapter<RVIdiomasSeleccionadosAdapter.IdiomasSeleccionadosViewHolder> {
     private Context context;
-    private List<DatosUsuarioIdioma> idiomasSeleccionados;
+    private static List<DatosUsuarioIdioma> idiomasSeleccionados;
     private Map<Integer, String> idiomas;
 
     public RVIdiomasSeleccionadosAdapter(Context context, List<DatosUsuarioIdioma> idiomasSeleccionados) {
@@ -69,6 +69,10 @@ public class RVIdiomasSeleccionadosAdapter extends RecyclerView.Adapter<RVIdioma
     @Override
     public int getItemCount() {
         return idiomasSeleccionados.size();
+    }
+
+    public static List<DatosUsuarioIdioma> getListaIdiomas() {
+        return idiomasSeleccionados;
     }
 
     public class IdiomasSeleccionadosViewHolder extends RecyclerView.ViewHolder {

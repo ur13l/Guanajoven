@@ -25,8 +25,8 @@ import mx.gob.jovenes.guanajuato.model.IdiomaAdicional;
 
 public class IdiomasAdicionalesDialogFragment extends DialogFragment {
     private RecyclerView recyclerViewIdiomas;
-    private List<IdiomaAdicional> idiomas;
-    private RVIdiomaAdicionalAdapter recyclerViewIdiomaAdicionalAdapter;
+    private static List<IdiomaAdicional> idiomas;
+    private static RVIdiomaAdicionalAdapter recyclerViewIdiomaAdicionalAdapter;
     private Button btnAceptar;
     private Button btnCancelar;
     public static List<DatosUsuarioIdioma> datosIdiomas;
@@ -36,6 +36,7 @@ public class IdiomasAdicionalesDialogFragment extends DialogFragment {
         View v = inflater.inflate(R.layout.fragment_idiomas_adicionales, null);
 
         datosIdiomas = new ArrayList<>();
+        idiomas = new ArrayList<>();
 
         recyclerViewIdiomas = (RecyclerView) v.findViewById(R.id.rv_idiomas);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -99,5 +100,16 @@ public class IdiomasAdicionalesDialogFragment extends DialogFragment {
             return datosIdiomas.size();
         }
     }
+
+    public static void quitarElementosDeAdapter(List<DatosUsuarioIdioma> idiomasAdicionales) {
+            for (int i = 0; i < idiomasAdicionales.size(); i++) {
+                for (int j = 0; j < idiomas.size(); j++) {
+                    if (idiomasAdicionales.get(i).getIdIdiomaAdicional() == idiomas.get(j).getIdIdiomaAdicional()) {
+                        idiomas.remove(j);
+                    }
+                }
+            }
+            recyclerViewIdiomaAdicionalAdapter.notifyDataSetChanged();
+        }
 
 }

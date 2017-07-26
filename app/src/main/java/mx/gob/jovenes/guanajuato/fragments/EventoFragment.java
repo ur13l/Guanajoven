@@ -118,8 +118,6 @@ public class EventoFragment extends CustomFragment {
                     }
                     realm.commitTransaction();
 
-                    System.out.println(eventos.size());
-
                     if(evn.size() > 0) {
                         updateList();
                     }
@@ -131,10 +129,12 @@ public class EventoFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<ArrayList<Evento>>> call, Throwable t) {
-                AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
-                mensajeError.create();
-                mensajeError.setMessage("Necesitas estar conectado para poder ver los ultimos eventos");
-                mensajeError.show();
+                if (noHayDatosEnRealm()) {
+                    AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+                    mensajeError.create();
+                    mensajeError.setMessage("Necesitas estar conectado para poder ver los últimos eventos");
+                    mensajeError.show();
+                }
             }
         });
     }

@@ -12,20 +12,13 @@ import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -33,6 +26,7 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,28 +34,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.squareup.picasso.Picasso;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import mx.gob.jovenes.guanajuato.R;
@@ -70,7 +47,6 @@ import mx.gob.jovenes.guanajuato.api.RegistroRequest;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
-import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.DatosUsuario;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.models_tmp.Curp;
@@ -90,7 +66,7 @@ import static android.view.View.GONE;
  * Fragment de la interfaz inicial de registro, solicita el correo, el nombre de usuario y la contraseña.
  * Fecha: 04/05/2016
  */
-public class RegistrarFragment extends Fragment implements  View.OnClickListener, View.OnFocusChangeListener, DatePickerDialog.OnDateSetListener {
+public class RegistrarFragment extends Fragment implements View.OnClickListener {
     private static final int REQUEST_CAMERA = 101;
     private static final int SELECT_FROM_GALLERY = 102;
     private static final int CAMERA_PERMISSION_CODE = 1;
@@ -129,15 +105,15 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     private TextView textViewConsultarCurp;
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         calendar = Calendar.getInstance();
-        Retrofit retrofit = ((MyApplication)getActivity().getApplication()).getRetrofitInstance();
+        Retrofit retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         usuarioAPI = retrofit.create(UsuarioAPI.class);
 
         Bundle args = getArguments();
-        if(args != null) {
+        if (args != null) {
             usuario = new Usuario();
             DatosUsuario du = new DatosUsuario();
             usuario.setEmail(args.getString(EMAIL));
@@ -149,7 +125,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_registrar, parent, false);
 
         //Declaración de vistas
@@ -174,12 +150,12 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
             enlace("https://consultas.curp.gob.mx/CurpSP/inicio2_2.jsp");
         });
 
-        if(usuario != null) {
+        if (usuario != null) {
             etEmail.setText(usuario.getEmail());
             etEmail.setEnabled(false);
             etPassword1.setVisibility(GONE);
             etPassword2.setVisibility(GONE);
-            if(usuario.getDatosUsuario().getRutaImagen() != null) {
+            if (usuario.getDatosUsuario().getRutaImagen() != null) {
                 Picasso.with(getActivity()).load(usuario.getDatosUsuario().getRutaImagen()).into(imgPerfil);
             }
         }
@@ -211,24 +187,24 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
         etCurp.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Cuando se encuentra un curp válido
-                if(s.length() == 18) {
+                if (s.length() == 18) {
                     progressDialog = ProgressDialog.show(getActivity(), "Recuperando información", "Buscando información de CURP en base de datos", true);
-
+                    progressDialog.setCancelable(true);
                     Call<Response<Curp>> call = usuarioAPI.consultarCurp(s.toString());
                     call.enqueue(new Callback<Response<Curp>>() {
                         @Override
                         public void onResponse(Call<Response<Curp>> call, retrofit2.Response<Response<Curp>> response) {
                             progressDialog.dismiss();
-                            if(response.body().success) {
-                                continuarBtn.setEnabled(true);
+                            if (response.body().success) {
+                                //continuarBtn.setEnabled(true);
                                 Curp curp = response.body().data;
-                                if(curp.getStatusOper() != null) {
-
+                                if (curp.getStatusOper() != null) {
                                     etNombre.setText(curp.getNombres());
                                     etApPaterno.setText(curp.getPrimerApellido());
                                     etApMaterno.setText(curp.getSegundoApellido());
@@ -242,8 +218,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                                     } else {
                                         spnGenero.setSelection(0);
                                     }
-                                }
-                                else {
+                                } else {
                                     OKDialog.showOKDialog(getActivity(), "No se encontraron datos", "No se encontró tu CURP en la base de datos, intenta nuevamente.");
                                     etNombre.setText("");
                                     etApPaterno.setText("");
@@ -271,7 +246,8 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                 }
                 //Se limpian los campos en caso de que el CURP no sea válido
                 else {
-                    continuarBtn.setEnabled(false);
+                    //continuarBtn.setEnabled(false);
+                    //EditTextValidations.curpValido(etCurp);
                     etNombre.setText("");
                     etApPaterno.setText("");
                     etApMaterno.setText("");
@@ -287,10 +263,6 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
             }
         });
 
-        etFechaNacimiento.setKeyListener(null);
-        etFechaNacimiento.setOnFocusChangeListener(this);
-        etFechaNacimiento.setOnClickListener(this);
-
         imgPerfil.setOnClickListener(this);
 
         EditTextValidations.removeErrorTyping(etCurp);
@@ -304,6 +276,8 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager inputMethodManager =(InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 getActivity().onBackPressed();
             }
         });
@@ -314,12 +288,9 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_continuar:
                 continuar();
-                break;
-            case R.id.et_fecha_nacimiento:
-                showCalendar();
                 break;
             case R.id.img_profile:
                 selectImage();
@@ -343,57 +314,56 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
      * Ejecución de lo que se hará al presionar el botón de contninuar, se realizan las validaciones
      * para pasar a la interfaz de Datos complementarios.
      */
-    public void continuar(){
+    public void continuar() {
         //Verifica que los campos no estén vacíos
         boolean curpEmpty = EditTextValidations.esCampoVacio(etCurp);
         boolean emailEmpty = EditTextValidations.esCampoVacio(etEmail);
         boolean pass1Empty = usuario == null ? EditTextValidations.esCampoVacio(etPassword1) : false;
         boolean pass2Empty = usuario == null ? EditTextValidations.esCampoVacio(etPassword2) : false;
-        boolean nombreEmpty = EditTextValidations.esCampoVacio(etNombre);
-        boolean fechaEmpty = EditTextValidations.esCampoVacio(etFechaNacimiento);
-        boolean generoEmpty = EditTextValidations.spinnerSinSeleccion(spnGenero);
-        boolean estadoEmpty = EditTextValidations.spinnerSinSeleccion(spnEstado);
-        boolean apPaternoEmpty = EditTextValidations.esCampoVacio(etApPaterno);
         boolean cpEmpty = EditTextValidations.esCampoVacio(etCodigoPostal);
         boolean emailV = false;
         boolean pass1V = false;
         boolean pass2V = false;
         boolean passEq = false;
         boolean cpV = false;
+        boolean curpValido = EditTextValidations.curpValido(etCurp, etNombre, etApPaterno, etApMaterno, etFechaNacimiento, spnGenero, spnEstado);
 
-        //Si ninguno de los campos es vacío
-        if(!curpEmpty && !emailEmpty && !pass1Empty && !pass2Empty &&
-                !fechaEmpty && !estadoEmpty && !nombreEmpty &&
-                !generoEmpty && !apPaternoEmpty && !cpEmpty){
-            emailV = EditTextValidations.esEmailValido(etEmail);
-            pass1V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword1) : true ;
-            pass2V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword2) : true;
-            passEq = EditTextValidations.contrasenasCoinciden(etPassword1, etPassword2);
-            cpV = EditTextValidations.esCodigoPostalValido(etCodigoPostal);
+        //Valida los 18 caracteres del curp y que halla sido exitoso el trámite del mismo
+        if (curpValido) {
+            //Si ninguno de los campos es vacío
+            if (!curpEmpty && !emailEmpty && !pass1Empty && !pass2Empty && !cpEmpty) {
+                emailV = EditTextValidations.esEmailValido(etEmail);
+                pass1V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword1) : true;
+                pass2V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword2) : true;
+                passEq = EditTextValidations.contrasenasCoinciden(etPassword1, etPassword2);
+                cpV = EditTextValidations.esCodigoPostalValido(etCodigoPostal);
+            }
+        } else {
+            Snackbar.make(getView(), "CURP inválido", Snackbar.LENGTH_LONG).show();
         }
 
         //Si todas las validaciones se cumplen, se genera el nuevo fragment.
-        if(emailV && pass1V && pass2V && passEq && cpV) {
+        if (emailV && pass1V && pass2V && passEq && cpV) {
 
             progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
 
             Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
                     new RegistroRequest(
-                        etCurp.getText().toString(),
-                        etEmail.getText().toString(),
-                        usuario == null ? etPassword1.getText().toString() : "_",
-                        usuario == null ? etPassword2.getText().toString() : "_",
-                        etApPaterno.getText().toString(),
-                        etApMaterno.getText().toString(),
-                        etNombre.getText().toString(),
-                        spnGenero.getSelectedItemPosition() == 1? "H" : "M",
-                        etFechaNacimiento.getText().toString(),
-                        etCodigoPostal.getText().toString(),
-                        estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
-                        "data:image/jpeg;base64," + getBase64(imgPerfil),
-                        usuario == null ? null : usuario.getIdGoogle(),
-                        usuario == null ? null : usuario.getIdFacebook()
-                )
+                            etCurp.getText().toString(),
+                            etEmail.getText().toString(),
+                            usuario == null ? etPassword1.getText().toString() : "_",
+                            usuario == null ? etPassword2.getText().toString() : "_",
+                            etApPaterno.getText().toString(),
+                            etApMaterno.getText().toString(),
+                            etNombre.getText().toString(),
+                            spnGenero.getSelectedItemPosition() == 1 ? "H" : "M",
+                            etFechaNacimiento.getText().toString(),
+                            etCodigoPostal.getText().toString(),
+                            estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
+                            "data:image/jpeg;base64," + getBase64(imgPerfil),
+                            usuario == null ? null : usuario.getIdGoogle(),
+                            usuario == null ? null : usuario.getIdFacebook()
+                    )
             );
 
             callRegistrar.enqueue(new Callback<Response<Usuario>>() {
@@ -417,76 +387,14 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
                 }
             });
-            }
-        }
-
-
-
-
-    /**
-     * Método que se ejecuta cuando se cambia el foco del campo de fecha de nacimiento para mostrar el
-     * calendario.
-     * @param view
-     * @param b
-     */
-    @Override
-    public void onFocusChange(View view, boolean b) {
-        switch (view.getId()){
-            // desplegar el calendario para introducir fecha
-            case R.id.et_fecha_nacimiento:
-                if(b) {
-                    showCalendar();
-                }
-                break;
         }
     }
-
-    /**
-     * Método que muestra el calendario en un Dialog.
-     */
-    public void showCalendar(){
-
-        DatePickerDialog dpd = DatePickerDialog.newInstance(
-                RegistrarFragment.this,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-        dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
-    }
-
-    /**
-     * Función que se ejecuta una vez que una fecha ha sido asignada. Hace que la fecha seleccionada
-     * aparezca en el campo etFechaNacimiento con formato dd/mm/yyyy.
-     * @param view
-     * @param year
-     * @param monthOfYear
-     * @param dayOfMonth
-     */
-    @Override
-    public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-        int aux;
-        calendar.set(Calendar.YEAR, year);
-        fecha = "" + year;
-        calendar.set(Calendar.MONTH, monthOfYear);
-        aux = monthOfYear + 1;
-        if(aux > 10){
-            fecha += "-" + aux ;
-        } else fecha += "-0" + aux;
-        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-        if(dayOfMonth < 10) {
-            fecha += "-0" + dayOfMonth;
-        } else fecha += "-" + dayOfMonth;
-        String date = ""+dayOfMonth+"/"+(monthOfYear+1)+"/"+year;
-        etFechaNacimiento.setText(date);
-    }
-
 
     /**
      * Método utilizado para seleccionar una imagen al dar click en img_profile
      */
     private void selectImage() {
-        final CharSequence[] items = { "Tomar una foto", "Escoger de tu galería" };
+        final CharSequence[] items = {"Tomar una foto", "Escoger de tu galería"};
 
         //Se construye el dialog que muestra las opciones
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -514,12 +422,10 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_CODE);
-            }
-            else{
+            } else {
                 startCamera();
             }
-        }
-        else{
+        } else {
             startCamera();
         }
     }
@@ -533,12 +439,10 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_CODE);
-            }
-            else{
+            } else {
                 startGallery();
             }
-        }
-        else{
+        } else {
             startGallery();
         }
     }
@@ -548,9 +452,9 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
      * Metodo que lanza el intent con la actividad de la cámara (Se toma la foto y existe la opción
      * de aceptar o cancelar.
      */
-    public void startCamera(){
+    public void startCamera() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+        startActivityForResult(takePictureIntent, REQUEST_CAMERA);
     }
 
 
@@ -558,7 +462,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
      * Función que lanza el selector de imágenes de la galería, debe haberse dado el permiso
      * READ_EXTERNAL_STORAGE antes para abrir.
      */
-    public void startGallery(){
+    public void startGallery() {
         Intent intent = new Intent(
                 Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
@@ -571,6 +475,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     /**
      * Callback ejecutado cuando se asigna un permiso, ejecuta la función del permiso una vez que sea
      * aceptado.
+     *
      * @param requestCode
      * @param permissions
      * @param grantResults
@@ -582,7 +487,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                        startCamera();
+                    startCamera();
                 } else {
 
                     Snackbar.make(getView(), "Permiso denegado, no se puede acceder a la cámara", Snackbar.LENGTH_LONG).show();
@@ -601,9 +506,9 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         }
     }
 
-
     /**
      * Función para reducir el tamaño de un bitmap.
+     *
      * @param image
      * @param maxSize
      * @return
@@ -627,6 +532,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     /**
      * Función ejecutada cuando se regresa de una actividad que manda respuesta, en este caso sirve
      * para cargar la imagen devuelta de las activities de cámara y galería.
+     *
      * @param requestCode
      * @param resultCode
      * @param data
@@ -659,6 +565,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
     /**
      * Método para inicializar el fragment con los nuevos datos para ser dados de alta. Este
      * formulario debe ser llenado para completar el registro.
+     *
      * @param usuario {Usuario}
      * @return {DatosComplementariosFragment}
      */
@@ -672,14 +579,16 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         f.setArguments(args);
         return f;
     }
+
     /**
      * Función que obtiene el path de un bitmap para cargarlo en el imageView.
+     *
      * @param uri
      * @param activity
      * @return
      */
     public String getPath(Uri uri, Activity activity) {
-        String[] projection = { MediaStore.MediaColumns.DATA };
+        String[] projection = {MediaStore.MediaColumns.DATA};
         Cursor cursor = activity
                 .managedQuery(uri, projection, null, null, null);
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
@@ -690,6 +599,7 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
 
     /**
      * Se transforma el contenido de un ImageView en un String base64 para enviar al servidor.
+     *
      * @param imageView
      * @return
      */
@@ -697,14 +607,14 @@ public class RegistrarFragment extends Fragment implements  View.OnClickListener
         BitmapDrawable drawable = (BitmapDrawable) imageView.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100,bos);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, bos);
         byte[] bb = bos.toByteArray();
         String image = Base64.encodeToString(bb, 0);
 
         return image;
     }
 
-    public void enlace(String link){
+    public void enlace(String link) {
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
 

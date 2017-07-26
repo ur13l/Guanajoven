@@ -18,6 +18,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -181,10 +183,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         estado = u.getDatosUsuario().getEstadoNacimiento().getNombre();
         rutaImagen = u.getDatosUsuario().getRutaImagen();
 
-        System.err.println("------------------------------------------");
-        System.err.println(codigoGuanajoven);
-        System.err.println("-----------------------------------------");
-
         //Cargar datos de usuario
         inputNombre = (TextView) vista.findViewById(R.id.tv_nombreCG);
         inputCorreo = (TextView) vista.findViewById(R.id.tv_correoCG);
@@ -212,7 +210,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         Picasso.with(getActivity()).load(rutaImagen).into(imgBackground);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle(nombre);
 
-        String dato = u.getCodigoGuanajoven().getToken();
+        String dato = Curp;
+
         try {
             generarQR(dato, imagenQr);
         } catch (WriterException e) {
@@ -261,11 +260,14 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_generar_pdf:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     pedirPermisos();
                 } else {
                     generarPDF();
-                }
+                }*/
+
+                DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                drawer.openDrawer(GravityCompat.START);
                 break;
         }
 

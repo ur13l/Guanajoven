@@ -34,7 +34,8 @@
         android:largeHeap="true"
         android:supportsRtl="true"
         android:authorities="mx.gob.jovenes.guanajuato"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:windowSoftInputMode="adjustResize">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/api_key" />
@@ -75,7 +76,8 @@
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/ActivityStyle" />
+            android:theme="@style/ActivityStyle"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
 
         <activity
             android:name=".activities.SegundaActivity"
@@ -92,7 +94,7 @@
             android:noHistory="true"
             android:screenOrientation="landscape"
             android:showOnLockScreen="true"
-            android:theme="@style/ActivityStyle"></activity>
+            android:theme="@style/ActivityStyle"/>
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:screenOrientation="portrait"
@@ -117,7 +119,7 @@
         <activity
             android:name=".activities.HelpActivity"
             android:label="@string/title_activity_help"
-            android:theme="@style/ActivityStyle"></activity>
+            android:theme="@style/ActivityStyle"/>
     </application>
 
 </manifest>

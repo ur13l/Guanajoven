@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    >
+    android:layout_height="match_parent">
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -84,7 +84,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:maxLength="50"
+                    android:maxLength="75"
 
                     android:textColorHint="@color/gray"
                     android:inputType="textEmailAddress"
@@ -106,7 +106,7 @@
                     android:typeface="normal"
                     android:textColorHint="@color/gray"
                     android:textSize="16dp"
-                    android:maxLength="15"
+                    android:maxLength="25"
                     android:hint="@string/pass" />
             </android.support.design.widget.TextInputLayout>
 
@@ -138,7 +138,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:maxLength="50"
+                    android:maxLength="18"
                     android:textColorHint="@color/gray"
                     android:typeface="normal"
                     android:inputType="textCapCharacters"
@@ -285,7 +285,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:text="@string/registrar"
-                android:enabled="false"
                 android:id="@+id/btn_continuar"
                 android:background="@drawable/bordered_button_blue"
                 android:layout_gravity="center_horizontal"

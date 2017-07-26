@@ -79,10 +79,9 @@ public class HomeFragment extends CustomFragment {
 
     //Botones
     ImageButton botonNavigationDrawer;
-    ImageButton botonHelp;
     Button botonCodigoGuanajoven;
     Button botonEventos;
-    Button botonNotificaciones;
+    Button botonPromociones;
     Button botonConvocatorias;
     Button botonRedesSociales;
     Button botonChat;
@@ -137,10 +136,9 @@ public class HomeFragment extends CustomFragment {
 
         //Elementos menu
         botonNavigationDrawer = (ImageButton) v.findViewById(R.id.boton_navigation_drawer);
-        botonHelp = (ImageButton) v.findViewById(R.id.boton_help);
         botonCodigoGuanajoven = (Button) v.findViewById(R.id.boton_codigo_guanajoven);
         botonEventos = (Button) v.findViewById(R.id.boton_eventos);
-        botonNotificaciones = (Button) v.findViewById(R.id.boton_notificaciones);
+        botonPromociones = (Button) v.findViewById(R.id.boton_promociones);
         botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
         botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
         botonChat = (Button) v.findViewById(R.id.boton_chat);
@@ -152,46 +150,21 @@ public class HomeFragment extends CustomFragment {
         });
 
         //Listeners de publicidad
-        btnSlide.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pnlPublicidad.animate()
-                        .translationX(0)
-                        .setListener(new AnimatorListenerAdapter() {
-                            @Override
-                            public void onAnimationEnd(Animator animation) {
-                                super.onAnimationEnd(animation);
-                                pnlPublicidad.setVisibility(View.VISIBLE);
-                            }
-                        });
-            }
-        });
+        btnSlide.setOnClickListener((View) -> pnlPublicidad.animate().translationX(0).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        pnlPublicidad.setVisibility(View.VISIBLE);
+                    }
+                }));
 
-        btnClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pnlPublicidad.animate()
-                        .translationX(pnlPublicidad.getWidth());
-            }
-        });
-
-
+        btnClose.setOnClickListener((View) -> pnlPublicidad.animate().translationX(pnlPublicidad.getWidth()));
 
         //Listeners botones menu
 
         botonNavigationDrawer.setOnClickListener((View) -> {
             DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
             drawer.openDrawer(GravityCompat.START);
-        });
-
-        botonHelp.setOnClickListener((View) -> {
-            try {
-                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
-                intent.putExtra(MENU_ID, R.id.boton_help);
-                startActivity(intent);
-            } catch (Exception e) {
-
-            }
         });
 
         botonCodigoGuanajoven.setOnClickListener((View) -> {
@@ -246,10 +219,10 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-        botonNotificaciones.setOnClickListener((View) -> {
+        botonPromociones.setOnClickListener((View) -> {
             try {
                 Intent intent = new Intent(this.getContext(), SegundaActivity.class);
-                intent.putExtra(MENU_ID, R.id.nav_historial_notificaciones);
+                intent.putExtra(MENU_ID, R.id.nav_promociones);
                 startActivity(intent);
             } catch (Exception e) {
                 System.err.println("que pendejo...");
@@ -375,9 +348,11 @@ public class HomeFragment extends CustomFragment {
             @Override
             public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                 Response<Boolean> body = response.body();
-                if (body.success) {
-                    if (body.data) {
-                        //Código cuando fue exitoso
+                if (body != null) {
+                    if (body.success) {
+                        if (body.data) {
+                            //Código cuando fue exitoso
+                        }
                     }
                 }
             }

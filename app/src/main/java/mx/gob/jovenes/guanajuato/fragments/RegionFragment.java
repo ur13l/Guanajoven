@@ -128,10 +128,12 @@ public class RegionFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<ArrayList<Region>>> call, Throwable t) {
-                AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
-                mensajeError.create();
-                mensajeError.setMessage("Necesitas estar conectado para poder ver las ultimas regiones");
-                mensajeError.show();
+                if (noHayDatosEnRealm()) {
+                    AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+                    mensajeError.create();
+                    mensajeError.setMessage("Necesitas estar conectado para poder ver las últimas regiones");
+                    mensajeError.show();
+                }
             }
         });
     }

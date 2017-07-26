@@ -20,10 +20,13 @@ import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.TextView;
 
 import com.facebook.AccessToken;
@@ -261,6 +264,8 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                InputMethodManager inputMethodManager =(InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 getActivity().onBackPressed();
             }
         });
@@ -268,7 +273,6 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
         //Eliminar mensaje de error mientras tiene foco de correo
         EditTextValidations.removeErrorTyping(correoEt);
         EditTextValidations.removeErrorTyping(contrasenaEt);
-
 
         //Configurando el input type
         contrasenaEt.setInputType(InputType.TYPE_CLASS_TEXT |
@@ -279,6 +283,8 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
         loginButton.setOnClickListener(this);
 
         recuperarPasswordTv.setOnClickListener(this);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         return v;
     }
@@ -665,21 +671,17 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
      * Método para el login, esta función se ejecuta con cualquier tipo de sesión (Normal, Google Facebook).
      * @param response
      */
-    public void login(retrofit2.Response<Response<Usuario>> response){
-        if(loginSimplePd != null){
+    public void login(retrofit2.Response<Response<Usuario>> response) {
+        if (loginSimplePd != null) {
             loginSimplePd.dismiss();
         }
         Response<Usuario> body = response.body();
-        if(body.success){
+        if (body != null) {
             Sesion.cargarSesion(body.data);
-            ((LoginActivity)getActivity()).startHomeActivity();
-        }
-        else{
-            OKDialog.showOKDialog(getActivity(), "Error", body.errors[0]);
-
+            ((LoginActivity) getActivity()).startHomeActivity();
+        } else {
+            Snackbar.make(getView(), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG).show();
         }
     }
-
-
 
 }

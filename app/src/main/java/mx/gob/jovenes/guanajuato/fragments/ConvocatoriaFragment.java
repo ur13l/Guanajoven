@@ -133,10 +133,12 @@ public class ConvocatoriaFragment extends CustomFragment{
 
             @Override
             public void onFailure(Call<Response<ArrayList<Convocatoria>>> call, Throwable t) {
-                AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
-                mensajeError.create();
-                mensajeError.setMessage("Necesitas estar conectado para poder ver las ultimas convocatorias");
-                mensajeError.show();
+                if (noHayDatosEnRealm()) {
+                    AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+                    mensajeError.create();
+                    mensajeError.setMessage("Necesitas estar conectado para poder ver las últimas convocatorias");
+                    mensajeError.show();
+                }
             }
         });
     }
