@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Notificacion;
+import mx.gob.jovenes.guanajuato.model.NotificationBody;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 
 /**
@@ -39,14 +41,28 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Log.d("DEBUG", "Notificacion");
         Realm.init(this);
         realm = Realm.getDefaultInstance();
-        showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("tag"));
+        Gson gson = new Gson();
+        NotificationBody body = gson.fromJson(remoteMessage.getData().get("body"), NotificationBody.class);
+       Log.d("MENSAJE", body.getMessage());
+
+        showNotification(remoteMessage.getData().get("title"), body.getMessage(),
+                remoteMessage.getData().get("tag"), body.getType());
+
+
     }
 
-    public void showNotification(String title, String message, String enlace) {
+
+
+    public void showNotification(String title, String message, String enlace, String type) {
         Intent i;
         if (enlace == null || enlace.isEmpty()) {
             i = new Intent(this, HomeActivity.class);
-        } else {
+        }
+        else if(enlace.equals("chat")) {
+            i = new Intent(this, HomeActivity.class);
+            //TODO: Lógica para cuando da click en el chat
+        }
+        else {
             i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(enlace));
         }
@@ -90,14 +106,20 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         System.err.println(message);
         System.err.println(Calendar.getInstance().getTime().toString());
 
-        notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
 
-        realm.beginTransaction();
-        realm.copyToRealm(notificacion);
-        realm.commitTransaction();
+        if(type.equals("chat")) {
+            notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
 
+            realm.beginTransaction();
+            realm.copyToRealm(notificacion);
+            realm.commitTransaction();
+        }
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         manager.notify(0, notification);
+    }
+
+    public void guardarNotificación() {
+
     }
 
     private int idNotificacion() {
