@@ -41,19 +41,12 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Log.d("DEBUG", "Notificacion");
         Realm.init(this);
         realm = Realm.getDefaultInstance();
-        Gson gson = new Gson();
-        NotificationBody body = gson.fromJson(remoteMessage.getData().get("body"), NotificationBody.class);
-       Log.d("MENSAJE", body.getMessage());
-
-        showNotification(remoteMessage.getData().get("title"), body.getMessage(),
-                remoteMessage.getData().get("tag"), body.getType());
-
-
+        showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"),
+                remoteMessage.getData().get("tag"));
     }
 
 
-
-    public void showNotification(String title, String message, String enlace, String type) {
+    public void showNotification(String title, String message, String enlace) {
         Intent i;
         if (enlace == null || enlace.isEmpty()) {
             i = new Intent(this, HomeActivity.class);
@@ -102,12 +95,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             notification.bigContentView = bigView;
         }
 
-        System.err.println(title);
-        System.err.println(message);
-        System.err.println(Calendar.getInstance().getTime().toString());
-
-
-        if(type.equals("chat")) {
+        if(!enlace.equals("chat")) {
             notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
 
             realm.beginTransaction();
