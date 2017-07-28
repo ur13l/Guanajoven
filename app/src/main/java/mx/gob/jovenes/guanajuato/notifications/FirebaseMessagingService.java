@@ -28,6 +28,7 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
+import mx.gob.jovenes.guanajuato.model.Mensaje;
 import mx.gob.jovenes.guanajuato.model.Notificacion;
 import mx.gob.jovenes.guanajuato.model.NotificationBody;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
@@ -45,13 +46,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Log.d("DEBUG", "Notificacion");
         Realm.init(this);
         realm = Realm.getDefaultInstance();
-<<<<<<< HEAD
         showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("tag"));
-
-=======
-        showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"),
-                remoteMessage.getData().get("tag"));
->>>>>>> 194f183977fa03a6f89c013fbf628d47471062c3
     }
 
 
@@ -103,32 +98,22 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification.bigContentView = bigView;
         }
-
-<<<<<<< HEAD
-        System.err.println(title);
-        System.err.println(message);
-        System.err.println(Calendar.getInstance().getTime().toString());
-
-        notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
-
-        //NotificacionesFragment.ingresarNotificacion(new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime())));
-
-        realm.beginTransaction();
-        realm.copyToRealm(notificacion);
-        realm.commitTransaction();
-=======
-        if(!enlace.equals("chat")) {
+;
+        if(enlace == null || !enlace.equals("chat")) {
             notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
->>>>>>> 194f183977fa03a6f89c013fbf628d47471062c3
 
             realm.beginTransaction();
             realm.copyToRealm(notificacion);
             realm.commitTransaction();
+
+            broadCastNotificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
+        } else{
+            broadCastMensaje(message, 0);
         }
+
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         manager.notify(0, notification);
 
-        broadCastIntent(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
 
     }
 
@@ -144,13 +129,19 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         }
     }
 
-    public void broadCastIntent(int idNotificacion, String title, String message, String fecha) {
+    public void broadCastNotificacion(int idNotificacion, String title, String message, String fecha) {
         Intent intent = new Intent();
-        //Bundle bundle = new Bundle();
 
-        //bundle.putSerializable("notificacion", (Serializable) new Notificacion(idNotificacion, title, message, fecha));
         intent.setAction("mx.gob.jovenes.guanajuato.NOTIFICACION_RECIBIDA");
         intent.putExtra("notificacion",  new Gson().toJson(new Notificacion(idNotificacion, title, message, fecha)));
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
+
+    public void broadCastMensaje(String mensaje, int enviaUsuario) {
+        Intent intent = new Intent();
+        intent.setAction("mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO");
+        intent.putExtra("mensaje", new Gson().toJson(new Mensaje(mensaje, enviaUsuario)));
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
+
 }

@@ -39,8 +39,10 @@ import mx.gob.jovenes.guanajuato.api.ChatAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.ChatMessage;
+import mx.gob.jovenes.guanajuato.model.DatosMensajes;
 import mx.gob.jovenes.guanajuato.model.Mensaje;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -57,6 +59,7 @@ public class ChatFragment extends CustomFragment {
     private List<Mensaje> mensajes;
     private ChatAPI chatAPI;
     private Retrofit retrofit;
+    private int PAGE = 1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,8 +68,7 @@ public class ChatFragment extends CustomFragment {
         chatAPI = retrofit.create(ChatAPI.class);
 
         IntentFilter intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO");
-        LocalBroadcastManager.getInstance(getContext()).registerReceiver(onNotice, intentFilter);
-
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(mensajeRecibido, intentFilter);
     }
 
     @Nullable
@@ -79,14 +81,14 @@ public class ChatFragment extends CustomFragment {
         editTextMessage = (EditText) v.findViewById(R.id.edittext_message);
         mensajes = new ArrayList<>();
 
-        setUpAdapter();
-        setUpRecyclerView();
+        //setUpAdapter();
+        //setUpRecyclerView();
 
-        buttonSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!editTextMessage.isDirty()) {
-                    mensajes.add(0, new Mensaje(editTextMessage.getText().toString(), true));
+        obtenerMensajes();
+
+        buttonSend.setOnClickListener((View) -> {
+                if (editTextMessage.getText().toString().length() != 0) {
+                    mensajes.add(0, new Mensaje(editTextMessage.getText().toString(), 1));
                     adapter.notifyData(mensajes);
 
                     Call<Response<Boolean>> call = chatAPI.enviarMensaje(Sesion.getUsuario().getApiToken(), editTextMessage.getText().toString());
@@ -94,25 +96,18 @@ public class ChatFragment extends CustomFragment {
                     call.enqueue(new Callback<Response<Boolean>>() {
                         @Override
                         public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                            /*AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-                            b.setMessage("Enviado!");
-                            b.show();*/
+
                         }
 
                         @Override
                         public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                            /*AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-                            b.setMessage("Error!");
-                            b.show();*/
+
                         }
                     });
 
                     editTextMessage.getText().clear();
 
-                } else {
-
                 }
-            }
         });
 
         return v;
@@ -141,6 +136,37 @@ public class ChatFragment extends CustomFragment {
         recyclerViewMessages.setAdapter(adapter);
     }
 
+    private void obtenerMensajes() {
+        Call<Response<DatosMensajes>> call = chatAPI.obtenerMensajes(Sesion.getUsuario().getApiToken(), PAGE);
+
+        call.enqueue(new Callback<Response<DatosMensajes>>() {
+            @Override
+            public void onResponse(Call<Response<DatosMensajes>> call, retrofit2.Response<Response<DatosMensajes>> response) {
+                mensajes = response.body().data.getData();
+                LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+                llm.setReverseLayout(true);
+                //llm.setStackFromEnd(true);
+                llm.setStackFromEnd(false);
+                adapter = new RVMessagesAdapter(getContext(), mensajes);
+                recyclerViewMessages.setLayoutManager(llm);
+                recyclerViewMessages.setAdapter(adapter);
+                PAGE++;
+            }
+
+            @Override
+            public void onFailure(Call<Response<DatosMensajes>> call, Throwable t) {
+                AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+                b.setMessage(t.getMessage());
+                b.show();
+
+                System.err.println("-------------------");
+                System.err.println(PAGE);
+                System.err.println(Sesion.getUsuario().getApiToken());
+                System.err.println("-------------------");
+            }
+        });
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -156,13 +182,15 @@ public class ChatFragment extends CustomFragment {
         super.onDestroy();
     }
 
-    private BroadcastReceiver onNotice = new BroadcastReceiver() {
+    private BroadcastReceiver mensajeRecibido = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            adapter.notifyItemRangeRemoved(0, adapter.getItemCount() - 1);
-            adapter.notifyItemRangeInserted(0, adapter.getItemCount());
+            Mensaje mensaje = new Gson().fromJson(intent.getExtras().getString("mensaje"), Mensaje.class);
+            mensajes.add(mensaje);
+            adapter.notifyDataSetChanged();
         }
     };
+
 
 
 

@@ -49,7 +49,7 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
         int color = fetchColor(R.attr.colorPrimary);
         int gravity = Gravity.RIGHT;
 
-        if (!mensaje.isEnviaUsuario()) {
+        if (mensaje.isEnviaUsuario() == 0) {
             color = fetchColor(R.attr.colorAccent);
             gravity = Gravity.LEFT;
         }

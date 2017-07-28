@@ -8,13 +8,13 @@ public class Mensaje {
     private int idMensaje;
     private int idChat;
     private String mensaje;
-    private boolean enviaUsuario;
-    private boolean visto;
+    private int enviaUsuario;
+    private int visto;
     private String createdAt;
     private String updatedAt;
     private String deletedAt;
 
-    public Mensaje(String mensaje, boolean enviaUsuario) {
+    public Mensaje(String mensaje, int enviaUsuario) {
         this.mensaje = mensaje;
         this.enviaUsuario = enviaUsuario;
     }
@@ -43,19 +43,19 @@ public class Mensaje {
         this.mensaje = mensaje;
     }
 
-    public boolean isEnviaUsuario() {
+    public int isEnviaUsuario() {
         return enviaUsuario;
     }
 
-    public void setEnviaUsuario(boolean enviaUsuario) {
+    public void setEnviaUsuario(int enviaUsuario) {
         this.enviaUsuario = enviaUsuario;
     }
 
-    public boolean isVisto() {
+    public int isVisto() {
         return visto;
     }
 
-    public void setVisto(boolean visto) {
+    public void setVisto(int visto) {
         this.visto = visto;
     }
 

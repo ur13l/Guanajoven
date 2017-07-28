@@ -2,6 +2,7 @@ package mx.gob.jovenes.guanajuato.api;
 
 import java.util.ArrayList;
 
+import mx.gob.jovenes.guanajuato.model.DatosMensajes;
 import mx.gob.jovenes.guanajuato.model.Mensaje;
 import retrofit2.Call;
 import retrofit2.http.POST;
@@ -20,7 +21,7 @@ public interface ChatAPI {
     );
 
     @POST("chat/mensajes")
-    Call<Response<ArrayList<Mensaje>>> obtenerMensajes (
+    Call<Response<DatosMensajes>> obtenerMensajes (
             @Query("api_token") String apiToken,
             @Query("page") int page
     );
