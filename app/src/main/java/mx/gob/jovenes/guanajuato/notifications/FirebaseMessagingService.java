@@ -29,6 +29,7 @@ import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.model.Notificacion;
+import mx.gob.jovenes.guanajuato.model.NotificationBody;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 
 /**
@@ -44,15 +45,26 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Log.d("DEBUG", "Notificacion");
         Realm.init(this);
         realm = Realm.getDefaultInstance();
+<<<<<<< HEAD
         showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("tag"));
 
+=======
+        showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"),
+                remoteMessage.getData().get("tag"));
+>>>>>>> 194f183977fa03a6f89c013fbf628d47471062c3
     }
+
 
     public void showNotification(String title, String message, String enlace) {
         Intent i;
         if (enlace == null || enlace.isEmpty()) {
             i = new Intent(this, HomeActivity.class);
-        } else {
+        }
+        else if(enlace.equals("chat")) {
+            i = new Intent(this, HomeActivity.class);
+            //TODO: Lógica para cuando da click en el chat
+        }
+        else {
             i = new Intent(Intent.ACTION_VIEW);
             i.setData(Uri.parse(enlace));
         }
@@ -92,6 +104,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             notification.bigContentView = bigView;
         }
 
+<<<<<<< HEAD
         System.err.println(title);
         System.err.println(message);
         System.err.println(Calendar.getInstance().getTime().toString());
@@ -103,11 +116,23 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         realm.beginTransaction();
         realm.copyToRealm(notificacion);
         realm.commitTransaction();
+=======
+        if(!enlace.equals("chat")) {
+            notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
+>>>>>>> 194f183977fa03a6f89c013fbf628d47471062c3
 
+            realm.beginTransaction();
+            realm.copyToRealm(notificacion);
+            realm.commitTransaction();
+        }
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         manager.notify(0, notification);
 
         broadCastIntent(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
+
+    }
+
+    public void guardarNotificación() {
 
     }
 
