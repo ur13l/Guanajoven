@@ -8,6 +8,7 @@ import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.app.ActionBar;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;

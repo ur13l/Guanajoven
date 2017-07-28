@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.Collection;
@@ -80,7 +81,7 @@ public class RVIdiomasSeleccionadosAdapter extends RecyclerView.Adapter<RVIdioma
         private TextView textViewPorcentajeConversacion;
         private TextView textViewPorcentajeLectura;
         private TextView textViewPorcentajeEscritura;
-        private Button btnEliminarIdioma;
+        private ImageButton btnEliminarIdioma;
 
         public IdiomasSeleccionadosViewHolder(View itemView) {
             super(itemView);
@@ -88,7 +89,7 @@ public class RVIdiomasSeleccionadosAdapter extends RecyclerView.Adapter<RVIdioma
             textViewPorcentajeConversacion = (TextView) itemView.findViewById(R.id.textview_porcentaje_conversacion);
             textViewPorcentajeLectura = (TextView) itemView.findViewById(R.id.textview_porcentaje_lectura);
             textViewPorcentajeEscritura = (TextView) itemView.findViewById(R.id.textview_porcentaje_escritura);
-            btnEliminarIdioma = (Button) itemView.findViewById(R.id.btn_eliminar_idioma);
+            btnEliminarIdioma = (ImageButton) itemView.findViewById(R.id.btn_eliminar_idioma);
         }
     }
 

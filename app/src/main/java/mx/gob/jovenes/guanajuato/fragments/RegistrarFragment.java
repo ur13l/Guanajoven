@@ -20,6 +20,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -185,6 +186,8 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                 InputType.TYPE_TEXT_VARIATION_PASSWORD);
         etPassword2.setTypeface(Typeface.DEFAULT);
 
+        etCurp.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+
         etCurp.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -193,6 +196,14 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 //Cuando se encuentra un curp válido
+
+                String cadena= s.toString();
+                if(!cadena.equals(cadena.toUpperCase()))
+                {
+                    cadena=cadena.toUpperCase();
+                    etCurp.setText(cadena);
+                }
+
                 if (s.length() == 18) {
                     progressDialog = ProgressDialog.show(getActivity(), "Recuperando información", "Buscando información de CURP en base de datos", true);
                     progressDialog.setCancelable(true);
@@ -376,7 +387,7 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                         ((LoginActivity) getActivity()).startHomeActivity();
 
                     } else {
-                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), body.errors[0], Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "El email ya existe", Snackbar.LENGTH_LONG).show();
                     }
                 }
 
@@ -384,7 +395,6 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                 public void onFailure(Call<Response<Usuario>> call, Throwable t) {
                     progressDialog.dismiss();
                     Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG).show();
-
                 }
             });
         }

@@ -57,36 +57,8 @@ import retrofit2.Retrofit;
  * Activity contenedora de la interfaz Home.
  * Fecha: 02/05/2016
  */
-public class HomeActivity extends BaseActivity {
-    private static HomeActivity homeActivity;
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        homeActivity = this;
-        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
-        getLayoutInflater().inflate(R.layout.activity_home, contentFrameLayout);
-
-        if (savedInstanceState == null) {
-            FragmentManager fm = getSupportFragmentManager();
-            Fragment fragment = null;
-            try {
-                fragment = HomeFragment.newInstance(R.id.nav_home,R.string.app_name, HomeFragment.class);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            }
-            fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
-        }
-    }
-
-    public static void cerrarSesion() {
-        homeActivity.finish();
-    }
-
-
-    /**
     public static String MENU_ID = "menu_id";
     public static String INSTRUCCIONES_CHECK = "instrucciones_check";
 
@@ -139,8 +111,6 @@ public class HomeActivity extends BaseActivity {
         });
         toggle.syncState();*/
 
-
-/**
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
@@ -169,11 +139,11 @@ public class HomeActivity extends BaseActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         //Intent para abrir el tutorial de la aplicación
-        if(!prefs.getBoolean(INSTRUCCIONES_CHECK, false)){
+        /*if(!prefs.getBoolean(INSTRUCCIONES_CHECK, false)){
             Intent i = new Intent(this, InstruccionesActivity.class);
             startActivity(i);
             prefs.edit().putBoolean(INSTRUCCIONES_CHECK, true).commit();
-        }
+        }*/
 
         //Configuración de retrofit
         retrofit = ((MyApplication) getApplication()).getRetrofitInstance();
@@ -312,6 +282,6 @@ public class HomeActivity extends BaseActivity {
         if(mGoogleApiClient.isConnected()){
             mGoogleApiClient.disconnect();
         }
-    }*/
+    }
 
 }

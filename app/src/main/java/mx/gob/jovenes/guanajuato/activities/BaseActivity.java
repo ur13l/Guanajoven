@@ -9,6 +9,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,8 +40,8 @@ import retrofit2.Retrofit;
  * Created by codigus on 26/07/2017.
  */
 
-public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    public static String MENU_ID = "menu_id";
+public class BaseActivity extends AppCompatActivity /*implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener*/ {
+    /*public static String MENU_ID = "menu_id";
     public static String INSTRUCCIONES_CHECK = "instrucciones_check";
 
     public int last_menu_id;
@@ -66,6 +67,9 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -93,7 +97,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         });
         toggle.syncState();*/
 
-
+/*
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_home);
@@ -162,6 +166,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
 
         switch (id) {
             case R.id.nav_home:
+                intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_logout:
                 Call<Response<Boolean>> call = notificacionAPI.cancelarToken(Sesion.getUsuario().getId());
@@ -185,11 +191,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 intent = new Intent(this, LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                HomeActivity.cerrarSesion();
 
                 if (SegundaActivity.segundaActivity != null) {
                     SegundaActivity.cerrarSesion();
                 }
+
+                HomeActivity.cerrarSesion();
 
                 this.finish();
                 break;
@@ -199,7 +206,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(intent);
                 break;
             default:
-
+                HomeActivity.cerrarSesion();
                 intent = new Intent(this, SegundaActivity.class);
                 intent.putExtra(MENU_ID, id);
                 startActivity(intent);
@@ -242,16 +249,16 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         Usuario usuario = Sesion.getUsuario();
 
 
-            if (Sesion.getUsuario().getDatosUsuario().getRutaImagen() != null) {
-                Picasso.with(getApplicationContext()).load(usuario.getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
-            }
+        if (Sesion.getUsuario().getDatosUsuario().getRutaImagen() != null) {
+            Picasso.with(getApplicationContext()).load(usuario.getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
+        }
 
-            String posicion = Sesion.getUsuario().getPosicion() == null ? "0" : Sesion.getUsuario().getPosicion();
+        String posicion = Sesion.getUsuario().getPosicion() == null ? "0" : Sesion.getUsuario().getPosicion();
 
-            nombreUsuarioDrawer.setText(usuario.getDatosUsuario().getNombre() + " " + usuario.getDatosUsuario().getApellidoPaterno() + " " + usuario.getDatosUsuario().getApellidoMaterno());
-            correoUsuarioDrawer.setText(usuario.getEmail());
-            puntajeDrawer.setText("Puntos: " + usuario.getPuntaje());
-            posicionDrawer.setText("Posición N° " + posicion);
+        nombreUsuarioDrawer.setText(usuario.getDatosUsuario().getNombre() + " " + usuario.getDatosUsuario().getApellidoPaterno() + " " + usuario.getDatosUsuario().getApellidoMaterno());
+        correoUsuarioDrawer.setText(usuario.getEmail());
+        puntajeDrawer.setText("Puntos: " + usuario.getPuntaje());
+        posicionDrawer.setText("Posición N° " + posicion);
 
     }
 
@@ -261,6 +268,6 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.disconnect();
         }
-    }
+    }*/
 
 }

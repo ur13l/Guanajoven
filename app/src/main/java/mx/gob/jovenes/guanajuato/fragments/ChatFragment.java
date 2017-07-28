@@ -1,10 +1,16 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
+import com.google.gson.Gson;
 import com.pusher.android.PusherAndroid;
 import com.pusher.android.notifications.ManifestValidator;
 import com.pusher.android.notifications.PushNotificationRegistration;
@@ -28,8 +35,15 @@ import java.util.List;
 import mx.gob.jovenes.guanajuato.Firebase.FirebaseHelper;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVMessagesAdapter;
+import mx.gob.jovenes.guanajuato.api.ChatAPI;
+import mx.gob.jovenes.guanajuato.api.Response;
+import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.ChatMessage;
+import mx.gob.jovenes.guanajuato.model.Mensaje;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Retrofit;
 
 /**
  * Created by code on 9/02/17.
@@ -40,73 +54,89 @@ public class ChatFragment extends CustomFragment {
     private ImageButton buttonSend;
     private EditText editTextMessage;
     private RVMessagesAdapter adapter;
-    private FirebaseHelper helper;
-    private PusherAndroid pusher;
-    private PushNotificationRegistration nativePusher;
-    private String defaultSenderId;
+    private List<Mensaje> mensajes;
+    private ChatAPI chatAPI;
+    private Retrofit retrofit;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
+        chatAPI = retrofit.create(ChatAPI.class);
+
+        IntentFilter intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO");
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(onNotice, intentFilter);
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_chat, container, false);
 
-
-        pusher = new PusherAndroid("b378afe11ef5100dae7e");
-        defaultSenderId = getString(R.string.gcm_defaultSenderId);
-        nativePusher = pusher.nativePusher();
-
-        PushNotificationRegistrationListener listener = new PushNotificationRegistrationListener() {
-            @Override
-            public void onSuccessfulRegistration() {
-                Snackbar.make(getView(), "Si conecto", Snackbar.LENGTH_LONG).show();
-            }
-
-
-
-            @Override
-            public void onFailedRegistration(int statusCode, String response) {
-                Snackbar.make(getView(), "no conecto", Snackbar.LENGTH_LONG).show();
-            }
-        };
-
-        try {
-            nativePusher.registerGCM(getActivity().getApplicationContext(), defaultSenderId, listener);
-        } catch (ManifestValidator.InvalidManifestException e) {
-            e.printStackTrace();
-        }
-
         recyclerViewMessages = (RecyclerView) v.findViewById(R.id.rv_messages);
         buttonSend = (ImageButton) v.findViewById(R.id.button_send);
         editTextMessage = (EditText) v.findViewById(R.id.edittext_message);
+        mensajes = new ArrayList<>();
 
         setUpAdapter();
         setUpRecyclerView();
 
-        /*buttonSend.setOnClickListener(new View.OnClickListener() {
+        buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                enviarMensaje(editTextMessage.getText().toString());
+                if (!editTextMessage.isDirty()) {
+                    mensajes.add(0, new Mensaje(editTextMessage.getText().toString(), true));
+                    adapter.notifyData(mensajes);
+
+                    Call<Response<Boolean>> call = chatAPI.enviarMensaje(Sesion.getUsuario().getApiToken(), editTextMessage.getText().toString());
+
+                    call.enqueue(new Callback<Response<Boolean>>() {
+                        @Override
+                        public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                            /*AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+                            b.setMessage("Enviado!");
+                            b.show();*/
+                        }
+
+                        @Override
+                        public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                            /*AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+                            b.setMessage("Error!");
+                            b.show();*/
+                        }
+                    });
+
+                    editTextMessage.getText().clear();
+
+                } else {
+
+                }
             }
-        });*/
+        });
 
         return v;
     }
 
     public void setUpAdapter() {
-        ChatMessage msg1 = new ChatMessage();
-        ChatMessage msg2 = new ChatMessage();
+       /* Mensaje msg1 = new Mensaje();
+        Mensaje msg2 = new Mensaje();
 
-        msg2.setMessage("como estas");
-        msg1.setMessage("hola");
+        msg2.setMensaje("como estas");
+        msg1.setMensaje("hola");
 
-        msg2.setSendByMe(false);
-        msg1.setSendByMe(true);
-
-        adapter = new RVMessagesAdapter(this.getContext(),/*new ArrayList<ChatMessage>()*/Arrays.asList(msg1, msg2));
+        msg2.setEnviaUsuario(false);
+        msg1.setEnviaUsuario(true);
+*/
+        //adapter = new RVMessagesAdapter(this.getContext(),/*new ArrayList<ChatMessage>()*/Arrays.asList(msg1, msg2));
     }
 
     private void setUpRecyclerView() {
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setReverseLayout(true);
+        //llm.setStackFromEnd(true);
+        llm.setStackFromEnd(false);
+        adapter = new RVMessagesAdapter(this.getContext(), Arrays.asList());
         recyclerViewMessages.setLayoutManager(llm);
         recyclerViewMessages.setAdapter(adapter);
     }
@@ -125,6 +155,14 @@ public class ChatFragment extends CustomFragment {
     public void onDestroy() {
         super.onDestroy();
     }
+
+    private BroadcastReceiver onNotice = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            adapter.notifyItemRangeRemoved(0, adapter.getItemCount() - 1);
+            adapter.notifyItemRangeInserted(0, adapter.getItemCount());
+        }
+    };
 
 
 

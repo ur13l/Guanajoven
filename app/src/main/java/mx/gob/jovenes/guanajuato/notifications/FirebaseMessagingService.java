@@ -7,12 +7,16 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -23,6 +27,7 @@ import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
+import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.model.Notificacion;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 
@@ -40,6 +45,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Realm.init(this);
         realm = Realm.getDefaultInstance();
         showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("tag"));
+
     }
 
     public void showNotification(String title, String message, String enlace) {
@@ -92,12 +98,17 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
 
+        //NotificacionesFragment.ingresarNotificacion(new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime())));
+
         realm.beginTransaction();
         realm.copyToRealm(notificacion);
         realm.commitTransaction();
 
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
         manager.notify(0, notification);
+
+        broadCastIntent(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
+
     }
 
     private int idNotificacion() {
@@ -106,5 +117,15 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         } catch (NullPointerException errorLlavePrimaria) {
             return 0;
         }
+    }
+
+    public void broadCastIntent(int idNotificacion, String title, String message, String fecha) {
+        Intent intent = new Intent();
+        //Bundle bundle = new Bundle();
+
+        //bundle.putSerializable("notificacion", (Serializable) new Notificacion(idNotificacion, title, message, fecha));
+        intent.setAction("mx.gob.jovenes.guanajuato.NOTIFICACION_RECIBIDA");
+        intent.putExtra("notificacion",  new Gson().toJson(new Notificacion(idNotificacion, title, message, fecha)));
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 }

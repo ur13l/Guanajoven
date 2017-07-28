@@ -1,10 +1,16 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +20,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
 
 import org.w3c.dom.Text;
 
@@ -37,15 +45,14 @@ import retrofit2.Retrofit;
 public class NotificacionesFragment extends CustomFragment {
     private RecyclerView rvNotificaciones;
     private TextView tvEmptyNotificaciones;
-    private RVNotificacionAdapter adapter;
+    public  RVNotificacionAdapter adapter;
     private Retrofit retrofit;
     private Realm realm;
-    private List<Notificacion> notificaciones;
+    public  List<Notificacion> notificaciones;
     private SharedPreferences preferences;
     private AppCompatActivity activity;
     private Toolbar toolbar;
     private CollapsingToolbarLayout cToolbar;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,9 @@ public class NotificacionesFragment extends CustomFragment {
         activity = ((AppCompatActivity) getActivity());
         toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
         cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
+
+        IntentFilter intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.NOTIFICACION_RECIBIDA");
+        LocalBroadcastManager.getInstance(getContext()).registerReceiver(notificacionRecibida, intentFilter);
     }
 
     @Nullable
@@ -115,4 +125,18 @@ public class NotificacionesFragment extends CustomFragment {
         imagen.setImageResource(R.drawable.notificaciones);
 
     }
+
+    private BroadcastReceiver notificacionRecibida = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Notificacion notificacion = new Gson().fromJson(intent.getExtras().getString("notificacion"), Notificacion.class);
+            notificaciones.add(notificacion);
+            adapter.notifyDataSetChanged();
+
+            Snackbar.make(getView(), "Nueva notificación: " + notificacion.getTitulo(), Snackbar.LENGTH_LONG).show();
+        }
+    };
+
+
+
 }

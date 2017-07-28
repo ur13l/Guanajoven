@@ -167,7 +167,7 @@ public class EditarDatosFragment extends CustomFragment {
         recyclerViewIdiomasSeleccionados = (RecyclerView) v.findViewById(R.id.rv_idiomas_seleccionados);
 
         btnSeleccionarIdiomas.setOnClickListener((View) -> {
-            /*if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
+            if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
                 //En caso de que ya halla puesto idiomas le saldra una alerta
                 AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
                 alerta.setMessage("Tienes idiomas seleccionados, en caso de aceptar se eliminaran, ¿Estás de acuerdo?");
@@ -188,11 +188,13 @@ public class EditarDatosFragment extends CustomFragment {
                 alerta.show();
 
             } else {
+                AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+                AlertDialog a = b.create();
                 FragmentManager fragmentManager = getActivity().getFragmentManager();
                 IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
                 idiomasAdicionalesDialogFragment.show(fragmentManager, null);
-            }*/
-            if (adapter.getListaIdiomas() != null) {
+            }
+            /*if (adapter.getListaIdiomas() != null) {
                 FragmentManager fragmentManager = getActivity().getFragmentManager();
                 IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
                 idiomasAdicionalesDialogFragment.show(fragmentManager, null);
@@ -201,7 +203,7 @@ public class EditarDatosFragment extends CustomFragment {
                 FragmentManager fragmentManager = getActivity().getFragmentManager();
                 IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
                 idiomasAdicionalesDialogFragment.show(fragmentManager, null);
-            }
+            }*/
         });
 
         btnContinuar.setOnClickListener((View -> {

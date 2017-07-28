@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -56,22 +57,23 @@ import retrofit2.Retrofit;
  * mx.gob.jovenes.guanajuato.fragments al seleccionar un elemento del Navigation Drawer.
  * Fecha: 02/05/2016
  */
-public class SegundaActivity extends BaseActivity {
-    public static SegundaActivity segundaActivity;
+public class SegundaActivity extends AppCompatActivity {
+    //public static SegundaActivity segundaActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_segunda);
 
-        segundaActivity = this;
+        /*segundaActivity = this;
         FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
-        getLayoutInflater().inflate(R.layout.activity_segunda, contentFrameLayout);
+        getLayoutInflater().inflate(R.layout.activity_segunda, contentFrameLayout);*/
 
         //setContentView(R.layout.activity_segunda);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,8 +90,8 @@ public class SegundaActivity extends BaseActivity {
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null){
-            fab.setOnClickListener(new View.OnClickListener(){
+        if (fab != null) {
+            fab.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
@@ -114,7 +116,7 @@ public class SegundaActivity extends BaseActivity {
                     fragment = ConvocatoriaFragment.newInstance(R.id.nav_convocatorias, R.string.convocatorias, ConvocatoriaFragment.class);
                     break;
                 case R.id.nav_mis_eventos:
-                    fragment = EventoFragment.newInstance(R.id.nav_mis_eventos, R.string.mis_eventos ,EventoFragment.class);
+                    fragment = EventoFragment.newInstance(R.id.nav_mis_eventos, R.string.mis_eventos, EventoFragment.class);
                     break;
 
                 case R.id.nav_acerca_de:
@@ -149,23 +151,35 @@ public class SegundaActivity extends BaseActivity {
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
-        if(conditional != 1){
+        if (conditional != 1) {
             ft.replace(R.id.segunda_fragment_container, fragment).commit();
 
         }
 
 
-
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
         this.getSupportActionBar().setTitle(R.string.app_name);
         super.onBackPressed();
     }
 
+    /*
+    @Override
+    protected void onStop() {
+        super.onStop();
+        this.finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.finish();
+    }
+
     public static void cerrarSesion() {
         segundaActivity.finish();
-    }
+    }*/
 
 }

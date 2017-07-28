@@ -125,7 +125,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscritoo", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscrito", Snackbar.LENGTH_LONG).show();
                 }
 
                 @Override

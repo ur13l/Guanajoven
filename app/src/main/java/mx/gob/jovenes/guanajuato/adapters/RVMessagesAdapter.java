@@ -17,6 +17,7 @@ import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.model.ChatMessage;
+import mx.gob.jovenes.guanajuato.model.Mensaje;
 
 /**
  * Created by codigus on 26/06/2017.
@@ -24,11 +25,11 @@ import mx.gob.jovenes.guanajuato.model.ChatMessage;
 
 public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.ViewHolder> {
     private Context context;
-    private List<ChatMessage> chatMessages;
+    private List<Mensaje> mensajes;
 
-    public RVMessagesAdapter(Context context, List<ChatMessage> chatMessages) {
+    public RVMessagesAdapter(Context context, List<Mensaje> mensajes) {
         this.context = context;
-        this.chatMessages = chatMessages;
+        this.mensajes = mensajes;
     }
 
     @Override
@@ -40,15 +41,15 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ChatMessage chatMessage = chatMessages.get(position);
+        Mensaje mensaje = mensajes.get(position);
 
-        String msg = chatMessage.getMessage();
+        String msg = mensaje.getMensaje();
         holder.textViewMessage.setText(msg);
 
         int color = fetchColor(R.attr.colorPrimary);
         int gravity = Gravity.RIGHT;
 
-        if (!chatMessage.isSendByMe()) {
+        if (!mensaje.isEnviaUsuario()) {
             color = fetchColor(R.attr.colorAccent);
             gravity = Gravity.LEFT;
         }
@@ -62,14 +63,22 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return chatMessages.size();
+        return mensajes.size();
     }
 
-    public void add(ChatMessage msg) {
-        if (!chatMessages.contains(msg)) {
-            chatMessages.add(msg);
+
+    public void notifyData(List<Mensaje> mensajes) {
+        this.mensajes = mensajes;
+        notifyDataSetChanged();
+    }
+
+    public void add(Mensaje mensaje) {
+        /*if (!mensajes.contains(mensaje)) {
+            mensajes.add(mensaje);
             notifyDataSetChanged();
-        }
+        }*/
+        mensajes.add(mensaje);
+        notifyDataSetChanged();
     }
 
     private int fetchColor(int color) {

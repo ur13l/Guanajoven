@@ -69,6 +69,11 @@ public class RVNotificacionAdapter extends RecyclerView.Adapter<RVNotificacionAd
         });
     }
 
+    public void notifyData(List<Notificacion> notificaciones) {
+        this.notificaciones = notificaciones;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return notificaciones.size();
