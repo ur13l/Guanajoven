@@ -16,21 +16,15 @@ import android.widget.RemoteViews;
 import com.google.firebase.messaging.RemoteMessage;
 import com.google.gson.Gson;
 
-import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import io.realm.Realm;
-import io.realm.exceptions.RealmPrimaryKeyConstraintException;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.HomeActivity;
-import mx.gob.jovenes.guanajuato.application.MyApplication;
-import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.model.Mensaje;
 import mx.gob.jovenes.guanajuato.model.Notificacion;
-import mx.gob.jovenes.guanajuato.model.NotificationBody;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 
 /**
@@ -47,6 +41,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Realm.init(this);
         realm = Realm.getDefaultInstance();
         showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("tag"));
+        System.err.println("----------------------------------------");
+        System.err.println(remoteMessage);
+        System.err.println("-------------------------------------");
     }
 
 
@@ -103,7 +100,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             notification.bigContentView = bigView;
         }
-;
+
         if(enlace == null || !enlace.equals("chat")) {
             notificacion = new Notificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
 

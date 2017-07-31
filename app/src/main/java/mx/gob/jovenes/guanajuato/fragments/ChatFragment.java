@@ -4,11 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,34 +13,23 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
-import com.firebase.client.Firebase;
+
 import com.google.gson.Gson;
-import com.itextpdf.text.Paragraph;
-import com.pusher.android.PusherAndroid;
-import com.pusher.android.notifications.ManifestValidator;
-import com.pusher.android.notifications.PushNotificationRegistration;
-import com.pusher.android.notifications.tokens.PushNotificationRegistrationListener;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import mx.gob.jovenes.guanajuato.Firebase.FirebaseHelper;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVMessagesAdapter;
 import mx.gob.jovenes.guanajuato.api.ChatAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
-import mx.gob.jovenes.guanajuato.model.ChatMessage;
 import mx.gob.jovenes.guanajuato.model.DatosMensajes;
 import mx.gob.jovenes.guanajuato.model.Mensaje;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
-import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
@@ -62,6 +48,7 @@ public class ChatFragment extends CustomFragment {
     private Retrofit retrofit;
     private int PAGE = 1;
     private LinearLayoutManager llm;
+    private IntentFilter intentFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,7 +56,7 @@ public class ChatFragment extends CustomFragment {
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         chatAPI = retrofit.create(ChatAPI.class);
 
-        IntentFilter intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO");
+        intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO");
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mensajeRecibido, intentFilter);
     }
 
@@ -82,9 +69,9 @@ public class ChatFragment extends CustomFragment {
         buttonSend = (ImageButton) v.findViewById(R.id.button_send);
         editTextMessage = (EditText) v.findViewById(R.id.edittext_message);
         mensajes = new ArrayList<>();
+        //adapter = new RVMessagesAdapter(getContext(), mensajes);
 
-        //setUpAdapter();
-        //setUpRecyclerView();
+        primeraLlamada();
 
         buttonSend.setOnClickListener((View) -> {
                 if (editTextMessage.getText().toString().length() != 0) {
@@ -110,36 +97,9 @@ public class ChatFragment extends CustomFragment {
                 }
         });
 
-        primeraLlamada();
-
         recyclerViewMessages.addOnScrollListener(new SetOnScrollListener());
 
-
-
         return v;
-    }
-
-    public void setUpAdapter() {
-       /* Mensaje msg1 = new Mensaje();
-        Mensaje msg2 = new Mensaje();
-
-        msg2.setMensaje("como estas");
-        msg1.setMensaje("hola");
-
-        msg2.setEnviaUsuario(false);
-        msg1.setEnviaUsuario(true);
-*/
-        //adapter = new RVMessagesAdapter(this.getContext(),/*new ArrayList<ChatMessage>()*/Arrays.asList(msg1, msg2));
-    }
-
-    private void setUpRecyclerView() {
-        llm = new LinearLayoutManager(getActivity());
-        llm.setReverseLayout(true);
-        //llm.setStackFromEnd(true);
-        llm.setStackFromEnd(false);
-        adapter = new RVMessagesAdapter(this.getContext(), Arrays.asList());
-        recyclerViewMessages.setLayoutManager(llm);
-        recyclerViewMessages.setAdapter(adapter);
     }
 
     private void primeraLlamada() {
@@ -216,7 +176,7 @@ public class ChatFragment extends CustomFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             Mensaje mensaje = new Gson().fromJson(intent.getExtras().getString("mensaje"), Mensaje.class);
-            mensajes.add(mensaje);
+            mensajes.add(0, mensaje);
             adapter.notifyDataSetChanged();
         }
     };
