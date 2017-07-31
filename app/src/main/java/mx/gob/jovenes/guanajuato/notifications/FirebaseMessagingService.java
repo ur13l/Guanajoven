@@ -52,6 +52,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     public void showNotification(String title, String message, String enlace) {
         Intent i;
+
+        System.err.println("-----------------------------------");
+        System.err.println(title + " -" + message + " -" + enlace);
+        System.err.println("----------------------------------");
+
         if (enlace == null || enlace.isEmpty()) {
             i = new Intent(this, HomeActivity.class);
         }
@@ -107,7 +112,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
             realm.commitTransaction();
 
             broadCastNotificacion(idNotificacion(), title, message, DateUtilities.dateToString(Calendar.getInstance().getTime()));
-        } else{
+        } else if (enlace.equals("chat")){
             broadCastMensaje(message, 0);
         }
 
@@ -131,7 +136,6 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
     public void broadCastNotificacion(int idNotificacion, String title, String message, String fecha) {
         Intent intent = new Intent();
-
         intent.setAction("mx.gob.jovenes.guanajuato.NOTIFICACION_RECIBIDA");
         intent.putExtra("notificacion",  new Gson().toJson(new Notificacion(idNotificacion, title, message, fecha)));
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);

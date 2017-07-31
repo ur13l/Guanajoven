@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 import com.google.gson.Gson;
+import com.itextpdf.text.Paragraph;
 import com.pusher.android.PusherAndroid;
 import com.pusher.android.notifications.ManifestValidator;
 import com.pusher.android.notifications.PushNotificationRegistration;
@@ -60,6 +61,7 @@ public class ChatFragment extends CustomFragment {
     private ChatAPI chatAPI;
     private Retrofit retrofit;
     private int PAGE = 1;
+    private LinearLayoutManager llm;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,8 +85,6 @@ public class ChatFragment extends CustomFragment {
 
         //setUpAdapter();
         //setUpRecyclerView();
-
-        obtenerMensajes();
 
         buttonSend.setOnClickListener((View) -> {
                 if (editTextMessage.getText().toString().length() != 0) {
@@ -110,6 +110,12 @@ public class ChatFragment extends CustomFragment {
                 }
         });
 
+        primeraLlamada();
+
+        recyclerViewMessages.addOnScrollListener(new SetOnScrollListener());
+
+
+
         return v;
     }
 
@@ -127,7 +133,7 @@ public class ChatFragment extends CustomFragment {
     }
 
     private void setUpRecyclerView() {
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm = new LinearLayoutManager(getActivity());
         llm.setReverseLayout(true);
         //llm.setStackFromEnd(true);
         llm.setStackFromEnd(false);
@@ -136,21 +142,21 @@ public class ChatFragment extends CustomFragment {
         recyclerViewMessages.setAdapter(adapter);
     }
 
-    private void obtenerMensajes() {
+    private void primeraLlamada() {
         Call<Response<DatosMensajes>> call = chatAPI.obtenerMensajes(Sesion.getUsuario().getApiToken(), PAGE);
 
         call.enqueue(new Callback<Response<DatosMensajes>>() {
             @Override
             public void onResponse(Call<Response<DatosMensajes>> call, retrofit2.Response<Response<DatosMensajes>> response) {
+                PAGE++;
                 mensajes = response.body().data.getData();
-                LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+                llm = new LinearLayoutManager(getActivity());
                 llm.setReverseLayout(true);
                 //llm.setStackFromEnd(true);
                 llm.setStackFromEnd(false);
                 adapter = new RVMessagesAdapter(getContext(), mensajes);
                 recyclerViewMessages.setLayoutManager(llm);
                 recyclerViewMessages.setAdapter(adapter);
-                PAGE++;
             }
 
             @Override
@@ -163,6 +169,30 @@ public class ChatFragment extends CustomFragment {
                 System.err.println(PAGE);
                 System.err.println(Sesion.getUsuario().getApiToken());
                 System.err.println("-------------------");
+            }
+        });
+    }
+
+    private void generarLlamada() {
+        Call<Response<DatosMensajes>> call = chatAPI.obtenerMensajes(Sesion.getUsuario().getApiToken(), PAGE);
+
+        call.enqueue(new Callback<Response<DatosMensajes>>() {
+            @Override
+            public void onResponse(Call<Response<DatosMensajes>> call, retrofit2.Response<Response<DatosMensajes>> response) {
+                PAGE++;
+                List<Mensaje> auxiliar = response.body().data.getData();
+
+                //if (response.body().data.getLastPage() < PAGE) {
+                    adapter.agregarMensajes(auxiliar);
+
+                //}
+            }
+
+            @Override
+            public void onFailure(Call<Response<DatosMensajes>> call, Throwable t) {
+                AlertDialog.Builder b = new AlertDialog.Builder(getContext());
+                b.setMessage(t.getMessage());
+                b.show();
             }
         });
     }
@@ -191,26 +221,19 @@ public class ChatFragment extends CustomFragment {
         }
     };
 
+    private class SetOnScrollListener extends RecyclerView.OnScrollListener {
 
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            int visibleItemCount = llm.getChildCount();
+            int totalItemCount = llm.getItemCount();
+            int firstVisibleItemPosition = llm.findFirstVisibleItemPosition();
 
+            if ((visibleItemCount + firstVisibleItemPosition) >= totalItemCount && firstVisibleItemPosition >= 0) {
+                generarLlamada();
+            }
 
-
-    /*
-    public void enviarMensaje(String mensaje) {
-        ChatMessage chatMessage = new ChatMessage();
-        chatMessage.setSender(Sesion.getUsuario().getEmail());
-        chatMessage.setMessage(mensaje);
-
-        Firebase chatReference = helper.getChatsReference("juanjoseesva@gmail.com");
-        chatReference.push().setValue(chatMessage);
+        }
     }
-
-    public void mensajeRecibido(ChatMessage msg) {
-        //Se añade el mensaje al adaptador
-        adapter.add(msg);
-        //El recycler view baja hasta la posicion del ultimo mensaje
-        recyclerViewMessages.scrollToPosition(adapter.getItemCount() -1);
-    }*/
-
 
 }

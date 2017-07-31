@@ -89,6 +89,11 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
         return  returnColor;
     }
 
+    public void agregarMensajes(List<Mensaje> mensajes) {
+        this.mensajes.addAll(mensajes);
+        notifyDataSetChanged();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder{
         TextView textViewMessage;
 

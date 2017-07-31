@@ -53,6 +53,7 @@ public class NotificacionesFragment extends CustomFragment {
     private AppCompatActivity activity;
     private Toolbar toolbar;
     private CollapsingToolbarLayout cToolbar;
+    private IntentFilter intentFilter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +66,7 @@ public class NotificacionesFragment extends CustomFragment {
         toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
         cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
 
-        IntentFilter intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.NOTIFICACION_RECIBIDA");
+        intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.NOTIFICACION_RECIBIDA");
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(notificacionRecibida, intentFilter);
     }
 
@@ -137,6 +138,9 @@ public class NotificacionesFragment extends CustomFragment {
         }
     };
 
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(notificacionRecibida);
+    }
 }
