@@ -58,15 +58,15 @@ import retrofit2.Retrofit;
  * Fecha: 02/05/2016
  */
 public class SegundaActivity extends AppCompatActivity {
-    //public static SegundaActivity segundaActivity;
+    public static SegundaActivity segundaActivity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_segunda);
 
-        /*segundaActivity = this;
-        FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
+        segundaActivity = this;
+        /*FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
         getLayoutInflater().inflate(R.layout.activity_segunda, contentFrameLayout);*/
 
         //setContentView(R.layout.activity_segunda);

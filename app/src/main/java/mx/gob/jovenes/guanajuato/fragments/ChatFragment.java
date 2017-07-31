@@ -4,6 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -49,6 +52,7 @@ public class ChatFragment extends CustomFragment {
     private int PAGE = 1;
     private LinearLayoutManager llm;
     private IntentFilter intentFilter;
+    public static ChatFragment chat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,8 @@ public class ChatFragment extends CustomFragment {
 
         intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO");
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mensajeRecibido, intentFilter);
+
+        chat = this;
     }
 
     @Nullable
@@ -180,6 +186,15 @@ public class ChatFragment extends CustomFragment {
             adapter.notifyDataSetChanged();
         }
     };
+
+    public static boolean estaEnChat() {
+         if (chat != null) {
+            if (chat.isVisible()) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     private class SetOnScrollListener extends RecyclerView.OnScrollListener {
 

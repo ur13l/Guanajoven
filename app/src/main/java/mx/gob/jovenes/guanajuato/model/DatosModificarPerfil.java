@@ -17,9 +17,11 @@ public class DatosModificarPerfil {
     private String proyectosSociales;
     private int apoyoProyectosSociales;
     private List<DatosUsuarioIdioma> idiomas;
+    private String rutaImagen;
 
-    public DatosModificarPerfil(String apiToken, int idNivelEstudios, int idProgramaBeneficiario, int trabaja, int idPuebloIndigena, int idCapacidadDiferente, String premios, String proyectosSociales, int apoyoProyectosSociales, List<DatosUsuarioIdioma> idiomas) {
+    public DatosModificarPerfil(String apiToken, int idNivelEstudios, int idProgramaBeneficiario, int trabaja, int idPuebloIndigena, int idCapacidadDiferente, String premios, String proyectosSociales, int apoyoProyectosSociales, List<DatosUsuarioIdioma> idiomas, String rutaImagen) {
         this.apiToken = apiToken;
+        this.rutaImagen = rutaImagen;
         this.idNivelEstudios = idNivelEstudios;
         this.idProgramaBeneficiario = idProgramaBeneficiario;
         this.trabaja = trabaja;
@@ -109,5 +111,29 @@ public class DatosModificarPerfil {
 
     public void setIdiomas(List<DatosUsuarioIdioma> idiomas) {
         this.idiomas = idiomas;
+    }
+
+    public int getIdProgramaBeneficiario() {
+        return idProgramaBeneficiario;
+    }
+
+    public void setIdProgramaBeneficiario(int idProgramaBeneficiario) {
+        this.idProgramaBeneficiario = idProgramaBeneficiario;
+    }
+
+    public int getTrabaja() {
+        return trabaja;
+    }
+
+    public void setTrabaja(int trabaja) {
+        this.trabaja = trabaja;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public void setRutaImagen(String rutaImagen) {
+        this.rutaImagen = rutaImagen;
     }
 }

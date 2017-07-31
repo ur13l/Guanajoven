@@ -85,6 +85,7 @@ public class HomeFragment extends CustomFragment {
     Button botonConvocatorias;
     Button botonRedesSociales;
     Button botonChat;
+    ImageButton botonAyuda;
 
     //Instancias de API
     private Retrofit retrofit;
@@ -142,6 +143,7 @@ public class HomeFragment extends CustomFragment {
         botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
         botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
         botonChat = (Button) v.findViewById(R.id.boton_chat);
+        botonAyuda = (ImageButton) v.findViewById(R.id.boton_ayuda);
 
         textViewBolsaTrabajo = (TextView) v.findViewById(R.id.textview_bolsa_de_trabajo);
 
@@ -161,6 +163,18 @@ public class HomeFragment extends CustomFragment {
         btnClose.setOnClickListener((View) -> pnlPublicidad.animate().translationX(pnlPublicidad.getWidth()));
 
         //Listeners botones menu
+
+        botonAyuda.setOnClickListener((View) -> {
+            try {
+                Fragment fragment = new AyudaFragment();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, fragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
 
         botonNavigationDrawer.setOnClickListener((View) -> {
             DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);

@@ -233,7 +233,7 @@ public class EditarDatosFragment extends CustomFragment {
             botonGuardar();
         }));
 
-        Picasso.with(getActivity()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imgPerfil);
+        //Picasso.with(getActivity()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imgPerfil);
 
         cargarDatos();
 
@@ -444,9 +444,6 @@ public class EditarDatosFragment extends CustomFragment {
         return image;
     }
 
-
-
-
     //Limpia el arreglo estatico de idiomas
     @Override
     public void onStop() {
@@ -513,6 +510,9 @@ public class EditarDatosFragment extends CustomFragment {
         String premios = etPremios.getText().toString();
         String proyectos = etProyectosSociales.getText().toString();
         int apoyoProyecto;
+        String rutaImagen = "data:image/jpeg;base64," + getBase64(imgPerfil);
+
+
 
         if (spnSueldoProyectosSociales.getSelectedItemPosition() == 1) {
             apoyoProyecto = 1;
@@ -520,7 +520,7 @@ public class EditarDatosFragment extends CustomFragment {
             apoyoProyecto = 0;
         }
 
-        DatosModificarPerfil datosModificarPerfil = new DatosModificarPerfil(apiToken, nivelEstudios, beneficiarioPrograma, trabajo, idPuebloIndigena, idCapacidadDiferente, premios, proyectos, apoyoProyecto, IdiomasAdicionalesDialogFragment.datosIdiomas);
+        DatosModificarPerfil datosModificarPerfil = new DatosModificarPerfil(apiToken, nivelEstudios, beneficiarioPrograma, trabajo, idPuebloIndigena, idCapacidadDiferente, premios, proyectos, apoyoProyecto, IdiomasAdicionalesDialogFragment.datosIdiomas, rutaImagen);
 
         Call<Response<Boolean>> callRegistrar = registroModificarPerfilAPI.postModificarPerfil(datosModificarPerfil);
 
@@ -748,6 +748,8 @@ public class EditarDatosFragment extends CustomFragment {
         spnPuebloIndigena.setSelection(datosModificarPerfil.getIdPuebloIndigena());
         spnCapacidadDiferente.setSelection(datosModificarPerfil.getIdCapacidadDiferente());
         spnProgramaGobierno.setSelection(datosModificarPerfil.getIdProgramaGobierno());
+
+        Picasso.with(getContext()).load(datosModificarPerfil.getRutaImagen()).into(imgPerfil);
 
     }
 
