@@ -1,5 +1,7 @@
 package mx.gob.jovenes.guanajuato.model;
 
+import android.support.v7.util.SortedList;
+
 import io.realm.RealmList;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

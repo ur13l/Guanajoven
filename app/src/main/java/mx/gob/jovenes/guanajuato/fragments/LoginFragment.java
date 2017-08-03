@@ -35,6 +35,7 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
@@ -52,6 +53,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -626,7 +628,6 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                 break;
 
             case R.id.btn_google:
-
                 i = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
                 startActivityForResult(i, RC_SIGN_IN);
                 break;
@@ -676,6 +677,11 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
             loginSimplePd.dismiss();
         }
         Response<Usuario> body = response.body();
+
+        System.err.println("-------------------------------");
+        System.err.println(new Gson().toJson(body));
+        System.err.println("-------------------------------");
+
         if (body != null) {
             Sesion.cargarSesion(body.data);
             ((LoginActivity) getActivity()).startHomeActivity();

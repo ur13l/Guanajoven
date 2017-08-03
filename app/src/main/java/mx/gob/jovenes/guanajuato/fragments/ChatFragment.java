@@ -75,7 +75,7 @@ public class ChatFragment extends CustomFragment {
         buttonSend = (ImageButton) v.findViewById(R.id.button_send);
         editTextMessage = (EditText) v.findViewById(R.id.edittext_message);
         mensajes = new ArrayList<>();
-        //adapter = new RVMessagesAdapter(getContext(), mensajes);
+        adapter = new RVMessagesAdapter(getContext(), mensajes);
 
         primeraLlamada();
 
@@ -115,14 +115,16 @@ public class ChatFragment extends CustomFragment {
             @Override
             public void onResponse(Call<Response<DatosMensajes>> call, retrofit2.Response<Response<DatosMensajes>> response) {
                 PAGE++;
-                mensajes = response.body().data.getData();
-                llm = new LinearLayoutManager(getActivity());
-                llm.setReverseLayout(true);
-                //llm.setStackFromEnd(true);
-                llm.setStackFromEnd(false);
-                adapter = new RVMessagesAdapter(getContext(), mensajes);
-                recyclerViewMessages.setLayoutManager(llm);
-                recyclerViewMessages.setAdapter(adapter);
+                if (response.body() != null) {
+                    mensajes = response.body().data.getData();
+                    llm = new LinearLayoutManager(getActivity());
+                    llm.setReverseLayout(true);
+                    //llm.setStackFromEnd(true);
+                    llm.setStackFromEnd(false);
+                    adapter = new RVMessagesAdapter(getContext(), mensajes);
+                    recyclerViewMessages.setLayoutManager(llm);
+                    recyclerViewMessages.setAdapter(adapter);
+                }
             }
 
             @Override

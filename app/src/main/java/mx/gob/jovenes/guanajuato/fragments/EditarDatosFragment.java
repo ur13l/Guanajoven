@@ -529,6 +529,7 @@ public class EditarDatosFragment extends CustomFragment {
             public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                 builder.setMessage("Datos registrados");
                 builder.show();
+
             }
 
             @Override
@@ -750,6 +751,8 @@ public class EditarDatosFragment extends CustomFragment {
         spnProgramaGobierno.setSelection(datosModificarPerfil.getIdProgramaGobierno());
 
         Picasso.with(getContext()).load(datosModificarPerfil.getRutaImagen()).into(imgPerfil);
+
+        Sesion.getUsuario().getDatosUsuario().setRutaImagen(datosModificarPerfil.getRutaImagen());
 
     }
 

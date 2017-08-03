@@ -1,9 +1,20 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.Manifest;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +47,7 @@ import mx.gob.jovenes.guanajuato.model.Region;
 /**
  * Created by uriel on 21/06/16.
  */
-public class DetalleEventoFragment extends Fragment implements OnMapReadyCallback{
+public class DetalleEventoFragment extends Fragment implements OnMapReadyCallback {
     private static String ID_EVENTO = "id_evento";
     private Evento evento;
     private MapFragment mapaEvento;
@@ -82,6 +93,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         tvDescripcionEvento.setText(evento.getDescripcion());
         tvFechaEvento.setText(getFechaCast(evento.getFechaInicio()) + " - " + getFechaCast(evento.getFechaFin()));
         checkAsist();
+
         return v;
     }
 
@@ -140,6 +152,77 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     public void onResume() {
         super.onResume();
         ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(evento.getTitulo());
+    }
+
+    private class GPSTracker extends Service implements LocationListener {
+        String TAG = GPSTracker.class.getName();
+        Context context;
+        boolean isGPSEnabled = false;
+        boolean isNetworkEnabled = false;
+        boolean isGPSTrackingEnabled = false;
+        Location location;
+        double altitude;
+        double longitude;
+        int geocoderMaxResults = 1;
+        long MIN_DISTANCE_CHANGE_FOR_UPDATES = 10;
+        long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
+        LocationManager locationManager;
+        String providerInfo;
+
+        public GPSTracker(Context context) {
+            this.context = context;
+            getLocation();
+        }
+
+        public void getLocation() {
+            try {
+                locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
+                isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+                isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+                if (isGPSEnabled) {
+                    this.isGPSTrackingEnabled = true;
+                    Log.d(TAG, "Aplication use GPS service");
+                    providerInfo = LocationManager.GPS_PROVIDER;
+                } else if (isNetworkEnabled) {
+                    this.isGPSTrackingEnabled = true;
+                    Log.d(TAG, "Application use Network state to get GPS coordinates");
+                    providerInfo = LocationManager.NETWORK_PROVIDER;
+                }
+
+                if (!providerInfo.isEmpty()) {
+                    locationManager.requestLocationUpdates(providerInfo, MIN_TIME_BW_UPDATES, MIN_DISTANCE_CHANGE_FOR_UPDATES, context.);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Nullable
+        @Override
+        public IBinder onBind(Intent intent) {
+            return null;
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
     }
 
 }

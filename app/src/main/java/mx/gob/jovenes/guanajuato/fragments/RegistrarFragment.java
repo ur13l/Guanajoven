@@ -35,6 +35,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.games.request.Requests;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
@@ -358,30 +360,39 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
 
             progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
 
-            Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(
-                    new RegistroRequest(
-                            etCurp.getText().toString(),
-                            etEmail.getText().toString(),
-                            usuario == null ? etPassword1.getText().toString() : "_",
-                            usuario == null ? etPassword2.getText().toString() : "_",
-                            etApPaterno.getText().toString(),
-                            etApMaterno.getText().toString(),
-                            etNombre.getText().toString(),
-                            spnGenero.getSelectedItemPosition() == 1 ? "H" : "M",
-                            etFechaNacimiento.getText().toString(),
-                            etCodigoPostal.getText().toString(),
-                            estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
-                            "data:image/jpeg;base64," + getBase64(imgPerfil),
-                            usuario == null ? null : usuario.getIdGoogle(),
-                            usuario == null ? null : usuario.getIdFacebook()
-                    )
+            RegistroRequest r = new RegistroRequest(
+                    etCurp.getText().toString(),
+                    etEmail.getText().toString(),
+                    usuario == null ? etPassword1.getText().toString() : "_",
+                    usuario == null ? etPassword2.getText().toString() : "_",
+                    etApPaterno.getText().toString(),
+                    etApMaterno.getText().toString(),
+                    etNombre.getText().toString(),
+                    spnGenero.getSelectedItemPosition() == 1 ? "H" : "M",
+                    etFechaNacimiento.getText().toString(),
+                    etCodigoPostal.getText().toString(),
+                    estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
+                    "data:image/jpeg;base64," + getBase64(imgPerfil),
+                    usuario == null ? null : usuario.getIdGoogle(),
+                    usuario == null ? null : usuario.getIdFacebook()
             );
+
+            Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(r);
+
+            System.err.println("------------------------------------");
+            System.err.println(new Gson().toJson(r));
+            System.err.println("--------------------------------------");
 
             callRegistrar.enqueue(new Callback<Response<Usuario>>() {
                 @Override
                 public void onResponse(Call<Response<Usuario>> call, retrofit2.Response<Response<Usuario>> response) {
                     progressDialog.dismiss();
                     Response<Usuario> body = response.body();
+
+                    System.err.println("---------------------------------------");
+                    System.err.println(new Gson().toJson(body));
+                    System.err.println("---------------------------------------");
+
                     if (body.success) {
                         Sesion.cargarSesion(body.data);
                         ((LoginActivity) getActivity()).startHomeActivity();

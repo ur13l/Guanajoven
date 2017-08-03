@@ -176,13 +176,13 @@
         <com.facebook.login.widget.LoginButton
             android:id="@+id/lgn_btn_facebook"
             style="@style/ButtonNoPadding"
-            android:layout_height="0dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_horizontal"
             android:visibility="gone"
-            android:layout_weight="1"
-            android:layout_width="0dp"
+            android:layout_width="30dp"
             tools:layout_editor_absoluteY="91dp"
             tools:layout_editor_absoluteX="10dp" />
+
         </android.support.constraint.ConstraintLayout>
 
     <ImageButton

@@ -34,7 +34,10 @@
     <string name="hint_user">Usuario</string>
     <string name="hint_email">Email</string>
     <string name="hint_passwordconfirmar">Confirmar Contraseña</string>
-    <string name="facebook_app_id">203591490120675</string>
+    <!--<string name="facebook_app_id">203591490120675</string>-->
+    <string name="facebook_app_id">1717159135254920</string>
+    <string name="fb_login_protocol_scheme">fb1717159135254920</string>
+
     <string name="api_key">AIzaSyBqcgu3wsKmTDKHQjpMhhj-gie-eLR_ELI</string>
 
 

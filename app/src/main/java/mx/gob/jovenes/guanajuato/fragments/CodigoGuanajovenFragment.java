@@ -260,14 +260,11 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_generar_pdf:
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     pedirPermisos();
                 } else {
                     generarPDF();
-                }*/
-
-                DrawerLayout drawer = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-                drawer.openDrawer(GravityCompat.START);
+                }
                 break;
         }
 
