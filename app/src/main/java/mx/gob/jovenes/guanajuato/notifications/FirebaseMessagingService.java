@@ -44,19 +44,11 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         Realm.init(this);
         realm = Realm.getDefaultInstance();
         showNotification(remoteMessage.getData().get("title"), remoteMessage.getData().get("body"), remoteMessage.getData().get("tag"));
-        System.err.println("----------------------------------------");
-        System.err.println(remoteMessage);
-        System.err.println("-------------------------------------");
     }
 
 
     public void showNotification(String title, String message, String enlace) {
         Intent i;
-
-        System.err.println("-----------------------------------");
-        System.err.println(title + " -" + message + " -" + enlace);
-        System.err.println("----------------------------------");
-
         if (enlace == null || enlace.isEmpty()) {
             i = new Intent(this, HomeActivity.class);
         }

@@ -49,7 +49,8 @@
                     android:layout_width="match_parent"
                     app:layout_scrollFlags="scroll|enterAlways"
                     android:layout_height="wrap_content"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    android:fitsSystemWindows="true"/>
 
 
 

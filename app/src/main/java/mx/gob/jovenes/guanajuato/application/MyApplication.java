@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MyApplication extends MultiDexApplication {
     private Retrofit retrofit;
 
-    private static Realm realm;
+    public static Realm realm;
     public static String LAST_UPDATE_CONVOCATORIAS = "last_update_convocatorias";
     public static String LAST_UPDATE_REGIONES = "last_update_regiones";
     public static String LAST_UPDATE_EVENTOS = "last_update_eventos";
@@ -36,9 +36,9 @@ public class MyApplication extends MultiDexApplication {
     //uriel publica
     //public static final String BASE_URL = "http://10.0.7.134/GuanajovenWeb/public/api/";
 
-    public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
 
-    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
 
     /**

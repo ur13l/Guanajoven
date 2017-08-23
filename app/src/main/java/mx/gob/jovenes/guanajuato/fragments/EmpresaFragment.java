@@ -60,6 +60,8 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
     private CollapsingToolbarLayout cToolbar;
     private SwipeRefreshLayout swipeRefreshLayoutEmpresas;
     private SharedPreferences preferences;
+    private static final Comparator<Empresa> COMPARADOR_ALFABETICO = (o1, o2) -> o1.getEmpresa().compareTo(o2.getEmpresa());
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -232,6 +234,5 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
         return filtro;
     }
 
-    private static final Comparator<Empresa> COMPARADOR_ALFABETICO = (o1, o2) -> o1.getEmpresa().compareTo(o2.getEmpresa());
 
 }

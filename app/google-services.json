@@ -1,51 +1,27 @@
 {
   "project_info": {
-    "project_number": "686001899882",
-    "firebase_url": "https://guanajoven-161821.firebaseio.com",
-    "project_id": "guanajoven-161821",
-    "storage_bucket": "guanajoven-161821.appspot.com"
+    "project_number": "706757253499",
+    "firebase_url": "https://guanajoven-174119.firebaseio.com",
+    "project_id": "guanajoven-174119",
+    "storage_bucket": "guanajoven-174119.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:686001899882:android:cc739f1a36108a5a",
+        "mobilesdk_app_id": "1:706757253499:android:cc739f1a36108a5a",
         "android_client_info": {
           "package_name": "mx.gob.jovenes.guanajuato"
         }
       },
       "oauth_client": [
         {
-          "client_id": "686001899882-jm9rdsi6khjdebvlmdkcjm6l0gbm17qd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "mx.gob.jovenes.guanajuato",
-            "certificate_hash": "610e60470618274f8a9ed6a66b39a772fa20a462"
-          }
-        },
-        {
-          "client_id": "686001899882-10pfdsujud8nusfkgd06m9dpiind9r9s.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "mx.gob.jovenes.guanajuato",
-            "certificate_hash": "3411feacb9989160fb5f1b76e0e8570a15c1d524"
-          }
-        },
-        {
-          "client_id": "686001899882-ogecms8l25kjvbaosslnko17ob68strs.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "mx.gob.jovenes.guanajuato",
-            "certificate_hash": "2e052df5b20c292451557bea881f4c47612f71b4"
-          }
-        },
-        {
-          "client_id": "686001899882-hhk3skc6par3kd04h2023lmrsvd34000.apps.googleusercontent.com",
+          "client_id": "706757253499-f4jrrqmm9njk7o7u7ph9sqd8ldcd80ke.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAD8VtkL2DsFglm763iWGPVUrdv4YGA-gs"
+          "current_key": "AIzaSyDHDnSpC4e1VwrYYjQeb1sAQrr_d2U0zPY"
         }
       ],
       "services": {
@@ -53,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "686001899882-hhk3skc6par3kd04h2023lmrsvd34000.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

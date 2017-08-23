@@ -2,6 +2,7 @@ package mx.gob.jovenes.guanajuato.fragments;
 
 import android.Manifest;
 import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -75,6 +76,7 @@ import java.text.SimpleDateFormat;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
+import mx.gob.jovenes.guanajuato.api.IdGuanajovenAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
@@ -125,6 +127,13 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     private Retrofit retrofit;
     private Bitmap imagenBitMap;
 
+    private IdGuanajovenAPI idGuanajovenAPI;
+
+    private static final String ENVIANDO_CORREO = "Enviando correo...";
+    private static final String POR_FAVOR_ESPERE = "Por favor espere...";
+    private static final String CORREO_ENVIADO = "Correo enviado";
+    private static final String ERROR_AL_ENVIAR = "Error al enviar";
+
     private static final int PERMISSION_REQUEST_CODE = 123;
     private Font fuentePDF;
 
@@ -133,6 +142,8 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         super.onCreate(savedInstanceState);
         Sesion.sessionStart(getActivity());
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
+
+        idGuanajovenAPI = retrofit.create(IdGuanajovenAPI.class);
         usuarioAPI = retrofit.create(UsuarioAPI.class);
 
         fuentePDF = new Font(Font.FontFamily.HELVETICA, 22);
@@ -176,7 +187,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                 " " + u.getDatosUsuario().getApellidoMaterno();
         correo = u.getEmail();
         genero = u.getDatosUsuario().getGenero().getNombre();
-        fechaNacimiento = getFechaCast(u.getDatosUsuario().getFechaNacimiento());
+        //fechaNacimiento = getFechaCast(u.getDatosUsuario().getFechaNacimiento());
         codigoGuanajoven = String.valueOf(u.getCodigoGuanajoven().getIdCodigoGuanajoven());
         Curp = u.getDatosUsuario().getCurp();
         municipio = u.getDatosUsuario().getMunicipio().getNombre();
@@ -242,8 +253,9 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     @Override
     public void onStart() {
         super.onStart();
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Código Guanajoven");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("ID Guanajoven");
     }
+
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
@@ -260,17 +272,37 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_generar_pdf:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     pedirPermisos();
                 } else {
                     generarPDF();
-                }
+                }*/
+
+                ProgressDialog progressDialog = ProgressDialog.show(getContext(), ENVIANDO_CORREO, POR_FAVOR_ESPERE, true, false);
+
+                Call<Response<Boolean>> call = idGuanajovenAPI.enviarCorreoIDGuanajoven(Sesion.getUsuario().getApiToken());
+
+                call.enqueue(new Callback<Response<Boolean>>() {
+                    @Override
+                    public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
+                        progressDialog.dismiss();
+                        Snackbar.make(getView(), CORREO_ENVIADO, Snackbar.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Response<Boolean>> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_LONG).show();
+                    }
+                });
+
                 break;
         }
 
         return false;
     }
 
+    /*
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         boolean permitir = true;
@@ -592,6 +624,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
             e.printStackTrace();
         }
         return null;
-    }
+    }*/
 
 }

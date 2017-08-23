@@ -20,6 +20,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -57,9 +58,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
         holder.descripcionTv.setText(eventos.get(position).getDescripcion());
         holder.fechaTv.setText("Inicio: " + getFechaCast(eventos.get(position).getFechaInicio()));
 
-        if (eventoVigente(holder, position)) {
-            holder.estado.setText("Evento abierto");
-        }
+        verificarFecha(holder, eventos.get(position));
 
         holder.imageButtonEliminarEvento.setOnClickListener((View) -> {
             AlertDialog.Builder mensaje = new AlertDialog.Builder(context);
@@ -76,7 +75,9 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
                 realm.commitTransaction();
             }));
 
-            mensaje.setNegativeButton("Cancelar", (dialog, which) -> { dialog.dismiss(); });
+            mensaje.setNegativeButton("Cancelar", (dialog, which) -> {
+                dialog.dismiss();
+            });
 
             mensaje.show();
 
@@ -98,24 +99,38 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
         return null;
     }
 
-    private boolean eventoVigente(EventosViewHolder holder, int position) {
+    public void verificarFecha(EventosViewHolder holder, Evento evento) {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String dateInStringend = getFechaCast(eventos.get(position).getFechaFin());
+        String dateInStringbegin = getFechaCast(evento.getFechaInicio());
+        String dateInStringend = getFechaCast(evento.getFechaFin());
         try {
+            Date fechainicio = formatter.parse(dateInStringbegin);
             Date fechafin = formatter.parse(dateInStringend);
             Date date = new Date();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             Date newFormat = formatter.parse(dateFormat.format(date));
-            if (newFormat.before(fechafin)) {
-                return true;
-            } else {
+
+            boolean antesDeFecha = (newFormat.before(fechainicio));
+            boolean enFecha = (newFormat.after(fechainicio) && newFormat.before(fechafin));
+            boolean despuesDeFecha = (newFormat.after(fechafin));
+
+            if (enFecha) {
+                holder.estado.setText("Evento abierto");
+                holder.imageButtonEliminarEvento.setVisibility(View.GONE);
+            } else if (despuesDeFecha) {
+                holder.estado.setText("Evento cerrado");
                 holder.imageButtonEliminarEvento.setVisibility(View.VISIBLE);
+            } else if (antesDeFecha) {
+                holder.estado.setText("Evento próximo");
+                holder.imageButtonEliminarEvento.setVisibility(View.GONE);
             }
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return false;
     }
+
+
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -143,10 +158,10 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             imageButtonEliminarEvento = (ImageButton) itemView.findViewById(R.id.imagebutton_eliminar_evento);
 
             itemView.setOnClickListener((View) -> {
-                    DetalleEventoFragment f = DetalleEventoFragment.newInstance(eventos.get(getAdapterPosition()).getIdEvento());
-                    FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
+                DetalleEventoFragment f = DetalleEventoFragment.newInstance(eventos.get(getAdapterPosition()).getIdEvento());
+                FragmentManager fragmentManager = ((AppCompatActivity) context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
             });
         }
 

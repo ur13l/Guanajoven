@@ -36,8 +36,10 @@ import mx.gob.jovenes.guanajuato.R;
 public class RVEmpresaAdapter extends RecyclerView.Adapter<RVEmpresaAdapter.EmpresasViewHolder>{
     private Context context;
     private Comparator<Empresa> comparator;
+    private static final Comparator<Empresa> COMPARADOR_ALFABETICO = (o1, o2) -> o1.getEmpresa().compareTo(o2.getEmpresa());
 
-   private final SortedList<Empresa> empresaSortedList = new SortedList<>(Empresa.class, new SortedList.Callback<Empresa>() {
+
+    private final SortedList<Empresa> empresaSortedList = new SortedList<>(Empresa.class, new SortedList.Callback<Empresa>() {
        @Override
        public int compare(Empresa o1, Empresa o2) {
            return COMPARADOR_ALFABETICO.compare(o1, o2);
@@ -74,7 +76,6 @@ public class RVEmpresaAdapter extends RecyclerView.Adapter<RVEmpresaAdapter.Empr
        }
    });
 
-    private static final Comparator<Empresa> COMPARADOR_ALFABETICO = (o1, o2) -> o1.getEmpresa().compareTo(o2.getEmpresa());
 
     public RVEmpresaAdapter(Context context, Comparator<Empresa> comparator1) {
         this.context = context;

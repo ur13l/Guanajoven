@@ -31,11 +31,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
+import org.w3c.dom.Text;
+
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.Funcion;
@@ -78,15 +83,24 @@ public class HomeFragment extends CustomFragment {
 
     public static String MENU_ID = "menu_id";
 
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+
     //Botones
     ImageButton botonNavigationDrawer;
     Button botonCodigoGuanajoven;
+    Button botonRegiones;
+    Button botonNotificaciones;
     Button botonEventos;
     Button botonPromociones;
     Button botonConvocatorias;
     Button botonRedesSociales;
     Button botonChat;
     ImageButton botonAyuda;
+    TextView textViewIdGuanajoven;
+    TextView textViewPromociones;
+    TextView textViewRegiones;
+    TextView textViewNotificaciones;
 
     //Instancias de API
     private Retrofit retrofit;
@@ -125,7 +139,6 @@ public class HomeFragment extends CustomFragment {
         fragmentTransaction = getFragmentManager().beginTransaction();
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
@@ -140,11 +153,17 @@ public class HomeFragment extends CustomFragment {
         botonNavigationDrawer = (ImageButton) v.findViewById(R.id.boton_navigation_drawer);
         botonCodigoGuanajoven = (Button) v.findViewById(R.id.boton_codigo_guanajoven);
         botonEventos = (Button) v.findViewById(R.id.boton_eventos);
+        botonRegiones = (Button) v.findViewById(R.id.boton_regiones);
+        botonNotificaciones = (Button) v.findViewById(R.id.boton_notificaciones);
         botonPromociones = (Button) v.findViewById(R.id.boton_promociones);
         botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
         botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
         botonChat = (Button) v.findViewById(R.id.boton_chat);
         botonAyuda = (ImageButton) v.findViewById(R.id.boton_ayuda);
+        textViewIdGuanajoven = (TextView) v.findViewById(R.id.textview_id_guanajoven);
+        textViewPromociones = (TextView) v.findViewById(R.id.textview_promociones);
+        textViewRegiones = (TextView) v.findViewById(R.id.textview_regiones);
+        textViewNotificaciones = (TextView) v.findViewById(R.id.textview_notificaciones);
 
         textViewBolsaTrabajo = (TextView) v.findViewById(R.id.textview_bolsa_de_trabajo);
 
@@ -188,7 +207,27 @@ public class HomeFragment extends CustomFragment {
                 intent.putExtra(MENU_ID, R.id.nav_codigo_guanajoven);
                 startActivity(intent);
             } catch (Exception e) {
-                System.err.println("que pendejo...");
+                e.printStackTrace();
+            }
+        });
+
+        botonRegiones.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_regiones);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        botonNotificaciones.setOnClickListener((View) -> {
+            try {
+                Intent intent = new Intent(this.getContext(), SegundaActivity.class);
+                intent.putExtra(MENU_ID, R.id.nav_historial_notificaciones);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
 
@@ -198,7 +237,7 @@ public class HomeFragment extends CustomFragment {
                 intent.putExtra(MENU_ID, R.id.nav_mis_eventos);
                 startActivity(intent);
             } catch (Exception e) {
-                System.err.println("que pendejo...");
+                e.printStackTrace();
             }
         });
 
@@ -333,6 +372,19 @@ public class HomeFragment extends CustomFragment {
             setValoresSesion();
         } catch (ParseException e) {
             e.printStackTrace();
+        }
+
+        if (!lessThan30Years(getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
+            //hide views
+            botonCodigoGuanajoven.setVisibility(View.GONE);
+            botonPromociones.setVisibility(View.GONE);
+            textViewIdGuanajoven.setVisibility(View.GONE);
+            textViewPromociones.setVisibility(View.GONE);
+            //show views
+            botonRegiones.setVisibility(View.VISIBLE);
+            botonNotificaciones.setVisibility(View.VISIBLE);
+            textViewRegiones.setVisibility(View.VISIBLE);
+            textViewNotificaciones.setVisibility(View.VISIBLE);
         }
     }
 
@@ -491,5 +543,48 @@ public class HomeFragment extends CustomFragment {
 
     public void enlace(String link){
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+    }
+
+
+    private boolean lessThan30Years(String date) {
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        String todayString  = new SimpleDateFormat(DATE_FORMAT).format(Calendar.getInstance().getTime());
+
+        try {
+            Date bornDateParse = formatter.parse(date);
+            Date todayDateParse = formatter.parse(todayString);
+            Calendar bornDate = getCalendar(bornDateParse);
+            Calendar today = getCalendar(todayDateParse);
+
+            int years = today.get(Calendar.YEAR) - bornDate.get(Calendar.YEAR);
+
+            if (bornDate.get(Calendar.MONTH) > today.get(Calendar.MONTH) || (bornDate.get(Calendar.MONTH) == today.get(Calendar.MONTH) && bornDate.get(Calendar.DATE) > today.get(Calendar.DATE))) {
+                years--;
+            }
+
+            return years < 30;
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+            return false;
+        }
+    }
+
+    private Calendar getCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance(Locale.US);
+        calendar.setTime(date);
+        return calendar;
+    }
+
+    private String getFechaCast(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat(SYSTEM_DATE_FORMAT);
+        SimpleDateFormat miFormato = new SimpleDateFormat(DATE_FORMAT);
+
+        try {
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

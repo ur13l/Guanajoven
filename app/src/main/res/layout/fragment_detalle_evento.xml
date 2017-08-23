@@ -1,80 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     android:fillViewport="true"
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:scrollbars="vertical">
 
-    <fragment
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/mapa_evento"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_nombre_evento"
+        <fragment
+            android:id="@+id/mapa_evento"
+            android:name="com.google.android.gms.maps.MapFragment"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="Nombre del evento"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorAccent"
-            android:textStyle="bold" />
+            android:layout_height="300dp" />
 
-
-        <TextView
-            android:id="@+id/tv_direccion_evento"
-            android:drawableStart="@drawable/ic_place_white_24dp"
-            android:drawablePadding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Dirección del evento" />
-
-        <TextView
-            android:id="@+id/tv_descripcion_evento"
-            android:drawableStart="@drawable/ic_description_32_px"
-            android:drawablePadding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Descripción del evento" />
-
-        <TextView
-            android:id="@+id/tv_fechas_evento"
-            android:drawableStart="@drawable/ic_evento_24_px"
-            android:drawablePadding="5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="Fecha del evento" />
-
-        <Button
-            android:id="@+id/btn_asistencia"
-            android:background="@drawable/bordered_button_blue"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:text="Asistí al evento"
-            android:textColor="@color/white"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/tv_nombre_evento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre del evento"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/colorAccent"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/tv_direccion_evento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_place_white_24dp"
+                android:padding="5dp"
+                android:text="Dirección del evento" />
+
+            <TextView
+                android:id="@+id/tv_descripcion_evento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_description_32_px"
+                android:padding="5dp"
+                android:text="Descripción del evento" />
+
+            <TextView
+                android:id="@+id/tv_fechas_evento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="5dp"
+                android:drawableStart="@drawable/ic_evento_24_px"
+                android:padding="5dp"
+                android:text="Fecha del evento" />
+
+            <Button
+                android:id="@+id/boton_estoy_en_el_evento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/bordered_button_blue"
+                android:text="@string/estoy_en_el_evento"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/boton_me_interesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/bordered_button_blue"
+                android:text="@string/me_interesa"
+                android:textColor="@color/white"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textview_evento_caducado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/evento_ha_caducado"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+</ScrollView>

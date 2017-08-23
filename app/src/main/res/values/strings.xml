@@ -35,8 +35,8 @@
     <string name="hint_email">Email</string>
     <string name="hint_passwordconfirmar">Confirmar Contraseña</string>
     <!--<string name="facebook_app_id">203591490120675</string>-->
-    <string name="facebook_app_id">1717159135254920</string>
-    <string name="fb_login_protocol_scheme">fb1717159135254920</string>
+    <string name="facebook_app_id">1547755481949405</string>
+    <string name="fb_login_protocol_scheme">fb1547755481949405</string>
 
     <string name="api_key">AIzaSyBqcgu3wsKmTDKHQjpMhhj-gie-eLR_ELI</string>
 
@@ -334,6 +334,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="cambiar_imagen">Agrega una imagen</string>
     <string name="ingresa_datos">Ingresa los siguientes datos:</string>
     <string name="codigo_guanajoven">Código Guanajoven</string>
+    <string name="id_guanajoven">ID Guanajoven</string>
     <string name="checkin_texto">Check-in</string>
     <string name="social">Redes sociales</string>
     <string name="promociones">Promociones</string>
@@ -450,4 +451,7 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="textview_promocion_bases">Bases</string>
     <string name="aplicar_promocion">Aplicar promoción</string>
     <string name="editar_datoscambiar_imagen">Cambia tu imagen</string>
+    <string name="estoy_en_el_evento">Estoy en el evento</string>
+    <string name="me_interesa">Me interesa</string>
+    <string name="evento_ha_caducado">Este evento ha caducado</string>
 </resources>

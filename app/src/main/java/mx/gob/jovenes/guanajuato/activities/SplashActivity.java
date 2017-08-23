@@ -37,10 +37,6 @@ public class SplashActivity extends AppCompatActivity {
         else {
             Sesion sesion = new Sesion(getApplicationContext());
 
-            System.err.println("------------------------------");
-            System.err.println(Sesion.getUsuario().getId());
-            System.err.println("-------------------------------");
-
             if (Sesion.getUsuario().getId() == 0 ) {
                 intent = new Intent(this, LoginActivity.class);
             } else {

@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVDocumentoAdapter;
-import mx.gob.jovenes.guanajuato.api.EnviarCorreoAPI;
+import mx.gob.jovenes.guanajuato.api.ConvocatoriaAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Convocatoria;
@@ -52,7 +51,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private Context context;
     private Realm realm;
     private Button btnQuieroMasInformacion;
-    private EnviarCorreoAPI enviarCorreoAPI;
+    private ConvocatoriaAPI convocatoriaAPI;
     private Retrofit retrofit;
 
     public static DetalleConvocatoriaFragment newInstance(int idConvocatoria) {
@@ -72,7 +71,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
         context = getActivity();
         realm = MyApplication.getRealmInstance();
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
-        enviarCorreoAPI = retrofit.create(EnviarCorreoAPI.class);
+        convocatoriaAPI = retrofit.create(ConvocatoriaAPI.class);
     }
 
 
@@ -120,7 +119,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
 
         btnQuieroMasInformacion.setOnClickListener((View) -> {
-            Call<Response<Boolean>> call = enviarCorreoAPI.enviarCorreo(Sesion.getUsuario().getId(), convocatoria.getIdConvocatoria());
+            Call<Response<Boolean>> call = convocatoriaAPI.enviarCorreo(Sesion.getUsuario().getId(), convocatoria.getIdConvocatoria());
 
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override

@@ -35,13 +35,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.games.request.Requests;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
 import mx.gob.jovenes.guanajuato.R;
@@ -208,7 +211,7 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
 
                 if (s.length() == 18) {
                     progressDialog = ProgressDialog.show(getActivity(), "Recuperando información", "Buscando información de CURP en base de datos", true);
-                    progressDialog.setCancelable(true);
+                    //progressDialog.setCancelable(true);
                     Call<Response<Curp>> call = usuarioAPI.consultarCurp(s.toString());
                     call.enqueue(new Callback<Response<Curp>>() {
                         @Override
@@ -231,6 +234,7 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                                     } else {
                                         spnGenero.setSelection(0);
                                     }
+
                                 } else {
                                     OKDialog.showOKDialog(getActivity(), "No se encontraron datos", "No se encontró tu CURP en la base de datos, intenta nuevamente.");
                                     etNombre.setText("");
@@ -379,19 +383,11 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
 
             Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(r);
 
-            System.err.println("------------------------------------");
-            System.err.println(new Gson().toJson(r));
-            System.err.println("--------------------------------------");
-
             callRegistrar.enqueue(new Callback<Response<Usuario>>() {
                 @Override
                 public void onResponse(Call<Response<Usuario>> call, retrofit2.Response<Response<Usuario>> response) {
                     progressDialog.dismiss();
                     Response<Usuario> body = response.body();
-
-                    System.err.println("---------------------------------------");
-                    System.err.println(new Gson().toJson(body));
-                    System.err.println("---------------------------------------");
 
                     if (body.success) {
                         Sesion.cargarSesion(body.data);

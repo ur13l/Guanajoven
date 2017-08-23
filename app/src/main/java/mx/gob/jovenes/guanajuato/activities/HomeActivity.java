@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -33,7 +34,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
@@ -61,18 +67,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     public static String MENU_ID = "menu_id";
     public static String INSTRUCCIONES_CHECK = "instrucciones_check";
-
-    public int last_menu_id;
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
+    private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
     private GoogleApiClient mGoogleApiClient;
 
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
 
+    private SharedPreferences prefs;
+
     private Retrofit retrofit;
     private NotificacionAPI notificacionAPI;
-
-    private SharedPreferences prefs;
 
     private CircleImageView imagenUsuarioDrawer;
     private TextView nombreUsuarioDrawer;
@@ -95,21 +101,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).build();
-
-
-       /*
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.setToolbarNavigationClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                onBackPressed();
-            }
-        });
-        toggle.syncState();*/
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -149,14 +140,53 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         retrofit = ((MyApplication) getApplication()).getRetrofitInstance();
         notificacionAPI = retrofit.create(NotificacionAPI.class);
 
+    }
 
+    private boolean lessThan30Years(String date) {
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        String todayString  = new SimpleDateFormat(DATE_FORMAT).format(Calendar.getInstance().getTime());
+
+        try {
+            Date bornDateParse = formatter.parse(date);
+            Date todayDateParse = formatter.parse(todayString);
+            Calendar bornDate = getCalendar(bornDateParse);
+            Calendar today = getCalendar(todayDateParse);
+
+            int years = today.get(Calendar.YEAR) - bornDate.get(Calendar.YEAR);
+
+            if (bornDate.get(Calendar.MONTH) > today.get(Calendar.MONTH) || (bornDate.get(Calendar.MONTH) == today.get(Calendar.MONTH) && bornDate.get(Calendar.DATE) > today.get(Calendar.DATE))) {
+                years--;
+            }
+
+            return years < 30;
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+            return false;
+        }
+    }
+
+    private Calendar getCalendar(Date date) {
+        Calendar calendar = Calendar.getInstance(Locale.US);
+        calendar.setTime(date);
+        return calendar;
+    }
+
+    private String getFechaCast(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat(SYSTEM_DATE_FORMAT);
+        SimpleDateFormat miFormato = new SimpleDateFormat(DATE_FORMAT);
+
+        try {
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
-
     }
 
     @Override
@@ -233,8 +263,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-
-
     public NavigationView getNavigationView(){
         return navigationView;
     }
@@ -274,6 +302,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         correoUsuarioDrawer.setText(usuario.getEmail());
         puntajeDrawer.setText("Puntos: " + usuario.getPuntaje());
         posicionDrawer.setText("Posición N° " + posicion);
+
+
+        if (!lessThan30Years(getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
+            navigationView.getMenu().findItem(R.id.nav_codigo_guanajoven).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_promociones).setVisible(false);
+        }
+
     }
 
     @Override

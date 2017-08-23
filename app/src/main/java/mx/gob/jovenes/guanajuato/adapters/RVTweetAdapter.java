@@ -1,12 +1,15 @@
 package mx.gob.jovenes.guanajuato.adapters;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,6 +67,23 @@ public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetVie
         holder.url = "https://twitter.com/i/web/status/" + statuses.get(position).getId();
 
     }
+
+    /*
+    @Override
+    public void onViewAttachedToWindow(TweetViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        circularAnimacion(holder.itemView);
+    }
+
+    private void circularAnimacion(View view) {
+        int centerX = 0;
+        int centerY = 0;
+        int startRadius = 0;
+        int endRadius = Math.max(view.getWidth(), view.getHeight());
+        Animator animator = ViewAnimationUtils.createCircularReveal(view, centerX, centerY, startRadius, endRadius);
+        view.setVisibility(View.VISIBLE);
+        animator.start();
+    }*/
 
     @Override
     public int getItemCount() {
