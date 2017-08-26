@@ -18,11 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tyczj.extendedcalendarview.CalendarProvider;
-import com.tyczj.extendedcalendarview.Day;
-import com.tyczj.extendedcalendarview.Event;
-import com.tyczj.extendedcalendarview.ExtendedCalendarView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
@@ -37,7 +32,7 @@ import mx.gob.jovenes.guanajuato.utils.DateUtilities;
  * Created by Uriel on 11/03/2016.
  */
 public class CalendarioActividadesFragment extends CustomFragment{
-    private ExtendedCalendarView calendarEcv;
+    //private ExtendedCalendarView calendarEcv;
     private TextView mesTv;
     private TextView diaTv;
     private TextView anioTv;

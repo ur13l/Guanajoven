@@ -23,7 +23,7 @@ public class DatosUsuario {
     private CapacidadDiferente capacidadDiferente;
     private String premios;
     private String proyectosSociales;
-    private boolean apoyoProyectosSociales;
+    private int apoyoProyectosSociales;
 
     public int getIdDatosUsuario() {
         return idDatosUsuario;
@@ -169,11 +169,11 @@ public class DatosUsuario {
         this.proyectosSociales = proyectosSociales;
     }
 
-    public boolean isApoyoProyectosSociales() {
+    public int isApoyoProyectosSociales() {
         return apoyoProyectosSociales;
     }
 
-    public void setApoyoProyectosSociales(boolean apoyoProyectosSociales) {
+    public void setApoyoProyectosSociales(int apoyoProyectosSociales) {
         this.apoyoProyectosSociales = apoyoProyectosSociales;
     }
 }

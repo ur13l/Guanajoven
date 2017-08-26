@@ -6,9 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.text.format.Time;
 
-import com.tyczj.extendedcalendarview.CalendarProvider;
-import com.tyczj.extendedcalendarview.Event;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,7 +54,7 @@ public class DateUtilities {
      * @param tipo: Tipo del evento (int)
      */
     public static void setFechas(Context context, int id, Date date1, Date date2, String title, String description, int tipo){
-        Calendar cal1 = dateToCalendar(date1);
+        /*Calendar cal1 = dateToCalendar(date1);
         Calendar cal2 = dateToCalendar(date2);
         ContentValues values = new ContentValues();
         values.put(CalendarProvider.ID, id);
@@ -98,7 +95,7 @@ public class DateUtilities {
         }
         else {
             context.getContentResolver().update(CalendarProvider.CONTENT_URI, values, mSelectionClause, mSelectionArgs);
-        }
+        }*/
 
     }
 
@@ -109,7 +106,7 @@ public class DateUtilities {
      */
     public static void deleteEvento(Context context, int id){
         // Defines selection criteria for the rows you want to delete
-        String mSelectionClause = CalendarProvider.ID + " = ? ";
+        /*String mSelectionClause = CalendarProvider.ID + " = ? ";
         String[] mSelectionArgs = {""+id};
 
         // Defines a variable to contain the number of rows deleted
@@ -121,7 +118,7 @@ public class DateUtilities {
                 CalendarProvider.CONTENT_URI,   // the user dictionary content URI
                 mSelectionClause,                    // the column to select on
                 mSelectionArgs                      // the value to compare to
-        );
+        );*/
     }
 
     /**

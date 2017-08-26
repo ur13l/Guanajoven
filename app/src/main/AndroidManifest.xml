@@ -101,10 +101,6 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
 
-        <provider
-            android:name="com.tyczj.extendedcalendarview.CalendarProvider"
-            android:authorities="com.tyczj.extendedcalendarview.calendarprovider" />
-
         <service android:name=".notifications.FirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

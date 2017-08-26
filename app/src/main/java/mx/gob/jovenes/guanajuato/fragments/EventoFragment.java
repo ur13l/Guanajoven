@@ -20,8 +20,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tyczj.extendedcalendarview.Event;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

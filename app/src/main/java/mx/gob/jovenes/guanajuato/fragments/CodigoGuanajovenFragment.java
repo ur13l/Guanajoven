@@ -292,7 +292,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                     @Override
                     public void onFailure(Call<Response<Boolean>> call, Throwable t) {
                         progressDialog.dismiss();
-                        Snackbar.make(getView(), t.getMessage(), Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), ERROR_AL_ENVIAR, Snackbar.LENGTH_LONG).show();
                     }
                 });
 

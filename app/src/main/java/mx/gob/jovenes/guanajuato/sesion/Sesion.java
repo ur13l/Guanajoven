@@ -51,9 +51,6 @@ public class Sesion {
         Gson gson = new Gson();
         String jsonUsuario = gson.toJson(usuario);
         prefs.edit().putString(SESION, jsonUsuario).apply();
-
-
-
     }
 
     /**
