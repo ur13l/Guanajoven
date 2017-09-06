@@ -158,13 +158,13 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             enviarCorreo.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscrito", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscrito", 7000).show();
 
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    Snackbar.make(getView(), "Correo enviado", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), "Gracias por estar interesado en el evento, en breve te llegará un correo electrónico con más información.", 7000).show();
                 }
             });
         });

@@ -49,10 +49,11 @@
                 android:text="estatus de la convocatoria"/>
 
             <TextView
+                android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Leer más..."
-                android:textColor="@color/com_facebook_button_send_background_color"/>
+                android:textColor="@color/com_facebook_button_send_background_color" />
 
         </LinearLayout>
 

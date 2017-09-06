@@ -63,9 +63,7 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
           with - establece el contexto en el que pertenece la imagen en este caso es a nuestra activity
           load - carga la imagen pasandole una url con un get que lo obtiene directamente del modelo
           into - establece en donde lo va a cargar, osea en que elemento pondra la imagen*/
-       Picasso.with(context)
-        .load(convocatorias.get(position).getRutaImagen())
-        .into(holder.imagenConvocatoria);
+       Picasso.with(context).load(convocatorias.get(position).getRutaImagen()).into(holder.imagenConvocatoria);
 
         holder.tituloConvocatoria.setText(convocatorias.get(position).getTitulo());
 

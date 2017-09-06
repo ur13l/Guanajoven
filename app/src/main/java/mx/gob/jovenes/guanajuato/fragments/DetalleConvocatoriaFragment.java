@@ -53,6 +53,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private Button btnQuieroMasInformacion;
     private ConvocatoriaAPI convocatoriaAPI;
     private Retrofit retrofit;
+    private final static String $ERROR_MENSAJE = "Fallo en enviar o ya se encuentra inscrito";
+    public final static String $MENSAJE_ENVIADO = "Gracias por interesarte en la convocatoria, en breve te llegará un correo electrónico con más información.";
 
     public static DetalleConvocatoriaFragment newInstance(int idConvocatoria) {
         DetalleConvocatoriaFragment detalleConvocatoriaFragment = new DetalleConvocatoriaFragment();
@@ -79,11 +81,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_detalle_convocatoria, container, false);
-        Bundle args = getArguments();
-       //convocatoria = args.getParcelable("convocatoria");
-        convocatoria = realm.where(Convocatoria.class)
-                .equalTo("idConvocatoria", getArguments().getInt(ID_CONVOCATORIA))
-                .findFirst();
+        convocatoria = realm.where(Convocatoria.class).equalTo("idConvocatoria", getArguments().getInt(ID_CONVOCATORIA)).findFirst();
 
         imgConvocatoria = (ImageView) v.findViewById(R.id.img_convocatoria);
         tvDescripcionConvocatoria = (TextView) v.findViewById(R.id.tv_descripcion_convocatoria);
@@ -97,9 +95,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
         LinearLayoutManager llm = new LinearLayoutManager(context);
         llm.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-
         rvDocumentosConvocatoria.setLayoutManager(llm);
-
 
         Picasso.with(context)
                 .load(convocatoria.getRutaImagen())
@@ -124,12 +120,12 @@ public class DetalleConvocatoriaFragment extends Fragment {
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscrito", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), $ERROR_MENSAJE, 7000).show();
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    Snackbar.make(getView(), "Correo enviado", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), $MENSAJE_ENVIADO, 7000).show();
                 }
             });
         });

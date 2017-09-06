@@ -24,27 +24,17 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import fr.ganfra.materialspinner.MaterialSpinner;
@@ -52,18 +42,14 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVIdiomasSeleccionadosAdapter;
 import mx.gob.jovenes.guanajuato.api.RegistroModificarPerfil;
 import mx.gob.jovenes.guanajuato.api.Response;
-import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.DatosModificarPerfil;
-import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
-import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-import static android.R.id.list;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -117,8 +103,6 @@ public class EditarDatosFragment extends CustomFragment {
     public static Activity thisActivity;
     public static RVIdiomasSeleccionadosAdapter adapter;
 
-    private AlertDialog.Builder builder;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,9 +110,6 @@ public class EditarDatosFragment extends CustomFragment {
         Retrofit retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         registroModificarPerfilAPI = retrofit.create(RegistroModificarPerfil.class);
         thisActivity = getActivity();
-
-        builder = new AlertDialog.Builder(getContext());
-        builder.create();
     }
 
     @Override
@@ -215,16 +196,6 @@ public class EditarDatosFragment extends CustomFragment {
                 IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
                 idiomasAdicionalesDialogFragment.show(fragmentManager, null);
             }
-            /*if (adapter.getListaIdiomas() != null) {
-                FragmentManager fragmentManager = getActivity().getFragmentManager();
-                IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
-                idiomasAdicionalesDialogFragment.show(fragmentManager, null);
-                IdiomasAdicionalesDialogFragment.quitarElementosDeAdapter(adapter.getListaIdiomas());
-            } else {
-                FragmentManager fragmentManager = getActivity().getFragmentManager();
-                IdiomasAdicionalesDialogFragment idiomasAdicionalesDialogFragment = new IdiomasAdicionalesDialogFragment();
-                idiomasAdicionalesDialogFragment.show(fragmentManager, null);
-            }*/
         });
 
         imgPerfil.setOnClickListener((View) -> { selectImage(); });
@@ -482,7 +453,17 @@ public class EditarDatosFragment extends CustomFragment {
     //Método para el botón de guardar
     public void botonGuardar() {
         if (datosCompletos()) {
-            registrarDatos();
+            AlertDialog.Builder $mensajeConfirmacion = new AlertDialog.Builder(getContext());
+            $mensajeConfirmacion.setTitle("Confirmación");
+
+            $mensajeConfirmacion.setMessage("¿Deseas actualizar tu información?");
+
+            $mensajeConfirmacion.setPositiveButton("Aceptar", (dialog, which) -> registrarDatos());
+
+            $mensajeConfirmacion.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+
+            $mensajeConfirmacion.show();
+
         } else {
             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
             dialog.setMessage("Ingresa todas las opciones");
@@ -494,6 +475,9 @@ public class EditarDatosFragment extends CustomFragment {
     //Registra los datos en BD
     private void registrarDatos() {
         //Datos a registrar
+        ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Registrando datos", "Por favor espere", true, false);
+        AlertDialog.Builder mensaje = new AlertDialog.Builder(getContext());
+
         String apiToken = Sesion.getUsuario().getApiToken();
         int nivelEstudios = spnNivelEstudios.getSelectedItemPosition();
         int beneficiarioPrograma = spnProgramaGobierno.getSelectedItemPosition();
@@ -527,15 +511,18 @@ public class EditarDatosFragment extends CustomFragment {
         callRegistrar.enqueue(new Callback<Response<Boolean>>() {
             @Override
             public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                builder.setMessage("Datos registrados");
-                builder.show();
-
+                progressDialog.dismiss();
+                mensaje.setTitle("Datos registrados");
+                mensaje.setMessage("Datos registrados con éxito");
+                mensaje.show();
             }
 
             @Override
             public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                builder.setMessage("Error en registrar");
-                builder.show();
+                progressDialog.dismiss();
+                mensaje.setTitle("Error");
+                mensaje.setMessage("Error al registrar los datos");
+                mensaje.show();
             }
         });
     }
@@ -554,7 +541,7 @@ public class EditarDatosFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<DatosModificarPerfil>> call, Throwable t) {
-
+                Snackbar.make(getView(), "Error al cargar los datos", Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -719,6 +706,7 @@ public class EditarDatosFragment extends CustomFragment {
 
     //método para establecer los datos en los spinners y los textview
     private void asignarDatos(DatosModificarPerfil datosModificarPerfil) {
+        if (datosModificarPerfil.getIdNivelEstudios() == 0) { spnNivelEstudios.setSelection(8); } else { spnNivelEstudios.setSelection(datosModificarPerfil.getIdNivelEstudios()); }
         if (datosModificarPerfil.getIdProgramaGobierno() != 0) { spnConfirmProgramaGobierno.setSelection(1); } else spnConfirmProgramaGobierno.setSelection(2);
         if (datosModificarPerfil.getTrabajo() == 0) spnTrabaja.setSelection(2); else spnTrabaja.setSelection(datosModificarPerfil.getTrabajo());
         if (datosModificarPerfil.getIdPuebloIndigena() != 0) spnConfirmPuebloIndigena.setSelection(1); else spnConfirmPuebloIndigena.setSelection(2);
@@ -745,7 +733,6 @@ public class EditarDatosFragment extends CustomFragment {
             adapter.notifyDataSetChanged();
         }
 
-        spnNivelEstudios.setSelection(datosModificarPerfil.getIdNivelEstudios());
         spnPuebloIndigena.setSelection(datosModificarPerfil.getIdPuebloIndigena());
         spnCapacidadDiferente.setSelection(datosModificarPerfil.getIdCapacidadDiferente());
         spnProgramaGobierno.setSelection(datosModificarPerfil.getIdProgramaGobierno());

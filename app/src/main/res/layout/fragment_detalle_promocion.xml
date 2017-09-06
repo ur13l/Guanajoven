@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,10 +17,20 @@
             android:layout_marginTop="10dp"/>
 
         <TextView
+            android:id="@+id/textview_visitar_sitio_promocion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="Visitar sitio promoción"
+            android:textColor="@color/link_color"
+            android:textAlignment="center"/>
+
+        <TextView
             android:id="@+id/textview_titulo_promocion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp"
+            android:textAlignment="center"/>
 
         <View
             android:layout_width="match_parent"
@@ -78,26 +90,6 @@
             android:background="@color/background_gray"
             android:layout_margin="5dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="5dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Código de promoción: "/>
-
-            <TextView
-                android:id="@+id/textview_codigo_promocion"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
@@ -150,12 +142,55 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/background_gray"
+            android:layout_margin="5dp"/>
+
+        <LinearLayout
+            android:id="@+id/linearlayout_codigo_promocion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="5dp"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Código de promoción: "/>
+
+            <TextView
+                android:id="@+id/textview_codigo_promocion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/background_gray"
+            android:layout_margin="5dp"/>
+
+        <ImageView
+            android:id="@+id/imageview_codigo_qr_promocion"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            app:srcCompat="@drawable/qr"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:visibility="gone"/>
+
         <Button
-            android:id="@+id/button_url_promocion"
+            android:id="@+id/button_aplicar_promocion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/white"
-            android:text="Visitar sitio de promoción"
+            android:text="@string/aplicar_promocion_text"
             android:layout_margin="5dp"/>
 
     </LinearLayout>

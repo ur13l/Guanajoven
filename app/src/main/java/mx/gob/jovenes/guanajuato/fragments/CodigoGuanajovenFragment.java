@@ -131,7 +131,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
 
     private static final String ENVIANDO_CORREO = "Enviando correo...";
     private static final String POR_FAVOR_ESPERE = "Por favor espere...";
-    private static final String CORREO_ENVIADO = "Correo enviado";
+    private static final String $CORREO_ENVIADO = "Se te ha enviado un correo electrónico con tu credencial, gracias por hacer de Guanajuato tu proyecto de vida.";
     private static final String ERROR_AL_ENVIAR = "Error al enviar";
 
     private static final int PERMISSION_REQUEST_CODE = 123;
@@ -286,7 +286,7 @@ public class CodigoGuanajovenFragment extends CustomFragment {
                     @Override
                     public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                         progressDialog.dismiss();
-                        Snackbar.make(getView(), CORREO_ENVIADO, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), $CORREO_ENVIADO, Snackbar.LENGTH_LONG).show();
                     }
 
                     @Override

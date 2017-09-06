@@ -346,65 +346,69 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
         boolean cpV = false;
         boolean curpValido = EditTextValidations.curpValido(etCurp, etNombre, etApPaterno, etApMaterno, etFechaNacimiento, spnGenero, spnEstado);
 
-        //Valida los 18 caracteres del curp y que halla sido exitoso el trámite del mismo
-        if (curpValido) {
-            //Si ninguno de los campos es vacío
-            if (!curpEmpty && !emailEmpty && !pass1Empty && !pass2Empty && !cpEmpty) {
-                emailV = EditTextValidations.esEmailValido(etEmail);
-                pass1V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword1) : true;
-                pass2V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword2) : true;
-                passEq = EditTextValidations.contrasenasCoinciden(etPassword1, etPassword2);
-                cpV = EditTextValidations.esCodigoPostalValido(etCodigoPostal);
+        if (!imgPerfil.getDrawable().getConstantState().equals(getResources().getDrawable(R.drawable.placeholder).getConstantState())) {
+            //Valida los 18 caracteres del curp y que halla sido exitoso el trámite del mismo
+            if (curpValido) {
+                //Si ninguno de los campos es vacío
+                if (!curpEmpty && !emailEmpty && !pass1Empty && !pass2Empty && !cpEmpty) {
+                    emailV = EditTextValidations.esEmailValido(etEmail);
+                    pass1V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword1) : true;
+                    pass2V = usuario == null ? EditTextValidations.esContrasenaValida(etPassword2) : true;
+                    passEq = EditTextValidations.contrasenasCoinciden(etPassword1, etPassword2);
+                    cpV = EditTextValidations.esCodigoPostalValido(etCodigoPostal);
+                }
+            } else {
+                Snackbar.make(getView(), "CURP inválido", Snackbar.LENGTH_LONG).show();
+            }
+
+            //Si todas las validaciones se cumplen, se genera el nuevo fragment.
+            if (emailV && pass1V && pass2V && passEq && cpV) {
+
+                progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
+
+                RegistroRequest r = new RegistroRequest(
+                        etCurp.getText().toString(),
+                        etEmail.getText().toString(),
+                        usuario == null ? etPassword1.getText().toString() : "_",
+                        usuario == null ? etPassword2.getText().toString() : "_",
+                        etApPaterno.getText().toString(),
+                        etApMaterno.getText().toString(),
+                        etNombre.getText().toString(),
+                        spnGenero.getSelectedItemPosition() == 1 ? "H" : "M",
+                        etFechaNacimiento.getText().toString(),
+                        etCodigoPostal.getText().toString(),
+                        estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
+                        "data:image/jpeg;base64," + getBase64(imgPerfil),
+                        usuario == null ? null : usuario.getIdGoogle(),
+                        usuario == null ? null : usuario.getIdFacebook()
+                );
+
+                Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(r);
+
+                callRegistrar.enqueue(new Callback<Response<Usuario>>() {
+                    @Override
+                    public void onResponse(Call<Response<Usuario>> call, retrofit2.Response<Response<Usuario>> response) {
+                        progressDialog.dismiss();
+                        Response<Usuario> body = response.body();
+
+                        if (body.success) {
+                            Sesion.cargarSesion(body.data);
+                            ((LoginActivity) getActivity()).startHomeActivity();
+
+                        } else {
+                            Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "El email ya existe", Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Response<Usuario>> call, Throwable t) {
+                        progressDialog.dismiss();
+                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG).show();
+                    }
+                });
             }
         } else {
-            Snackbar.make(getView(), "CURP inválido", Snackbar.LENGTH_LONG).show();
-        }
-
-        //Si todas las validaciones se cumplen, se genera el nuevo fragment.
-        if (emailV && pass1V && pass2V && passEq && cpV) {
-
-            progressDialog = ProgressDialog.show(getActivity(), "Registrando", "Espere un momento mientras se completa el registro", true);
-
-            RegistroRequest r = new RegistroRequest(
-                    etCurp.getText().toString(),
-                    etEmail.getText().toString(),
-                    usuario == null ? etPassword1.getText().toString() : "_",
-                    usuario == null ? etPassword2.getText().toString() : "_",
-                    etApPaterno.getText().toString(),
-                    etApMaterno.getText().toString(),
-                    etNombre.getText().toString(),
-                    spnGenero.getSelectedItemPosition() == 1 ? "H" : "M",
-                    etFechaNacimiento.getText().toString(),
-                    etCodigoPostal.getText().toString(),
-                    estadosValueArray[spnEstado.getSelectedItemPosition() - 1],
-                    "data:image/jpeg;base64," + getBase64(imgPerfil),
-                    usuario == null ? null : usuario.getIdGoogle(),
-                    usuario == null ? null : usuario.getIdFacebook()
-            );
-
-            Call<Response<Usuario>> callRegistrar = usuarioAPI.registrar(r);
-
-            callRegistrar.enqueue(new Callback<Response<Usuario>>() {
-                @Override
-                public void onResponse(Call<Response<Usuario>> call, retrofit2.Response<Response<Usuario>> response) {
-                    progressDialog.dismiss();
-                    Response<Usuario> body = response.body();
-
-                    if (body.success) {
-                        Sesion.cargarSesion(body.data);
-                        ((LoginActivity) getActivity()).startHomeActivity();
-
-                    } else {
-                        Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "El email ya existe", Snackbar.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Response<Usuario>> call, Throwable t) {
-                    progressDialog.dismiss();
-                    Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG).show();
-                }
-            });
+            Snackbar.make(getView(), "Ingresa o selecciona una foto de perfil", Snackbar.LENGTH_LONG).show();
         }
     }
 

@@ -95,6 +95,7 @@ public class ConvocatoriaFragment extends CustomFragment{
         swipeRefreshLayoutConvocatorias.setRefreshing(false);
         Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getString(MyApplication.LAST_UPDATE_CONVOCATORIAS, "0000-00-00 00:00:00"));
         //Llamada a servidor caso de acertar o fallar
+
         call.enqueue(new Callback<Response<ArrayList<Convocatoria>>>() {
             @Override
             public void onResponse(Call<Response<ArrayList<Convocatoria>>> call, retrofit2.Response<Response<ArrayList<Convocatoria>>> response) {
