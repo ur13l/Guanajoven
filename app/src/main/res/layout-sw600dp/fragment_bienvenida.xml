@@ -14,39 +14,39 @@
             style="@style/AppTheme.EncabezadoTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="30dp"
             android:text="@string/bienvenida"
-            android:textSize="15sp" />
+            android:textSize="25sp" />
 
         <ImageView
-            android:layout_width="155dp"
-            android:layout_height="170dp"
+            android:layout_width="255dp"
+            android:layout_height="270dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/logo_guanajoven_nuevo" />
 
         <TextView
             style="@style/TextAppearance.AppCompat.Small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
             android:gravity="center_horizontal"
             android:text="@string/mensaje_bienvenida"
             android:textColor="@color/abc_secondary_text_material_light"
-            android:textSize="15sp" />
+            android:textSize="25sp" />
 
         <Button
             android:id="@+id/btn_comenzar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/bordered_button_blue"
             android:text="@string/comenzar"
-            android:textSize="15sp"
+            android:textSize="25sp"
             android:textColor="@color/white" />
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal|bottom"
             android:text="@string/copyright"
-            android:textSize="15sp"
+            android:textSize="25sp"
             android:textColor="@color/abc_secondary_text_material_light" />
     </LinearLayout>
 

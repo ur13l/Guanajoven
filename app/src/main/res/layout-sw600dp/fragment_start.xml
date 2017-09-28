@@ -2,6 +2,7 @@
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -26,53 +27,59 @@
 
         <Button
             android:text="@string/registrar"
-            android:layout_height="48dp"
+            android:layout_height="50dp"
             android:id="@+id/btn_registrar"
             android:elevation="13dp"
             android:background="@drawable/bordered_button"
             android:textColor="@color/colorPrimaryDark"
-            android:layout_width="260dp"
+            android:layout_width="300dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="32dp"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginLeft="8dp"
-            app:layout_constraintLeft_toLeftOf="parent" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            tools:layout_editor_absoluteY="720dp"
+            android:textSize="20sp"/>
 
         <Button
             android:text="@string/inicio_sesion"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/btn_login"
             android:textColor="@color/white"
             android:background="@drawable/transparent_button_bordered"
             android:elevation="13dp"
-            android:layout_width="261dp"
+            android:layout_width="300dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintHorizontal_bias="0.504"
             android:layout_marginBottom="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/btn_registrar" />
+            app:layout_constraintBottom_toTopOf="@+id/btn_registrar"
+            tools:layout_editor_absoluteY="629dp"
+            tools:layout_editor_absoluteX="91dp"
+            android:textSize="20sp"/>
 
         <ImageView
-            android:layout_width="170dp"
+            android:layout_width="271dp"
             app:srcCompat="@drawable/logo_guanajoven_nuevo"
             android:id="@+id/imageView"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="64dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_height="170dp" />
+            android:layout_height="257dp"
+            tools:layout_editor_absoluteX="114dp" />
     </android.support.constraint.ConstraintLayout>
 
     <ImageButton
         android:id="@+id/boton_ayuda"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_gravity="right|top"
         android:background="@android:color/transparent"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/ic_help" />
+        app:srcCompat="@drawable/ic_help_600dp" />
 
 
 </FrameLayout>

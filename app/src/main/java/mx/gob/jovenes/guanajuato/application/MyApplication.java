@@ -37,10 +37,9 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://10.0.7.134/GuanajovenWeb/public/api/";
 
     //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
-    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
-
-    //public static final String BASE_URL = "http://187.216.153.130/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.
@@ -68,7 +67,9 @@ public class MyApplication extends MultiDexApplication {
 
     }
 
-    public static Realm getRealmInstance() { return realm; }
+    public static Realm getRealmInstance() {
+        return realm;
+    }
 
     public Retrofit getRetrofitInstance(){
         return retrofit;

@@ -72,6 +72,8 @@ dependencies {
     compile 'com.pusher:pusher-websocket-android:0.6.0'
     compile 'org.slf4j:slf4j-android:1.7.25'
     compile 'com.google.apis:google-api-services-youtube:v3-rev181-1.22.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     testCompile 'junit:junit:4.12'
     compile files('lib/YouTubeAndroidPlayerApi.jar')
 }

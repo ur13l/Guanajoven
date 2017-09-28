@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/registro_usuario" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:alpha="0.8">
+
+        </FrameLayout>
+    </FrameLayout>
+    <ScrollView
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="6dp"
+                app:srcCompat="@drawable/ic_arrow_back_blue_24dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/img_profile"
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:src="@drawable/placeholder"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:text="@string/cambiar_imagen"
+                android:gravity="center"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="@string/ingresa_datos"
+                android:textSize="20sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_emailreg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="75"
+
+                    android:textColorHint="@color/gray"
+                    android:inputType="textEmailAddress"
+                    android:typeface="normal"
+                    android:textSize="20sp"
+                    android:hint="@string/email" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_passreg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="20sp"
+                    android:maxLength="25"
+                    android:hint="@string/pass" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_confpass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="20sp"
+                    android:maxLength="15"
+                    android:hint="@string/confirmar_password" />
+            </android.support.design.widget.TextInputLayout>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_curp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="18"
+                    android:textColorHint="@color/gray"
+                    android:typeface="normal"
+                    android:inputType="textCapCharacters"
+                    android:textSize="20sp"
+                    android:hint="@string/curp" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textview_consultar_curp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/consultar_curp"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="20sp"/>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_nombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textColor="@color/black"
+                    android:inputType="textCapWords"
+                    android:enabled="false"
+                    android:textSize="20sp"
+                    android:maxLength="15"
+                    android:hint="@string/nombre" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_ap_paterno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:inputType="textCapWords"
+                    android:textColor="@color/black"
+                    android:enabled="false"
+                    android:textColorHint="@color/gray"
+                    android:textSize="20sp"
+                    android:maxLength="15"
+                    android:hint="@string/ap_paterno" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_ap_materno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:typeface="normal"
+                    android:textColor="@color/black"
+                    android:enabled="false"
+                    android:inputType="textCapWords"
+                    android:textColorHint="@color/gray"
+                    android:textSize="20sp"
+                    android:maxLength="15"
+                    android:hint="@string/ap_materno" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_fecha_nacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:maxLength="50"
+                    android:textColor="@color/black"
+                    android:enabled="false"
+                    android:typeface="normal"
+                    android:textColorHint="@color/gray"
+                    android:textSize="20sp"
+                    android:hint="Fecha de nacimiento" />
+            </android.support.design.widget.TextInputLayout>
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spn_genero"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ms_hintColor="@color/colorPrimary"
+                app:ms_arrowColor="@color/colorPrimary"
+                android:enabled="false"
+                android:textColor="@color/black"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="@color/gray"
+                app:ms_floatingLabelText="@string/genero"
+                app:ms_hint="Genero"
+                app:ms_multiline="true"
+                android:layout_marginTop="5dp" />
+
+            <fr.ganfra.materialspinner.MaterialSpinner
+                android:id="@+id/spn_estado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ms_hintColor="@color/colorPrimary"
+                app:ms_arrowColor="@color/colorPrimary"
+                android:enabled="false"
+                android:textColor="@color/black"
+                app:ms_arrowSize="16dp"
+                app:ms_floatingLabelColor="@color/gray"
+                app:ms_floatingLabelText="@string/estado_nacimiento"
+                app:ms_hint="@string/estado_nacimiento"
+                app:ms_multiline="true"
+                android:layout_marginTop="5dp" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <EditText
+                    android:id="@+id/et_codigo_postal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:typeface="normal"
+                    android:inputType="number"
+                    android:textSize="20sp"
+                    android:maxLength="5"
+                    android:hint="@string/codigo_postal" />
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_continuar"
+                android:layout_width="563dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bordered_button_blue"
+                android:text="@string/registrar"
+                android:textColor="@android:color/white"
+                android:textSize="20sp" />
+
+
+        </LinearLayout>
+        </FrameLayout>
+    </ScrollView>
+</FrameLayout>

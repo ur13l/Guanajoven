@@ -247,7 +247,7 @@ public class HomeFragment extends CustomFragment {
                 intent.putExtra(MENU_ID, R.id.nav_convocatorias);
                 startActivity(intent);
             } catch (Exception e) {
-                System.err.println("que pendejo...");
+
             }
         });
 
@@ -259,7 +259,7 @@ public class HomeFragment extends CustomFragment {
 
                 startActivity(intent);
             } catch (Exception e) {
-                System.err.println("que pendejo...");
+
             }
         });
 
@@ -269,7 +269,7 @@ public class HomeFragment extends CustomFragment {
                 intent.putExtra(MENU_ID, R.id.nav_chat_ayuda);
                 startActivity(intent);
             } catch (Exception e) {
-                System.err.println("que pendejo...");
+
             }
         });
 
@@ -279,7 +279,7 @@ public class HomeFragment extends CustomFragment {
                 intent.putExtra(MENU_ID, R.id.nav_promociones);
                 startActivity(intent);
             } catch (Exception e) {
-                System.err.println("que pendejo...");
+
             }
         });
 

@@ -72,7 +72,7 @@
                             android:layout_width="55dp"
                             android:layout_height="55dp"
                             android:layout_gravity="end"
-                            android:src="@drawable/logo" />
+                            android:src="@drawable/logo_guanajoven_nuevo" />
 
                     </FrameLayout>
 

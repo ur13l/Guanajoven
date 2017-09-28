@@ -182,7 +182,7 @@ public class DetallePromocionFragment extends Fragment {
         AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
 
         alerta.setTitle("Advertencia");
-        alerta.setMessage("¿Deseas aplicar para esta promoción? (Puede que la promoción aplique veces contadas)");
+        alerta.setMessage("Al aplicar esta promoción quedará registrado en la base de datos que has sido beneficiado por la empresa, ¿Estas seguro de Aplicar esta promoción?");
 
         alerta.setPositiveButton("Aceptar", (dialog, which) -> {
             Call<Response<Boolean>> call = promocionAPI.registrar(Sesion.getUsuario().getCodigoGuanajoven().getToken(), promocion.getIdPromocion());

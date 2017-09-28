@@ -151,6 +151,9 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         setHasOptionsMenu(true);
 
 
+        System.err.println(Sesion.getUsuario().getCodigoGuanajoven().getToken());
+
+
         /**
          * Llamada para actualizar el nuevo token guanajoven con nueva validez.
          */

@@ -1,6 +1,7 @@
 package mx.gob.jovenes.guanajuato.activities;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -41,6 +42,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
@@ -108,9 +111,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         View headerLayout = navigationView.getHeaderView(0);
 
-        imagenUsuarioDrawer = (CircleImageView) headerLayout.findViewById(R.id.imagen_usuario_drawer);
-        nombreUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.nombre_usuario_drawer);
-        correoUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.correo_usuario_drawer);
+        imagenUsuarioDrawer = (CircleImageView) headerLayout.findViewById(R.id.circleimageview_imagen_usuario_drawer);
+        nombreUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.textview_nombre_usuario_drawer);
+        correoUsuarioDrawer = (TextView) headerLayout.findViewById(R.id.textview_correo_usuario_drawer);
         puntajeDrawer = (TextView) headerLayout.findViewById(R.id.textview_puntaje_drawer);
         posicionDrawer = (TextView) headerLayout.findViewById(R.id.textview_posicion_drawer);
 
@@ -238,7 +241,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 });
                 //Verifica si la sesión de google existe
                 if(mGoogleApiClient.isConnected()){
-                   Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 }
 
                 Sesion.logout();
