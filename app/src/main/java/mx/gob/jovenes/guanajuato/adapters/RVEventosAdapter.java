@@ -99,19 +99,23 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
     }
 
     public void verificarFecha(EventosViewHolder holder, Evento evento) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String dateInStringbegin = getFechaCast(evento.getFechaInicio());
-        String dateInStringend = getFechaCast(evento.getFechaFin());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateInStringbegin = evento.getFechaInicio();
+        String dateInStringend = evento.getFechaFin();
+        String dateInStringToday = formatter.format(new Date());
+
         try {
             Date fechainicio = formatter.parse(dateInStringbegin);
             Date fechafin = formatter.parse(dateInStringend);
-            Date date = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date newFormat = formatter.parse(dateFormat.format(date));
+            Date today = formatter.parse(dateInStringToday);
 
-            boolean antesDeFecha = (newFormat.before(fechainicio));
-            boolean enFecha = (newFormat.after(fechainicio) && newFormat.before(fechafin));
-            boolean despuesDeFecha = (newFormat.after(fechafin));
+            long timeStampBegin = fechainicio.getTime();
+            long timeStampEnd = fechafin.getTime();
+            long timeStampToday = today.getTime();
+
+            boolean antesDeFecha = timeStampBegin > timeStampToday;
+            boolean enFecha = timeStampBegin < timeStampToday && timeStampToday > timeStampEnd;
+            boolean despuesDeFecha = timeStampEnd < timeStampToday;
 
             if (enFecha) {
                 holder.estado.setText("Evento abierto");

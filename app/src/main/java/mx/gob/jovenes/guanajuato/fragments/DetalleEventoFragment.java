@@ -3,12 +3,15 @@ package mx.gob.jovenes.guanajuato.fragments;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -95,6 +98,8 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         View v = inflater.inflate(R.layout.fragment_detalle_evento, container, false);
 
         evento = realm.where(Evento.class).equalTo("idEvento", getArguments().getInt(ID_EVENTO)).findFirst();
+
+
         progressDialog = new ProgressDialog(getContext());
 
         mapaEvento = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapa_evento);
@@ -153,13 +158,13 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         });
 
         botonMeInteresa.setOnClickListener((View) -> {
+            //Genera la llamada para poder enviar un correo
             Call<Response<Boolean>> enviarCorreo = eventoAPI.enviarCorreo(Sesion.getUsuario().getId(), evento.getIdEvento());
 
             enviarCorreo.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                     Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscrito", 7000).show();
-
                 }
 
                 @Override
@@ -167,27 +172,51 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                     Snackbar.make(getView(), "Gracias por estar interesado en el evento, en breve te llegará un correo electrónico con más información.", 7000).show();
                 }
             });
+
+            //TODO Bloquear boton a lo largo de toda la app
+            //Crea un contador para poder enviar correos cada cierto tiempo
+            new CountDownTimer(10000, 1000) {
+
+                public void onTick(long millisUntilFinished) {
+                    MyApplication.ENVIAR_CORREOS_EVENTOS = false;
+                    botonMeInteresa.setEnabled(false);
+                }
+
+                public void onFinish() {
+                    MyApplication.ENVIAR_CORREOS_EVENTOS = true;
+                }
+
+            }.start();
+
         });
 
         return v;
     }
 
     public void checkAsist() {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String dateInStringbegin = getFechaCast(evento.getFechaInicio());
-        String dateInStringend = getFechaCast(evento.getFechaFin());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String dateInStringbegin = evento.getFechaInicio();
+        String dateInStringend = evento.getFechaFin();
+        String dateInStringToday = formatter.format(new Date());
+
         try {
             Date fechainicio = formatter.parse(dateInStringbegin);
             Date fechafin = formatter.parse(dateInStringend);
-            Date date = new Date();
-            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            Date newFormat = formatter.parse(dateFormat.format(date));
+            Date today = formatter.parse(dateInStringToday);
 
-            boolean antesDeFecha = (newFormat.before(fechainicio));
-            boolean enFecha = (newFormat.after(fechainicio) && newFormat.before(fechafin));
-            boolean despuesDeFecha = (newFormat.after(fechafin));
+            long timeStampBegin = fechainicio.getTime();
+            long timeStampEnd = fechafin.getTime();
+            long timeStampToday = today.getTime();
 
-            if (enFecha) {
+            boolean antesDeFecha = timeStampBegin > timeStampToday;
+            boolean enFecha = timeStampBegin < timeStampToday && timeStampToday > timeStampEnd;
+            boolean despuesDeFecha = timeStampEnd < timeStampToday;
+
+            if (antesDeFecha) {
+                textViewEventoCaducado.setVisibility(View.VISIBLE);
+            } else if (despuesDeFecha) {
+                botonMeInteresa.setVisibility(View.VISIBLE);
+            } else if (enFecha) {
                 botonEstoyEnEvento.setVisibility(View.VISIBLE);
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -200,10 +229,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                     }
                 }
 
-            } else if (despuesDeFecha) {
-                textViewEventoCaducado.setVisibility(View.VISIBLE);
-            } else if (antesDeFecha) {
-                botonMeInteresa.setVisibility(View.VISIBLE);
             }
         } catch (ParseException e) {
             e.printStackTrace();

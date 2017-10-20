@@ -185,12 +185,17 @@ public class CodigoGuanajovenFragment extends CustomFragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View vista = inflater.inflate(R.layout.fragment_codigo_guanajoven, container, false);
         Usuario u = Sesion.getUsuario();
+
+        System.err.println("----------------------------------------------");
+        System.err.println(u.getDatosUsuario().getFechaNacimiento());
+        System.err.println("-------------------------");
+
         //Obtener datos de usuario
         nombre = u.getDatosUsuario().getNombre() + " " + u.getDatosUsuario().getApellidoPaterno() +
                 " " + u.getDatosUsuario().getApellidoMaterno();
         correo = u.getEmail();
         genero = u.getDatosUsuario().getGenero().getNombre();
-        //fechaNacimiento = getFechaCast(u.getDatosUsuario().getFechaNacimiento());
+        fechaNacimiento = getFechaCast(u.getDatosUsuario().getFechaNacimiento());
         codigoGuanajoven = String.valueOf(u.getCodigoGuanajoven().getIdCodigoGuanajoven());
         Curp = u.getDatosUsuario().getCurp();
         municipio = u.getDatosUsuario().getMunicipio().getNombre();
@@ -210,7 +215,6 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         imagenUsuario = (CircleImageView) vista.findViewById(R.id.iv_imagenCG);
         imgBackground = (ImageView) vista.findViewById(R.id.img_background);
         imgGuanajoven = (ImageView) vista.findViewById(R.id.logo_guanajoven);
-        imgGuanajuato = (ImageView) vista.findViewById(R.id.logo_guanajuato);
 
         inputNombre.setText(nombre);
         inputCorreo.setText(correo);
@@ -303,6 +307,19 @@ public class CodigoGuanajovenFragment extends CustomFragment {
         }
 
         return false;
+    }
+
+    private String getFechaCast(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
+
+        try {
+            String reformato = miFormato.format(formato.parse(fecha));
+            return reformato;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /*

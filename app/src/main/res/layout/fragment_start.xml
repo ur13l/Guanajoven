@@ -55,7 +55,7 @@
 
         <ImageView
             android:layout_width="170dp"
-            app:srcCompat="@drawable/logo_guanajoven_nuevo"
+            app:srcCompat="@drawable/logo"
             android:id="@+id/imageView"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="64dp"

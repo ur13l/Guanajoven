@@ -37,7 +37,7 @@
 
         <ImageView
             android:layout_width="0dp"
-            android:src="@drawable/logo_guanajoven_nuevo"
+            android:src="@drawable/logo"
             android:id="@+id/imageView10"
             android:layout_height="250dp"
             app:layout_constraintTop_toTopOf="parent"

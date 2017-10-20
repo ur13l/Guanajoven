@@ -28,18 +28,19 @@ public class MyApplication extends MultiDexApplication {
     public static String LAST_UPDATE_EVENTOS = "last_update_eventos";
     public static String LAST_UPDATE_EMPRESAS = "last_update_empresas";
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
+    public static boolean ENVIAR_CORREOS_EVENTOS = true;
 
 
     //dirección publica
     //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
 
     //uriel publica
-    //public static final String BASE_URL = "http://10.0.7.134/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.133/GuanajovenWeb/public/api/";
 
     //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
     //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
-    public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
+    //public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.

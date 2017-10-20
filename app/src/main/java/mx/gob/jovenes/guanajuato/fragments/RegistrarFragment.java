@@ -111,6 +111,13 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
 
     private TextView textViewConsultarCurp;
 
+    private static final String ERROR_EMAIL_OBLIGATORIO = "El campo email es obligatorio";
+    private static final String ERROR_PASSWORD_OBLIGATORIO = "El campo password es obligatorio";
+    private static final String ERROR_CURP_OBLIGATORIO = "El campo curp es obligatorio";
+    private static final String ERROR_CODIGO_POSTAL = "El campo codigo postal es obligatorio";
+    private static final String ERROR_EMAIL_EN_USO = "El elemento email ya está en uso.";
+    private static final String ERROR_PASSWORD_NO_COINCIDE = "El campo confirmación de password no coincide.";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -392,11 +399,19 @@ public class RegistrarFragment extends Fragment implements View.OnClickListener 
                         Response<Usuario> body = response.body();
 
                         if (body.success) {
-                            Sesion.cargarSesion(body.data);
-                            ((LoginActivity) getActivity()).startHomeActivity();
-
+                            //if (body.errors.length == 0) {
+                                Sesion.cargarSesion(body.data);
+                                ((LoginActivity) getActivity()).startHomeActivity();
+                            //} else {
+                              //  for (int i = 0; i < body.errors.length; i++) {
+                                //    Snackbar.make(getView(), body.errors[i], Snackbar.LENGTH_LONG).show();
+                                //}
+                            //}
                         } else {
-                            Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "El email ya existe", Snackbar.LENGTH_LONG).show();
+                            //Snackbar.make(getActivity().findViewById(R.id.login_fragment_container), "Hubo un error al registrar su solicitud, intente más tarde.", Snackbar.LENGTH_LONG).show();
+                            for (int i = 0; i < body.errors.length; i++) {
+                                Snackbar.make(getView(), body.errors[i], Snackbar.LENGTH_LONG).show();
+                            }
                         }
                     }
 

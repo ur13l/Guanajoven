@@ -28,13 +28,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_chat"
-            android:layout_width="67dp"
-            android:layout_height="79dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_chat_white_36dp"
-            android:paddingTop="10dp"
+            android:src="@drawable/ic_chat_white_36dp"
             android:textColor="#fff"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -42,8 +41,8 @@
             app:layout_constraintTop_toBottomOf="@+id/boton_eventos"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
-            app:layout_constraintHorizontal_bias="0.862"
-            app:layout_constraintVertical_bias="0.536" />
+            app:layout_constraintHorizontal_bias="0.782"
+            app:layout_constraintVertical_bias="0.493" />
 
         <TextView
             android:id="@+id/textView7"
@@ -60,13 +59,12 @@
             app:layout_constraintTop_toBottomOf="@+id/boton_chat"
             app:layout_constraintHorizontal_bias="0.548" />
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_redes_sociales"
-            android:layout_width="77dp"
-            android:layout_height="76dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_group_white_36dp"
-            android:paddingTop="10dp"
+            android:src="@drawable/ic_group_white_36dp"
             android:textColor="#fff"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -74,8 +72,7 @@
             app:layout_constraintTop_toBottomOf="@+id/boton_eventos"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
-            app:layout_constraintVertical_bias="0.506"
-            app:layout_constraintHorizontal_bias="0.518" />
+            app:layout_constraintVertical_bias="0.493" />
 
         <TextView
             android:id="@+id/textview_id_guanajoven"
@@ -162,51 +159,48 @@
             android:layout_height="38dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="0dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="-1dp"
             android:gravity="center_horizontal"
             android:text="@string/social"
             android:textColor="@color/white"
-            app:layout_constraintHorizontal_bias="0.333"
+            app:layout_constraintHorizontal_bias="0.222"
             app:layout_constraintLeft_toLeftOf="@+id/boton_redes_sociales"
             app:layout_constraintRight_toRightOf="@+id/boton_redes_sociales"
             app:layout_constraintTop_toBottomOf="@+id/boton_redes_sociales" />
 
         <ImageView
             android:id="@+id/imageView9"
-            android:layout_width="298dp"
-            android:layout_height="291dp"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
             android:layout_marginTop="64dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:src="@drawable/logo_guanajoven_nuevo"
-            app:layout_constraintHorizontal_bias="0.502"
-            card_view:layout_editor_absoluteX="88dp" />
+            android:src="@drawable/logo"
+            app:layout_constraintHorizontal_bias="0.502" />
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_promociones"
-            android:layout_width="65dp"
-            android:layout_height="67dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_promociones_home"
-            android:paddingTop="10dp"
+            android:src="@drawable/ic_promociones_home"
             android:textColor="#fff"
             app:layout_constraintRight_toLeftOf="@+id/boton_redes_sociales"
-            android:layout_marginRight="99dp"
+            android:layout_marginRight="70dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/boton_codigo_guanajoven"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
             android:visibility="visible"
-            app:layout_constraintVertical_bias="0.508" />
+            app:layout_constraintVertical_bias="0.492" />
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_notificaciones"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_notificaciones_home"
-            android:paddingTop="10dp"
+            android:src="@drawable/ic_notificaciones_home"
             android:textColor="#fff"
             app:layout_constraintRight_toLeftOf="@+id/boton_redes_sociales"
             android:layout_marginRight="58dp"
@@ -216,61 +210,57 @@
             android:layout_marginBottom="8dp"
             android:visibility="gone"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_codigo_guanajoven"
             android:layout_width="80dp"
-            android:layout_height="71dp"
-            android:layout_marginTop="70dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="64dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/qr_white"
-            android:paddingTop="10dp"
+            android:src="@drawable/qr_white"
             android:textColor="#fff"
             app:layout_constraintTop_toBottomOf="@+id/imageView9"
             app:layout_constraintRight_toLeftOf="@+id/boton_eventos"
-            android:layout_marginRight="87dp"
-            android:visibility="visible" />
+            android:layout_marginRight="70dp"
+            android:visibility="visible"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_regiones"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginTop="64dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_regiones_home"
-            android:paddingTop="10dp"
+            android:src="@drawable/ic_regiones_home"
             android:textColor="#fff"
             app:layout_constraintTop_toBottomOf="@+id/imageView9"
             app:layout_constraintRight_toLeftOf="@+id/boton_eventos"
             android:layout_marginRight="64dp"
             android:visibility="gone"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_eventos"
-            android:layout_width="75dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="70dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="64dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_event_white_36dp"
-            android:paddingTop="10dp"
+            android:src="@drawable/ic_event_white_36dp"
             android:textColor="#fff"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView9"
-            card_view:layout_editor_absoluteX="252dp" />
+            app:layout_constraintHorizontal_bias="0.501" />
 
-        <Button
+        <ImageButton
             android:id="@+id/boton_convocatorias"
-            android:layout_width="72dp"
-            android:layout_height="81dp"
-            android:layout_marginTop="77dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="64dp"
             android:background="@drawable/circular_button"
-            android:drawableTop="@drawable/ic_convocatoria_home"
-            android:paddingTop="10dp"
+            android:src="@drawable/ic_convocatoria_home"
             android:textColor="#fff"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageView9"
-            app:layout_constraintHorizontal_bias="0.866" />
+            app:layout_constraintHorizontal_bias="0.782" />
 
         <TextView
             android:id="@+id/tv_perfil"
@@ -325,7 +315,8 @@
         android:text="@string/bolsa_de_trabajo"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:textSize="20sp"/>
 
     <ImageButton
         android:id="@+id/boton_ayuda"
@@ -335,7 +326,7 @@
         android:background="@android:color/transparent"
         android:layout_marginTop="16dp"
         android:layout_marginRight="16dp"
-        app:srcCompat="@drawable/ic_help_600dp" />
+        app:srcCompat="@drawable/ic_help" />
 
     <FrameLayout
         android:id="@+id/pnl_publicidad"

@@ -12,8 +12,8 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:src="@drawable/logo" />
 
@@ -23,14 +23,15 @@
             android:layout_margin="5dp"
             android:text="@string/conocenos_que_hacemos"
             android:textColor="@color/colorAccent"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@string/conocenos_descripcion" />
+            android:text="@string/conocenos_descripcion"
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -38,32 +39,37 @@
             android:layout_margin="5dp"
             android:text="@string/conocenos_titulo_logros_estadisticas"
             android:textColor="@color/colorAccent"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/logro1" />
+            android:text="@string/logro1"
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/logro2" />
+            android:text="@string/logro2"
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/logro3" />
+            android:text="@string/logro3"
+            android:textSize="20sp"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="@string/logro4" />
+            android:text="@string/logro4"
+            android:textSize="20sp"/>
 
 
         <TextView
@@ -72,7 +78,7 @@
             android:layout_margin="5dp"
             android:text="@string/conocenos_enlaces"
             android:textColor="@color/colorAccent"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
@@ -81,7 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="@string/conocenos_lineas_de_accion"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/enlace_encuesta_de_juventud"
@@ -89,7 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="@string/conocenos_encuesta_juventud"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/enlace_diagnostico_juvenil"
@@ -97,7 +105,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="@string/conocenos_diagnostico_juvenil"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/enlace_directorio"
@@ -105,7 +114,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:text="@string/conocenos_directorio"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

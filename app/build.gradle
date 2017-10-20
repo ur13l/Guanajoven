@@ -9,8 +9,8 @@ android {
         applicationId "mx.gob.jovenes.guanajuato"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 1
-        versionName "0.1"
+        versionCode 4
+        versionName "1.1.2"
 
         dexOptions {
             javaMaxHeapSize "4g"

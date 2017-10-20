@@ -65,7 +65,7 @@
             android:id="@+id/imagenUsuario"
             android:layout_width="180dp"
             android:layout_height="180dp"
-            app:srcCompat="@drawable/logo_guanajoven_nuevo"
+            app:srcCompat="@drawable/logo"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginLeft="8dp"

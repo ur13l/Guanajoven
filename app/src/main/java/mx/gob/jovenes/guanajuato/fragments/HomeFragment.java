@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.formats.NativeAd;
 import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -88,14 +89,14 @@ public class HomeFragment extends CustomFragment {
 
     //Botones
     ImageButton botonNavigationDrawer;
-    Button botonCodigoGuanajoven;
-    Button botonRegiones;
-    Button botonNotificaciones;
-    Button botonEventos;
-    Button botonPromociones;
-    Button botonConvocatorias;
-    Button botonRedesSociales;
-    Button botonChat;
+    ImageButton botonCodigoGuanajoven;
+    ImageButton botonRegiones;
+    ImageButton botonNotificaciones;
+    ImageButton botonEventos;
+    ImageButton botonPromociones;
+    ImageButton botonConvocatorias;
+    ImageButton botonRedesSociales;
+    ImageButton botonChat;
     ImageButton botonAyuda;
     TextView textViewIdGuanajoven;
     TextView textViewPromociones;
@@ -151,14 +152,14 @@ public class HomeFragment extends CustomFragment {
 
         //Elementos menu
         botonNavigationDrawer = (ImageButton) v.findViewById(R.id.boton_navigation_drawer);
-        botonCodigoGuanajoven = (Button) v.findViewById(R.id.boton_codigo_guanajoven);
-        botonEventos = (Button) v.findViewById(R.id.boton_eventos);
-        botonRegiones = (Button) v.findViewById(R.id.boton_regiones);
-        botonNotificaciones = (Button) v.findViewById(R.id.boton_notificaciones);
-        botonPromociones = (Button) v.findViewById(R.id.boton_promociones);
-        botonConvocatorias = (Button) v.findViewById(R.id.boton_convocatorias);
-        botonRedesSociales = (Button) v.findViewById(R.id.boton_redes_sociales);
-        botonChat = (Button) v.findViewById(R.id.boton_chat);
+        botonCodigoGuanajoven = (ImageButton) v.findViewById(R.id.boton_codigo_guanajoven);
+        botonEventos = (ImageButton) v.findViewById(R.id.boton_eventos);
+        botonRegiones = (ImageButton) v.findViewById(R.id.boton_regiones);
+        botonNotificaciones = (ImageButton) v.findViewById(R.id.boton_notificaciones);
+        botonPromociones = (ImageButton) v.findViewById(R.id.boton_promociones);
+        botonConvocatorias = (ImageButton) v.findViewById(R.id.boton_convocatorias);
+        botonRedesSociales = (ImageButton) v.findViewById(R.id.boton_redes_sociales);
+        botonChat = (ImageButton) v.findViewById(R.id.boton_chat);
         botonAyuda = (ImageButton) v.findViewById(R.id.boton_ayuda);
         textViewIdGuanajoven = (TextView) v.findViewById(R.id.textview_id_guanajoven);
         textViewPromociones = (TextView) v.findViewById(R.id.textview_promociones);
@@ -321,6 +322,7 @@ public class HomeFragment extends CustomFragment {
                     //Transacción de realm, se itera sobre las publicidades obtenidas desde el servidor.
                     realm.beginTransaction();
                     for (Publicidad p : publicidades) {
+                        p.setUrl(getValidURL(p.getUrl()));
                         if (p.getDeletedAt() != null) {
                             Publicidad pr = realm.where(Publicidad.class)
                                     .equalTo("idPublicidad", p.getIdPublicidad())
@@ -586,5 +588,21 @@ public class HomeFragment extends CustomFragment {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     *
+     * @param url
+     * @return parse url
+     * @description Parse a invalid url to a http request, example: www.google.com, parse to http://www.google.com
+     */
+    private String getValidURL(String url) {
+        String returnURL;
+        if (url.startsWith("www")) {
+            returnURL = "http://" + url;
+            return returnURL;
+        } else {
+            return url;
+        }
     }
 }
