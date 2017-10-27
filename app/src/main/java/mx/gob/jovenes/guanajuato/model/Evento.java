@@ -20,6 +20,7 @@ public class Evento extends RealmObject {
     private String createdAt;
     private String updatedAt;
     private String deletedAt;
+    private boolean estaRegistrado;
 
     public int getIdEvento() {
         return idEvento;
@@ -116,4 +117,13 @@ public class Evento extends RealmObject {
     public void setDeletedAt(String deletedAt) {
         this.deletedAt = deletedAt;
     }
+
+    public void setEstaRegistrado(boolean estaRegistrado) {
+        this.estaRegistrado = estaRegistrado;
+    }
+
+    public boolean getEstaRegistrado() {
+        return this.estaRegistrado;
+    }
+
 }

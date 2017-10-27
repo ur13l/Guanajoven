@@ -93,6 +93,16 @@
                 android:textSize="15sp"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/textview_registrado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ya_has_sido_registrado"
+                android:textAlignment="center"
+                android:textSize="15sp"
+                android:visibility="gone"
+                android:layout_margin="10dp"/>
+
 
         </LinearLayout>
 

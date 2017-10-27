@@ -54,6 +54,9 @@ public class ChatFragment extends CustomFragment {
     private IntentFilter intentFilter;
     public static ChatFragment chat;
 
+    private static final String ERROR_MENSAJES = "Vaya!, parece que tenemos un problema...\n" +
+                                                        "Intenta más tarde o verifica tu conexión a internet";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,14 +132,7 @@ public class ChatFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<DatosMensajes>> call, Throwable t) {
-                AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-                b.setMessage(t.getMessage());
-                b.show();
 
-                System.err.println("-------------------");
-                System.err.println(PAGE);
-                System.err.println(Sesion.getUsuario().getApiToken());
-                System.err.println("-------------------");
             }
         });
     }
@@ -158,9 +154,13 @@ public class ChatFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<DatosMensajes>> call, Throwable t) {
-                AlertDialog.Builder b = new AlertDialog.Builder(getContext());
-                b.setMessage(t.getMessage());
-                b.show();
+                try {
+                    generarLlamada();
+                } catch (Exception exception) {
+                    AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+                    mensajeError.setMessage(ERROR_MENSAJES);
+                    mensajeError.show();
+                }
             }
         });
     }

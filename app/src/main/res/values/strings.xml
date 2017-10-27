@@ -455,4 +455,5 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="me_interesa">Me interesa</string>
     <string name="evento_ha_caducado">Este evento ha caducado</string>
     <string name="aplicar_promocion_text">Aplicar promoción</string>
+    <string name="ya_has_sido_registrado">Ya has sido registrado en este evento</string>
 </resources>

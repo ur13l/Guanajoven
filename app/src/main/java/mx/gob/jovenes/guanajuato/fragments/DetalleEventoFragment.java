@@ -62,6 +62,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     private Button botonEstoyEnEvento;
     private Button botonMeInteresa;
     private TextView textViewEventoCaducado;
+    private TextView textViewYaHasSidoRegistrado;
     private Realm realm;
     private LocationManager locationManager;
     private static final int PERMISSION_REQUEST_CODE = 321;
@@ -112,12 +113,14 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         botonEstoyEnEvento = (Button) v.findViewById(R.id.boton_estoy_en_el_evento);
         botonMeInteresa = (Button) v.findViewById(R.id.boton_me_interesa);
         textViewEventoCaducado = (TextView) v.findViewById(R.id.textview_evento_caducado);
+        textViewYaHasSidoRegistrado = (TextView) v.findViewById(R.id.textview_registrado);
 
         tvNombreEvento.setText(evento.getTitulo());
         tvDireccionEvento.setText(evento.getDireccion());
         tvDescripcionEvento.setText(evento.getDescripcion());
         tvFechaEvento.setText(getFechaCast(evento.getFechaInicio()) + " - " + getFechaCast(evento.getFechaFin()));
-        checkAsist();
+
+        if (!usuarioRegistrado()) checkAsist();
 
         botonEstoyEnEvento.setOnClickListener((View) -> {
                 progressDialog = ProgressDialog.show(getContext(), "Cargando", "Obteniendo tu localización", true, true);
@@ -137,10 +140,18 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
                                 Snackbar.make(getView(), "Registrado!", Snackbar.LENGTH_LONG).show();
 
+                                realm.beginTransaction();
+                                evento.setEstaRegistrado(true);
+                                realm.commitTransaction();
+
                             } else if (response.body().errors[0].equals(ERROR_FUERA_DE_RANGO)) {
                                 Snackbar.make(getView(), ERROR_FUERA_DE_RANGO, Snackbar.LENGTH_LONG).show();
                             } else if (response.body().errors[0].equals(ERROR_YA_REGISTRADO)) {
                                 Snackbar.make(getView(), ERROR_YA_REGISTRADO, Snackbar.LENGTH_LONG).show();
+
+                                realm.beginTransaction();
+                                evento.setEstaRegistrado(true);
+                                realm.commitTransaction();
                             }
                         } else {
                             Snackbar.make(getView(), "Error al obtener los datos", Snackbar.LENGTH_LONG).show();
@@ -175,7 +186,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
             //TODO Bloquear boton a lo largo de toda la app
             //Crea un contador para poder enviar correos cada cierto tiempo
-            new CountDownTimer(10000, 1000) {
+            /*new CountDownTimer(10000, 1000) {
 
                 public void onTick(long millisUntilFinished) {
                     MyApplication.ENVIAR_CORREOS_EVENTOS = false;
@@ -186,7 +197,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                     MyApplication.ENVIAR_CORREOS_EVENTOS = true;
                 }
 
-            }.start();
+            }.start();*/
 
         });
 
@@ -208,14 +219,26 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             long timeStampEnd = fechafin.getTime();
             long timeStampToday = today.getTime();
 
+            System.err.println(fechainicio.getHours() + " " + fechainicio.getMinutes());
+            System.err.println(today.getHours() + " " + today.getMinutes());
+            System.err.println(fechafin.getHours() + " " + fechafin.getMinutes());
+
+            System.err.println(timeStampBegin);
+            System.err.println(timeStampToday);
+            System.err.println(timeStampEnd);
+
             boolean antesDeFecha = timeStampBegin > timeStampToday;
-            boolean enFecha = timeStampBegin < timeStampToday && timeStampToday > timeStampEnd;
+            boolean enFecha = timeStampBegin < timeStampToday && timeStampToday < timeStampEnd;
             boolean despuesDeFecha = timeStampEnd < timeStampToday;
 
+            System.err.println(antesDeFecha);
+            System.err.println(timeStampBegin < timeStampToday);
+            System.err.println(despuesDeFecha);
+
             if (antesDeFecha) {
-                textViewEventoCaducado.setVisibility(View.VISIBLE);
-            } else if (despuesDeFecha) {
                 botonMeInteresa.setVisibility(View.VISIBLE);
+            } else if (despuesDeFecha) {
+                textViewEventoCaducado.setVisibility(View.VISIBLE);
             } else if (enFecha) {
                 botonEstoyEnEvento.setVisibility(View.VISIBLE);
 
@@ -348,6 +371,14 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
     private double getLongitud() {
         return this.longitud;
+    }
+
+    private boolean usuarioRegistrado() {
+        if (evento.getEstaRegistrado()) {
+            textViewYaHasSidoRegistrado.setVisibility(View.VISIBLE);
+            return true;
+        }
+        return false;
     }
 
 }

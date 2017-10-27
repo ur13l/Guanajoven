@@ -114,7 +114,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             long timeStampToday = today.getTime();
 
             boolean antesDeFecha = timeStampBegin > timeStampToday;
-            boolean enFecha = timeStampBegin < timeStampToday && timeStampToday > timeStampEnd;
+            boolean enFecha = timeStampBegin < timeStampToday && timeStampToday < timeStampEnd;
             boolean despuesDeFecha = timeStampEnd < timeStampToday;
 
             if (enFecha) {
@@ -132,8 +132,6 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             e.printStackTrace();
         }
     }
-
-
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
