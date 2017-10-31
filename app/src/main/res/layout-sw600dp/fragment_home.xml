@@ -35,12 +35,13 @@
             android:background="@drawable/circular_button"
             android:src="@drawable/ic_chat_white_36dp"
             android:textColor="#fff"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/boton_eventos"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginBottom="8dp"
+
+            app:layout_constraintLeft_toRightOf="@+id/boton_redes_sociales"
+            android:layout_marginLeft="64dp"
             app:layout_constraintHorizontal_bias="0.782"
             app:layout_constraintVertical_bias="0.493" />
 
@@ -187,7 +188,7 @@
             android:src="@drawable/ic_promociones_home"
             android:textColor="#fff"
             app:layout_constraintRight_toLeftOf="@+id/boton_redes_sociales"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="64dp"
             android:layout_marginTop="16dp"
             app:layout_constraintTop_toBottomOf="@+id/boton_codigo_guanajoven"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -220,7 +221,7 @@
             android:textColor="#fff"
             app:layout_constraintTop_toBottomOf="@+id/imageView9"
             app:layout_constraintRight_toLeftOf="@+id/boton_eventos"
-            android:layout_marginRight="70dp"
+            android:layout_marginRight="64dp"
             android:visibility="visible"/>
 
         <ImageButton
@@ -257,8 +258,9 @@
             android:background="@drawable/circular_button"
             android:src="@drawable/ic_convocatoria_home"
             android:textColor="#fff"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
+
+            app:layout_constraintLeft_toRightOf="@id/boton_eventos"
+            android:layout_marginLeft="64dp"
             app:layout_constraintTop_toBottomOf="@+id/imageView9"
             app:layout_constraintHorizontal_bias="0.782" />
 

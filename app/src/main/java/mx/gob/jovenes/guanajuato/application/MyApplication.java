@@ -1,5 +1,6 @@
 package mx.gob.jovenes.guanajuato.application;
 
+import android.os.CountDownTimer;
 import android.support.multidex.MultiDexApplication;
 
 import com.firebase.client.Firebase;
@@ -7,7 +8,13 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
 import io.realm.Realm;
+import mx.gob.jovenes.guanajuato.fragments.DetalleConvocatoriaFragment;
+import mx.gob.jovenes.guanajuato.fragments.DetalleEventoFragment;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,7 +37,50 @@ public class MyApplication extends MultiDexApplication {
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
     public static boolean ENVIAR_CORREOS_EVENTOS = true;
 
+    private static int minutes = 5;
+    private static long TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;
+    private static long TIEMPO_RESTANTE_CORREOS_EVENTOS = minutes * 60000;
 
+    public static CountDownTimer contadorCorreosConvocatorias = new CountDownTimer(TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS, 100) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = millisUntilFinished;
+
+            Date  date = new Date(TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS);
+            SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
+            String formatted = formatter.format(date);
+
+            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText("Enviar siguiente correo - " + formatted);
+            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setEnabled(false);
+        }
+
+        @Override
+        public void onFinish() {
+            TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;
+            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText("Quiero mas información");
+            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setEnabled(true);
+        }
+    };
+
+    public static CountDownTimer contadorCorreosEventos = new CountDownTimer(TIEMPO_RESTANTE_CORREOS_EVENTOS, 100) {
+        @Override
+        public void onTick(long millisUntilFinished) {
+            TIEMPO_RESTANTE_CORREOS_EVENTOS = millisUntilFinished;
+            Date date = new Date(TIEMPO_RESTANTE_CORREOS_EVENTOS);
+            SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
+            String formatted = formatter.format(date);
+
+            DetalleEventoFragment.botonMeInteresa.setText("Enviar siguiente correo - " + formatted);
+            DetalleEventoFragment.botonMeInteresa.setEnabled(false);
+        }
+
+        @Override
+        public void onFinish() {
+            TIEMPO_RESTANTE_CORREOS_EVENTOS = minutes * 60000;
+            DetalleEventoFragment.botonMeInteresa.setText("Me interesa");
+            DetalleEventoFragment.botonMeInteresa.setEnabled(true);
+        }
+    };
     //dirección publica
     //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
 

@@ -50,7 +50,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private RVDocumentoAdapter adapter;
     private Context context;
     private Realm realm;
-    private Button btnQuieroMasInformacion;
+    public static Button btnQuieroMasInformacion;
     private ConvocatoriaAPI convocatoriaAPI;
     private Retrofit retrofit;
     private final static String $ERROR_MENSAJE = "Fallo en enviar o ya se encuentra inscrito";
@@ -126,6 +126,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
                     Snackbar.make(getView(), $MENSAJE_ENVIADO, 7000).show();
+                    MyApplication.contadorCorreosConvocatorias.start();
                 }
             });
         });

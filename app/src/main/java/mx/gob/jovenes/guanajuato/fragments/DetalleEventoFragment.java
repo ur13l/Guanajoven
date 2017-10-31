@@ -60,7 +60,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     private TextView tvDescripcionEvento;
     private TextView tvFechaEvento;
     private Button botonEstoyEnEvento;
-    private Button botonMeInteresa;
+    public static Button botonMeInteresa;
     private TextView textViewEventoCaducado;
     private TextView textViewYaHasSidoRegistrado;
     private Realm realm;

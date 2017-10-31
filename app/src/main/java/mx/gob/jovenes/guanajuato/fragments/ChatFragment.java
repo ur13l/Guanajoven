@@ -80,12 +80,23 @@ public class ChatFragment extends CustomFragment {
         mensajes = new ArrayList<>();
         adapter = new RVMessagesAdapter(getContext(), mensajes);
 
+        llm = new LinearLayoutManager(getActivity());
+        llm.setReverseLayout(true);
+        llm.setStackFromEnd(false);
+
+        recyclerViewMessages.setLayoutManager(llm);
+        recyclerViewMessages.setAdapter(adapter);
+
         primeraLlamada();
 
         buttonSend.setOnClickListener((View) -> {
                 if (editTextMessage.getText().toString().length() != 0) {
                     mensajes.add(0, new Mensaje(editTextMessage.getText().toString(), 1));
+
                     adapter.notifyData(mensajes);
+
+
+                    System.err.println(mensajes);
 
                     Call<Response<Boolean>> call = chatAPI.enviarMensaje(Sesion.getUsuario().getApiToken(), editTextMessage.getText().toString());
 
@@ -120,19 +131,25 @@ public class ChatFragment extends CustomFragment {
                 PAGE++;
                 if (response.body() != null) {
                     mensajes = response.body().data.getData();
-                    llm = new LinearLayoutManager(getActivity());
+                    /*llm = new LinearLayoutManager(getActivity());
                     llm.setReverseLayout(true);
-                    //llm.setStackFromEnd(true);
                     llm.setStackFromEnd(false);
                     adapter = new RVMessagesAdapter(getContext(), mensajes);
                     recyclerViewMessages.setLayoutManager(llm);
-                    recyclerViewMessages.setAdapter(adapter);
+                    recyclerViewMessages.setAdapter(adapter);*/
+                    adapter.notifyData(mensajes);
                 }
             }
 
             @Override
             public void onFailure(Call<Response<DatosMensajes>> call, Throwable t) {
-
+                try {
+                    primeraLlamada();
+                } catch (Exception exception) {
+                    AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
+                    mensajeError.setMessage(ERROR_MENSAJES);
+                    mensajeError.show();
+                }
             }
         });
     }
