@@ -1,5 +1,6 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -115,18 +116,25 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
 
         btnQuieroMasInformacion.setOnClickListener((View) -> {
-            Call<Response<Boolean>> call = convocatoriaAPI.enviarCorreo(Sesion.getUsuario().getId(), convocatoria.getIdConvocatoria());
+            ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("Enviando correo");
+            progressDialog.setMessage("Espera mientras enviamos un correo a tu cuenta registrada");
+            progressDialog.show();
+
+            Call<Response<Boolean>> call = convocatoriaAPI.enviarCorreo(Sesion.getUsuario().getApiToken(), convocatoria.getIdConvocatoria());
 
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                     Snackbar.make(getView(), $ERROR_MENSAJE, 7000).show();
+                    progressDialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
                     Snackbar.make(getView(), $MENSAJE_ENVIADO, 7000).show();
                     MyApplication.contadorCorreosConvocatorias.start();
+                    progressDialog.dismiss();
                 }
             });
         });

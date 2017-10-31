@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
+import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.DetalleConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.DetalleEventoFragment;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
@@ -35,7 +36,17 @@ public class MyApplication extends MultiDexApplication {
     public static String LAST_UPDATE_EVENTOS = "last_update_eventos";
     public static String LAST_UPDATE_EMPRESAS = "last_update_empresas";
     public static final String LAST_UPDATE_PUBLICIDAD = "last_update_publicidad";
-    public static boolean ENVIAR_CORREOS_EVENTOS = true;
+
+    //dirección publica
+    //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
+
+    //uriel publica
+    //public static final String BASE_URL = "http://10.0.7.131/GuanajovenWeb/public/api/";
+
+    //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
+    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+
+    //public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
 
     private static int minutes = 5;
     private static long TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;
@@ -50,14 +61,14 @@ public class MyApplication extends MultiDexApplication {
             SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
             String formatted = formatter.format(date);
 
-            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText("Enviar siguiente correo - " + formatted);
+            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText("Espera para enviar otro correo - " + formatted);
             DetalleConvocatoriaFragment.btnQuieroMasInformacion.setEnabled(false);
         }
 
         @Override
         public void onFinish() {
             TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;
-            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText("Quiero mas información");
+            DetalleConvocatoriaFragment.btnQuieroMasInformacion.setText(R.string.btn_quiero_mas_informacion);
             DetalleConvocatoriaFragment.btnQuieroMasInformacion.setEnabled(true);
         }
     };
@@ -70,27 +81,17 @@ public class MyApplication extends MultiDexApplication {
             SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
             String formatted = formatter.format(date);
 
-            DetalleEventoFragment.botonMeInteresa.setText("Enviar siguiente correo - " + formatted);
+            DetalleEventoFragment.botonMeInteresa.setText("Espera para enviar otro correo - " + formatted);
             DetalleEventoFragment.botonMeInteresa.setEnabled(false);
         }
 
         @Override
         public void onFinish() {
             TIEMPO_RESTANTE_CORREOS_EVENTOS = minutes * 60000;
-            DetalleEventoFragment.botonMeInteresa.setText("Me interesa");
+            DetalleEventoFragment.botonMeInteresa.setText(R.string.me_interesa);
             DetalleEventoFragment.botonMeInteresa.setEnabled(true);
         }
     };
-    //dirección publica
-    //public static final String BASE_URL = "http://200.23.39.11/GuanajovenWeb/public/api/";
-
-    //uriel publica
-    //public static final String BASE_URL = "http://10.0.7.131/GuanajovenWeb/public/api/";
-
-    //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
-    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
-
-    //public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
 
     /**
      * Punto de partida que ejecuta la app al iniciar.

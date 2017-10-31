@@ -29,9 +29,9 @@ public interface EventoAPI {
             @Query("longitud") double longitud
     );
 
-    @POST("notificaciones/evento")
+    @POST("eventos/notificacion")
     Call<Response<Boolean>> enviarCorreo (
-            @Query("id_usuario") int idUsuario,
+            @Query("api_token") String apitoken,
             @Query("id_evento") int idvento
     );
 }

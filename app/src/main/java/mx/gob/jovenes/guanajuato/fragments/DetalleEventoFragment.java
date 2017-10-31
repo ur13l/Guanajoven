@@ -170,34 +170,27 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
         botonMeInteresa.setOnClickListener((View) -> {
             //Genera la llamada para poder enviar un correo
-            Call<Response<Boolean>> enviarCorreo = eventoAPI.enviarCorreo(Sesion.getUsuario().getId(), evento.getIdEvento());
+            ProgressDialog progressDialog = new ProgressDialog(getContext());
+            progressDialog.setTitle("Enviando correo");
+            progressDialog.setMessage("Espera mientras enviamos un correo a tu cuenta registrada");
+            progressDialog.show();
+
+            Call<Response<Boolean>> enviarCorreo = eventoAPI.enviarCorreo(Sesion.getUsuario().getApiToken(), evento.getIdEvento());
 
             enviarCorreo.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                     Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscrito", 7000).show();
+                    progressDialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
                     Snackbar.make(getView(), "Gracias por estar interesado en el evento, en breve te llegará un correo electrónico con más información.", 7000).show();
+                    MyApplication.contadorCorreosEventos.start();
+                    progressDialog.dismiss();
                 }
             });
-
-            //TODO Bloquear boton a lo largo de toda la app
-            //Crea un contador para poder enviar correos cada cierto tiempo
-            /*new CountDownTimer(10000, 1000) {
-
-                public void onTick(long millisUntilFinished) {
-                    MyApplication.ENVIAR_CORREOS_EVENTOS = false;
-                    botonMeInteresa.setEnabled(false);
-                }
-
-                public void onFinish() {
-                    MyApplication.ENVIAR_CORREOS_EVENTOS = true;
-                }
-
-            }.start();*/
 
         });
 

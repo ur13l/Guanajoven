@@ -19,9 +19,9 @@ public interface ConvocatoriaAPI {
         @Query("timestamp") String timestamp
     );
 
-    @POST("notificaciones/convocatoria")
+    @POST("convocatorias/notificacion")
     Call<Response<Boolean>> enviarCorreo (
-            @Query("id_usuario") int idUsuario,
+            @Query("api_token") String apiToken,
             @Query("id_convocatoria") int idConvocatoria
     );
 }

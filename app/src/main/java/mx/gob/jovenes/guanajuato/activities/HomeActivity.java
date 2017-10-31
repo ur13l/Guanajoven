@@ -145,28 +145,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    private boolean lessThan30Years(String date) {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        String todayString  = new SimpleDateFormat(DATE_FORMAT).format(Calendar.getInstance().getTime());
-
-        try {
-            Date bornDateParse = formatter.parse(date);
-            Date todayDateParse = formatter.parse(todayString);
-            Calendar bornDate = getCalendar(bornDateParse);
-            Calendar today = getCalendar(todayDateParse);
-
-            int years = today.get(Calendar.YEAR) - bornDate.get(Calendar.YEAR);
-
-            if (bornDate.get(Calendar.MONTH) > today.get(Calendar.MONTH) || (bornDate.get(Calendar.MONTH) == today.get(Calendar.MONTH) && bornDate.get(Calendar.DATE) > today.get(Calendar.DATE))) {
-                years--;
-            }
-
-            return years < 30;
-        } catch (ParseException parseException) {
-            parseException.printStackTrace();
-            return false;
-        }
-    }
 
     private Calendar getCalendar(Date date) {
         Calendar calendar = Calendar.getInstance(Locale.US);
@@ -310,6 +288,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         if (!lessThan30Years(getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
             navigationView.getMenu().findItem(R.id.nav_codigo_guanajoven).setVisible(false);
             navigationView.getMenu().findItem(R.id.nav_promociones).setVisible(false);
+            puntajeDrawer.setVisibility(View.GONE);
+            posicionDrawer.setVisibility(View.GONE);
         }
 
     }
@@ -319,6 +299,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStop();
         if(mGoogleApiClient.isConnected()){
             mGoogleApiClient.disconnect();
+        }
+    }
+
+    private boolean lessThan30Years(String date) {
+        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        String todayString  = new SimpleDateFormat(DATE_FORMAT).format(Calendar.getInstance().getTime());
+
+        try {
+            Date bornDateParse = formatter.parse(date);
+            Date todayDateParse = formatter.parse(todayString);
+            Calendar bornDate = getCalendar(bornDateParse);
+            Calendar today = getCalendar(todayDateParse);
+
+            int years = today.get(Calendar.YEAR) - bornDate.get(Calendar.YEAR);
+
+            if (bornDate.get(Calendar.MONTH) > today.get(Calendar.MONTH) || (bornDate.get(Calendar.MONTH) == today.get(Calendar.MONTH) && bornDate.get(Calendar.DATE) > today.get(Calendar.DATE))) {
+                years--;
+            }
+
+            return years < 30;
+        } catch (ParseException parseException) {
+            parseException.printStackTrace();
+            return false;
         }
     }
 
