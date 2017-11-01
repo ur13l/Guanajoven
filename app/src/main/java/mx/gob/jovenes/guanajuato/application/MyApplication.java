@@ -1,9 +1,14 @@
 package mx.gob.jovenes.guanajuato.application;
 
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDexApplication;
 
 import com.firebase.client.Firebase;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -17,6 +22,7 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.DetalleConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.DetalleEventoFragment;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import mx.gob.jovenes.guanajuato.utils.OKDialog;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

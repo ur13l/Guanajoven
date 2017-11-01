@@ -53,6 +53,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -189,7 +190,7 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                             OKDialog.showOKDialog(getActivity(), "Error", "Hubo un error en la conexión, reintentar más adelante");
                         }
                     })
-                    .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions)
+                    .addApi(Auth.GOOGLE_SIGN_IN_API, googleSignInOptions).addApi(LocationServices.API)
                     .build();
         }
 
@@ -688,6 +689,10 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
         } else {
             Snackbar.make(getView(), "Email o Contraseña Incorrectos, intenta nuevamente.", Snackbar.LENGTH_LONG).show();
         }
+    }
+
+    public GoogleApiClient getGoogleApiClient() {
+        return googleApiClient;
     }
 
 }

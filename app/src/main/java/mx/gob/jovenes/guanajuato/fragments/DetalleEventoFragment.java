@@ -16,6 +16,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -25,12 +26,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -71,6 +74,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     private ProgressDialog progressDialog;
     private Retrofit retrofit;
     private EventoAPI eventoAPI;
+    private Location lastLocation;
 
     private static final String ERROR_YA_REGISTRADO = "Ya has sido registrado";
     private static final String ERROR_FUERA_DE_RANGO = "No te encuentras en el rango del evento";
