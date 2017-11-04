@@ -3,16 +3,13 @@ package mx.gob.jovenes.guanajuato.fragments;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -24,9 +21,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -54,7 +51,7 @@ import retrofit2.Retrofit;
 /**
  * Created by uriel on 21/06/16.
  */
-public class DetalleEventoFragment extends Fragment implements OnMapReadyCallback, LocationListener {
+public class DetalleEventoFragment extends Fragment implements OnMapReadyCallback {
     private static String ID_EVENTO = "id_evento";
     private Evento evento;
     private MapFragment mapaEvento;
@@ -74,10 +71,10 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     private ProgressDialog progressDialog;
     private Retrofit retrofit;
     private EventoAPI eventoAPI;
-    private Location lastLocation;
-
     private static final String ERROR_YA_REGISTRADO = "Ya has sido registrado";
     private static final String ERROR_FUERA_DE_RANGO = "No te encuentras en el rango del evento";
+
+    private Criteria criteria;
 
     public static DetalleEventoFragment newInstance(int idEvento) {
         DetalleEventoFragment detalleEventoFragment = new DetalleEventoFragment();
@@ -104,6 +101,8 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
         evento = realm.where(Evento.class).equalTo("idEvento", getArguments().getInt(ID_EVENTO)).findFirst();
 
+        criteria = new Criteria();
+        criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 
         progressDialog = new ProgressDialog(getContext());
 
@@ -127,48 +126,48 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         if (!usuarioRegistrado()) checkAsist();
 
         botonEstoyEnEvento.setOnClickListener((View) -> {
-                progressDialog = ProgressDialog.show(getContext(), "Cargando", "Obteniendo tu localización", true, true);
+            progressDialog = ProgressDialog.show(getContext(), "Cargando", "Obteniendo tu localización", true, true);
 
-                Call<Response<EventoResponse>> call = eventoAPI.marcarEvento(evento.getIdEvento(), Sesion.getUsuario().getApiToken(), getLatitud(), getLongitud());
+            Call<Response<EventoResponse>> call = eventoAPI.marcarEvento(evento.getIdEvento(), Sesion.getUsuario().getApiToken(), getLatitud(), getLongitud());
 
-                call.enqueue(new Callback<Response<EventoResponse>>() {
-                    @Override
-                    public void onResponse(Call<Response<EventoResponse>> call, retrofit2.Response<Response<EventoResponse>> response) {
+            call.enqueue(new Callback<Response<EventoResponse>>() {
+                @Override
+                public void onResponse(Call<Response<EventoResponse>> call, retrofit2.Response<Response<EventoResponse>> response) {
 
-                        if (response.body() != null) {
-                            if (response.body().errors.length == 0) {
-                                int puntos = response.body().data.getPuntosOtorgados();
-                                int puntosUsuario = Integer.parseInt(Sesion.getUsuario().getPuntaje());
-                                String puntosFinal = String.valueOf(puntos + puntosUsuario);
-                                Sesion.getUsuario().setPuntaje(puntosFinal);
+                    if (response.body() != null) {
+                        if (response.body().errors.length == 0) {
+                            int puntos = response.body().data.getPuntosOtorgados();
+                            int puntosUsuario = Integer.parseInt(Sesion.getUsuario().getPuntaje());
+                            String puntosFinal = String.valueOf(puntos + puntosUsuario);
+                            Sesion.getUsuario().setPuntaje(puntosFinal);
 
-                                Snackbar.make(getView(), "Registrado!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getView(), "Registrado!", Snackbar.LENGTH_LONG).show();
 
-                                realm.beginTransaction();
-                                evento.setEstaRegistrado(true);
-                                realm.commitTransaction();
+                            realm.beginTransaction();
+                            evento.setEstaRegistrado(true);
+                            realm.commitTransaction();
 
-                            } else if (response.body().errors[0].equals(ERROR_FUERA_DE_RANGO)) {
-                                Snackbar.make(getView(), ERROR_FUERA_DE_RANGO, Snackbar.LENGTH_LONG).show();
-                            } else if (response.body().errors[0].equals(ERROR_YA_REGISTRADO)) {
-                                Snackbar.make(getView(), ERROR_YA_REGISTRADO, Snackbar.LENGTH_LONG).show();
+                        } else if (response.body().errors[0].equals(ERROR_FUERA_DE_RANGO)) {
+                            Snackbar.make(getView(), ERROR_FUERA_DE_RANGO, Snackbar.LENGTH_LONG).show();
+                        } else if (response.body().errors[0].equals(ERROR_YA_REGISTRADO)) {
+                            Snackbar.make(getView(), ERROR_YA_REGISTRADO, Snackbar.LENGTH_LONG).show();
 
-                                realm.beginTransaction();
-                                evento.setEstaRegistrado(true);
-                                realm.commitTransaction();
-                            }
-                        } else {
-                            Snackbar.make(getView(), "Error al obtener los datos", Snackbar.LENGTH_LONG).show();
+                            realm.beginTransaction();
+                            evento.setEstaRegistrado(true);
+                            realm.commitTransaction();
                         }
+                    } else {
+                        Snackbar.make(getView(), "Ops! parece que ocurrio un error, intenta más tarde", Snackbar.LENGTH_LONG).show();
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<Response<EventoResponse>> call, Throwable t) {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                        builder.setMessage("Error de conexión");
-                        builder.show();
-                    }
-                });
+                @Override
+                public void onFailure(Call<Response<EventoResponse>> call, Throwable t) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setMessage("Error de conexión");
+                    builder.show();
+                }
+            });
 
         });
 
@@ -216,14 +215,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             long timeStampEnd = fechafin.getTime();
             long timeStampToday = today.getTime();
 
-            System.err.println(fechainicio.getHours() + " " + fechainicio.getMinutes());
-            System.err.println(today.getHours() + " " + today.getMinutes());
-            System.err.println(fechafin.getHours() + " " + fechafin.getMinutes());
-
-            System.err.println(timeStampBegin);
-            System.err.println(timeStampToday);
-            System.err.println(timeStampEnd);
-
             boolean antesDeFecha = timeStampBegin > timeStampToday;
             boolean enFecha = timeStampBegin < timeStampToday && timeStampToday < timeStampEnd;
             boolean despuesDeFecha = timeStampEnd < timeStampToday;
@@ -231,6 +222,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             System.err.println(antesDeFecha);
             System.err.println(timeStampBegin < timeStampToday);
             System.err.println(despuesDeFecha);
+
 
             if (antesDeFecha) {
                 botonMeInteresa.setVisibility(View.VISIBLE);
@@ -243,7 +235,35 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                     pedirPermisos();
                 } else {
                     try {
-                        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                        locationManager.requestSingleUpdate(criteria, new LocationListener() {
+                            @Override
+                            public void onLocationChanged(Location location) {
+                                setLatitud(location.getLatitude());
+                                setLongitud(location.getLongitude());
+                            }
+
+                            @Override
+                            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                            }
+
+                            @Override
+                            public void onProviderEnabled(String provider) {
+
+                            }
+
+                            @Override
+                            public void onProviderDisabled(String provider) {
+
+                            }
+                        }, null);
+                        /*SingleShootLocationProvider.requestSingleUpdate(getContext(), new SingleShootLocationProvider.LocationCallBack() {
+                            @Override
+                            public void onNewLocationAvailable(GPSCoordinates location) {
+                                setLatitud(location.getLatitude());
+                                setLongitud(location.getLongitude());
+                            }
+                        });*/
                     } catch (SecurityException e) {
                         e.printStackTrace();
                     }
@@ -284,41 +304,8 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             getActivity().getFragmentManager().beginTransaction().remove(mapaEvento).commit();
     }
 
-    @Override
-    public void onLocationChanged(Location location) {
-        if (botonEstoyEnEvento.getVisibility() == View.VISIBLE) {
-            progressDialog.dismiss();
-
-            setLatitud(location.getLatitude());
-            setLongitud(location.getLongitude());
-        }
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        if (botonEstoyEnEvento.getVisibility() == View.VISIBLE) {
-            if (getContext() != null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setMessage("Necesitas el GPS");
-                builder.show();
-            }
-
-            if (progressDialog != null) { progressDialog.dismiss(); }
-        }
-    }
-
     private void pedirPermisos() {
-        String[] permisos = new String[]{ Manifest.permission.ACCESS_FINE_LOCATION };
+        String[] permisos = new String[]{Manifest.permission.ACCESS_FINE_LOCATION};
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(permisos, PERMISSION_REQUEST_CODE);
         }
@@ -339,9 +326,36 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                 break;
         }
 
+
         if (permitir) {
             try {
-                locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+                locationManager.requestSingleUpdate(criteria, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        setLatitud(location.getLatitude());
+                        setLongitud(location.getLongitude());
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+
+                    }
+                }, null);
+                /*SingleShootLocationProvider.requestSingleUpdate(getContext(), location -> {
+                    setLatitud(location.getLatitude());
+                    setLongitud(location.getLongitude());
+                });*/
+
             } catch (SecurityException e) {
                 e.printStackTrace();
             }
@@ -372,10 +386,102 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
     private boolean usuarioRegistrado() {
         if (evento.getEstaRegistrado()) {
+            botonEstoyEnEvento.setVisibility(View.GONE);
+            botonMeInteresa.setVisibility(View.GONE);
+            textViewEventoCaducado.setVisibility(View.GONE);
             textViewYaHasSidoRegistrado.setVisibility(View.VISIBLE);
             return true;
         }
         return false;
+    }
+
+    private static class SingleShootLocationProvider {
+
+        interface LocationCallBack {
+             void onNewLocationAvailable(GPSCoordinates location);
+        }
+
+        public static void requestSingleUpdate(final Context context, final LocationCallBack callBack) {
+            final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+            if (isNetworkEnabled) {
+                Criteria criteria = new Criteria();
+                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+
+                locationManager.requestSingleUpdate(criteria, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        callBack.onNewLocationAvailable(new GPSCoordinates(location.getLatitude(), location.getLongitude()));
+                    }
+
+                    @Override
+                    public void onStatusChanged(String provider, int status, Bundle extras) {
+                    }
+
+                    @Override
+                    public void onProviderEnabled(String provider) {
+                    }
+
+                    @Override
+                    public void onProviderDisabled(String provider) {
+                    }
+                }, null);
+            } else {
+                boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+                if (isGPSEnabled) {
+                    Criteria criteria = new Criteria();
+                    criteria.setAccuracy(Criteria.ACCURACY_COARSE);
+
+                    locationManager.requestSingleUpdate(criteria, new LocationListener() {
+                        @Override
+                        public void onLocationChanged(Location location) {
+                            callBack.onNewLocationAvailable(new GPSCoordinates(location.getLatitude(), location.getLongitude()));
+                        }
+
+                        @Override
+                        public void onStatusChanged(String provider, int status, Bundle extras) {}
+
+                        @Override
+                        public void onProviderEnabled(String provider) {}
+
+                        @Override
+                        public void onProviderDisabled(String provider) {}
+
+                    }, null);
+                }
+            }
+
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            }
+
+        }
+
+    }
+
+    private static class GPSCoordinates {
+        public float latitude = -1;
+        public float longitude = -1;
+
+        public GPSCoordinates(float latitude, float longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        public GPSCoordinates(double latitude, double longitude) {
+            this.latitude = (float) latitude;
+            this.longitude = (float) longitude;
+        }
+
+        public float getLatitude() {
+            return this.latitude;
+        }
+
+        public float getLongitude() {
+            return this.longitude;
+        }
+
     }
 
 }
