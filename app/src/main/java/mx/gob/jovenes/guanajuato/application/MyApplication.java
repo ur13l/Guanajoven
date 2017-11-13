@@ -50,9 +50,9 @@ public class MyApplication extends MultiDexApplication {
     //public static final String BASE_URL = "http://10.0.7.131/GuanajovenWeb/public/api/";
 
     //public static final String BASE_URL = "http://10.0.7.119/GuanajovenWeb/public/api/";
-    public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
+    //public static final String BASE_URL = "http://10.0.7.40/GuanajovenWeb/public/api/";
 
-    //public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
+    public static final String BASE_URL = "http://guanajovenapp.guanajuato.gob.mx/api/";
 
     private static int minutes = 5;
     private static long TIEMPO_RESTANTE_CORREOS_CONVOCATORIAS = minutes * 60000;

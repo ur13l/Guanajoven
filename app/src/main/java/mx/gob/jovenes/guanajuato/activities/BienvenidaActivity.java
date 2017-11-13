@@ -16,7 +16,6 @@ import mx.gob.jovenes.guanajuato.fragments.BienvenidaFragment;
  */
 public class BienvenidaActivity extends AppCompatActivity {
     public static String BIENVENIDA_KEY = "bienvenida";
-    public static String LOGIN = "login";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

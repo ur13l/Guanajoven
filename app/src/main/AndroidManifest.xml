@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="mx.gob.jovenes.guanajuato">
 
-    <!-- To auto-complete the email text field in the usuario form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -20,9 +19,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- To access accounts configured on device -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <!-- To use account credentials -->
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
 
@@ -64,14 +61,17 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".activities.BienvenidaActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.BienvenidaTheme" />
+
         <activity
             android:name=".activities.InstruccionesActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/app_name"
@@ -84,10 +84,13 @@
             android:label="@string/title_activity_segunda"
             android:screenOrientation="portrait"
             android:theme="@style/ActivityStyle">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.HomeActivity" />
+
         </activity>
+
         <activity
             android:name=".activities.VideoActivacionActivity"
             android:label="@string/title_activity_video_activacion"
@@ -95,6 +98,7 @@
             android:screenOrientation="landscape"
             android:showOnLockScreen="true"
             android:theme="@style/ActivityStyle"/>
+
         <activity
             android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
             android:screenOrientation="portrait"
@@ -106,6 +110,7 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <service android:name=".notifications.FirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -116,6 +121,7 @@
             android:name=".activities.HelpActivity"
             android:label="@string/title_activity_help"
             android:theme="@style/ActivityStyle"/>
+
     </application>
 
 </manifest>

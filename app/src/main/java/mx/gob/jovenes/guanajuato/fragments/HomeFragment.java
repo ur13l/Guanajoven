@@ -9,30 +9,21 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.widget.ButtonBarLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.google.android.gms.ads.formats.NativeAd;
-import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
-
-import org.w3c.dom.Text;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -46,7 +37,6 @@ import java.util.Locale;
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.Funcion;
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.activities.HomeActivity;
 import mx.gob.jovenes.guanajuato.activities.SegundaActivity;
 import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
 import mx.gob.jovenes.guanajuato.api.PublicidadAPI;
@@ -55,13 +45,9 @@ import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.model.Evento;
 import mx.gob.jovenes.guanajuato.model.Publicidad;
-import mx.gob.jovenes.guanajuato.model.Perfil;
-import mx.gob.jovenes.guanajuato.model.PerfilPOJO;
-import mx.gob.jovenes.guanajuato.model.models_tmp.Imagen;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
-import mx.gob.jovenes.guanajuato.utils.FileUtils;
 import mx.gob.jovenes.guanajuato.utils.ImageHandler;
 import mx.gob.jovenes.guanajuato.utils.SlideHandler;
 import retrofit2.Call;
@@ -75,8 +61,6 @@ import retrofit2.Retrofit;
  * Fecha: 10/04/2017
  */
 public class HomeFragment extends CustomFragment {
-    public final static String FECHA_ACTUALIZACION = "fecha_actualizacion";
-    //Elementos gráficos
     private ImageButton btnSlide;
     private ViewGroup pnlPublicidad;
     private ImageButton btnClose;
@@ -87,7 +71,6 @@ public class HomeFragment extends CustomFragment {
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
-    //Botones
     ImageButton botonNavigationDrawer;
     ImageButton botonCodigoGuanajoven;
     ImageButton botonRegiones;
@@ -103,38 +86,30 @@ public class HomeFragment extends CustomFragment {
     TextView textViewRegiones;
     TextView textViewNotificaciones;
 
-    //Instancias de API
     private Retrofit retrofit;
     private PublicidadAPI publicidadAPI;
     private Realm realm;
     private NotificacionAPI notificacionAPI;
 
-    //Preferencias almacenadas del usuario
     private SharedPreferences prefs;
 
-    //Cambio de fragments
     FragmentTransaction fragmentTransaction;
     Fragment fragment = null;
 
     private TextView textViewBolsaTrabajo;
 
-
-    //Al crearse el fragment se genera el singleton que contendrá la lista de anuncios disponibles
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Instancias de la API
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         publicidadAPI = retrofit.create(PublicidadAPI.class);
         notificacionAPI = retrofit.create(NotificacionAPI.class);
 
-        //Instancia de Realm
         realm = MyApplication.getRealmInstance();
 
         Sesion.sessionStart(getActivity().getApplication());
 
-        //Declarando las preferencias
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
 
         fragmentTransaction = getFragmentManager().beginTransaction();
@@ -144,13 +119,11 @@ public class HomeFragment extends CustomFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, parent, false);
 
-        //Elementos publicidad
         pnlPublicidad = (ViewGroup) v.findViewById(R.id.pnl_publicidad);
         btnSlide = (ImageButton) v.findViewById(R.id.btn_slide);
         btnClose = (ImageButton) v.findViewById(R.id.close);
         slidePublicidad = v.findViewById(R.id.slide_publicidad);
 
-        //Elementos menu
         botonNavigationDrawer = (ImageButton) v.findViewById(R.id.boton_navigation_drawer);
         botonCodigoGuanajoven = (ImageButton) v.findViewById(R.id.boton_codigo_guanajoven);
         botonEventos = (ImageButton) v.findViewById(R.id.boton_eventos);
@@ -453,94 +426,6 @@ public class HomeFragment extends CustomFragment {
             }.getType());
         }
 
-        /*
-        @Override
-        public void onPostExecute(ArrayList<Evento> result) {
-            super.onPostExecute(result);
-            if (result != null) {
-                prefs.edit().putString(FECHA_ACTUALIZACION, DateUtilities.dateToString(new Date())).commit();
-
-                if(result.size() > 0) {
-                    for (Evento e : result) {
-                        if(e.ge == 0){
-                            DateUtilities.deleteEvento(getActivity(), e.getIdEvento());
-                        }
-                        else {
-                            DateUtilities.setFechas(getActivity(),
-                                    e.getIdEvento(),
-                                    DateUtilities.stringToDate(e.getFechaInicio()),
-                                    DateUtilities.stringToDate(e.getFechaFin()),
-                                    e.getTitulo(),
-                                    e.getDescripcion(),
-                                    e.getTipo()
-                            );
-                        }
-                    }
-
-                }
-            }
-        }
-    }*/
-
-
-        private class ObternerAsyncTask extends AsyncTask<Integer, Void, String> {
-            @Override
-            protected String doInBackground(Integer... args) {
-                String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/registro/obtenerPerfil.php";
-                ClienteHttp cliente = new ClienteHttp();
-                HashMap<String, String> param = new HashMap<>();
-                param.put("id_login_app", args[0] + "");
-                String result = cliente.hacerRequestHttp(url, param);
-                Log.d("RESULT", result);
-                Gson gson = new Gson();
-                PerfilPOJO perfilpo = gson.fromJson(result, PerfilPOJO.class);
-                if (perfilpo != null) {
-                    Perfil perfil = new Perfil(getActivity().getApplicationContext());
-                    perfil.setNombreCompleto(perfilpo.getNombre());
-                    perfil.setGenero(perfilpo.getId_genero());
-                    String fechaBaseDatos = perfilpo.getFec_nacimiento();
-                    perfil.setFecha(fechaBaseDatos);
-                    perfil.setOcupacion(perfilpo.getId_ocupacion());
-                    perfil.setCodigo_postal(perfilpo.getCodigo_postal());
-                    perfil.setTelefono(perfilpo.getTelefono());
-                    perfil.setSuccess(perfilpo.getSuccess());
-                    perfil.setPeso(perfilpo.getPeso());
-                    perfil.setEstatura(perfilpo.getEstatura());
-                    perfil.setPresion(perfilpo.getPresion());
-                    perfil.setGlucosa(perfilpo.getGlucosa());
-                    perfil.setActividad(perfilpo.getActividad());
-                    perfil.setLesion(perfilpo.getLesion());
-                }
-                Log.d("result", result);
-                return result;
-            }
-        }
-
-
-        private class RecibirImagenesAsyncTask extends AsyncTask<Void, Void, ArrayList<Imagen>> {
-
-            @Override
-            protected ArrayList<Imagen> doInBackground(Void... voids) {
-                HashMap<String, String> params = new HashMap<>();
-                String url = "http://" + ClienteHttp.SERVER_IP + "/app_php/imagenes/imagenes.php";
-                ClienteHttp cliente = new ClienteHttp();
-                String result = cliente.hacerRequestHttp(url, params);
-                Gson gson = new Gson();
-                Log.d("RESULTAD", result);
-                return gson.fromJson(result, new TypeToken<List<Imagen>>() {
-                }.getType());
-            }
-
-            @Override
-            public void onPostExecute(ArrayList<Imagen> result) {
-                super.onPostExecute(result);
-                Gson gson = new Gson();
-                if (result != null) {
-                    JsonArray jsonArray = gson.toJsonTree(result).getAsJsonArray();
-                    FileUtils.writeToFile(jsonArray.toString(), getActivity());
-                }
-            }
-        }
     }
 
     public void enlace(String link){
@@ -605,4 +490,6 @@ public class HomeFragment extends CustomFragment {
             return url;
         }
     }
+
+
 }
