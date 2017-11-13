@@ -1,13 +1,10 @@
 package mx.gob.jovenes.guanajuato.activities;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -15,46 +12,38 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.model.Circle;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
-import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
 import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.model.Usuario;
+<<<<<<< HEAD
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
 
+=======
+>>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,9 +56,7 @@ import retrofit2.Retrofit;
  * Fecha: 02/05/2016
  */
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
-
     public static String MENU_ID = "menu_id";
-    public static String INSTRUCCIONES_CHECK = "instrucciones_check";
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
@@ -78,7 +65,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
 
-    private SharedPreferences prefs;
 
     private Retrofit retrofit;
     private NotificacionAPI notificacionAPI;
@@ -131,14 +117,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        //Intent para abrir el tutorial de la aplicación
-        /*if(!prefs.getBoolean(INSTRUCCIONES_CHECK, false)){
-            Intent i = new Intent(this, InstruccionesActivity.class);
-            startActivity(i);
-            prefs.edit().putBoolean(INSTRUCCIONES_CHECK, true).commit();
-        }*/
-
         //Configuración de retrofit
         retrofit = ((MyApplication) getApplication()).getRetrofitInstance();
         notificacionAPI = retrofit.create(NotificacionAPI.class);
@@ -177,18 +155,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int id = item.getItemId();
-
-        if(id == R.id.ayuda_home){
-            Intent i = new Intent(this, HelpActivity.class);
-            startActivity(i);
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

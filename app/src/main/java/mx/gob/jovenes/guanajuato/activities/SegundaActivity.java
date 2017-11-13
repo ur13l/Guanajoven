@@ -1,13 +1,19 @@
 package mx.gob.jovenes.guanajuato.activities;
 
 import android.os.Bundle;
+<<<<<<< HEAD
 import android.support.design.widget.FloatingActionButton;
+=======
+>>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+<<<<<<< HEAD
 import android.view.View;
+=======
+>>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
@@ -18,7 +24,6 @@ import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
 import mx.gob.jovenes.guanajuato.fragments.EmpresaFragment;
 import mx.gob.jovenes.guanajuato.fragments.NotificacionesFragment;
 import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
-import mx.gob.jovenes.guanajuato.fragments.NuevoEventoDialogFragment;
 import mx.gob.jovenes.guanajuato.fragments.RedesSocialesFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
 
@@ -38,21 +43,13 @@ public class SegundaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_segunda);
 
         segundaActivity = this;
-        /*FrameLayout contentFrameLayout = (FrameLayout) findViewById(R.id.content_frame);
-        getLayoutInflater().inflate(R.layout.activity_segunda, contentFrameLayout);*/
 
-        //setContentView(R.layout.activity_segunda);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         int conditional = 0;
         FragmentManager fm = getSupportFragmentManager();
@@ -60,27 +57,8 @@ public class SegundaActivity extends AppCompatActivity {
         Fragment fragment = null;
         int id = getIntent().getExtras().getInt(HomeActivity.MENU_ID);
 
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    FragmentManager fm = getSupportFragmentManager();
-                    NuevoEventoDialogFragment f = new NuevoEventoDialogFragment();
-                    f.show(fm, "Nuevo evento");
-                }
-            });
-        }
-
         try {
             switch (id) {
-                /*
-                case R.id.nav_home:
-                    fragment = HomeFragment.newInstance(R.id.nav_home,HomeFragment.class);
-                    break;
-                 */
                 case R.id.nav_perfil:
                     fragment = EditarDatosFragment.newInstance(R.id.nav_perfil, R.string.datos_usuario, EditarDatosFragment.class);
                     break;
@@ -90,15 +68,12 @@ public class SegundaActivity extends AppCompatActivity {
                 case R.id.nav_mis_eventos:
                     fragment = EventoFragment.newInstance(R.id.nav_mis_eventos, R.string.mis_eventos, EventoFragment.class);
                     break;
-
                 case R.id.nav_acerca_de:
                     fragment = AcercaDeFragment.newInstance(R.id.nav_acerca_de, R.string.acerca_de, AcercaDeFragment.class);
                     break;
-
                 case R.id.nav_historial_notificaciones:
                     fragment = NotificacionesFragment.newInstance(R.id.nav_historial_notificaciones, R.string.historial_notificaciones, NotificacionesFragment.class);
                     break;
-
                 case R.id.nav_regiones:
                     fragment = RegionFragment.newInstance(R.id.nav_regiones, R.string.regiones, RegionFragment.class);
                     break;
@@ -111,9 +86,6 @@ public class SegundaActivity extends AppCompatActivity {
                 case R.id.nav_redes_sociales:
                     fragment = RedesSocialesFragment.newInstance(R.id.nav_redes_sociales, R.string.redes_sociales, RedesSocialesFragment.class);
                     break;
-                case R.id.boton_ayuda:
-                    //fragment = AyudaFragment.newInstance(R.id.boton_help, R.string.acerca_de, AyudaFragment.class);
-                    break;
                 case R.id.nav_promociones:
                     fragment = EmpresaFragment.newInstance(R.id.nav_promociones, R.string.nav_promociones, EmpresaFragment.class);
                     break;
@@ -125,9 +97,7 @@ public class SegundaActivity extends AppCompatActivity {
         }
         if (conditional != 1) {
             ft.replace(R.id.segunda_fragment_container, fragment).commit();
-
         }
-
 
     }
 
@@ -136,22 +106,5 @@ public class SegundaActivity extends AppCompatActivity {
         this.getSupportActionBar().setTitle(R.string.app_name);
         super.onBackPressed();
     }
-
-    /*
-    @Override
-    protected void onStop() {
-        super.onStop();
-        this.finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        this.finish();
-    }
-
-    public static void cerrarSesion() {
-        segundaActivity.finish();
-    }*/
 
 }
