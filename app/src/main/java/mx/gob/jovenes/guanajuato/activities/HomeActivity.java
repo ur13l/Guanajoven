@@ -54,7 +54,7 @@ import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.Perfil;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
-import mx.gob.jovenes.guanajuato.receivers.AlarmasBroadcastReceiver;
+
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import retrofit2.Call;
 import retrofit2.Callback;

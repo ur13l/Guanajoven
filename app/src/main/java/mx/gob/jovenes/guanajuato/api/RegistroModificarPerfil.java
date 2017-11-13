@@ -1,12 +1,6 @@
 package mx.gob.jovenes.guanajuato.api;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import mx.gob.jovenes.guanajuato.model.DatosModificarPerfil;
-import mx.gob.jovenes.guanajuato.model.DatosUsuario;
-import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
