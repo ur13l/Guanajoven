@@ -1,11 +1,19 @@
 package mx.gob.jovenes.guanajuato.activities;
 
 import android.os.Bundle;
+<<<<<<< HEAD
+import android.support.design.widget.FloatingActionButton;
+=======
+>>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+<<<<<<< HEAD
+import android.view.View;
+=======
+>>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;

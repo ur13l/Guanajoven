@@ -20,7 +20,6 @@ public interface PromocionesAPI {
             @Query("timestamp") String timeStamp
     );
 
-
     @POST("promociones/registrar")
     Call<Response<Boolean>> registrar (
             @Query("token") String token,

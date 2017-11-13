@@ -35,6 +35,12 @@ import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.model.Usuario;
+<<<<<<< HEAD
+import mx.gob.jovenes.guanajuato.model.Perfil;
+import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
+
+=======
+>>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;

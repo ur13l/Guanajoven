@@ -1,7 +1,5 @@
 package mx.gob.jovenes.guanajuato.api;
 
-import org.json.JSONObject;
-
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.model.models_tmp.Curp;
 import retrofit2.Call;
@@ -59,7 +57,6 @@ public interface UsuarioAPI {
             @Query("id_google") String idGoogle
     );
 
-
     /**
      * Funcionalidad para logueo utilizando cuenta de Facebook
      * @param email
@@ -71,7 +68,6 @@ public interface UsuarioAPI {
             @Query("email") String email,
             @Query("id_facebook") String idFacebook
     );
-
 
     /**
      * Método para recuperación de password a partir de un email.
@@ -92,7 +88,6 @@ public interface UsuarioAPI {
     Call<Response<Curp>> consultarCurp(
             @Query("curp") String curp
     );
-
 
     /**
      * Método para actualizar el token Guanajoven del código QR

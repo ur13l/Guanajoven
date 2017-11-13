@@ -14,5 +14,4 @@ public interface IdGuanajovenAPI {
     Call<Response<Boolean>> enviarCorreoIDGuanajoven (
             @Query("api_token") String apiToken
     );
-
 }

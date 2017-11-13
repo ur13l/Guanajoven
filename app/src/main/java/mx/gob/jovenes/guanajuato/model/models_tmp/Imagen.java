@@ -1,7 +1,7 @@
 package mx.gob.jovenes.guanajuato.model.models_tmp;
 
 /**
- * Created by code on 22/08/16.
+ * Created by ode on 22/08/16.
  */
 public class Imagen {
     private String img;
