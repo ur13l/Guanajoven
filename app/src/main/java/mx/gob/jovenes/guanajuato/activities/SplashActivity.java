@@ -10,9 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 
-/**
- * Created by Uriel on 17/01/2016.
- */
 public class SplashActivity extends AppCompatActivity {
     private SharedPreferences prefs;
 

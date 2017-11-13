@@ -9,13 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.BienvenidaFragment;
 
-/**
- * Autor: Uriel Infante
- * Activity que contiene al fragment de bienvenida.
- * Fecha: 02/05/2016
- */
 public class BienvenidaActivity extends AppCompatActivity {
-    public static String BIENVENIDA_KEY = "bienvenida";
+    public static final String BIENVENIDA_KEY = "bienvenida";
 
     @Override
     protected void onCreate(Bundle savedInstanceState){

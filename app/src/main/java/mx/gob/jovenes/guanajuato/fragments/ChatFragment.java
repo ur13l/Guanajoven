@@ -4,9 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
@@ -22,11 +19,10 @@ import android.widget.ImageButton;
 
 import com.google.gson.Gson;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.adapters.RVMessagesAdapter;
+import mx.gob.jovenes.guanajuato.adapters.RVMensajeAdapter;
 import mx.gob.jovenes.guanajuato.api.ChatAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
@@ -45,7 +41,7 @@ public class ChatFragment extends CustomFragment {
     private RecyclerView recyclerViewMessages;
     private ImageButton buttonSend;
     private EditText editTextMessage;
-    private RVMessagesAdapter adapter;
+    private RVMensajeAdapter adapter;
     private List<Mensaje> mensajes;
     private ChatAPI chatAPI;
     private Retrofit retrofit;
@@ -78,7 +74,7 @@ public class ChatFragment extends CustomFragment {
         buttonSend = (ImageButton) v.findViewById(R.id.button_send);
         editTextMessage = (EditText) v.findViewById(R.id.edittext_message);
         mensajes = new ArrayList<>();
-        adapter = new RVMessagesAdapter(getContext(), mensajes);
+        adapter = new RVMensajeAdapter(getContext(), mensajes);
 
         llm = new LinearLayoutManager(getActivity());
         llm.setReverseLayout(true);
@@ -131,12 +127,6 @@ public class ChatFragment extends CustomFragment {
                 PAGE++;
                 if (response.body() != null) {
                     mensajes = response.body().data.getData();
-                    /*llm = new LinearLayoutManager(getActivity());
-                    llm.setReverseLayout(true);
-                    llm.setStackFromEnd(false);
-                    adapter = new RVMessagesAdapter(getContext(), mensajes);
-                    recyclerViewMessages.setLayoutManager(llm);
-                    recyclerViewMessages.setAdapter(adapter);*/
                     adapter.notifyData(mensajes);
                 }
             }
@@ -163,10 +153,7 @@ public class ChatFragment extends CustomFragment {
                 PAGE++;
                 List<Mensaje> auxiliar = response.body().data.getData();
 
-                //if (response.body().data.getLastPage() < PAGE) {
-                    adapter.agregarMensajes(auxiliar);
-
-                //}
+                adapter.agregarMensajes(auxiliar);
             }
 
             @Override

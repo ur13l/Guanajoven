@@ -644,8 +644,6 @@ public class LoginFragment extends Fragment implements  View.OnClickListener {
                 String tag = null;
                 if (correo_prefs == null) {
                     f = new RecuperarPasswordFragment();
-                } else {
-                    f = new ReestablecerPasswordFragment();
                 }
 
                 ft.replace(R.id.login_fragment_container, f);

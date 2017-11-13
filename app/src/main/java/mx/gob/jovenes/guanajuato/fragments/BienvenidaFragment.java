@@ -14,12 +14,6 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.activities.BienvenidaActivity;
 import mx.gob.jovenes.guanajuato.activities.LoginActivity;
 
-/**
- * Autor: Uriel Infante
- * Fragment de la interfaz de bienvenida, esta pantalla solo se muestra la primera vez que el usuario abre la app.
- * Consta de un mensaje de bienvenida acompañado de una imagen y un botón de comenzar.
- * Fecha: 02/05/2016
- */
 public class BienvenidaFragment extends Fragment {
     private Button btnComenzar;
 
@@ -28,18 +22,15 @@ public class BienvenidaFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_bienvenida, parent, false);
         btnComenzar = (Button) v.findViewById(R.id.btn_comenzar);
 
-        btnComenzar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(BienvenidaActivity.BIENVENIDA_KEY, true);
-                editor.commit();
+        btnComenzar.setOnClickListener(v1 -> {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean(BienvenidaActivity.BIENVENIDA_KEY, true);
+            editor.commit();
 
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-            }
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            startActivity(intent);
+            getActivity().finish();
         });
         return v;
     }

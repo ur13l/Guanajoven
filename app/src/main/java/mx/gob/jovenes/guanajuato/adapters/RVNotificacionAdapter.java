@@ -1,7 +1,6 @@
 package mx.gob.jovenes.guanajuato.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,27 +8,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.model.Notificacion;
 
-/**
- * Created by codigus on 17/5/2017.
- */
-
 public class RVNotificacionAdapter extends RecyclerView.Adapter<RVNotificacionAdapter.NotificacionViewHolder>{
     private List<Notificacion> notificaciones;
-    private Context contexto;
+    private Context context;
     private Realm realm;
 
     public RVNotificacionAdapter(Context context, List<Notificacion> notificaciones) {
         this.notificaciones = notificaciones;
-        this.contexto = context;
+        this.context = context;
     }
 
     @Override
@@ -49,29 +41,24 @@ public class RVNotificacionAdapter extends RecyclerView.Adapter<RVNotificacionAd
         holder.tvFechaNotificacion.setText(notificaciones.get(position).getFechaEmision());
 
         holder.imageViewEliminarNotificacion.setOnClickListener((View) -> {
-            AlertDialog.Builder mensaje = new AlertDialog.Builder(contexto);
+            AlertDialog.Builder mensaje = new AlertDialog.Builder(context);
 
-            mensaje.setMessage("¿Estás seguro de eliminar este elemento?");
+            mensaje.setMessage(context.getString(R.string.rv_notificacion_adapter_eliminarseguro));
 
-            mensaje.setPositiveButton("Aceptar", (dialog, which) -> {
+            mensaje.setPositiveButton(context.getString(R.string.rv_notificacion_adapter_aceptar), (dialog, which) -> {
                 realm.beginTransaction();
-                Notificacion notificacion = realm.where(Notificacion.class).equalTo("idNotificacion", notificaciones.get(position).getIdNotificacion()).findFirst();
+                Notificacion notificacion = realm.where(Notificacion.class).equalTo(context.getString(R.string.rv_notificacion_adapter_idnotificacion), notificaciones.get(position).getIdNotificacion()).findFirst();
                 notificacion.deleteFromRealm();
                 notificaciones.remove(position);
                 notifyDataSetChanged();
                 realm.commitTransaction();
             });
 
-            mensaje.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+            mensaje.setNegativeButton(context.getString(R.string.rv_notificacion_adapter_cancelar), (dialog, which) -> dialog.dismiss());
 
             mensaje.show();
 
         });
-    }
-
-    public void notifyData(List<Notificacion> notificaciones) {
-        this.notificaciones = notificaciones;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -79,11 +66,11 @@ public class RVNotificacionAdapter extends RecyclerView.Adapter<RVNotificacionAd
         return notificaciones.size();
     }
 
-    public class NotificacionViewHolder extends RecyclerView.ViewHolder {
-        TextView tvNombreNotificacion;
-        TextView tvMensajeNotificacion;
-        TextView tvFechaNotificacion;
-        ImageButton imageViewEliminarNotificacion;
+    class NotificacionViewHolder extends RecyclerView.ViewHolder {
+        private TextView tvNombreNotificacion;
+        private TextView tvMensajeNotificacion;
+        private TextView tvFechaNotificacion;
+        private ImageButton imageViewEliminarNotificacion;
 
         NotificacionViewHolder(View itemView) {
             super(itemView);

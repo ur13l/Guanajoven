@@ -438,7 +438,7 @@ public class EditarDatosFragment extends CustomFragment {
             recyclerViewIdiomasSeleccionados.setVisibility(View.VISIBLE);
 
             LinearLayoutManager llm = new LinearLayoutManager(thisActivity);
-            adapter = new RVIdiomasSeleccionadosAdapter(thisActivity, IdiomasAdicionalesDialogFragment.datosIdiomas);
+            adapter = new RVIdiomasSeleccionadosAdapter(thisActivity,IdiomasAdicionalesDialogFragment.datosIdiomas);
             recyclerViewIdiomasSeleccionados.setLayoutManager(llm);
             recyclerViewIdiomasSeleccionados.setAdapter(adapter);
             textViewTituloIdiomasSeleccionados.setVisibility(View.VISIBLE);

@@ -16,13 +16,10 @@ import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.DetalleRegionFragment;
 import mx.gob.jovenes.guanajuato.model.Region;
 
-/**
- * Created by esva on 25/04/17.
- */
-
 public class RVRegionAdapter extends RecyclerView.Adapter<RVRegionAdapter.RegionViewHolder>{
-    private List<Region> regiones;
     private Context context;
+
+    private List<Region> regiones;
 
     public RVRegionAdapter(Context context, List<Region> regiones) {
         this.context = context;
@@ -52,7 +49,7 @@ public class RVRegionAdapter extends RecyclerView.Adapter<RVRegionAdapter.Region
         return regiones.size();
     }
 
-    public class RegionViewHolder extends RecyclerView.ViewHolder {
+    class RegionViewHolder extends RecyclerView.ViewHolder {
         TextView tvNombreRegion;
         TextView tvDireccionRegion;
 
@@ -61,14 +58,11 @@ public class RVRegionAdapter extends RecyclerView.Adapter<RVRegionAdapter.Region
             tvNombreRegion = (TextView) itemView.findViewById(R.id.tv_nombre_region);
             tvDireccionRegion = (TextView) itemView.findViewById(R.id.tv_direccion_region);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DetalleRegionFragment f = DetalleRegionFragment.newInstance(regiones.get(getAdapterPosition()).getIdRegion());
-                    FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
-                }
+            itemView.setOnClickListener(v -> {
+                DetalleRegionFragment f = DetalleRegionFragment.newInstance(regiones.get(getAdapterPosition()).getIdRegion());
+                FragmentManager fragmentManager = ((AppCompatActivity)context).getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.segunda_fragment_container, f).addToBackStack(null).commit();
             });
         }
     }

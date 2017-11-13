@@ -10,20 +10,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.DetallePromocionFragment;
 import mx.gob.jovenes.guanajuato.model.Empresa;
 import mx.gob.jovenes.guanajuato.model.Promocion;
-
-/**
- * Created by codigus on 17/07/2017.
- */
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 
 public class RVPromocionAdapter  extends RecyclerView.Adapter<RVPromocionAdapter.PromocionViewHolder> {
     private Context context;
+
     private List<Promocion> promociones;
     private Empresa empresa;
 
@@ -42,31 +39,21 @@ public class RVPromocionAdapter  extends RecyclerView.Adapter<RVPromocionAdapter
     @Override
     public void onBindViewHolder(PromocionViewHolder holder, int position) {
         holder.textViewNombrePromocion.setText(promociones.get(position).getTitulo());
-        holder.textViewFechaInicio.setText("Inicio: " + getFechaCast(promociones.get(position).getFechaInicio()));
-        holder.textViewFechaFin.setText("Fin: " + getFechaCast(promociones.get(position).getFechaFin()));
+        String fechaInicio = context.getString(R.string.rv_promocion_adapter_inicio) + DateUtilities.getFechaCast(promociones.get(position).getFechaInicio());
+        String fechaFin = context.getString(R.string.rv_promocion_adapter_fin) + DateUtilities.getFechaCast(promociones.get(position).getFechaFin());
+
+        holder.textViewFechaInicio.setText(fechaInicio);
+        holder.textViewFechaFin.setText(fechaFin);
     }
 
     public int getItemCount() {
         return promociones.size();
     }
 
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     class PromocionViewHolder extends RecyclerView.ViewHolder {
-        TextView textViewNombrePromocion;
-        TextView textViewFechaInicio;
-        TextView textViewFechaFin;
+        private TextView textViewNombrePromocion;
+        private TextView textViewFechaInicio;
+        private TextView textViewFechaFin;
 
         PromocionViewHolder(View item) {
             super(item);

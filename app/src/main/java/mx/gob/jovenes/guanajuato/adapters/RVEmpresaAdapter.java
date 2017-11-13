@@ -5,7 +5,6 @@ import mx.gob.jovenes.guanajuato.model.Empresa;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 
 import android.content.Context;
 
-import android.support.v7.widget.util.SortedListAdapterCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,57 +27,49 @@ import java.util.List;
 
 import mx.gob.jovenes.guanajuato.R;
 
-/**
- * Created by codigus on 17/07/2017.
- */
-
-public class RVEmpresaAdapter extends RecyclerView.Adapter<RVEmpresaAdapter.EmpresasViewHolder>{
+public class RVEmpresaAdapter extends RecyclerView.Adapter<RVEmpresaAdapter.EmpresasViewHolder> {
     private Context context;
-    private Comparator<Empresa> comparator;
+
     private static final Comparator<Empresa> COMPARADOR_ALFABETICO = (o1, o2) -> o1.getEmpresa().compareTo(o2.getEmpresa());
-
-
     private final SortedList<Empresa> empresaSortedList = new SortedList<>(Empresa.class, new SortedList.Callback<Empresa>() {
-       @Override
-       public int compare(Empresa o1, Empresa o2) {
-           return COMPARADOR_ALFABETICO.compare(o1, o2);
-       }
+        @Override
+        public int compare(Empresa o1, Empresa o2) {
+            return COMPARADOR_ALFABETICO.compare(o1, o2);
+        }
 
-       @Override
-       public void onChanged(int position, int count) {
-           notifyItemRangeChanged(position, count);
-       }
+        @Override
+        public void onChanged(int position, int count) {
+            notifyItemRangeChanged(position, count);
+        }
 
-       @Override
-       public boolean areContentsTheSame(Empresa oldItem, Empresa newItem) {
-           return oldItem.equals(newItem);
-       }
+        @Override
+        public boolean areContentsTheSame(Empresa oldItem, Empresa newItem) {
+            return oldItem.equals(newItem);
+        }
 
-       @Override
-       public boolean areItemsTheSame(Empresa item1, Empresa item2) {
-           return item1.getIdEmpresa() == item2.getIdEmpresa();
-       }
+        @Override
+        public boolean areItemsTheSame(Empresa item1, Empresa item2) {
+            return item1.getIdEmpresa() == item2.getIdEmpresa();
+        }
 
-       @Override
-       public void onInserted(int position, int count) {
-           notifyItemRangeInserted(position, count);
-       }
+        @Override
+        public void onInserted(int position, int count) {
+            notifyItemRangeInserted(position, count);
+        }
 
-       @Override
-       public void onRemoved(int position, int count) {
-           notifyItemRangeRemoved(position, count);
-       }
+        @Override
+        public void onRemoved(int position, int count) {
+            notifyItemRangeRemoved(position, count);
+        }
 
-       @Override
-       public void onMoved(int fromPosition, int toPosition) {
-           notifyItemRangeRemoved(fromPosition, toPosition);
-       }
-   });
+        @Override
+        public void onMoved(int fromPosition, int toPosition) {
+            notifyItemRangeRemoved(fromPosition, toPosition);
+        }
+    });
 
-
-    public RVEmpresaAdapter(Context context, Comparator<Empresa> comparator1) {
+    public RVEmpresaAdapter(Context context) {
         this.context = context;
-        this.comparator = comparator1;
     }
 
     public EmpresasViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -131,11 +121,11 @@ public class RVEmpresaAdapter extends RecyclerView.Adapter<RVEmpresaAdapter.Empr
         return empresaSortedList.size();
     }
 
-    public class EmpresasViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageViewLogoEmpresa;
-        TextView textViewNombreEmpresa;
-        TextView textViewUrlEmpresa;
-        String url;
+    class EmpresasViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageViewLogoEmpresa;
+        private TextView textViewNombreEmpresa;
+        private TextView textViewUrlEmpresa;
+        private String url;
 
         EmpresasViewHolder(View item) {
             super(item);

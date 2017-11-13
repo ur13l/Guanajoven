@@ -11,14 +11,7 @@ import android.view.MenuItem;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.StartFragment;
 
-
-/**
- * Autor: Uriel Infante
- * Activity contenedora de la interfaz Usuario.
- * Fecha: 02/05/2016
- */
 public class LoginActivity extends AppCompatActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +42,11 @@ public class LoginActivity extends AppCompatActivity {
         super.onBackPressed();
     }
 
-
     public void startHomeActivity(){
         Intent i = new Intent(this, HomeActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);
         this.finish();
     }
-
-
 
 }

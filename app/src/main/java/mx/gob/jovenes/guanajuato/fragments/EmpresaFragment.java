@@ -99,7 +99,7 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
             public void onResponse(Call<Response<ArrayList<Empresa>>> call, retrofit2.Response<Response<ArrayList<Empresa>>> response) {
                 empresas = response.body().data;
 
-                adapter = new RVEmpresaAdapter(getContext(), COMPARADOR_ALFABETICO);
+                adapter = new RVEmpresaAdapter(getContext());
                 adapter.add(empresas);
 
                 StaggeredGridLayoutManager slm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -194,7 +194,7 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
         RealmResults<Empresa> result = realm.where(Empresa.class).findAll();
 
         empresas = realm.copyFromRealm(result);
-        adapter = new RVEmpresaAdapter(getContext(), COMPARADOR_ALFABETICO);
+        adapter = new RVEmpresaAdapter(getContext());
         StaggeredGridLayoutManager slm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
         rvEmpresas.setAdapter(adapter);
         rvEmpresas.setLayoutManager(slm);

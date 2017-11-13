@@ -20,8 +20,8 @@ import mx.gob.jovenes.guanajuato.fragments.DetalleConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.model.Convocatoria;
 
 public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAdapter.ConvocatoriaViewHolder> {
-    public static List<Convocatoria> convocatorias;
-    public Context context;
+    private Context context;
+    private static List<Convocatoria> convocatorias;
 
     public RVConvocatoriaAdapter(Context context, List<Convocatoria> convocatorias) {
         this.context = context;
@@ -45,20 +45,14 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
 
         switch(convocatorias.get(position).getEstatus()){
             case 1:
-                holder.estatusConvocatoria.setText("Activa");
+                holder.estatusConvocatoria.setText(context.getString(R.string.rv_convocatoria_adapter_activa));
                 break;
             case 2:
-                holder.estatusConvocatoria.setText("Terminada");
+                holder.estatusConvocatoria.setText(context.getString(R.string.rv_convocatoria_adapter_terminada));
                 break;
             default:
-                holder.estatusConvocatoria.setText("Sin asignar");
+                holder.estatusConvocatoria.setText(context.getString(R.string.rv_convocatoria_adapter_sinasignar));
         }
-    }
-
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
     }
 
     @Override
@@ -67,10 +61,10 @@ public class RVConvocatoriaAdapter extends RecyclerView.Adapter<RVConvocatoriaAd
     }
 
     class ConvocatoriaViewHolder extends RecyclerView.ViewHolder {
-        ImageView imagenConvocatoria;
-        TextView tituloConvocatoria;
-        TextView descripcionConvocatoria;
-        TextView estatusConvocatoria;
+        private ImageView imagenConvocatoria;
+        private TextView tituloConvocatoria;
+        private TextView descripcionConvocatoria;
+        private TextView estatusConvocatoria;
 
         ConvocatoriaViewHolder(View itemView) {
             super(itemView);

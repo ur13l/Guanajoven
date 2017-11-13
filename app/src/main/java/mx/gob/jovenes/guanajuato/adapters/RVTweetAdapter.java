@@ -20,10 +20,6 @@ import java.util.List;
 import mx.gob.jovenes.guanajuato.R;
 import twitter4j.Status;
 
-/**
- * Created by codigus on 26/05/2017.
- */
-
 public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetViewHolder>{
     private List<Status> statuses;
     private Context context;
@@ -47,11 +43,13 @@ public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetVie
         String name;
         String screenName;
         String profileImageURL;
+        String url = null;
 
         if (!statuses.get(position).isRetweet()) {
             name = statuses.get(position).getUser().getName();
-            screenName = statuses.get(position).getUser().getScreenName();
+            screenName = context.getString(R.string.rv_tweet_adapter_arroba) + statuses.get(position).getUser().getScreenName();
             profileImageURL = statuses.get(position).getUser().getProfileImageURL();
+            url = context.getString(R.string.rv_tweet_adapter_link) + statuses.get(position).getId();
         } else {
             name = statuses.get(position).getRetweetedStatus().getUser().getName();
             screenName = statuses.get(position).getRetweetedStatus().getUser().getScreenName();
@@ -60,11 +58,11 @@ public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetVie
 
         Picasso.with(context).load(profileImageURL).into(holder.imagenUsuario);
         holder.tvUserName.setText(name);
-        holder.tvScreenName.setText("@" + screenName);
+        holder.tvScreenName.setText(screenName);
 
         holder.tvTexto.setText(statuses.get(position).getText());
         holder.context = context;
-        holder.url = "https://twitter.com/i/web/status/" + statuses.get(position).getId();
+        holder.url = url;
 
     }
 
@@ -95,15 +93,15 @@ public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetVie
         notifyDataSetChanged();
     }
 
-    public class TweetViewHolder extends RecyclerView.ViewHolder {
-        ImageView imagenUsuario;
-        TextView tvUserName;
-        TextView tvScreenName;
-        TextView tvTexto;
-        String url;
-        Context context;
+    class TweetViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imagenUsuario;
+        private TextView tvUserName;
+        private TextView tvScreenName;
+        private TextView tvTexto;
+        private String url;
+        private Context context;
 
-        public TweetViewHolder(View itemView) {
+        TweetViewHolder(View itemView) {
             super(itemView);
             imagenUsuario = (ImageView) itemView.findViewById(R.id.imagen_usuario_tweet);
             tvUserName = (TextView) itemView.findViewById(R.id.tv_nombre_usuario);
@@ -116,6 +114,5 @@ public class RVTweetAdapter extends RecyclerView.Adapter<RVTweetAdapter.TweetVie
                 context.startActivity(intentTwitter);
             });
         }
-
     }
 }

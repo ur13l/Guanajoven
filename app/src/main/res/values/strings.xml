@@ -453,4 +453,63 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="evento_ha_caducado">Este evento ha caducado</string>
     <string name="aplicar_promocion_text">Aplicar promoción</string>
     <string name="ya_has_sido_registrado">Ya has sido registrado en este evento</string>
+
+    <!--Activities strings resources-->
+
+    <!--Home activity-->
+    <string name="home_activity_zero">0</string>
+    <string name="home_activity_space"> </string>
+    <string name="home_activity_points">Puntos: </string>
+    <string name="home_activity_position">Posición N° </string>
+
+    <!--Adapters string resources-->
+
+    <!--RV convocatoria adapter-->
+    <string name="rv_convocatoria_adapter_activa">Activa</string>
+    <string name="rv_convocatoria_adapter_terminada">Terminada</string>
+    <string name="rv_convocatoria_adapter_sinasignar">Sin asignar</string>
+
+    <!--RV evento adapter-->
+    <string name="rv_evento_adapter_inicio">Inicio: </string>
+    <string name="rv_evento_adapter_eliminarobjeto">¿Estás seguro de eliminar este elemento?</string>
+    <string name="rv_evento_adapter_aceptar">Aceptar</string>
+    <string name="rv_evento_adapter_cancelar">Cancelar</string>
+    <string name="rv_evento_adapter_idevento">idEvento</string>
+    <string name="rv_evento_adapter_fechasistema">yyyy-MM-dd HH:mm:ss</string>
+    <string name="rv_evento_adapter_eventoabierto">Evento abierto</string>
+    <string name="rv_evento_adapter_eventocerrado">Evento cerrado</string>
+    <string name="rv_evento_adapter_eventoproximo">Evento Próximo</string>
+
+    <!--RV idiomas seleccionados adapter-->
+    <string-array name="rv_idiomas_seleccionados_adapter_idiomas">
+        <item>Alemán</item>
+        <item>Árabe</item>
+        <item>Chino</item>
+        <item>Coreano</item>
+        <item>Francés</item>
+        <item>Inglés</item>
+        <item>Italiano</item>
+        <item>Japonés</item>
+        <item>Polaco</item>
+        <item>Portugués</item>
+        <item>Ruso</item>
+        <item>Otro</item>
+    </string-array>
+
+    <!--RV notificación adapter-->
+    <string name="rv_notificacion_adapter_eliminarseguro">¿Estás seguro de eliminar este elemento?</string>
+    <string name="rv_notificacion_adapter_aceptar">Aceptar</string>
+    <string name="rv_notificacion_adapter_cancelar">Cancelar</string>
+    <string name="rv_notificacion_adapter_idnotificacion">idNotificacion</string>
+
+    <!--RV promoción adapter-->
+    <string name="rv_promocion_adapter_inicio">Inicio: </string>
+    <string name="rv_promocion_adapter_fin">Fin: </string>
+
+    <!--RV tweet adapter-->
+    <string name="rv_tweet_adapter_arroba">/@</string>
+    <string name="rv_tweet_adapter_link">https://twitter.com/i/web/status/</string>
+
+    <!---->
+
 </resources>

@@ -81,7 +81,7 @@ public class IdiomasAdicionalesDialogFragment extends DialogFragment {
 
         idiomas = new ArrayList<>(Arrays.asList(arregloIdiomas));
 
-        recyclerViewIdiomaAdicionalAdapter = new RVIdiomaAdicionalAdapter(getActivity(), idiomas);
+        recyclerViewIdiomaAdicionalAdapter = new RVIdiomaAdicionalAdapter(idiomas);
         recyclerViewIdiomas.setAdapter(recyclerViewIdiomaAdicionalAdapter);
     }
 

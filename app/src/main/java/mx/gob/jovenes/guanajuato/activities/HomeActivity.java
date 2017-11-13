@@ -1,10 +1,7 @@
 package mx.gob.jovenes.guanajuato.activities;
 
-
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -39,29 +36,20 @@ import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-
-/**
- * Autor: Uriel Infante
- * Activity contenedora de la interfaz Home.
- * Fecha: 02/05/2016
- */
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
-    public static String MENU_ID = "menu_id";
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
-    private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    public static final String MENU_ID = "menu_id";
 
     private GoogleApiClient mGoogleApiClient;
+    private Retrofit retrofit;
+    private NotificacionAPI notificacionAPI;
 
     private NavigationView navigationView;
     private ActionBarDrawerToggle toggle;
-
-
-    private Retrofit retrofit;
-    private NotificacionAPI notificacionAPI;
 
     private CircleImageView imagenUsuarioDrawer;
     private TextView nombreUsuarioDrawer;
@@ -77,7 +65,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
-
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
@@ -111,30 +98,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
 
-        //Configuración de retrofit
         retrofit = ((MyApplication) getApplication()).getRetrofitInstance();
         notificacionAPI = retrofit.create(NotificacionAPI.class);
 
-    }
-
-
-    private Calendar getCalendar(Date date) {
-        Calendar calendar = Calendar.getInstance(Locale.US);
-        calendar.setTime(date);
-        return calendar;
-    }
-
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat(SYSTEM_DATE_FORMAT);
-        SimpleDateFormat miFormato = new SimpleDateFormat(DATE_FORMAT);
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
@@ -144,17 +110,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -168,16 +130,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 Call<Response<Boolean>> call = notificacionAPI.cancelarToken(Sesion.getUsuario().getId());
                 call.enqueue(new Callback<Response<Boolean>>() {
                     @Override
-                    public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                        Log.d("WOW", "WW");
-                    }
+                    public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {}
 
                     @Override
-                    public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                        Log.d("STOPO", "we");
-                    }
+                    public void onFailure(Call<Response<Boolean>> call, Throwable t) {}
                 });
-                //Verifica si la sesión de google existe
+
                 if(mGoogleApiClient.isConnected()){
                     Auth.GoogleSignInApi.signOut(mGoogleApiClient);
                 }
@@ -204,12 +162,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public NavigationView getNavigationView(){
-        return navigationView;
-    }
-
-    public ActionBarDrawerToggle getActionBarDrawerToggle() { return toggle; }
-
     @Override
     public void onConnected(@org.jetbrains.annotations.Nullable Bundle bundle) {
 
@@ -232,20 +184,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         Usuario usuario = Sesion.getUsuario();
 
-
         if(Sesion.getUsuario().getDatosUsuario().getRutaImagen() != null ) {
             Picasso.with(getApplicationContext()).load(usuario.getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
         }
 
-        String posicion = Sesion.getUsuario().getPosicion() == null ? "0" : Sesion.getUsuario().getPosicion();
+        String posicion = Sesion.getUsuario().getPosicion() == null ? getString(R.string.home_activity_zero) : Sesion.getUsuario().getPosicion();
 
-        nombreUsuarioDrawer.setText(usuario.getDatosUsuario().getNombre() + " " + usuario.getDatosUsuario().getApellidoPaterno() + " " + usuario.getDatosUsuario().getApellidoMaterno());
+        nombreUsuarioDrawer.setText(usuario.getDatosUsuario().getNombre() + getString(R.string.home_activity_space) + usuario.getDatosUsuario().getApellidoPaterno() + getString(R.string.home_activity_space) + usuario.getDatosUsuario().getApellidoMaterno());
         correoUsuarioDrawer.setText(usuario.getEmail());
-        puntajeDrawer.setText("Puntos: " + usuario.getPuntaje());
-        posicionDrawer.setText("Posición N° " + posicion);
+        puntajeDrawer.setText(getString(R.string.home_activity_points) + usuario.getPuntaje());
+        posicionDrawer.setText(getString(R.string.home_activity_position) + posicion);
 
-
-        if (!lessThan30Years(getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
+        if (!DateUtilities.lessThan30Years(DateUtilities.getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
             navigationView.getMenu().findItem(R.id.nav_codigo_guanajoven).setVisible(false);
             navigationView.getMenu().findItem(R.id.nav_promociones).setVisible(false);
             puntajeDrawer.setVisibility(View.GONE);
@@ -259,29 +209,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onStop();
         if(mGoogleApiClient.isConnected()){
             mGoogleApiClient.disconnect();
-        }
-    }
-
-    private boolean lessThan30Years(String date) {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        String todayString  = new SimpleDateFormat(DATE_FORMAT).format(Calendar.getInstance().getTime());
-
-        try {
-            Date bornDateParse = formatter.parse(date);
-            Date todayDateParse = formatter.parse(todayString);
-            Calendar bornDate = getCalendar(bornDateParse);
-            Calendar today = getCalendar(todayDateParse);
-
-            int years = today.get(Calendar.YEAR) - bornDate.get(Calendar.YEAR);
-
-            if (bornDate.get(Calendar.MONTH) > today.get(Calendar.MONTH) || (bornDate.get(Calendar.MONTH) == today.get(Calendar.MONTH) && bornDate.get(Calendar.DATE) > today.get(Calendar.DATE))) {
-                years--;
-            }
-
-            return years < 30;
-        } catch (ParseException parseException) {
-            parseException.printStackTrace();
-            return false;
         }
     }
 

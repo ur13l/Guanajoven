@@ -1,13 +1,11 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,12 +25,11 @@ import java.util.List;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.adapters.RVEventosAdapter;
+import mx.gob.jovenes.guanajuato.adapters.RVEventoAdapter;
 import mx.gob.jovenes.guanajuato.api.EventoAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Evento;
-import mx.gob.jovenes.guanajuato.model.Region;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +42,7 @@ public class EventoFragment extends CustomFragment {
     private EventoAPI eventoAPI;
     private RecyclerView rvEvento;
     private TextView tvEmptyEvento;
-    private RVEventosAdapter adapter;
+    private RVEventoAdapter adapter;
     private Realm realm;
     private Retrofit retrofit;
     private List<Evento> eventos;
@@ -140,7 +137,7 @@ public class EventoFragment extends CustomFragment {
     private void updateList() {
         RealmResults<Evento> result = realm.where(Evento.class).findAll();
         eventos = realm.copyFromRealm(result);
-        adapter = new RVEventosAdapter(getActivity(), eventos);
+        adapter = new RVEventoAdapter(getActivity(), eventos);
         rvEvento.setAdapter(adapter);
     }
 

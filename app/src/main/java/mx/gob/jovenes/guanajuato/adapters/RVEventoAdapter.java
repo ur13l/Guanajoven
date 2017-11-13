@@ -6,38 +6,30 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.itextpdf.text.Image;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.DetalleEventoFragment;
-import mx.gob.jovenes.guanajuato.fragments.DetalleRegionFragment;
 import mx.gob.jovenes.guanajuato.model.Evento;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 
-/**
- * Created by uriel on 21/05/16.
- */
-public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.EventosViewHolder> {
-    private List<Evento> eventos;
+public class RVEventoAdapter extends RecyclerView.Adapter<RVEventoAdapter.EventosViewHolder> {
     private Context context;
     private Realm realm;
 
-    public RVEventosAdapter(Context context, List<Evento> eventos) {
+    private List<Evento> eventos;
+
+    public RVEventoAdapter(Context context, List<Evento> eventos) {
         this.context = context;
         this.eventos = eventos;
     }
@@ -55,7 +47,7 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
     public void onBindViewHolder(EventosViewHolder holder, int position) {
         holder.tituloTv.setText(eventos.get(position).getTitulo());
         holder.descripcionTv.setText(eventos.get(position).getDescripcion());
-        holder.fechaTv.setText("Inicio: " + getFechaCast(eventos.get(position).getFechaInicio()));
+        holder.fechaTv.setText(context.getString(R.string.rv_evento_adapter_inicio) + DateUtilities.getFechaCast(eventos.get(position).getFechaInicio()));
 
         verificarFecha(holder, eventos.get(position));
 
@@ -63,18 +55,18 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             AlertDialog.Builder mensaje = new AlertDialog.Builder(context);
             mensaje.create();
 
-            mensaje.setMessage("¿Estás seguro de eliminar este elemento?");
+            mensaje.setMessage(context.getString(R.string.rv_evento_adapter_eliminarobjeto));
 
-            mensaje.setPositiveButton("Aceptar", ((dialog, which) -> {
+            mensaje.setPositiveButton(context.getString(R.string.rv_evento_adapter_aceptar), ((dialog, which) -> {
                 realm.beginTransaction();
-                Evento evento = realm.where(Evento.class).equalTo("idEvento", eventos.get(position).getIdEvento()).findFirst();
+                Evento evento = realm.where(Evento.class).equalTo(context.getString(R.string.rv_evento_adapter_idevento), eventos.get(position).getIdEvento()).findFirst();
                 evento.deleteFromRealm();
                 eventos.remove(position);
                 notifyDataSetChanged();
                 realm.commitTransaction();
             }));
 
-            mensaje.setNegativeButton("Cancelar", (dialog, which) -> {
+            mensaje.setNegativeButton(context.getString(R.string.rv_evento_adapter_cancelar), (dialog, which) -> {
                 dialog.dismiss();
             });
 
@@ -84,22 +76,8 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
 
     }
 
-
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public void verificarFecha(EventosViewHolder holder, Evento evento) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private void verificarFecha(EventosViewHolder holder, Evento evento) {
+        SimpleDateFormat formatter = new SimpleDateFormat(context.getString(R.string.rv_evento_adapter_fechasistema));
         String dateInStringbegin = evento.getFechaInicio();
         String dateInStringend = evento.getFechaFin();
         String dateInStringToday = formatter.format(new Date());
@@ -118,13 +96,13 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
             boolean despuesDeFecha = timeStampEnd < timeStampToday;
 
             if (enFecha) {
-                holder.estado.setText("Evento abierto");
+                holder.estado.setText(context.getString(R.string.rv_evento_adapter_eventoabierto));
                 holder.imageButtonEliminarEvento.setVisibility(View.GONE);
             } else if (despuesDeFecha) {
-                holder.estado.setText("Evento cerrado");
+                holder.estado.setText(context.getString(R.string.rv_evento_adapter_eventocerrado));
                 holder.imageButtonEliminarEvento.setVisibility(View.VISIBLE);
             } else if (antesDeFecha) {
-                holder.estado.setText("Evento próximo");
+                holder.estado.setText(context.getString(R.string.rv_evento_adapter_eventoproximo));
                 holder.imageButtonEliminarEvento.setVisibility(View.GONE);
             }
 
@@ -134,21 +112,16 @@ public class RVEventosAdapter extends RecyclerView.Adapter<RVEventosAdapter.Even
     }
 
     @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-    }
-
-    @Override
     public int getItemCount() {
         return eventos.size();
     }
 
-    public class EventosViewHolder extends RecyclerView.ViewHolder {
-        TextView tituloTv;
-        TextView descripcionTv;
-        TextView fechaTv;
-        TextView estado;
-        ImageButton imageButtonEliminarEvento;
+    class EventosViewHolder extends RecyclerView.ViewHolder {
+        private TextView tituloTv;
+        private TextView descripcionTv;
+        private TextView fechaTv;
+        private TextView estado;
+        private ImageButton imageButtonEliminarEvento;
 
         EventosViewHolder(View itemView) {
             super(itemView);

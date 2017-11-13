@@ -19,13 +19,6 @@ import mx.gob.jovenes.guanajuato.fragments.EventoFragment;
 import mx.gob.jovenes.guanajuato.fragments.RedesSocialesFragment;
 import mx.gob.jovenes.guanajuato.fragments.RegionFragment;
 
-
-/**
- * Autor: Uriel Infante
- * ACtivity contenedora de múltiples interfaces utilizando CustomFragment, aquí se inflan los
- * mx.gob.jovenes.guanajuato.fragments al seleccionar un elemento del Navigation Drawer.
- * Fecha: 02/05/2016
- */
 public class SegundaActivity extends AppCompatActivity {
     public static SegundaActivity segundaActivity;
 

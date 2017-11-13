@@ -16,15 +16,11 @@ import java.util.List;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.model.Mensaje;
 
-/**
- * Created by codigus on 26/06/2017.
- */
-
-public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.ViewHolder> {
+public class RVMensajeAdapter extends RecyclerView.Adapter<RVMensajeAdapter.ViewHolder> {
     private Context context;
     private List<Mensaje> mensajes;
 
-    public RVMessagesAdapter(Context context, List<Mensaje> mensajes) {
+    public RVMensajeAdapter(Context context, List<Mensaje> mensajes) {
         this.context = context;
         this.mensajes = mensajes;
     }
@@ -32,8 +28,8 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_message, parent, false);
-        ViewHolder vh = new ViewHolder(view);
-        return vh;
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
@@ -63,17 +59,12 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
         return mensajes.size();
     }
 
-
     public void notifyData(List<Mensaje> mensajes) {
         this.mensajes = mensajes;
         notifyDataSetChanged();
     }
 
     public void add(Mensaje mensaje) {
-        /*if (!mensajes.contains(mensaje)) {
-            mensajes.add(mensaje);
-            notifyDataSetChanged();
-        }*/
         mensajes.add(mensaje);
         notifyDataSetChanged();
     }
@@ -91,10 +82,10 @@ public class RVMessagesAdapter extends RecyclerView.Adapter<RVMessagesAdapter.Vi
         notifyDataSetChanged();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView textViewMessage;
+    class ViewHolder extends RecyclerView.ViewHolder{
+        private TextView textViewMessage;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             textViewMessage = (TextView) itemView.findViewById(R.id.textview_message);
         }

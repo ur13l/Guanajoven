@@ -1,6 +1,5 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,9 +14,6 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 
 import mx.gob.jovenes.guanajuato.R;
 
-/**
- * Created by code on 26/10/16.
- */
 public class AyudaFragment extends Fragment {
     private YouTubePlayerFragment videoView;
     private YouTubePlayer.OnInitializedListener listener;
@@ -33,7 +29,6 @@ public class AyudaFragment extends Fragment {
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
                 youTubePlayer.loadVideo("8qdgB_JUWL4");
                 youTubePlayer.setShowFullscreenButton(false);
-                //youTubePlayer.setOnFullscreenListener(b1 -> getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE));
             }
 
             @Override
@@ -41,7 +36,6 @@ public class AyudaFragment extends Fragment {
 
             }
         };
-
 
         videoView.initialize("AIzaSyDHDnSpC4e1VwrYYjQeb1sAQrr_d2U0zPY", listener);
 
@@ -52,7 +46,6 @@ public class AyudaFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         this.onDestroy();
-        if (videoView != null)
-            getActivity().getFragmentManager().beginTransaction().remove(videoView).commit();
+        if (videoView != null) getActivity().getFragmentManager().beginTransaction().remove(videoView).commit();
     }
 }
