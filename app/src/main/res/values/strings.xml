@@ -454,13 +454,18 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="aplicar_promocion_text">Aplicar promoción</string>
     <string name="ya_has_sido_registrado">Ya has sido registrado en este evento</string>
 
+    <!--My application strings resources-->
+    <string name="my_application_time_format">mm:ss</string>
+    <string name="my_application_espera">Espera para enviar otro correo - </string>
+    <string name="my_application_date_format">d/M/yyyy</string>
+
     <!--Activities strings resources-->
 
     <!--Home activity-->
     <string name="home_activity_zero">0</string>
-    <string name="home_activity_space"> </string>
-    <string name="home_activity_points">Puntos: </string>
-    <string name="home_activity_position">Posición N° </string>
+    <string name="home_activity_space">\u0020</string>
+    <string name="home_activity_points">Puntos:\u0020</string>
+    <string name="home_activity_position">Posición N°\u0020</string>
 
     <!--Adapters string resources-->
 
@@ -510,6 +515,184 @@ condiciones informados en el presente aviso de privacidad.&lt;br>
     <string name="rv_tweet_adapter_arroba">/@</string>
     <string name="rv_tweet_adapter_link">https://twitter.com/i/web/status/</string>
 
-    <!---->
+    <!--Fragments string resources-->
+
+    <!--Fragment acerca de-->
+    <string name="fragment_acercade_link_lineas_accion">http://jovenes.guanajuato.gob.mx/index.php/702-2/</string>
+    <string name="fragment_acercade_link_diagnostico">http://jovenes.guanajuato.gob.mx/index.php/diagnostico-juvenil/</string>
+    <string name="fragment_acerdade_link_encuesta">http://jovenes.guanajuato.gob.mx/index.php/encuesta-de-juventud/</string>
+    <string name="fragment_acercade_link_directorio">http://transparencia.guanajuato.gob.mx/transparencia/informacion_publica_directorio.php </string>
+
+    <!--Fragment ayuda-->
+    <string name="fragment_ayuda_link_video">8qdgB_JUWL4</string>
+    <string name="fragment_ayuda_youtubekey">AIzaSyDHDnSpC4e1VwrYYjQeb1sAQrr_d2U0zPY</string>
+
+    <!--Fragment chat-->
+    <string name="fragment_chat_error_mensajes">Vaya!, parece que tenemos un problema... Intenta más tarde o verifica tu conexión a internet</string>
+    <string name="fragment_chat_intentfilter_action">mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO</string>
+    <string name="fragment_chat_json_received">mensaje</string>
+
+    <!--Fragment id guanajoven-->
+    <string name="fragment_idguanajoven_enviando_correo">Enviando correo...</string>
+    <string name="fragment_idguanajoven_porfavor_espere">Por favor espere...</string>
+    <string name="fragment_idguanajoven_correo_enviado">Se te ha enviado un correo electrónico con tu credencial, gracias por hacer de Guanajuato tu proyecto de vida.</string>
+    <string name="fragment_idguanajoven_error_al_enviar">Error al enviar</string>
+    <string name="fragment_idguanajoven_utf8">utf-8</string>
+    <string name="fragment_idguanajoven_actionbar_title">ID Guanajoven</string>
+
+    <!--Fragment convocatoria-->
+    <string name="fragment_convocatoria_timestamp">0000-00-00 00:00:00</string>
+    <string name="fragment_convocatoria_idconvocatoria">idConvocatoria</string>
+    <string name="fragment_convocatoria_error_conexion">Necesitas estar conectado para poder ver las últimas convocatorias</string>
+    <string name="fragment_convocatoria_actionbar_title">Convocatorias</string>
+
+    <!--Fragment custom-->
+    <string name="fragment_custom_key_arguments">string_title</string>
+
+    <!--Fragment detalle convocatoria-->
+    <string name="fragment_detalle_convocatoria_error_envio">Fallo en enviar o ya se encuentra inscrito</string>
+    <string name="fragment_detalle_convocatoria_mensaje_enviado">Gracias por interesarte en la convocatoria, en breve te llegará un correo electrónico con más información.</string>
+    <string name="fragment_detalle_convocatoria_idconvocatoria">idConvocatoria</string>
+    <string name="fragment_detalle_convocatoria_fecha_inicio">Fecha inicio:\u0020</string>
+    <string name="fragment_detalle_convocatoria_fecha_fin">Fecha fin:\u0020</string>
+    <string name="fragment_detalle_convocatoria_enviando_correo">Enviando correo</string>
+    <string name="fragment_detallle_convocatoria_espera">Espera mientras enviamos un correo a tu cuenta registrada</string>
+
+    <!--Fragment detalle evento-->
+    <string name="fragment_detalle_evento_error_ya_registrado">Ya has sido registrado</string>
+    <string name="fragment_detalle_evento_error_fuera_de_rango">No te encuentras en el rango del evento</string>
+    <string name="fragment_detalle_evento_idevento">idEvento</string>
+    <string name="fragment_detalle_evento_cargando">Cargando</string>
+    <string name="fragment_detalle_evento_obteniendo_localizacion">Obteniendo tu localización</string>
+    <string name="fragment_detalle_evento_registrado">Registrado</string>
+    <string name="fragment_detalle_evento_guion">\u0020-\u0020</string>
+    <string name="fragment_detalle_evento_intenta_mas_tarde">Ops! parece que ocurrio un error, intenta más tarde</string>
+    <string name="fragment_detalle_evento_error_conexion">Error de conexión</string>
+    <string name="fragment_detalle_evento_enviando_correo">Enviando correo</string>
+    <string name="fragment_detalle_evento_espera">Espera mientras enviamos un correo a tu cuenta registrada</string>
+    <string name="fragment_detalle_evento_error_envio">Fallo en enviar o ya se encuentra inscrito</string>
+    <string name="fragment_detalle_evento_mensaje_enviado">Gracias por estar interesado en el evento, en breve te llegará un correo electrónico con más información.</string>
+    <string name="fragment_detalle_evento_date_format">yyyy-MM-dd HH:mm:ss</string>
+    <string name="fragment_detalle_evento_permiso_denegado">Permiso denegado</string>
+
+    <!--Fragment detalle promocion-->
+    <string name="fragment_detalle_promocion_no_existe_id">No existe id guanajoven</string>
+    <string name="fragment_detalle_promocion_no_existe_promocion">No existe promoción</string>
+    <string name="fragment_detalle_promocion_no_existe_empresa">No existe la empresa</string>
+    <string name="fragment_detalle_promocion_utf8">utf-8</string>
+    <string name="fragment_detalle_promocion_advertencia">Advertencia</string>
+    <string name="fragment_detalle_promocion_advertencia_mensaje">Al aplicar esta promoción quedará registrado en la base de datos que has sido beneficiado por la empresa, ¿Estas seguro de Aplicar esta promoción?</string>
+    <string name="fragment_detalle_promocion_promocion_registrada">Promoción registrada</string>
+    <string name="fragment_detalle_promocion_aceptar">Aceptar</string>
+    <string name="fragment_detalle_promocion_cancelar">Cancelar</string>
+    <string name="fragment_detalle_promocion_error_conexion">Error al conectar</string>
+
+    <!--Fragment detalle region-->
+    <string name="fragment_detalle_region_idregion">idRegion</string>
+
+    <!--Fragment editar datos-->
+    <string-array name="fragment_editar_datos_array_sino">
+        <item>Sí</item>
+        <item>No</item>
+    </string-array>
+
+    <string-array name="fragment_editar_datos_array_niveles_estudio">
+        <item>Primaria</item>
+        <item>Secundaria</item>
+        <item>Preparatoria</item>
+        <item>TSU</item>
+        <item>Universidad</item>
+        <item>Maestría</item>
+        <item>Doctorado</item>
+        <item>Otro</item>
+    </string-array>
+
+    <string-array name="fragment_editar_datos_array_programas_gobierno">
+        <item>Municipal</item>
+        <item>Estatal</item>
+        <item>Federal</item>
+        <item>Internacional</item>
+    </string-array>
+
+    <string-array name="fragment_editar_datos_array_pueblos_indigenas">
+        <item>Otomí</item>
+        <item>Chichimeca-Jonaz</item>
+        <item>Náhuatl</item>
+        <item>Mazahua</item>
+        <item>Otra</item>
+    </string-array>
+
+    <string-array name="fragment_editar_datos_array_capacidades_diferentes">
+        <item>Física</item>
+        <item>Sensorial</item>
+        <item>Auditiva</item>
+        <item>Visual</item>
+        <item>Psíquica</item>
+        <item>Intelectual</item>
+        <item>Mental</item>
+    </string-array>
+
+    <string-array name="fragment_editar_datos_array_opciones_camara">
+        <item>Tomar una foto</item>
+        <item>Escoger de tu galería</item>
+    </string-array>
+
+    <string name="fragment_editar_datos_mensaje_idiomas_seleccionados">Tienes idiomas seleccionados, en caso de aceptar se eliminaran, ¿Estás de acuerdo?</string>
+    <string name="fragment_editar_datos_añadir_imagen">Añadir imagen</string>
+    <string name="fragment_editar_datos_tomar_una_foto">Tomar una foto</string>
+    <string name="fragment_editar_datos_escoger_de_galería">Escoger de tu galería</string>
+    <string name="fragment_editar_datos_selecciona_una_imagen">Selecciona una imagen</string>
+    <string name="fragment_editar_datos_permiso_denegado_camara">Permiso denegado, no se puede acceder a la cámara</string>
+    <string name="fragment_editar_datos_permiso_denegado_galeria">Permiso denegado, no se puede acceder a los archivos</string>
+    <string name="fragment_editar_datos_confirmacion">Confirmación</string>
+    <string name="fragment_editar_datos_mensaje_actualizar_informacion">¿Deseas actualizar tu información?</string>
+    <string name="fragment_editar_datos_aceptar">Aceptar</string>
+    <string name="fragment_editar_datos_cancelar">Cancelar</string>
+    <string name="fragment_editar_datos_ingresa_todas_las_opciones">Ingresa todas las opciones</string>
+    <string name="fragment_editar_datos_registrando_datos">Registrando datos</string>
+    <string name="fragment_editar_datos_espere">Por favor espere</string>
+    <string name="fragment_editar_datos_formato_imagen">data:image/jpeg;base64,</string>
+    <string name="fragment_editar_datos_datos_registrados">Datos registrados</string>
+    <string name="fragment_editar_datos_datos_registrados_con_exito">Datos registrados con éxito</string>
+    <string name="fragment_editar_datos_error">Error</string>
+    <string name="fragment_editar_datos_error_al_registrar">Error al registrar los datos</string>
+    <string name="fragment_editar_datos_error_al_cargar_los_datos">Error al cargar los datos</string>
+
+    <!--Fragment empresa-->
+    <string name="fragment_empresa_timestamp">0000-00-00 00:00:00</string>
+    <string name="fragment_empresa_error_conexion">Error, intenta mas tarde</string>
+
+    <!--Fragment evento-->
+    <string name="fragment_evento_timestamp">0000-00-00 00:00:00</string>
+    <string name="fragment_evento_idevento">idEvento</string>
+    <string name="fragment_evento_error_internet">Necesitas estar conectado para poder ver los últimos eventos</string>
+    <string name="fragment_evento_actionbar_title">Eventos</string>
+
+    <!--Fragment home-->
+    <string name="fragment_home_link_bolsa_de_trabajo">http://jovenes.guanajuato.gob.mx/index.php/empresas-incluyentes/</string>
+    <string name="fragment_home_idpublicidad">idPublicidad</string>
+    <string name="fragment_home_timestamp">0000-00-00 00:00:00</string>
+    <string name="fragment_home_suscription">mx.gob.jovenes.guanajuato.Guanajoven</string>
+    <string name="fragment_home_os">android</string>
+    <string name="fragment_home_starts_with">www</string>
+    <string name="fragment_home_default_http">http://</string>
+    <string name="fragment_home_left">left</string>
+    <string name="fragment_home_right">right</string>
+
+    <!--Fragment idiomas adicionales-->
+    <string-array name="fragment_dialog_idiomas_adicionales_array_idiomas">
+        <item>Alemán</item>
+        <item>Árabe</item>
+        <item>Chino</item>
+        <item>Coreano</item>
+        <item>Francés</item>
+        <item>Inglés</item>
+        <item>Italiano</item>
+        <item>Japonés</item>
+        <item>Polaco</item>
+        <item>Portugués</item>
+        <item>Ruso</item>
+        <item>Otro</item>
+    </string-array>
 
 </resources>

@@ -8,10 +8,6 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-/**
- * Created by esva on 12/04/17.
- */
-
 public interface ConvocatoriaAPI {
 
     @GET("convocatorias")

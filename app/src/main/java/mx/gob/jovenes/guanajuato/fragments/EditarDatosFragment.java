@@ -91,11 +91,11 @@ public class EditarDatosFragment extends CustomFragment {
 
     private RegistroModificarPerfil registroModificarPerfilAPI;
 
-    private String[] siNo = {"Sí", "No"};
-    private String[] nivelesEstudio = {"Primaria", "Secundaria", "Preparatoria", "TSU", "Universidad", "Maestría", "Doctorado", "Otro"};
-    private String[] programasGobierno = {"Municipal", "Estatal", "Federal", "Internacional"};
-    private String[] pueblosIndigenas = {"Otomí", "Chichimeca-Jonaz", "Náhuatl", "Mazahua", "Otra"};
-    private String[] capacidadesDiferentes = {"Física", "Sensorial", "Auditiva", "Visual", "Psíquica", "Intelectual", "Mental"};
+    private String[] siNo;
+    private String[] nivelesEstudio;
+    private String[] programasGobierno;
+    private String[] pueblosIndigenas;
+    private String[] capacidadesDiferentes;
 
     public static TextView textViewTituloIdiomasSeleccionados;
     public static LinearLayout layoutTablas;
@@ -110,6 +110,12 @@ public class EditarDatosFragment extends CustomFragment {
         Retrofit retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         registroModificarPerfilAPI = retrofit.create(RegistroModificarPerfil.class);
         thisActivity = getActivity();
+
+        siNo = getResources().getStringArray(R.array.fragment_editar_datos_array_sino);
+        nivelesEstudio = getResources().getStringArray(R.array.fragment_editar_datos_array_niveles_estudio);
+        programasGobierno = getResources().getStringArray(R.array.fragment_editar_datos_array_programas_gobierno);
+        pueblosIndigenas = getResources().getStringArray(R.array.fragment_editar_datos_array_pueblos_indigenas);
+        capacidadesDiferentes = getResources().getStringArray(R.array.fragment_editar_datos_array_capacidades_diferentes);
     }
 
     @Override
@@ -172,9 +178,9 @@ public class EditarDatosFragment extends CustomFragment {
             if (IdiomasAdicionalesDialogFragment.numeroDeIdiomas() > 0) {
                 //En caso de que ya halla puesto idiomas le saldra una alerta
                 AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
-                alerta.setMessage("Tienes idiomas seleccionados, en caso de aceptar se eliminaran, ¿Estás de acuerdo?");
+                alerta.setMessage(getString(R.string.fragment_editar_datos_mensaje_idiomas_seleccionados));
 
-                alerta.setPositiveButton("Aceptar", (dialog, which) -> {
+                alerta.setPositiveButton(getString(R.string.fragment_editar_datos_aceptar), (dialog, which) -> {
                     IdiomasAdicionalesDialogFragment.datosIdiomas.clear();
                     adapter.notifyDataSetChanged();
 
@@ -204,27 +210,22 @@ public class EditarDatosFragment extends CustomFragment {
             botonGuardar();
         }));
 
-        //Picasso.with(getActivity()).load(Sesion.getUsuario().getDatosUsuario().getRutaImagen()).into(imgPerfil);
-
         cargarDatos();
 
         return v;
     }
 
     private void selectImage() {
-        final CharSequence[] items = {"Tomar una foto", "Escoger de tu galería"};
+        final CharSequence[] items = getResources().getStringArray(R.array.fragment_editar_datos_array_opciones_camara);
 
         //Se construye el dialog que muestra las opciones
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Añadir imagen");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                if (items[item].equals("Tomar una foto")) {
-                    checkCameraPermission();
-                } else if (items[item].equals("Escoger de tu galería")) {
-                    checkStoragePermission();
-                }
+        builder.setTitle(R.string.fragment_editar_datos_añadir_imagen);
+        builder.setItems(items, (dialog, item) -> {
+            if (items[item].equals(getString(R.string.fragment_editar_datos_tomar_una_foto))) {
+                checkCameraPermission();
+            } else if (items[item].equals(getString(R.string.fragment_editar_datos_escoger_de_galería))) {
+                checkStoragePermission();
             }
         });
 
@@ -286,7 +287,7 @@ public class EditarDatosFragment extends CustomFragment {
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(
-                Intent.createChooser(intent, "Selecciona una imagen"),
+                Intent.createChooser(intent, getString(R.string.fragment_editar_datos_selecciona_una_imagen)),
                 SELECT_FROM_GALLERY);
     }
 
@@ -308,7 +309,7 @@ public class EditarDatosFragment extends CustomFragment {
                     startCamera();
                 } else {
 
-                    Snackbar.make(getView(), "Permiso denegado, no se puede acceder a la cámara", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), R.string.fragment_editar_datos_permiso_denegado_camara, Snackbar.LENGTH_LONG).show();
                 }
                 return;
             case READ_EXTERNAL_STORAGE_CODE:
@@ -317,7 +318,7 @@ public class EditarDatosFragment extends CustomFragment {
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     startGallery();
                 } else {
-                    Snackbar.make(getView(), "Permiso denegado, no se puede acceder a los archivos", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), R.string.fragment_editar_datos_permiso_denegado_galeria, Snackbar.LENGTH_LONG).show();
                 }
                 return;
 
@@ -454,19 +455,19 @@ public class EditarDatosFragment extends CustomFragment {
     public void botonGuardar() {
         if (datosCompletos()) {
             AlertDialog.Builder $mensajeConfirmacion = new AlertDialog.Builder(getContext());
-            $mensajeConfirmacion.setTitle("Confirmación");
+            $mensajeConfirmacion.setTitle(R.string.fragment_editar_datos_confirmacion);
 
-            $mensajeConfirmacion.setMessage("¿Deseas actualizar tu información?");
+            $mensajeConfirmacion.setMessage(R.string.fragment_editar_datos_mensaje_actualizar_informacion);
 
-            $mensajeConfirmacion.setPositiveButton("Aceptar", (dialog, which) -> registrarDatos());
+            $mensajeConfirmacion.setPositiveButton(R.string.fragment_editar_datos_aceptar, (dialog, which) -> registrarDatos());
 
-            $mensajeConfirmacion.setNegativeButton("Cancelar", (dialog, which) -> dialog.dismiss());
+            $mensajeConfirmacion.setNegativeButton(R.string.fragment_editar_datos_cancelar, (dialog, which) -> dialog.dismiss());
 
             $mensajeConfirmacion.show();
 
         } else {
             AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-            dialog.setMessage("Ingresa todas las opciones");
+            dialog.setMessage(R.string.fragment_editar_datos_ingresa_todas_las_opciones);
             dialog.create();
             dialog.show();
         }
@@ -475,7 +476,7 @@ public class EditarDatosFragment extends CustomFragment {
     //Registra los datos en BD
     private void registrarDatos() {
         //Datos a registrar
-        ProgressDialog progressDialog = ProgressDialog.show(getContext(), "Registrando datos", "Por favor espere", true, false);
+        ProgressDialog progressDialog = ProgressDialog.show(getContext(), getString(R.string.fragment_editar_datos_registrando_datos), getString(R.string.fragment_editar_datos_espere), true, false);
         AlertDialog.Builder mensaje = new AlertDialog.Builder(getContext());
 
         String apiToken = Sesion.getUsuario().getApiToken();
@@ -494,7 +495,7 @@ public class EditarDatosFragment extends CustomFragment {
         String premios = etPremios.getText().toString();
         String proyectos = etProyectosSociales.getText().toString();
         int apoyoProyecto;
-        String rutaImagen = "data:image/jpeg;base64," + getBase64(imgPerfil);
+        String rutaImagen = getString(R.string.fragment_editar_datos_formato_imagen) + getBase64(imgPerfil);
 
 
 
@@ -512,16 +513,16 @@ public class EditarDatosFragment extends CustomFragment {
             @Override
             public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
                 progressDialog.dismiss();
-                mensaje.setTitle("Datos registrados");
-                mensaje.setMessage("Datos registrados con éxito");
+                mensaje.setTitle(R.string.fragment_editar_datos_datos_registrados);
+                mensaje.setMessage(R.string.fragment_editar_datos_datos_registrados_con_exito);
                 mensaje.show();
             }
 
             @Override
             public void onFailure(Call<Response<Boolean>> call, Throwable t) {
                 progressDialog.dismiss();
-                mensaje.setTitle("Error");
-                mensaje.setMessage("Error al registrar los datos");
+                mensaje.setTitle(R.string.fragment_editar_datos_error);
+                mensaje.setMessage(R.string.fragment_editar_datos_error_al_registrar);
                 mensaje.show();
             }
         });
@@ -541,7 +542,7 @@ public class EditarDatosFragment extends CustomFragment {
 
             @Override
             public void onFailure(Call<Response<DatosModificarPerfil>> call, Throwable t) {
-                Snackbar.make(getView(), "Error al cargar los datos", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), R.string.fragment_editar_datos_error_al_cargar_los_datos, Snackbar.LENGTH_LONG).show();
             }
         });
 

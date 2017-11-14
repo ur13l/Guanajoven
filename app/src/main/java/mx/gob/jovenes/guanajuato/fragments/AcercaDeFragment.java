@@ -26,19 +26,19 @@ public class AcercaDeFragment extends CustomFragment {
         textViewDirectorio = (TextView) v.findViewById(R.id.enlace_directorio);
 
         textViewLineasAccion.setOnClickListener((View) -> {
-            enlace("http://jovenes.guanajuato.gob.mx/index.php/702-2/");
+            enlace(getString(R.string.fragment_acercade_link_lineas_accion));
         });
 
         textViewDiagnosticoJuvenil.setOnClickListener((View) -> {
-            enlace("http://jovenes.guanajuato.gob.mx/index.php/diagnostico-juvenil/");
+            enlace(getString(R.string.fragment_acercade_link_diagnostico));
         });
 
         textViewEncuestaJuventud.setOnClickListener((View) -> {
-            enlace("http://jovenes.guanajuato.gob.mx/index.php/encuesta-de-juventud/");
+            enlace(getString(R.string.fragment_acerdade_link_encuesta));
         });
 
         textViewDirectorio.setOnClickListener((View) -> {
-            enlace("http://transparencia.guanajuato.gob.mx/transparencia/informacion_publica_directorio.php");
+            enlace(getString(R.string.fragment_acercade_link_directorio));
         });
 
         return v;

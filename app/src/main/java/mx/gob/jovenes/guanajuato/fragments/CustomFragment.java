@@ -1,18 +1,11 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.activities.SegundaActivity;
 
-/**
- * Created by Uriel on 01/02/2016.
- */
 public class CustomFragment extends Fragment {
 
     private int menu_id;
@@ -25,7 +18,7 @@ public class CustomFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        int string_title = getArguments().getInt("string_title");
+        int string_title = getArguments().getInt(getString(R.string.fragment_custom_key_arguments));
         if(((AppCompatActivity)getActivity()).getSupportActionBar() != null) {
             ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(string_title);
         }

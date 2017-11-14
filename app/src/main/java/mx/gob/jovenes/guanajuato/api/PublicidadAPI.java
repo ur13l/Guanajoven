@@ -7,10 +7,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-/**
- * Created by Uriel on 10/04/2017.
- */
-
 public interface PublicidadAPI {
 
     @GET("publicidad")

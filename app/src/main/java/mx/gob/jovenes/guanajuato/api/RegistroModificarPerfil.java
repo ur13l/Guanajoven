@@ -6,10 +6,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-/**
- * Created by codigus on 04/07/2017.
- */
-
 public interface RegistroModificarPerfil {
 
     @POST("profile/update")

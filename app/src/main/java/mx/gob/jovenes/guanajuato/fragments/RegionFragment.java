@@ -170,8 +170,8 @@ public class RegionFragment extends CustomFragment {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle("Eventos");
-        cToolbar.setTitle("Eventos");
+        activity.getSupportActionBar().setTitle("Regiones");
+        cToolbar.setTitle("Regiones");
         imagen.setImageResource(R.drawable.registro_usuario);
 
     }

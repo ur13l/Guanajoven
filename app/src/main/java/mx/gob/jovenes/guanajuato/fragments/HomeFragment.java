@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
@@ -13,7 +12,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,17 +20,11 @@ import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.Funcion;
@@ -42,8 +34,6 @@ import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
 import mx.gob.jovenes.guanajuato.api.PublicidadAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
-import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
-import mx.gob.jovenes.guanajuato.model.Evento;
 import mx.gob.jovenes.guanajuato.model.Publicidad;
 import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
@@ -54,12 +44,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Autor: Uriel Infante
- * Fragment de Home.
- * La ventana principal del proyecto, es la que se abre cuando el usuario inicia sesión.
- * Fecha: 10/04/2017
- */
 public class HomeFragment extends CustomFragment {
     private ImageButton btnSlide;
     private ViewGroup pnlPublicidad;
@@ -67,9 +51,6 @@ public class HomeFragment extends CustomFragment {
     private View slidePublicidad;
 
     public static String MENU_ID = "menu_id";
-
-    private static final String DATE_FORMAT = "dd/MM/yyyy";
-    private static final String SYSTEM_DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
 
     ImageButton botonNavigationDrawer;
     ImageButton botonCodigoGuanajoven;
@@ -142,7 +123,7 @@ public class HomeFragment extends CustomFragment {
         textViewBolsaTrabajo = (TextView) v.findViewById(R.id.textview_bolsa_de_trabajo);
 
         textViewBolsaTrabajo.setOnClickListener((View) -> {
-            enlace("http://jovenes.guanajuato.gob.mx/index.php/empresas-incluyentes/");
+            enlace(getString(R.string.fragment_home_link_bolsa_de_trabajo));
         });
 
         //Listeners de publicidad
@@ -155,8 +136,6 @@ public class HomeFragment extends CustomFragment {
                 }));
 
         btnClose.setOnClickListener((View) -> pnlPublicidad.animate().translationX(pnlPublicidad.getWidth()));
-
-        //Listeners botones menu
 
         botonAyuda.setOnClickListener((View) -> {
             try {
@@ -258,7 +237,7 @@ public class HomeFragment extends CustomFragment {
         });
 
 
-        SlideHandler.initSlider(slidePublicidad, "left", new Funcion() {
+        SlideHandler.initSlider(slidePublicidad, getString(R.string.fragment_home_left), new Funcion() {
             @Override
             public void exec() {
                 pnlPublicidad.animate()
@@ -273,7 +252,7 @@ public class HomeFragment extends CustomFragment {
             }
         });
 
-        SlideHandler.initSlider(pnlPublicidad, "right", new Funcion() {
+        SlideHandler.initSlider(pnlPublicidad, getString(R.string.fragment_home_right), new Funcion() {
             @Override
             public void exec() {
                 pnlPublicidad.animate()
@@ -283,22 +262,20 @@ public class HomeFragment extends CustomFragment {
 
         ImageHandler.start(pnlPublicidad, getActivity());
         //Se define la acción para cuando se descargan las imágenes publicitarias.
-        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get(prefs.getString(MyApplication.LAST_UPDATE_PUBLICIDAD, "0000-00-00 00:00:00"));
+        retrofit2.Call<Response<ArrayList<Publicidad>>> call = publicidadAPI.get(prefs.getString(MyApplication.LAST_UPDATE_PUBLICIDAD, getString(R.string.fragment_home_timestamp)));
         call.enqueue(new Callback<Response<ArrayList<Publicidad>>>() {
             @Override
             public void onResponse(retrofit2.Call<Response<ArrayList<Publicidad>>> call, retrofit2.Response<Response<ArrayList<Publicidad>>> response) {
                 if (response.body().success) {
-                    //Se ejecuta el guardado de elementos en Realm a partir de lo obtenido en el servicio.
 
                     List<Publicidad> publicidades = response.body().data;
 
-                    //Transacción de realm, se itera sobre las publicidades obtenidas desde el servidor.
                     realm.beginTransaction();
                     for (Publicidad p : publicidades) {
                         p.setUrl(getValidURL(p.getUrl()));
                         if (p.getDeletedAt() != null) {
                             Publicidad pr = realm.where(Publicidad.class)
-                                    .equalTo("idPublicidad", p.getIdPublicidad())
+                                    .equalTo(getString(R.string.fragment_home_idpublicidad), p.getIdPublicidad())
                                     .findFirst();
                             if (pr != null) {
                                 pr.deleteFromRealm();
@@ -309,17 +286,15 @@ public class HomeFragment extends CustomFragment {
                     }
                     realm.commitTransaction();
 
-                    //Actualizando el timestamp para no descargar el contenido ya existente.
                     String lastUpdate = DateUtilities.dateToString(new Date());
                     prefs.edit().putString(MyApplication.LAST_UPDATE_PUBLICIDAD, lastUpdate).apply();
                 }
-
 
             }
 
             @Override
             public void onFailure(retrofit2.Call<Response<ArrayList<Publicidad>>> call, Throwable t) {
-                Log.d("Error", "Error");
+
             }
         });
         return v;
@@ -336,7 +311,6 @@ public class HomeFragment extends CustomFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Haciendo que la barra se pueda ocultar
     }
 
     @Override
@@ -349,13 +323,11 @@ public class HomeFragment extends CustomFragment {
             e.printStackTrace();
         }
 
-        if (!lessThan30Years(getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
-            //hide views
+        if (!DateUtilities.lessThan30Years(DateUtilities.getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
             botonCodigoGuanajoven.setVisibility(View.GONE);
             botonPromociones.setVisibility(View.GONE);
             textViewIdGuanajoven.setVisibility(View.GONE);
             textViewPromociones.setVisibility(View.GONE);
-            //show views
             botonRegiones.setVisibility(View.VISIBLE);
             botonNotificaciones.setVisibility(View.VISIBLE);
             textViewRegiones.setVisibility(View.VISIBLE);
@@ -365,25 +337,20 @@ public class HomeFragment extends CustomFragment {
 
     @Override
     public void onStop() {
-
         super.onStop();
         ImageHandler.stopCambioPublicidadTask();
     }
 
-    /**
-     * Asigna los valores de la sesión y la bitácora.
-     *
-     * @throws ParseException
-     */
+
     public void setValoresSesion() throws ParseException {
-        FirebaseMessaging.getInstance().subscribeToTopic("mx.gob.jovenes.guanajuato.Guanajoven");
+        FirebaseMessaging.getInstance().subscribeToTopic(getString(R.string.fragment_home_suscription));
         FirebaseInstanceId.getInstance().getToken();
         String token = prefs.getString(FirebaseInstanceIDService.TOKEN, null);
         int idUsuario = Sesion.getUsuario().getId();
         Call<Response<Boolean>> call = notificacionAPI.enviarToken(
                 token,
                 idUsuario,
-                "android"
+                getString(R.string.fragment_home_os)
         );
 
         call.enqueue(new Callback<Response<Boolean>>() {
@@ -393,7 +360,6 @@ public class HomeFragment extends CustomFragment {
                 if (body != null) {
                     if (body.success) {
                         if (body.data) {
-                            //Código cuando fue exitoso
                         }
                     }
                 }
@@ -406,85 +372,14 @@ public class HomeFragment extends CustomFragment {
         });
     }
 
-
-    /**
-     * Clase privada para la llamada asíncrona que descarga los eventos más recientes
-     */
-    private class NuevosEventosAsyncTask extends AsyncTask<String, Void, ArrayList<Evento>> {
-
-
-        @Override
-        protected ArrayList<Evento> doInBackground(String... args) {
-            HashMap<String, String> params = new HashMap<>();
-            params.put("fecha_actualizacion", args[0].toString());
-            String url = "http://" + ClienteHttp.SERVER_IP + "//app_php/eventos/nuevosEventos.php";
-            ClienteHttp cliente = new ClienteHttp();
-            String result = cliente.hacerRequestHttp(url, params);
-            Gson gson = new Gson();
-            Log.d("RESULTAD", result);
-            return gson.fromJson(result, new TypeToken<List<Evento>>() {
-            }.getType());
-        }
-
-    }
-
     public void enlace(String link){
         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
     }
 
-
-    private boolean lessThan30Years(String date) {
-        SimpleDateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        String todayString  = new SimpleDateFormat(DATE_FORMAT).format(Calendar.getInstance().getTime());
-
-        try {
-            Date bornDateParse = formatter.parse(date);
-            Date todayDateParse = formatter.parse(todayString);
-            Calendar bornDate = getCalendar(bornDateParse);
-            Calendar today = getCalendar(todayDateParse);
-
-            int years = today.get(Calendar.YEAR) - bornDate.get(Calendar.YEAR);
-
-            if (bornDate.get(Calendar.MONTH) > today.get(Calendar.MONTH) || (bornDate.get(Calendar.MONTH) == today.get(Calendar.MONTH) && bornDate.get(Calendar.DATE) > today.get(Calendar.DATE))) {
-                years--;
-            }
-
-            return years < 30;
-        } catch (ParseException parseException) {
-            parseException.printStackTrace();
-            return false;
-        }
-    }
-
-    private Calendar getCalendar(Date date) {
-        Calendar calendar = Calendar.getInstance(Locale.US);
-        calendar.setTime(date);
-        return calendar;
-    }
-
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat(SYSTEM_DATE_FORMAT);
-        SimpleDateFormat miFormato = new SimpleDateFormat(DATE_FORMAT);
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     *
-     * @param url
-     * @return parse url
-     * @description Parse a invalid url to a http request, example: www.google.com, parse to http://www.google.com
-     */
     private String getValidURL(String url) {
         String returnURL;
-        if (url.startsWith("www")) {
-            returnURL = "http://" + url;
+        if (url.startsWith(getString(R.string.fragment_home_starts_with))) {
+            returnURL = getString(R.string.fragment_home_default_http) + url;
             return returnURL;
         } else {
             return url;

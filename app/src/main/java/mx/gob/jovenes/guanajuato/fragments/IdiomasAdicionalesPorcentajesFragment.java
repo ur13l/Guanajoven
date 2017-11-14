@@ -17,10 +17,6 @@ import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
 import mx.gob.jovenes.guanajuato.model.IdiomaAdicional;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 
-/**
- * Created by codigus on 29/06/2017.
- */
-
 public class IdiomasAdicionalesPorcentajesFragment extends DialogFragment {
     private TextView tvNombreIdioma;
 
@@ -38,7 +34,6 @@ public class IdiomasAdicionalesPorcentajesFragment extends DialogFragment {
     private IdiomaAdicional idiomaAdicional;
 
     private DatosUsuarioIdioma datos;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup container, Bundle savedInstanceState) {
@@ -70,8 +65,6 @@ public class IdiomasAdicionalesPorcentajesFragment extends DialogFragment {
             int porcentajeLectura = seekBarLectura.getProgress();
             int porcentajeEscritura = seekBarEscritura.getProgress();
             datos = new DatosUsuarioIdioma(idDatosUsuario, idIdioma, porcentajeConversacion, porcentajeLectura, porcentajeEscritura);
-            //System.out.println("------------------------------");
-            //System.out.println(datos.getIdDatosUsuario() + "-" + datos.getIdIdiomaAdicional() + "-" + datos.getConversacion() + "-" + datos.getLectura() + "-" + datos.getEscritura());
             IdiomasAdicionalesDialogFragment.insertarIdiomas(datos);
             EditarDatosFragment.validarIdiomas();
 
@@ -98,7 +91,6 @@ public class IdiomasAdicionalesPorcentajesFragment extends DialogFragment {
         this.datos = datos;
     }
 
-    //Clase privada para poner porcentaje visual con los seek bar
     private class ActionSeekBar implements SeekBar.OnSeekBarChangeListener {
 
         @Override

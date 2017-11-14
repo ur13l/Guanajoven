@@ -8,13 +8,8 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-/**
- * Created by codigus on 17/07/2017.
- */
-
 public interface PromocionesAPI {
 
-    //obtiene las promociones
     @GET("promociones")
     Call<Response<ArrayList<Empresa>>> getEmpresas (
             @Query("timestamp") String timeStamp

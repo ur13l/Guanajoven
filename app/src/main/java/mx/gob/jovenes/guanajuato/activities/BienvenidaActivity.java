@@ -1,6 +1,5 @@
 package mx.gob.jovenes.guanajuato.activities;
 
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

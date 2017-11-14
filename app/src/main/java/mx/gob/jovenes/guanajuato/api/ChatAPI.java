@@ -5,10 +5,6 @@ import retrofit2.Call;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-/**
- * Created by codigus on 27/07/2017.
- */
-
 public interface ChatAPI {
 
     @POST("chat/enviar")

@@ -3,15 +3,12 @@ package mx.gob.jovenes.guanajuato.fragments;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.util.SortedList;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
@@ -22,58 +19,38 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
-import io.realm.Realm;
-import io.realm.RealmResults;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVEmpresaAdapter;
 import mx.gob.jovenes.guanajuato.api.PromocionesAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Empresa;
-import mx.gob.jovenes.guanajuato.utils.DateUtilities;
-import retrofit2.Retrofit;
 import retrofit2.Call;
 import retrofit2.Callback;
-
-/**
- * Created by codigus on 17/07/2017.
- */
+import retrofit2.Retrofit;
 
 public class EmpresaFragment extends CustomFragment implements SearchView.OnQueryTextListener {
     private PromocionesAPI promocionesAPI;
     private RVEmpresaAdapter adapter;
     private TextView textViewEmptyEmpresas;
     private RecyclerView rvEmpresas;
-    private Realm realm;
     private Retrofit retrofit;
     private List<Empresa> empresas;
-    private AppCompatActivity activity;
-    private Toolbar toolbar;
-    private CollapsingToolbarLayout cToolbar;
     private SwipeRefreshLayout swipeRefreshLayoutEmpresas;
     private SharedPreferences preferences;
-    private static final Comparator<Empresa> COMPARADOR_ALFABETICO = (o1, o2) -> o1.getEmpresa().compareTo(o2.getEmpresa());
-
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         promocionesAPI = retrofit.create(PromocionesAPI.class);
-        realm = MyApplication.getRealmInstance();
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplication());
-
-        activity = ((AppCompatActivity) getActivity());
-        toolbar = (Toolbar) activity.findViewById(R.id.toolbar2);
-        cToolbar = (CollapsingToolbarLayout) activity.findViewById(R.id.collapsing_toolbar);
 
         setHasOptionsMenu(true);
     }
@@ -86,13 +63,7 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
         rvEmpresas = (RecyclerView) view.findViewById(R.id.rv_empresas);
         textViewEmptyEmpresas = (TextView) view.findViewById(R.id.textview_empty_empresas);
 
-        //actualiza la lista a partir de los datos en realm
-        //actualizarLista();
-
-        //añade mas elementos a partir del servicio
-        //primeraLlamada();
-
-        Call<Response<ArrayList<Empresa>>> call = promocionesAPI.getEmpresas(preferences.getString(MyApplication.LAST_UPDATE_EMPRESAS, "0000-00-00 00:00:00"));
+        Call<Response<ArrayList<Empresa>>> call = promocionesAPI.getEmpresas(preferences.getString(MyApplication.LAST_UPDATE_EMPRESAS, getString(R.string.fragment_empresa_timestamp)));
 
         call.enqueue(new Callback<Response<ArrayList<Empresa>>>() {
             @Override
@@ -110,13 +81,9 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
 
             @Override
             public void onFailure(Call<Response<ArrayList<Empresa>>> call, Throwable t) {
-
+                textViewEmptyEmpresas.setVisibility(View.VISIBLE);
             }
         });
-
-        /*if (noHayDatosEnRealm()) {
-            textViewEmptyEmpresas.setVisibility(View.VISIBLE);
-        }*/
 
         swipeRefreshLayoutEmpresas.setOnRefreshListener(() -> primeraLlamada());
 
@@ -126,7 +93,7 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
     private void primeraLlamada() {
         swipeRefreshLayoutEmpresas.setRefreshing(false);
 
-        Call<Response<ArrayList<Empresa>>> call = promocionesAPI.getEmpresas(preferences.getString(MyApplication.LAST_UPDATE_EMPRESAS, "0000-00-00 00:00:00"));
+        Call<Response<ArrayList<Empresa>>> call = promocionesAPI.getEmpresas(preferences.getString(MyApplication.LAST_UPDATE_EMPRESAS, getString(R.string.fragment_empresa_timestamp)));
 
         call.enqueue(new Callback<Response<ArrayList<Empresa>>>() {
             @Override
@@ -141,40 +108,13 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
                 StaggeredGridLayoutManager slm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
                 rvEmpresas.setAdapter(adapter);
                 rvEmpresas.setLayoutManager(slm);
-
-                /*if (response.body().success) {
-                    List<Empresa> emp = response.body().data;
-
-                    realm.beginTransaction();
-
-                    for (Empresa empresa : emp) {
-                        if (empresa.getDeletedAt() != null) {
-                            Empresa e = realm.where(Empresa.class).equalTo("idEmpresa", empresa.getIdEmpresa()).findFirst();
-
-                            if (e != null) {
-                                e.deleteFromRealm();
-                            }
-
-                        } else {
-                            realm.copyToRealmOrUpdate(empresa);
-                        }
-                    }
-
-                    realm.commitTransaction();
-
-                    if (emp.size() > 0) actualizarLista();
-
-                    String lasUpdate = DateUtilities.dateToString(new Date());
-                    preferences.edit().putString(MyApplication.LAST_UPDATE_EMPRESAS, lasUpdate).apply();
-
-                }*/
             }
 
             @Override
             public void onFailure(Call<Response<ArrayList<Empresa>>> call, Throwable t) {
                 AlertDialog.Builder b = new AlertDialog.Builder(getContext());
                 b.create();
-                b.setMessage("Error, intenta mas tarde");
+                b.setMessage(R.string.fragment_empresa_error_conexion);
                 b.show();
             }
         });
@@ -188,21 +128,6 @@ public class EmpresaFragment extends CustomFragment implements SearchView.OnQuer
         final MenuItem searchItem = menu.findItem(R.id.item_buscar_empresas);
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(this);
-    }
-
-    private void actualizarLista() {
-        RealmResults<Empresa> result = realm.where(Empresa.class).findAll();
-
-        empresas = realm.copyFromRealm(result);
-        adapter = new RVEmpresaAdapter(getContext());
-        StaggeredGridLayoutManager slm = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-        rvEmpresas.setAdapter(adapter);
-        rvEmpresas.setLayoutManager(slm);
-
-    }
-
-    public boolean noHayDatosEnRealm() {
-        return (realm.where(Empresa.class).findAll().isEmpty());
     }
 
     @Override

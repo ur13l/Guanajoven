@@ -33,10 +33,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Created by code on 9/02/17.
- */
-
 public class ChatFragment extends CustomFragment {
     private RecyclerView recyclerViewMessages;
     private ImageButton buttonSend;
@@ -50,16 +46,13 @@ public class ChatFragment extends CustomFragment {
     private IntentFilter intentFilter;
     public static ChatFragment chat;
 
-    private static final String ERROR_MENSAJES = "Vaya!, parece que tenemos un problema...\n" +
-                                                        "Intenta más tarde o verifica tu conexión a internet";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         retrofit = ((MyApplication) getActivity().getApplication()).getRetrofitInstance();
         chatAPI = retrofit.create(ChatAPI.class);
 
-        intentFilter = new IntentFilter("mx.gob.jovenes.guanajuato.MENSAJE_RECIBIDO");
+        intentFilter = new IntentFilter(getString(R.string.fragment_chat_intentfilter_action));
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(mensajeRecibido, intentFilter);
 
         chat = this;
@@ -137,7 +130,7 @@ public class ChatFragment extends CustomFragment {
                     primeraLlamada();
                 } catch (Exception exception) {
                     AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
-                    mensajeError.setMessage(ERROR_MENSAJES);
+                    mensajeError.setMessage(getString(R.string.fragment_chat_error_mensajes));
                     mensajeError.show();
                 }
             }
@@ -162,7 +155,7 @@ public class ChatFragment extends CustomFragment {
                     generarLlamada();
                 } catch (Exception exception) {
                     AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
-                    mensajeError.setMessage(ERROR_MENSAJES);
+                    mensajeError.setMessage(getString(R.string.fragment_chat_error_mensajes));
                     mensajeError.show();
                 }
             }
@@ -187,7 +180,7 @@ public class ChatFragment extends CustomFragment {
     private BroadcastReceiver mensajeRecibido = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            Mensaje mensaje = new Gson().fromJson(intent.getExtras().getString("mensaje"), Mensaje.class);
+            Mensaje mensaje = new Gson().fromJson(intent.getExtras().getString(getString(R.string.fragment_chat_json_received)), Mensaje.class);
             mensajes.add(0, mensaje);
             adapter.notifyDataSetChanged();
         }

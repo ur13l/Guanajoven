@@ -10,7 +10,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,12 +21,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.api.NotificacionAPI;
@@ -35,12 +28,7 @@ import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.fragments.HomeFragment;
 import mx.gob.jovenes.guanajuato.model.Usuario;
-<<<<<<< HEAD
-import mx.gob.jovenes.guanajuato.model.Perfil;
-import mx.gob.jovenes.guanajuato.notifications.FirebaseInstanceIDService;
 
-=======
->>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
 import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
@@ -189,17 +177,24 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         mGoogleApiClient.connect();
 
         Usuario usuario = Sesion.getUsuario();
+        String nombre = usuario.getDatosUsuario().getNombre() + getString(R.string.home_activity_space) +
+                usuario.getDatosUsuario().getApellidoPaterno() + getString(R.string.home_activity_space) +
+                usuario.getDatosUsuario().getApellidoMaterno();
+        String correo = usuario.getEmail();
+        String puntaje = getString(R.string.home_activity_points) + usuario.getPuntaje();
 
         if(Sesion.getUsuario().getDatosUsuario().getRutaImagen() != null ) {
             Picasso.with(getApplicationContext()).load(usuario.getDatosUsuario().getRutaImagen()).into(imagenUsuarioDrawer);
         }
 
-        String posicion = Sesion.getUsuario().getPosicion() == null ? getString(R.string.home_activity_zero) : Sesion.getUsuario().getPosicion();
+        String posicion = Sesion.getUsuario().getPosicion() == null ?
+                getString(R.string.home_activity_position) + getString(R.string.home_activity_zero) :
+                getString(R.string.home_activity_position) + Sesion.getUsuario().getPosicion();
 
-        nombreUsuarioDrawer.setText(usuario.getDatosUsuario().getNombre() + getString(R.string.home_activity_space) + usuario.getDatosUsuario().getApellidoPaterno() + getString(R.string.home_activity_space) + usuario.getDatosUsuario().getApellidoMaterno());
-        correoUsuarioDrawer.setText(usuario.getEmail());
-        puntajeDrawer.setText(getString(R.string.home_activity_points) + usuario.getPuntaje());
-        posicionDrawer.setText(getString(R.string.home_activity_position) + posicion);
+        nombreUsuarioDrawer.setText(nombre);
+        correoUsuarioDrawer.setText(correo);
+        puntajeDrawer.setText(puntaje);
+        posicionDrawer.setText(posicion);
 
         if (!DateUtilities.lessThan30Years(DateUtilities.getFechaCast(Sesion.getUsuario().getDatosUsuario().getFechaNacimiento()))) {
             navigationView.getMenu().findItem(R.id.nav_codigo_guanajoven).setVisible(false);

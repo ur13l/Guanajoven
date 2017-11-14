@@ -1,9 +1,5 @@
 package mx.gob.jovenes.guanajuato.api;
 
-/**
- * Created by Uriel on 16/03/2017.
- */
-
 public class RegistroRequest {
 
     private String curp;

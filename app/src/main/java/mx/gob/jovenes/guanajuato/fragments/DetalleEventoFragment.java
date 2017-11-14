@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -21,9 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -31,7 +28,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -44,13 +40,11 @@ import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Evento;
 import mx.gob.jovenes.guanajuato.model.EventoResponse;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Created by uriel on 21/06/16.
- */
 public class DetalleEventoFragment extends Fragment implements OnMapReadyCallback {
     private static String ID_EVENTO = "id_evento";
     private Evento evento;
@@ -68,18 +62,15 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     private static final int PERMISSION_REQUEST_CODE = 321;
     private double latitud;
     private double longitud;
-    private ProgressDialog progressDialog;
     private Retrofit retrofit;
     private EventoAPI eventoAPI;
-    private static final String ERROR_YA_REGISTRADO = "Ya has sido registrado";
-    private static final String ERROR_FUERA_DE_RANGO = "No te encuentras en el rango del evento";
 
     private Criteria criteria;
 
     public static DetalleEventoFragment newInstance(int idEvento) {
         DetalleEventoFragment detalleEventoFragment = new DetalleEventoFragment();
         Bundle args = new Bundle();
-        args.putInt(ID_EVENTO, idEvento);//cambia el valor de la variable por el id de la region seleccionada
+        args.putInt(ID_EVENTO, idEvento);
         detalleEventoFragment.setArguments(args);
         return detalleEventoFragment;
     }
@@ -99,12 +90,10 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_detalle_evento, container, false);
 
-        evento = realm.where(Evento.class).equalTo("idEvento", getArguments().getInt(ID_EVENTO)).findFirst();
+        evento = realm.where(Evento.class).equalTo(getString(R.string.fragment_detalle_evento_idevento), getArguments().getInt(ID_EVENTO)).findFirst();
 
         criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-
-        progressDialog = new ProgressDialog(getContext());
 
         mapaEvento = (MapFragment) getActivity().getFragmentManager().findFragmentById(R.id.mapa_evento);
         mapaEvento.getMapAsync(this);
@@ -121,12 +110,19 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         tvNombreEvento.setText(evento.getTitulo());
         tvDireccionEvento.setText(evento.getDireccion());
         tvDescripcionEvento.setText(evento.getDescripcion());
-        tvFechaEvento.setText(getFechaCast(evento.getFechaInicio()) + " - " + getFechaCast(evento.getFechaFin()));
+
+        String fechaEvento = DateUtilities.getFechaCast(evento.getFechaInicio()) +
+                getString(R.string.fragment_detalle_evento_guion) +
+                DateUtilities.getFechaCast(evento.getFechaFin());
+
+        tvFechaEvento.setText(fechaEvento);
 
         if (!usuarioRegistrado()) checkAsist();
 
         botonEstoyEnEvento.setOnClickListener((View) -> {
-            progressDialog = ProgressDialog.show(getContext(), "Cargando", "Obteniendo tu localización", true, true);
+            ProgressDialog.show(getContext(),
+                    getString(R.string.fragment_detalle_evento_cargando),
+                    getString(R.string.fragment_detalle_evento_obteniendo_localizacion), true, true);
 
             Call<Response<EventoResponse>> call = eventoAPI.marcarEvento(evento.getIdEvento(), Sesion.getUsuario().getApiToken(), getLatitud(), getLongitud());
 
@@ -141,30 +137,30 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
                             String puntosFinal = String.valueOf(puntos + puntosUsuario);
                             Sesion.getUsuario().setPuntaje(puntosFinal);
 
-                            Snackbar.make(getView(), "Registrado!", Snackbar.LENGTH_LONG).show();
+                            Snackbar.make(getView(), getString(R.string.fragment_detalle_evento_registrado), Snackbar.LENGTH_LONG).show();
 
                             realm.beginTransaction();
                             evento.setEstaRegistrado(true);
                             realm.commitTransaction();
 
-                        } else if (response.body().errors[0].equals(ERROR_FUERA_DE_RANGO)) {
-                            Snackbar.make(getView(), ERROR_FUERA_DE_RANGO, Snackbar.LENGTH_LONG).show();
-                        } else if (response.body().errors[0].equals(ERROR_YA_REGISTRADO)) {
-                            Snackbar.make(getView(), ERROR_YA_REGISTRADO, Snackbar.LENGTH_LONG).show();
+                        } else if (response.body().errors[0].equals(getString(R.string.fragment_detalle_evento_error_fuera_de_rango))) {
+                            Snackbar.make(getView(), getString(R.string.fragment_detalle_evento_error_fuera_de_rango), Snackbar.LENGTH_LONG).show();
+                        } else if (response.body().errors[0].equals(getString(R.string.fragment_detalle_evento_error_ya_registrado))) {
+                            Snackbar.make(getView(), getString(R.string.fragment_detalle_evento_error_ya_registrado), Snackbar.LENGTH_LONG).show();
 
                             realm.beginTransaction();
                             evento.setEstaRegistrado(true);
                             realm.commitTransaction();
                         }
                     } else {
-                        Snackbar.make(getView(), "Ops! parece que ocurrio un error, intenta más tarde", Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), getString(R.string.fragment_detalle_evento_intenta_mas_tarde), Snackbar.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Response<EventoResponse>> call, Throwable t) {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setMessage("Error de conexión");
+                    builder.setMessage(getString(R.string.fragment_detalle_evento_error_conexion));
                     builder.show();
                 }
             });
@@ -172,10 +168,9 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         });
 
         botonMeInteresa.setOnClickListener((View) -> {
-            //Genera la llamada para poder enviar un correo
             ProgressDialog progressDialog = new ProgressDialog(getContext());
-            progressDialog.setTitle("Enviando correo");
-            progressDialog.setMessage("Espera mientras enviamos un correo a tu cuenta registrada");
+            progressDialog.setTitle(getString(R.string.fragment_detalle_evento_enviando_correo));
+            progressDialog.setMessage(getString(R.string.fragment_detalle_evento_espera));
             progressDialog.show();
 
             Call<Response<Boolean>> enviarCorreo = eventoAPI.enviarCorreo(Sesion.getUsuario().getApiToken(), evento.getIdEvento());
@@ -183,13 +178,13 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             enviarCorreo.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Snackbar.make(getView(), "Fallo en enviar o ya se encuentra inscrito", 7000).show();
+                    Snackbar.make(getView(), getString(R.string.fragment_detalle_evento_error_envio), 7000).show();
                     progressDialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    Snackbar.make(getView(), "Gracias por estar interesado en el evento, en breve te llegará un correo electrónico con más información.", 7000).show();
+                    Snackbar.make(getView(), getString(R.string.fragment_detalle_evento_mensaje_enviado), 7000).show();
                     MyApplication.contadorCorreosEventos.start();
                     progressDialog.dismiss();
                 }
@@ -201,7 +196,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
     }
 
     public void checkAsist() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat formatter = new SimpleDateFormat(getString(R.string.fragment_detalle_evento_date_format));
         String dateInStringbegin = evento.getFechaInicio();
         String dateInStringend = evento.getFechaFin();
         String dateInStringToday = formatter.format(new Date());
@@ -257,13 +252,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
                             }
                         }, null);
-                        /*SingleShootLocationProvider.requestSingleUpdate(getContext(), new SingleShootLocationProvider.LocationCallBack() {
-                            @Override
-                            public void onNewLocationAvailable(GPSCoordinates location) {
-                                setLatitud(location.getLatitude());
-                                setLongitud(location.getLongitude());
-                            }
-                        });*/
+
                     } catch (SecurityException e) {
                         e.printStackTrace();
                     }
@@ -275,25 +264,12 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         }
     }
 
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         float zoomLevel = (float) 16.0;
-        LatLng coordenadas = new LatLng(evento.getLatitud(), evento.getLongitud()); //coordenadas de la región
-        googleMap.addMarker(new MarkerOptions().position(coordenadas).title(evento.getTitulo())); //pone el puntero en las coordenadas
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel)); //hace el zoom en el mapa
+        LatLng coordenadas = new LatLng(evento.getLatitud(), evento.getLongitud());
+        googleMap.addMarker(new MarkerOptions().position(coordenadas).title(evento.getTitulo()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(coordenadas, zoomLevel));
     }
 
     @Override
@@ -351,10 +327,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
 
                     }
                 }, null);
-                /*SingleShootLocationProvider.requestSingleUpdate(getContext(), location -> {
-                    setLatitud(location.getLatitude());
-                    setLongitud(location.getLongitude());
-                });*/
 
             } catch (SecurityException e) {
                 e.printStackTrace();
@@ -362,7 +334,7 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION)) {
-                    Snackbar.make(getActivity().findViewById(R.id.segunda_fragment_container), "Permiso denegado", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getActivity().findViewById(R.id.segunda_fragment_container), getString(R.string.fragment_detalle_evento_permiso_denegado), Snackbar.LENGTH_LONG).show();
                 }
             }
         }
@@ -393,95 +365,6 @@ public class DetalleEventoFragment extends Fragment implements OnMapReadyCallbac
             return true;
         }
         return false;
-    }
-
-    private static class SingleShootLocationProvider {
-
-        interface LocationCallBack {
-             void onNewLocationAvailable(GPSCoordinates location);
-        }
-
-        public static void requestSingleUpdate(final Context context, final LocationCallBack callBack) {
-            final LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-            boolean isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (isNetworkEnabled) {
-                Criteria criteria = new Criteria();
-                criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-
-                locationManager.requestSingleUpdate(criteria, new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        callBack.onNewLocationAvailable(new GPSCoordinates(location.getLatitude(), location.getLongitude()));
-                    }
-
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-                    }
-
-                    @Override
-                    public void onProviderEnabled(String provider) {
-                    }
-
-                    @Override
-                    public void onProviderDisabled(String provider) {
-                    }
-                }, null);
-            } else {
-                boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-                if (isGPSEnabled) {
-                    Criteria criteria = new Criteria();
-                    criteria.setAccuracy(Criteria.ACCURACY_COARSE);
-
-                    locationManager.requestSingleUpdate(criteria, new LocationListener() {
-                        @Override
-                        public void onLocationChanged(Location location) {
-                            callBack.onNewLocationAvailable(new GPSCoordinates(location.getLatitude(), location.getLongitude()));
-                        }
-
-                        @Override
-                        public void onStatusChanged(String provider, int status, Bundle extras) {}
-
-                        @Override
-                        public void onProviderEnabled(String provider) {}
-
-                        @Override
-                        public void onProviderDisabled(String provider) {}
-
-                    }, null);
-                }
-            }
-
-            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            }
-
-        }
-
-    }
-
-    private static class GPSCoordinates {
-        public float latitude = -1;
-        public float longitude = -1;
-
-        public GPSCoordinates(float latitude, float longitude) {
-            this.latitude = latitude;
-            this.longitude = longitude;
-        }
-
-        public GPSCoordinates(double latitude, double longitude) {
-            this.latitude = (float) latitude;
-            this.longitude = (float) longitude;
-        }
-
-        public float getLatitude() {
-            return this.latitude;
-        }
-
-        public float getLongitude() {
-            return this.longitude;
-        }
-
     }
 
 }

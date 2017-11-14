@@ -19,10 +19,6 @@ import mx.gob.jovenes.guanajuato.adapters.RVIdiomaAdicionalAdapter;
 import mx.gob.jovenes.guanajuato.model.DatosUsuarioIdioma;
 import mx.gob.jovenes.guanajuato.model.IdiomaAdicional;
 
-/**
- * Created by Juan on 25/05/2017.
- */
-
 public class IdiomasAdicionalesDialogFragment extends DialogFragment {
     private RecyclerView recyclerViewIdiomas;
     private static List<IdiomaAdicional> idiomas;
@@ -69,15 +65,14 @@ public class IdiomasAdicionalesDialogFragment extends DialogFragment {
     }
 
     private void llenarLista() {
-        IdiomaAdicional[] arregloIdiomas = new IdiomaAdicional[]{
-                new IdiomaAdicional(1, "Alemán"),
-                new IdiomaAdicional(2, "Árabe"), new IdiomaAdicional(3, "Chino"),
-                new IdiomaAdicional(4, "Coreano"), new IdiomaAdicional(5, "Fránces"),
-                new IdiomaAdicional(6, "Inglés"), new IdiomaAdicional(7, "Italiano"),
-                new IdiomaAdicional(8, "Japonés"), new IdiomaAdicional(9, "Polaco"),
-                new IdiomaAdicional(10, "Portugués"), new IdiomaAdicional(11, "Ruso"),
-                new IdiomaAdicional(12, "Otro")
-        };
+        String[] idiomasArray = getResources().getStringArray(R.array.fragment_dialog_idiomas_adicionales_array_idiomas);
+        IdiomaAdicional[] arregloIdiomas = new IdiomaAdicional[idiomasArray.length];
+
+        for (int i = 0; i < idiomasArray.length; i++) {
+            arregloIdiomas[i] = new IdiomaAdicional(i + 1, idiomasArray[i]);
+            System.err.println(idiomasArray[i]);
+            System.err.println(arregloIdiomas.length);
+        }
 
         idiomas = new ArrayList<>(Arrays.asList(arregloIdiomas));
 
@@ -87,29 +82,10 @@ public class IdiomasAdicionalesDialogFragment extends DialogFragment {
 
     public static void insertarIdiomas(DatosUsuarioIdioma datosUsuarioIdioma) {
         datosIdiomas.add(datosUsuarioIdioma);
-        for (int i = 0; i < datosIdiomas.size(); i++) {
-            System.out.println(datosIdiomas.get(i).getIdDatosUsuario() + "-" + datosIdiomas.get(i).getIdIdiomaAdicional() + "-" +
-                    datosIdiomas.get(i).getConversacion() + "-" + datosIdiomas.get(i).getLectura() + "-" + datosIdiomas.get(i).getEscritura() + "\n");
-        }
     }
 
     public static int numeroDeIdiomas() {
-        if (datosIdiomas == null) {
-            return 0;
-        } else {
-            return datosIdiomas.size();
-        }
+        return (datosIdiomas == null) ? 0 : datosIdiomas.size();
     }
-
-    public static void quitarElementosDeAdapter(List<DatosUsuarioIdioma> idiomasAdicionales) {
-            for (int i = 0; i < idiomasAdicionales.size(); i++) {
-                for (int j = 0; j < idiomas.size(); j++) {
-                    if (idiomasAdicionales.get(i).getIdIdiomaAdicional() == idiomas.get(j).getIdIdiomaAdicional()) {
-                        idiomas.remove(j);
-                    }
-                }
-            }
-            recyclerViewIdiomaAdicionalAdapter.notifyDataSetChanged();
-        }
 
 }

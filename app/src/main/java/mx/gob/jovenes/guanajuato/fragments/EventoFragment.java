@@ -35,9 +35,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Created by code on 31/01/17.
- */
 public class EventoFragment extends CustomFragment {
     private EventoAPI eventoAPI;
     private RecyclerView rvEvento;
@@ -89,7 +86,7 @@ public class EventoFragment extends CustomFragment {
 
     private void primeraLlamada() {
         swipeRefreshLayoutEventos.setRefreshing(false);
-        Call<Response<ArrayList<Evento>>> call = eventoAPI.obtenerEventos(prefs.getString(MyApplication.LAST_UPDATE_EVENTOS, "0000-00-00 00:00:00"));
+        Call<Response<ArrayList<Evento>>> call = eventoAPI.obtenerEventos(prefs.getString(MyApplication.LAST_UPDATE_EVENTOS, getString(R.string.fragment_evento_timestamp)));
 
         call.enqueue(new Callback<Response<ArrayList<Evento>>>() {
             @Override
@@ -103,7 +100,7 @@ public class EventoFragment extends CustomFragment {
                     realm.beginTransaction();
                     for(Evento e : evn) {
                         if(e.getDeletedAt() != null) {
-                            Evento ev = realm.where(Evento.class).equalTo("idEvento", e.getIdEvento()).findFirst();
+                            Evento ev = realm.where(Evento.class).equalTo(getString(R.string.fragment_evento_idevento), e.getIdEvento()).findFirst();
                             if(ev != null) {
                                 ev.deleteFromRealm();
                             }
@@ -127,7 +124,7 @@ public class EventoFragment extends CustomFragment {
                 if (noHayDatosEnRealm()) {
                     AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
                     mensajeError.create();
-                    mensajeError.setMessage("Necesitas estar conectado para poder ver los últimos eventos");
+                    mensajeError.setMessage(R.string.fragment_evento_error_internet);
                     mensajeError.show();
                 }
             }
@@ -166,8 +163,8 @@ public class EventoFragment extends CustomFragment {
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle("Eventos");
-        cToolBar.setTitle("Eventos");
+        activity.getSupportActionBar().setTitle(R.string.fragment_evento_actionbar_title);
+        cToolBar.setTitle(getString(R.string.fragment_evento_actionbar_title));
         imagen.setImageResource(R.drawable.registro_usuario);
 
     }

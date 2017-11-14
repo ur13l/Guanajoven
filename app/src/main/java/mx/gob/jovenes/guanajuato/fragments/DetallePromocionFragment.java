@@ -1,10 +1,8 @@
 package mx.gob.jovenes.guanajuato.fragments;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,12 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Writer;
 import com.google.zxing.WriterException;
@@ -28,25 +24,19 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-
 import mx.gob.jovenes.guanajuato.R;
-import mx.gob.jovenes.guanajuato.api.IdGuanajovenAPI;
 import mx.gob.jovenes.guanajuato.api.PromocionesAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Empresa;
 import mx.gob.jovenes.guanajuato.model.Promocion;
-import mx.gob.jovenes.guanajuato.model.Usuario;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Created by codigus on 18/07/2017.
- */
 
 public class DetallePromocionFragment extends Fragment {
     private ImageView imageViewLogoEmpresa;
@@ -68,10 +58,6 @@ public class DetallePromocionFragment extends Fragment {
     private UsuarioAPI usuarioAPI;
     private PromocionesAPI promocionAPI;
     private Retrofit retrofit;
-
-    private static final String ERROR_ID_GUANAJOVEN = "No existe id guanajoven";
-    private static final String ERROR_PROMOCION = "No existe promocion";
-    private static final String ERROR_EMPRESA = "No existe la empresa";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,8 +112,8 @@ public class DetallePromocionFragment extends Fragment {
         textViewCodigoPromocion.setText(promocion.getCodigoPromocion());
         textViewDescripcionPromocion.setText(promocion.getDescripcion());
         textViewBasesPromocion.setText(promocion.getBases());
-        textViewFechaInicio.setText(getFechaCast(promocion.getFechaInicio()));
-        textViewFechaFin.setText(getFechaCast(promocion.getFechaFin()));
+        textViewFechaInicio.setText(DateUtilities.getFechaCast(promocion.getFechaInicio()));
+        textViewFechaFin.setText(DateUtilities.getFechaCast(promocion.getFechaFin()));
 
         textViewSitioPromocion.setOnClickListener((View) -> { enlace(promocion.getUrlPromocion()); });
         buttonAplicarPromocion.setOnClickListener((View) -> { meInteresa(); });
@@ -143,22 +129,9 @@ public class DetallePromocionFragment extends Fragment {
         this.promocion = promocion;
     }
 
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     private void generarQR(String dato, ImageView objeto) throws WriterException {
         Writer generador = new QRCodeWriter();
-        String datoFinal = Uri.encode(dato, "utf-8");
+        String datoFinal = Uri.encode(dato, getString(R.string.fragment_detalle_promocion_utf8));
 
         BitMatrix bm = generador.encode(datoFinal, BarcodeFormat.QR_CODE, 150, 150);
         imagenBitMap = Bitmap.createBitmap(150, 150, Bitmap.Config.ARGB_8888);
@@ -181,10 +154,10 @@ public class DetallePromocionFragment extends Fragment {
     private void meInteresa() {
         AlertDialog.Builder alerta = new AlertDialog.Builder(getContext());
 
-        alerta.setTitle("Advertencia");
-        alerta.setMessage("Al aplicar esta promoción quedará registrado en la base de datos que has sido beneficiado por la empresa, ¿Estas seguro de Aplicar esta promoción?");
+        alerta.setTitle(getString(R.string.fragment_detalle_promocion_advertencia));
+        alerta.setMessage(getString(R.string.fragment_detalle_promocion_advertencia_mensaje));
 
-        alerta.setPositiveButton("Aceptar", (dialog, which) -> {
+        alerta.setPositiveButton(getString(R.string.fragment_detalle_promocion_aceptar), (dialog, which) -> {
             Call<Response<Boolean>> call = promocionAPI.registrar(Sesion.getUsuario().getCodigoGuanajoven().getToken(), promocion.getIdPromocion());
 
             call.enqueue(new Callback<Response<Boolean>>() {
@@ -194,25 +167,25 @@ public class DetallePromocionFragment extends Fragment {
                         linearLayoutCodigoPromocion.setVisibility(android.view.View.VISIBLE);
                         imageViewCodigoQR.setVisibility(android.view.View.VISIBLE);
 
-                        Snackbar.make(getView(), "Promoción registrada", Snackbar.LENGTH_LONG).show();
-                    } else if (response.body().errors[0].equals(ERROR_ID_GUANAJOVEN)) {
-                        Snackbar.make(getView(), ERROR_ID_GUANAJOVEN, Snackbar.LENGTH_LONG).show();
-                    } else if (response.body().errors[0].equals(ERROR_PROMOCION)) {
-                        Snackbar.make(getView(), ERROR_PROMOCION, Snackbar.LENGTH_LONG).show();
-                    } else if (response.body().errors[0].equals(ERROR_EMPRESA)) {
-                        Snackbar.make(getView(), ERROR_EMPRESA, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(getView(), getString(R.string.fragment_detalle_promocion_promocion_registrada), Snackbar.LENGTH_LONG).show();
+                    } else if (response.body().errors[0].equals(getString(R.string.fragment_detalle_promocion_no_existe_id))) {
+                        Snackbar.make(getView(), getString(R.string.fragment_detalle_promocion_no_existe_id), Snackbar.LENGTH_LONG).show();
+                    } else if (response.body().errors[0].equals(getString(R.string.fragment_detalle_promocion_no_existe_promocion))) {
+                        Snackbar.make(getView(), getString(R.string.fragment_detalle_promocion_no_existe_promocion), Snackbar.LENGTH_LONG).show();
+                    } else if (response.body().errors[0].equals(getString(R.string.fragment_detalle_promocion_no_existe_empresa))) {
+                        Snackbar.make(getView(), getString(R.string.fragment_detalle_promocion_no_existe_empresa), Snackbar.LENGTH_LONG).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    Snackbar.make(getView(), "Error al conectar", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), getString(R.string.fragment_detalle_promocion_error_conexion), Snackbar.LENGTH_LONG).show();
                 }
             });
 
         });
 
-        alerta.setNegativeButton("Cancelar", ((dialog, which) -> { dialog.dismiss(); }));
+        alerta.setNegativeButton(getString(R.string.fragment_detalle_promocion_cancelar), ((dialog, which) -> { dialog.dismiss(); }));
 
         alerta.show();
 

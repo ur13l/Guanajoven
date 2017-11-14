@@ -7,10 +7,6 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-/**
- * Created by esva on 25/04/17.
- */
-
 public interface RegionAPI {
 
     @GET("regiones")

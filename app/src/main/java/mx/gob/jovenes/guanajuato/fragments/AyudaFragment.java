@@ -27,7 +27,7 @@ public class AyudaFragment extends Fragment {
         listener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                youTubePlayer.loadVideo("8qdgB_JUWL4");
+                youTubePlayer.loadVideo(getString(R.string.fragment_ayuda_link_video));
                 youTubePlayer.setShowFullscreenButton(false);
             }
 
@@ -37,7 +37,7 @@ public class AyudaFragment extends Fragment {
             }
         };
 
-        videoView.initialize("AIzaSyDHDnSpC4e1VwrYYjQeb1sAQrr_d2U0zPY", listener);
+        videoView.initialize(getString(R.string.fragment_ayuda_youtubekey), listener);
 
         return v;
     }

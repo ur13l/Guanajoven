@@ -19,10 +19,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -37,9 +35,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Created by Juan José Estrada Valtierra on 12/04/17.
- */
 public class ConvocatoriaFragment extends CustomFragment{
     private ConvocatoriaAPI convocatoriaAPI;
     private RecyclerView rvConvocatoria;
@@ -93,8 +88,7 @@ public class ConvocatoriaFragment extends CustomFragment{
 
     public void primeraLlamada() {
         swipeRefreshLayoutConvocatorias.setRefreshing(false);
-        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getString(MyApplication.LAST_UPDATE_CONVOCATORIAS, "0000-00-00 00:00:00"));
-        //Llamada a servidor caso de acertar o fallar
+        Call<Response<ArrayList<Convocatoria>>> call = convocatoriaAPI.get(prefs.getString(MyApplication.LAST_UPDATE_CONVOCATORIAS, getString(R.string.fragment_convocatoria_timestamp)));
 
         call.enqueue(new Callback<Response<ArrayList<Convocatoria>>>() {
             @Override
@@ -104,12 +98,11 @@ public class ConvocatoriaFragment extends CustomFragment{
 
                     List<Convocatoria> conv = response.body().data;
 
-                    //Transacción de realm, se itera sobre las convocatorias obtenidas desde el servidor.
                     realm.beginTransaction();
                     for(Convocatoria c : conv) {
                         if(c.getDeletedAt() != null) {
                             Convocatoria cr = realm.where(Convocatoria.class)
-                                    .equalTo("idConvocatoria", c.getIdConvocatoria())
+                                    .equalTo(getString(R.string.fragment_convocatoria_idconvocatoria), c.getIdConvocatoria())
                                     .findFirst();
                             if(cr != null) {
                                 cr.deleteFromRealm();
@@ -121,7 +114,6 @@ public class ConvocatoriaFragment extends CustomFragment{
                     }
                     realm.commitTransaction();
 
-                    //La lista se actualiza cuando se carga al menos un registro desde el servidor.
                     if(conv.size() > 0) {
                         updateList();
                     }
@@ -137,7 +129,7 @@ public class ConvocatoriaFragment extends CustomFragment{
                 if (noHayDatosEnRealm()) {
                     AlertDialog.Builder mensajeError = new AlertDialog.Builder(getContext());
                     mensajeError.create();
-                    mensajeError.setMessage("Necesitas estar conectado para poder ver las últimas convocatorias");
+                    mensajeError.setMessage(getString(R.string.fragment_convocatoria_error_conexion));
                     mensajeError.show();
                 }
             }
@@ -176,8 +168,8 @@ public class ConvocatoriaFragment extends CustomFragment{
         activity.setSupportActionBar(toolbar);
         activity.getSupportActionBar().setHomeButtonEnabled(true);
         activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle("Convocatorias");
-        cToolbar.setTitle("Convocatorias");
+        activity.getSupportActionBar().setTitle(getString(R.string.fragment_convocatoria_actionbar_title));
+        cToolbar.setTitle(getString(R.string.fragment_convocatoria_actionbar_title));
         imagen.setImageResource(R.drawable.convocatorias);
 
     }

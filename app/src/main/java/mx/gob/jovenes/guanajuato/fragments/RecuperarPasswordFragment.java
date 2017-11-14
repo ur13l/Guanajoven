@@ -20,18 +20,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
-import com.firebase.client.utilities.Utilities;
-import com.google.gson.Gson;
-
-import java.util.HashMap;
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.api.UsuarioAPI;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
-import mx.gob.jovenes.guanajuato.connection.ClienteHttp;
-import mx.gob.jovenes.guanajuato.model.Usuario;
-import mx.gob.jovenes.guanajuato.model.models_tmp.RecuperarPass;
 import mx.gob.jovenes.guanajuato.utils.EditTextValidations;
 import mx.gob.jovenes.guanajuato.utils.OKDialog;
 import retrofit2.Call;

@@ -18,9 +18,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-
 import io.realm.Realm;
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.adapters.RVDocumentoAdapter;
@@ -28,15 +25,12 @@ import mx.gob.jovenes.guanajuato.api.ConvocatoriaAPI;
 import mx.gob.jovenes.guanajuato.api.Response;
 import mx.gob.jovenes.guanajuato.application.MyApplication;
 import mx.gob.jovenes.guanajuato.model.Convocatoria;
-import mx.gob.jovenes.guanajuato.model.Documento;
 import mx.gob.jovenes.guanajuato.sesion.Sesion;
+import mx.gob.jovenes.guanajuato.utils.DateUtilities;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 
-/**
- * Created by esva on 19/04/17.
- */
 
 public class DetalleConvocatoriaFragment extends Fragment {
     private static String ID_CONVOCATORIA = "id_convocatoria";
@@ -47,15 +41,12 @@ public class DetalleConvocatoriaFragment extends Fragment {
     private TextView tvFechaCierreConvocatoria;
     private TextView tvEmptyDocumentos;
     private RecyclerView rvDocumentosConvocatoria;
-    private ArrayList<Documento> documentos;
     private RVDocumentoAdapter adapter;
     private Context context;
     private Realm realm;
     public static Button btnQuieroMasInformacion;
     private ConvocatoriaAPI convocatoriaAPI;
     private Retrofit retrofit;
-    private final static String $ERROR_MENSAJE = "Fallo en enviar o ya se encuentra inscrito";
-    public final static String $MENSAJE_ENVIADO = "Gracias por interesarte en la convocatoria, en breve te llegará un correo electrónico con más información.";
 
     public static DetalleConvocatoriaFragment newInstance(int idConvocatoria) {
         DetalleConvocatoriaFragment detalleConvocatoriaFragment = new DetalleConvocatoriaFragment();
@@ -82,7 +73,7 @@ public class DetalleConvocatoriaFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_detalle_convocatoria, container, false);
-        convocatoria = realm.where(Convocatoria.class).equalTo("idConvocatoria", getArguments().getInt(ID_CONVOCATORIA)).findFirst();
+        convocatoria = realm.where(Convocatoria.class).equalTo(getString(R.string.fragment_detalle_convocatoria_idconvocatoria), getArguments().getInt(ID_CONVOCATORIA)).findFirst();
 
         imgConvocatoria = (ImageView) v.findViewById(R.id.img_convocatoria);
         tvDescripcionConvocatoria = (TextView) v.findViewById(R.id.tv_descripcion_convocatoria);
@@ -104,9 +95,11 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         tvDescripcionConvocatoria.setText(convocatoria.getDescripcion());
 
+        String fechaInicio = getString(R.string.fragment_detalle_convocatoria_fecha_inicio) + DateUtilities.getFechaCast(convocatoria.getFechaInicio());
+        String fechaFin = getString(R.string.fragment_detalle_convocatoria_fecha_fin) + DateUtilities.getFechaCast(convocatoria.getFechaCierre());
 
-        tvFechaInicioConvocatoria.setText("Fecha inicio: " + getFechaCast(convocatoria.getFechaInicio()));
-        tvFechaCierreConvocatoria.setText("Fecha cierre: " + getFechaCast(convocatoria.getFechaCierre()));
+        tvFechaInicioConvocatoria.setText(fechaInicio);
+        tvFechaCierreConvocatoria.setText(fechaFin);
         rvDocumentosConvocatoria.setAdapter(adapter);
 
         if( convocatoria.getDocumentos().size() == 0) {
@@ -117,8 +110,8 @@ public class DetalleConvocatoriaFragment extends Fragment {
 
         btnQuieroMasInformacion.setOnClickListener((View) -> {
             ProgressDialog progressDialog = new ProgressDialog(getContext());
-            progressDialog.setTitle("Enviando correo");
-            progressDialog.setMessage("Espera mientras enviamos un correo a tu cuenta registrada");
+            progressDialog.setTitle(getString(R.string.fragment_detalle_convocatoria_enviando_correo));
+            progressDialog.setMessage(getString(R.string.fragment_detallle_convocatoria_espera));
             progressDialog.show();
 
             Call<Response<Boolean>> call = convocatoriaAPI.enviarCorreo(Sesion.getUsuario().getApiToken(), convocatoria.getIdConvocatoria());
@@ -126,13 +119,13 @@ public class DetalleConvocatoriaFragment extends Fragment {
             call.enqueue(new Callback<Response<Boolean>>() {
                 @Override
                 public void onResponse(Call<Response<Boolean>> call, retrofit2.Response<Response<Boolean>> response) {
-                    Snackbar.make(getView(), $ERROR_MENSAJE, 7000).show();
+                    Snackbar.make(getView(), getString(R.string.fragment_detalle_convocatoria_error_envio), 7000).show();
                     progressDialog.dismiss();
                 }
 
                 @Override
                 public void onFailure(Call<Response<Boolean>> call, Throwable t) {
-                    Snackbar.make(getView(), $MENSAJE_ENVIADO, 7000).show();
+                    Snackbar.make(getView(), getString(R.string.fragment_detalle_convocatoria_mensaje_enviado), 7000).show();
                     MyApplication.contadorCorreosConvocatorias.start();
                     progressDialog.dismiss();
                 }
@@ -140,19 +133,6 @@ public class DetalleConvocatoriaFragment extends Fragment {
         });
 
         return v;
-    }
-
-    private String getFechaCast(String fecha) {
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        SimpleDateFormat miFormato = new SimpleDateFormat("dd/MM/yyyy");
-
-        try {
-            String reformato = miFormato.format(formato.parse(fecha));
-            return reformato;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override

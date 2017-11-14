@@ -1,23 +1,15 @@
 package mx.gob.jovenes.guanajuato.activities;
 
 import android.os.Bundle;
-<<<<<<< HEAD
-import android.support.design.widget.FloatingActionButton;
-=======
->>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-<<<<<<< HEAD
-import android.view.View;
-=======
->>>>>>> 77b7636f1ff2334c50714bb1542b65d0a5d58a3d
 
 import mx.gob.jovenes.guanajuato.R;
 import mx.gob.jovenes.guanajuato.fragments.ChatFragment;
-import mx.gob.jovenes.guanajuato.fragments.CodigoGuanajovenFragment;
+import mx.gob.jovenes.guanajuato.fragments.IDGuanajovenFragment;
 import mx.gob.jovenes.guanajuato.fragments.AcercaDeFragment;
 import mx.gob.jovenes.guanajuato.fragments.ConvocatoriaFragment;
 import mx.gob.jovenes.guanajuato.fragments.EditarDatosFragment;
@@ -74,7 +66,7 @@ public class SegundaActivity extends AppCompatActivity {
                     fragment = ChatFragment.newInstance(R.id.nav_chat_ayuda, R.string.chat, ChatFragment.class);
                     break;
                 case R.id.nav_codigo_guanajoven:
-                    fragment = CodigoGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, CodigoGuanajovenFragment.class);
+                    fragment = IDGuanajovenFragment.newInstance(R.id.nav_codigo_guanajoven, R.string.codigo_guanajoven, IDGuanajovenFragment.class);
                     break;
                 case R.id.nav_redes_sociales:
                     fragment = RedesSocialesFragment.newInstance(R.id.nav_redes_sociales, R.string.redes_sociales, RedesSocialesFragment.class);

@@ -7,10 +7,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-/**
- * Created by code on 7/03/17.
- */
-
 public interface UsuarioAPI {
 
     /**
